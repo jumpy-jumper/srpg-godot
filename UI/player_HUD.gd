@@ -1,12 +1,14 @@
 extends CanvasLayer
 
 
-var cur_unit = null
+var cur_unit: Unit = null
 
+onready var _hover_panel: Panel = $"Unit Hover Panel"
+onready var _hover_panel_name: Label = $"Unit Hover Panel/Unit Name"
 
-func _process(_delta):
+func _process(_delta) -> void:
 	if cur_unit:
-		$"Unit Hover Panel".visible = true
-		$"Unit Hover Panel/Unit Name".text = cur_unit.name
+		_hover_panel.visible = true
+		_hover_panel_name.text = cur_unit.name
 	else:
-		$"Unit Hover Panel".visible = false
+		_hover_panel.visible = false

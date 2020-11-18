@@ -2,14 +2,14 @@ class_name Cursor
 extends Node2D
 
 
+var selected: Unit = null
+var hovered: Unit = null
 
-var selected = null
-var hovered = null
-
+onready var _animated_sprite : AnimatedSprite = $AnimatedSprite
 onready var _stage = get_tree().root.get_node("Stage")	
 
 
-func _process(_delta):
+func _process(_delta) -> void:
 	if not selected:
 		get_parent().get_node("Player HUD").cur_unit = null
 		visible = false
@@ -37,5 +37,5 @@ func _process(_delta):
 		
 	# Send click events to selected unit
 	if Input.is_action_just_pressed("ui_accept"):
-		$AnimatedSprite.play("select")
+		_animated_sprite.play("select")
 		selected.on_click_while_selected(position)

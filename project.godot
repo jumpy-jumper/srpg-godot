@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Units/Movement/movement_solver.gd"
 }, {
+"base": "Sprite",
+"class": "MovementTile",
+"language": "GDScript",
+"path": "res://Units/Movement/movement_tile.gd"
+}, {
 "base": "Node",
 "class": "Stage",
 "language": "GDScript",
@@ -28,18 +33,13 @@ _global_script_classes=[ {
 "class": "Unit",
 "language": "GDScript",
 "path": "res://Units/unit.gd"
-}, {
-"base": "Sprite",
-"class": "UnitMovementTile",
-"language": "GDScript",
-"path": "res://Units/Movement/movement_tile.gd"
 } ]
 _global_script_class_icons={
 "Cursor": "",
 "MovementSolver": "",
+"MovementTile": "",
 "Stage": "",
-"Unit": "",
-"UnitMovementTile": ""
+"Unit": ""
 }
 
 [application]

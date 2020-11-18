@@ -1,8 +1,8 @@
 extends Label
 
 
-func _process(_delta):
-	var health = get_parent().health
+func _process(_delta) -> void:
+	var health: int = get_parent().health
 	match health:
 		Unit.HealthLevels.HEALTHY:
 			text = ""

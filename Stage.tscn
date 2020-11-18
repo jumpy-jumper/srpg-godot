@@ -27,7 +27,6 @@ stats = {
 4: 0,
 5: 8
 }
-movement = 10
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -41,7 +40,6 @@ stats = {
 4: 0,
 5: 6
 }
-movement = 10
 
 [node name="Unit Sprite" parent="Units/Enemy/Bad Eirika" index="1"]
 animation = "red_idle"
@@ -57,7 +55,6 @@ stats = {
 4: 0,
 5: 5
 }
-movement = 10
 
 [node name="Unit Sprite" parent="Units/Enemy/Bad Eirika2" index="1"]
 animation = "red_idle"
