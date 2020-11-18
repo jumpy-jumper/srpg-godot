@@ -1,6 +1,8 @@
 extends CanvasLayer
 
+
 var cur_unit = null
+
 
 func _process(_delta):
 	if cur_unit:

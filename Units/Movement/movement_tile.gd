@@ -1,13 +1,16 @@
+class_name UnitMovementTile
 extends Sprite
 
-class_name UnitMovementTile
 
-enum tile_type { free, costly, attack }
-export(tile_type) var type = tile_type.free
+enum TileType { FREE, COSTLY, ATTACK }
 
-const colors = { tile_type.free : Color(85.0 / 255.0, 205.0 / 255.0, 252.0 / 255.0), 
-tile_type.costly : Color.white, 
-tile_type.attack : Color(247.0 / 255.0, 168.0 / 255.0, 184.0 / 255.0) }
+const COLORS = { TileType.FREE : Color(85.0 / 255, 205.0 / 255, 252.0 / 255), 
+	TileType.COSTLY : Color.white, 
+	TileType.ATTACK : Color(247.0 / 255, 168.0 / 255, 184.0 / 255),
+}
+
+export(TileType) var type = TileType.FREE
+
 
 func _process(delta):
-	modulate = colors[type]
+	modulate = COLORS[type]

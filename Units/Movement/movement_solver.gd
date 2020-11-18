@@ -1,22 +1,24 @@
 class_name MovementSolver
-
 extends Node2D
 
-export(PackedScene) var tile
 
-const faint_visibility = 0.2
-const normal_visibility = 0.4
+const FAINT = 0.2
+const NORMAL = 0.4
+
+export(PackedScene) var tile
 
 var hovered = false
 var selected = false
 
+
 func _process(_delta):
 	if selected:
-		$Tiles.modulate.a = normal_visibility
+		$Tiles.modulate.a = NORMAL
 	elif hovered:
-		$Tiles.modulate.a = faint_visibility
+		$Tiles.modulate.a = FAINT
 	else:
 		$Tiles.modulate.a = 0.0
+
 
 func calculate_movement(unit):
 	var parent = $Tiles/MovementTile

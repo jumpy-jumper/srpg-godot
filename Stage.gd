@@ -1,15 +1,33 @@
+class_name Stage
 extends Node
 
-class_name Stage
 
-# There must be a cursor
-var cursor
-func _ready():
-	cursor = $Player/Cursor
+const GRID_SIZE = 64
 
-# Grid elements getters
+var cur_unit = null	
+var cur_round = 0
 
-const grid_size = 64
+var _order = []
+
+onready var _cursor = $Player/Cursor
+	
+
+func _process(_delta):
+	if not cur_unit:
+		_start_round()
+		cur_unit.turn_start()
+	elif cur_unit.idle:	# unit finished turn
+		cur_unit.on_deselected()
+		_check_events()
+		_next_unit()
+		cur_unit.turn_start()
+		
+	if cur_unit.type == Unit.UnitType.ALLY:
+		_cursor.selected = cur_unit
+		cur_unit.on_selected()
+	else:
+		_cursor.selected = null
+
 
 func get_unit_at(pos):
 	for cat in $Units.get_children():
@@ -17,7 +35,8 @@ func get_unit_at(pos):
 			if u.position == pos:
 				return u
 	return null
-	
+
+
 func get_all_units(offset = Vector2()):
 	var all = []
 	for cat in $Units.get_children():
@@ -26,70 +45,47 @@ func get_all_units(offset = Vector2()):
 			
 	var ret = {}
 	for u in all:
-		var pos = (u.position - offset) / grid_size
+		var pos = (u.position - offset) / GRID_SIZE
 		if ret.has(pos):
 			ret[pos].append(u)
 		else:
 			ret[pos] = [u]
 	return ret
-	
-# Round logic
 
-var order = []
-var cur_unit = null	# only null at the beginning of round
 
-# Round flow:
-#	1. Creates round order with all non-unconscious units
-#	2. Waits for every unit to act once.
-#		(checks events after every action)
-#	3. Go to 1
-func _process(_delta):
-	if not cur_unit:
-		start_round()
-		cur_unit.turn_start()
-	elif cur_unit.idle:	# unit finished turn
-		cur_unit.on_deselected()
-		check_events()
-		next_unit()
-		cur_unit.turn_start()
-		
-	if cur_unit.type == Unit.unit_type.ally:
-		cursor.selected = cur_unit
-		cur_unit.on_selected()
-	else:
-		cursor.selected = null
-
-func unit_order(a, b):
+func _unit_order(a, b):
 	if a.initiative > b.initiative:
 		return true
 	return false
 
-var cur_round = 0
 
-func start_round():
+func _start_round():
 	cur_round += 1
 	print("Round ", cur_round, " start.")
-	order = []
-	for u in $Units/Ally.get_children() + $Units/Enemy.get_children():
-		if u.health != Unit.health_levels.unconscious:
-			u.initiative = u.stats[Unit.combat_stats.foresight]
-			order.append(u)
-	order.sort_custom(self, "unit_order")		
-	cur_unit = order[0]
+	_order = []
+	for cat in $Units.get_children():
+		for u in cat.get_children():
+			if u.health != Unit.HealthLevels.UNCONSCIOUS:
+				u.initiative = u.stats[Unit.CombatStats.FOR]
+				_order.append(u)
+	_order.sort_custom(self, "_unit_order")		
+	cur_unit = _order[0]
 	
-func end_round():
+	
+func _end_round():
 	print("Round ", cur_round, " end.")
 
-# Events are map conditions that trigger some behavior
-func check_events():
+
+func _check_events():
 	pass
 
-func next_unit():
-	for i in range (len(order)):
-		if order[i] == cur_unit:
-			if i == len(order) - 1:
-				end_round()
-				start_round()
+
+func _next_unit():
+	for i in range (len(_order)):
+		if _order[i] == cur_unit:
+			if i == len(_order) - 1:
+				_end_round()
+				_start_round()
 			else:
-				cur_unit = order[i+1]
+				cur_unit = _order[i + 1]
 			break

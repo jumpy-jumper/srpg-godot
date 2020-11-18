@@ -1,14 +1,13 @@
 class_name Cursor
-
 extends Node2D
 
-# There must be a stage
-var stage
-func _ready():
-	stage = get_tree().root.get_node("Stage")
+
 
 var selected = null
 var hovered = null
+
+onready var _stage = get_tree().root.get_node("Stage")	
+
 
 func _process(_delta):
 	if not selected:
@@ -20,13 +19,13 @@ func _process(_delta):
 	
 	# Update position
 	position = get_global_mouse_position()
-	position.x = floor(position.x / Stage.grid_size)
-	position.y = floor(position.y / Stage.grid_size)
-	position *= Stage.grid_size
+	position.x = floor(position.x / Stage.GRID_SIZE)
+	position.y = floor(position.y / Stage.GRID_SIZE)
+	position *= Stage.GRID_SIZE
 	
 	# Update hovered unit
 	var previous = hovered
-	hovered = stage.get_unit_at(position)
+	hovered = _stage.get_unit_at(position)
 	if hovered != previous:
 		if previous:
 			previous.on_unhovered()

@@ -1,16 +1,17 @@
 extends Label
 
+
 func _process(_delta):
 	var health = get_parent().health
 	match health:
-		Unit.health_levels.healthy:
+		Unit.HealthLevels.HEALTHY:
 			text = ""
-		Unit.health_levels.wounded:
+		Unit.HealthLevels.WOUNDED:
 			text = "-1"
 			modulate = Color.deeppink
-		Unit.health_levels.crippled:
+		Unit.HealthLevels.CRIPPLED:
 			text = "-2"
 			modulate = Color.red
-		Unit.health_levels.unconscious:
+		Unit.HealthLevels.UNCONSCIOUS:
 			text = "-3"
 			modulate = Color.crimson

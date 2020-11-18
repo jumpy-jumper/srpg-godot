@@ -1,5 +1,6 @@
 extends Label
 
+
 func _process(_delta):
 	var initiative = get_parent().initiative
 	modulate = Color.white if initiative > 0 else Color.deeppink

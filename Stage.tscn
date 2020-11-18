@@ -45,7 +45,7 @@ movement = 10
 
 [node name="Unit Sprite" parent="Units/Enemy/Bad Eirika" index="1"]
 animation = "red_idle"
-frame = 1
+frame = 2
 
 [node name="Bad Eirika2" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( -512, -576 )
@@ -61,7 +61,7 @@ movement = 10
 
 [node name="Unit Sprite" parent="Units/Enemy/Bad Eirika2" index="1"]
 animation = "red_idle"
-frame = 1
+frame = 2
 
 [node name="Terrain" type="Node2D" parent="."]
 
