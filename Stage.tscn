@@ -1,33 +1,60 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Stage.gd" type="Script" id=1]
 [ext_resource path="res://Units/Unit.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
 
-[node name="Stage" type="Node2D"]
+[node name="Stage" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 320, -192 )
+position = Vector2( -640, -704 )
+anchor_mode = 0
 current = true
-zoom = Vector2( 0.5, 0.5 )
 
 [node name="Units" type="Node2D" parent="."]
 
 [node name="Ally" type="Node2D" parent="Units"]
 
 [node name="Eirika" parent="Units/Ally" instance=ExtResource( 2 )]
-position = Vector2( 32, -64 )
+position = Vector2( -64, -384 )
 type = 0
-foresight = 4
+stats = {
+0: 0,
+1: 0,
+2: 0,
+3: 0,
+4: 0,
+5: 8
+}
+movement = 10
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
-[node name="Fakerika" parent="Units/Enemy" instance=ExtResource( 2 )]
-position = Vector2( 480, -128 )
-foresight = 6
+[node name="Bad Eirika" parent="Units/Enemy" instance=ExtResource( 2 )]
+position = Vector2( 384, -128 )
+stats = {
+0: 0,
+1: 0,
+2: 0,
+3: 0,
+4: 0,
+5: 6
+}
+movement = 10
 
-[node name="Fakerika2" parent="Units/Enemy" instance=ExtResource( 2 )]
-position = Vector2( 160, -320 )
-foresight = 5
+[node name="Bad Eirika2" parent="Units/Enemy" instance=ExtResource( 2 )]
+position = Vector2( -512, -576 )
+stats = {
+0: 0,
+1: 0,
+2: 0,
+3: 0,
+4: 0,
+5: 5
+}
+movement = 10
 
 [node name="Terrain" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource( 3 )]

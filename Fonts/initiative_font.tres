@@ -3,7 +3,7 @@
 [ext_resource path="res://Fonts/Simpletown.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 19
+size = 38
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
