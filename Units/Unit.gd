@@ -8,7 +8,6 @@ func _ready():
 	stage = get_tree().root.get_node("Stage")
 
 # Stats
-
 enum unit_type { ally, enemy, neutral }
 export(unit_type) var type = unit_type.enemy
 
@@ -61,19 +60,15 @@ func turn_end():
 
 func on_hovered():
 	$Movement.hovered = true
-	pass
 	
 func on_unhovered():
 	$Movement.hovered = false
-	pass
 
 func on_selected():
 	$Movement.selected = true
-	pass
 	
 func on_deselected():
 	$Movement.selected = false
-	pass
 	
 func on_click_while_selected(pos):
 	var target = stage.get_unit_at(pos)

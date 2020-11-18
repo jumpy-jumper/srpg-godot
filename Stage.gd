@@ -12,7 +12,6 @@ func _ready():
 const grid_size = 64
 
 func get_unit_at(pos):
-	var all = []
 	for cat in $Units.get_children():
 		for u in cat.get_children():
 			if u.position == pos:
@@ -44,7 +43,7 @@ var cur_unit = null	# only null at the beginning of round
 #	2. Waits for every unit to act once.
 #		(checks events after every action)
 #	3. Go to 1
-func _process(delta):
+func _process(_delta):
 	if not cur_unit:
 		start_round()
 		cur_unit.turn_start()

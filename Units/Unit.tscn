@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Units/Unit.gd" type="Script" id=1]
-[ext_resource path="res://Units/Unit Movement/UnitMovement.gd" type="Script" id=2]
-[ext_resource path="res://Units/Eirika/eirika.tres" type="SpriteFrames" id=3]
-[ext_resource path="res://Units/AnimatedSprite.gd" type="Script" id=4]
-[ext_resource path="res://Fonts/initiative_font.tres" type="DynamicFont" id=5]
-[ext_resource path="res://Units/Initiative Label.gd" type="Script" id=6]
-[ext_resource path="res://Units/Health Label.gd" type="Script" id=7]
-[ext_resource path="res://Units/Weapons/Weapon.gd" type="Script" id=8]
+[ext_resource path="res://Units/unit.gd" type="Script" id=1]
+[ext_resource path="res://Units/Movement/movement_solver.gd" type="Script" id=2]
+[ext_resource path="res://Units/Sprites/Eirika/eirika.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://Units/unit_sprite.gd" type="Script" id=4]
+[ext_resource path="res://Fonts/Dynamic Fonts/initiative.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Units/initiative_label.gd" type="Script" id=6]
+[ext_resource path="res://Units/health_label.gd" type="Script" id=7]
+[ext_resource path="res://Units/Weapons/weapon.gd" type="Script" id=8]
 
 [node name="Unit" type="Node2D"]
 script = ExtResource( 1 )
@@ -20,7 +20,7 @@ modulate = Color( 1, 1, 1, 0 )
 
 [node name="Arrow" type="Node2D" parent="Movement"]
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="Unit Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 3 )
 animation = "blue_idle"
@@ -43,6 +43,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "299"
 align = 2
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Health Label" type="Label" parent="."]
 anchor_top = 1.0

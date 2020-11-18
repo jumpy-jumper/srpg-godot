@@ -9,37 +9,43 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Cursor",
+"language": "GDScript",
+"path": "res://UI/Cursor/cursor.gd"
+}, {
+"base": "Node2D",
+"class": "MovementSolver",
+"language": "GDScript",
+"path": "res://Units/Movement/movement_solver.gd"
+}, {
 "base": "Node",
 "class": "Stage",
 "language": "GDScript",
-"path": "res://Stage.gd"
+"path": "res://stage.gd"
 }, {
 "base": "Node2D",
 "class": "Unit",
 "language": "GDScript",
-"path": "res://Units/Unit.gd"
-}, {
-"base": "Node2D",
-"class": "UnitMovement",
-"language": "GDScript",
-"path": "res://Units/Unit Movement/UnitMovement.gd"
+"path": "res://Units/unit.gd"
 }, {
 "base": "Sprite",
 "class": "UnitMovementTile",
 "language": "GDScript",
-"path": "res://Units/Unit Movement/UnitMovementTile.gd"
+"path": "res://Units/Movement/movement_tile.gd"
 } ]
 _global_script_class_icons={
+"Cursor": "",
+"MovementSolver": "",
 "Stage": "",
 "Unit": "",
-"UnitMovement": "",
 "UnitMovementTile": ""
 }
 
 [application]
 
 config/name="SRPG"
-run/main_scene="res://Stage.tscn"
+run/main_scene="res://stage.tscn"
 
 [display]
 

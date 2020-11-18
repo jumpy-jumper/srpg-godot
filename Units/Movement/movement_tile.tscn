@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Units/Movement/Sprites/movement_tile.png" type="Texture" id=1]
+[ext_resource path="res://Units/Movement/movement_tile.gd" type="Script" id=2]
+
+
+
+
+
+[node name="MovementTile" type="Sprite"]
+scale = Vector2( 4, 4 )
+texture = ExtResource( 1 )
+centered = false
+script = ExtResource( 2 )
