@@ -5,24 +5,23 @@ extends Node2D
 # The cursor snaps to the stage's grid.
 # The cursor emits signals when it updates position or clicks a position.
 
+
 signal position_updated(pos)
 signal position_clicked(pos)
 
-var operatable: bool = true
-
-onready var _animated_sprite : AnimatedSprite = $AnimatedSprite
+var _operatable: bool = true
 
 
 func _process(_delta) -> void:
-	if not operatable:
+	if not _operatable:
 		visible = false
 		return
 
 	visible = true
 
-	position = Stage.POSITION_IN_GRID(get_global_mouse_position())
+	position = Stage.GET_POSITION_IN_GRID(get_global_mouse_position())
 	emit_signal("position_updated", position)
 
 	if Input.is_action_just_pressed("ui_accept"):
-		_animated_sprite.play("select")
+		$AnimatedSprite.play("select")
 		emit_signal("position_clicked", position)

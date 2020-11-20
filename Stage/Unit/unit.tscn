@@ -1,16 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Stage/Unit/unit.gd" type="Script" id=1]
-[ext_resource path="res://Stage/Unit/Movement/movement_solver.gd" type="Script" id=2]
-[ext_resource path="res://Stage/Unit/Sprite/unit_sprite.gd" type="Script" id=4]
 [ext_resource path="res://Fonts/Dynamic Fonts/initiative.tres" type="DynamicFont" id=5]
-[ext_resource path="res://Stage/Unit/initiative_label.gd" type="Script" id=6]
-[ext_resource path="res://Stage/Unit/health_label.gd" type="Script" id=7]
-[ext_resource path="res://Stage/Unit/Weapon/weapon.gd" type="Script" id=8]
 
 [node name="Unit" type="Node2D"]
 script = ExtResource( 1 )
-type = 0
 stats = {
 0: 6,
 1: 5,
@@ -21,21 +15,19 @@ stats = {
 }
 
 [node name="Movement" type="Node2D" parent="."]
-script = ExtResource( 2 )
 
 [node name="Tiles" type="Node2D" parent="Movement"]
 modulate = Color( 1, 1, 1, 0 )
 
 [node name="Arrow" type="Node2D" parent="Movement"]
 
-[node name="Unit Sprite" type="AnimatedSprite" parent="."]
+[node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 playing = true
 centered = false
 offset = Vector2( -8, -16 )
-script = ExtResource( 4 )
 
-[node name="Initiative Label" type="Label" parent="."]
+[node name="Initiative" type="Label" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -46,12 +38,11 @@ margin_right = 64.5276
 margin_bottom = 70.5843
 custom_fonts/font = ExtResource( 5 )
 align = 2
-script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Health Label" type="Label" parent="."]
+[node name="Health" type="Label" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = -39.0
@@ -60,12 +51,6 @@ margin_right = 35.1823
 margin_bottom = 71.0
 custom_fonts/font = ExtResource( 5 )
 align = 1
-script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Equipment" type="Node" parent="."]
-
-[node name="Main Hand" type="Node" parent="Equipment"]
-script = ExtResource( 8 )

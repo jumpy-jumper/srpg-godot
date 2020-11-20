@@ -1,17 +1,14 @@
 class_name Unit
 extends Node2D
 
+signal done()
 
 enum UnitType { ALLY, ENEMY, NEUTRAL }
 enum HealthLevels { HEALTHY, WOUNDED, CRIPPLED, UNCONSCIOUS }
 enum CombatStats { STR, END, AGI, INT, PER, FOR }
 
 export(String) var unit_name: String = ""
-export(UnitType) var type: int = UnitType.ENEMY
 export(HealthLevels) var health: int = HealthLevels.HEALTHY
-export(int) var initiative: int = 0
-export(int) var base_initiative: int = 0
-export(int) var bonus_initiative: int = 0
 export(Dictionary) var stats: Dictionary = {
 	CombatStats.STR : 0,
 	CombatStats.END : 0,
@@ -21,58 +18,54 @@ export(Dictionary) var stats: Dictionary = {
 	CombatStats.FOR : 0,
 }
 
-var acting: bool = false
-var hovered: bool = false
-var selected: bool = false
+var type: int = UnitType.ENEMY
+var ini: int = 0
+var ini_base: int = 0
+var ini_bonus: int = 0
 
-onready var _stage = $"../../.."
-
-
-func take_withering(value: int) -> void:
-	initiative -= value
-	initiative = max(0, initiative)
+var _greenlit = false
 
 
-func take_lethal(crit: bool = false) -> void:
-	health += 2 if crit else 1
-	health = min(health, 3)
+func _enter_tree() -> void:
+	pass
 
 
-func fight(other: Unit) -> void:
-	print(name, " fights ", other.name)
-	other.take_lethal()
+func _process(delta: float) -> void:
+	$"Sprite".animation = "blue_idle" if type == UnitType.ALLY else "red_idle"
+	_update_ui()
 
 
-func turn_start() -> void:
-	print(name, "'s turn.")
-	acting = true
-
-
-func turn_end() -> void:
-	acting = false
-
-
-func on_hovered() -> void:
-	hovered = true
-
-
-func on_unhovered() -> void:
-	hovered = false
-
-
-func on_selected() -> void:
-	selected = true
-
-
-func on_deselected() -> void:
-	selected = false
-
-
-func on_click_while_selected(pos: Vector2) -> void:
-	if type == UnitType.ALLY:
-		var target: Unit = _stage.get_unit_at(pos)
-		if target and target.type == UnitType.ENEMY and target.health != HealthLevels.UNCONSCIOUS:
-			fight(target)
-			turn_end()
+func _update_ui() -> void:
+	# Update initiative label
+	if ini > 0:
+		if ini_bonus > 0:
+			$"Initiative".modulate = Color.lightgreen
+		else:
+			$"Initiative".modulate = Color.white
 	else:
-		turn_end()
+		$"Initiative".modulate = Color.deeppink
+
+	$"Initiative".text = str(ini) if ini > 0 else "í ½í»‡í ½í»‡í ½í»‡-"
+
+	# Update health label
+	match health:
+		HealthLevels.HEALTHY:
+			$"Health".text = ""
+		HealthLevels.WOUNDED:
+			$"Health".text = "-1"
+			$"Health".modulate = Color.deeppink
+		HealthLevels.CRIPPLED:
+			$"Health".text = "-2"
+			$"Health".modulate = Color.red
+		HealthLevels.UNCONSCIOUS:
+			$"Health".text = "-3"
+			$"Health".modulate = Color.crimson
+
+
+func _on_Stage_unit_greenlit(unit: Unit) -> void:
+	_greenlit = unit == self
+
+
+func _on_Stage_unit_clicked(unit: Unit) -> void:
+	if _greenlit and unit == self:
+		emit_signal("done")

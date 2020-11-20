@@ -12,17 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Cursor",
 "language": "GDScript",
-"path": "res://Stage/Player/cursor.gd"
-}, {
-"base": "Node2D",
-"class": "MovementSolver",
-"language": "GDScript",
-"path": "res://Stage/Unit/Movement/movement_solver.gd"
-}, {
-"base": "Sprite",
-"class": "MovementTile",
-"language": "GDScript",
-"path": "res://Stage/Unit/Movement/Tile/movement_tile.gd"
+"path": "res://Stage/Cursor/cursor.gd"
 }, {
 "base": "Node",
 "class": "Stage",
@@ -43,21 +33,13 @@ _global_script_classes=[ {
 "class": "UnitPanel",
 "language": "GDScript",
 "path": "res://Stage/UI/unit_panel.gd"
-}, {
-"base": "Node",
-"class": "Weapon",
-"language": "GDScript",
-"path": "res://Stage/Unit/Weapon/weapon.gd"
 } ]
 _global_script_class_icons={
 "Cursor": "",
-"MovementSolver": "",
-"MovementTile": "",
 "Stage": "",
 "Terrain": "",
 "Unit": "",
-"UnitPanel": "",
-"Weapon": ""
+"UnitPanel": ""
 }
 
 [application]
