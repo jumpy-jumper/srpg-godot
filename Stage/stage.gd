@@ -22,7 +22,7 @@ func _process(_delta: float) -> void:
 		_start_round()
 		cur_unit.turn_start()
 		cur_unit.on_selected()
-	elif cur_unit.idle:	# unit finished turn
+	elif not cur_unit.acting:	# unit finished turn
 		cur_unit.on_deselected()
 		_check_events()
 		_next_unit()
@@ -88,7 +88,9 @@ func _start_round() -> void:
 	for cat in _units.get_children():
 		for u in cat.get_children():
 			if u.health != Unit.HealthLevels.UNCONSCIOUS:
-				u.initiative = u.stats[Unit.CombatStats.FOR]
+				u.base_initiative = u.stats[Unit.CombatStats.FOR]
+				u.bonus_initiative = (get_terrain_at(u.position).ini_multiplier - 1) * u.base_initiative
+				u.initiative = u.base_initiative + u.bonus_initiative
 				order.append(u)
 	order.sort_custom(self, "_order_criteria")
 	cur_unit = order[0]

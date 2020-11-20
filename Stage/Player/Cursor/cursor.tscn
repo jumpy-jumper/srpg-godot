@@ -9,8 +9,7 @@
 [ext_resource path="res://Stage/Player/Cursor/Sprites/cursor_selection5.png" type="Texture" id=7]
 [ext_resource path="res://Stage/Player/Cursor/Sprites/cursor_selection4.png" type="Texture" id=8]
 [ext_resource path="res://Stage/Player/Cursor/cursor.gd" type="Script" id=9]
-[ext_resource path="res://Stage/Player/Cursor/cursor_animated_sprite.gd" type="Script" id=10]
-
+[ext_resource path="res://Stage/Player/Cursor/cursor_sprite.gd" type="Script" id=10]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {

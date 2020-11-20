@@ -37,12 +37,22 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Terrain",
 "language": "GDScript",
-"path": "res://Stage/Terrain/terrain.gd"
+"path": "res://Stage/Terrain/Instances/terrain.gd"
 }, {
 "base": "Node2D",
 "class": "Unit",
 "language": "GDScript",
 "path": "res://Stage/Unit/unit.gd"
+}, {
+"base": "Node2D",
+"class": "UnitPanel",
+"language": "GDScript",
+"path": "res://Stage/UI/unit_panel.gd"
+}, {
+"base": "Node",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://Stage/Unit/Weapon/weapon.gd"
 } ]
 _global_script_class_icons={
 "Cursor": "",
@@ -51,7 +61,9 @@ _global_script_class_icons={
 "PlayerHUD": "",
 "Stage": "",
 "Terrain": "",
-"Unit": ""
+"Unit": "",
+"UnitPanel": "",
+"Weapon": ""
 }
 
 [application]

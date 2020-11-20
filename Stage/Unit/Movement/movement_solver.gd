@@ -10,7 +10,7 @@ export(PackedScene) var tile: PackedScene
 var hovered: bool = false
 var selected: bool = false
 
-onready var _unit : Unit = get_parent()
+onready var _unit : Unit = $"../"
 onready var _tiles : Node2D = $Tiles
 
 func _process(_delta) -> void:

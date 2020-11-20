@@ -7,7 +7,6 @@
 [ext_resource path="res://Stage/Unit/Sprite/Sprites/Eirika/blue_idle0.png" type="Texture" id=5]
 [ext_resource path="res://Stage/Unit/Sprite/Sprites/Eirika/blue_idle1.png" type="Texture" id=6]
 
-
 [resource]
 animations = [ {
 "frames": [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ) ],
@@ -15,7 +14,7 @@ animations = [ {
 "name": "red_idle",
 "speed": 7.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "blue_idle",
 "speed": 7.0

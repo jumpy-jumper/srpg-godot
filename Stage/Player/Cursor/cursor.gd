@@ -5,6 +5,7 @@ extends Node2D
 # The cursor holds a hovered unit and a hovered terrain, which correspond to
 # its position on the stage grid.
 
+
 var operatable: bool = true
 var hovered_unit: Unit = null
 var hovered_terrain: Terrain = null
@@ -36,7 +37,7 @@ func _process(_delta) -> void:
 
 	hovered_terrain = _stage.get_terrain_at(position)
 
-	# Send click events to selected unit
+	# Send click events to current unit
 	if Input.is_action_just_pressed("ui_accept"):
 		_animated_sprite.play("select")
 		_stage.cur_unit.on_click_while_selected(position)

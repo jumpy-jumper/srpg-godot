@@ -6,9 +6,12 @@ enum UnitType { ALLY, ENEMY, NEUTRAL }
 enum HealthLevels { HEALTHY, WOUNDED, CRIPPLED, UNCONSCIOUS }
 enum CombatStats { STR, END, AGI, INT, PER, FOR }
 
+export(String) var unit_name: String = ""
 export(UnitType) var type: int = UnitType.ENEMY
 export(HealthLevels) var health: int = HealthLevels.HEALTHY
 export(int) var initiative: int = 0
+export(int) var base_initiative: int = 0
+export(int) var bonus_initiative: int = 0
 export(Dictionary) var stats: Dictionary = {
 	CombatStats.STR : 0,
 	CombatStats.END : 0,
@@ -18,7 +21,7 @@ export(Dictionary) var stats: Dictionary = {
 	CombatStats.FOR : 0,
 }
 
-var idle: bool = true
+var acting: bool = false
 var hovered: bool = false
 var selected: bool = false
 
@@ -42,15 +45,11 @@ func fight(other: Unit) -> void:
 
 func turn_start() -> void:
 	print(name, "'s turn.")
-	if type == UnitType.ENEMY:
-		print(name, "passes.")
-		turn_end()
-	else:
-		idle = false
+	acting = true
 
 
 func turn_end() -> void:
-	idle = true
+	acting = false
 
 
 func on_hovered() -> void:
@@ -70,7 +69,10 @@ func on_deselected() -> void:
 
 
 func on_click_while_selected(pos: Vector2) -> void:
-	var target: Unit = _stage.get_unit_at(pos)
-	if target and target.type == UnitType.ENEMY and target.health != HealthLevels.UNCONSCIOUS:
-		fight(target)
+	if type == UnitType.ALLY:
+		var target: Unit = _stage.get_unit_at(pos)
+		if target and target.type == UnitType.ENEMY and target.health != HealthLevels.UNCONSCIOUS:
+			fight(target)
+			turn_end()
+	else:
 		turn_end()

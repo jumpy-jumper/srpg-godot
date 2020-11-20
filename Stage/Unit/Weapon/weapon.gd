@@ -1,3 +1,4 @@
+class_name Weapon
 extends Node
 
 export(String) var weapon_name: String = ""

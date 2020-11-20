@@ -1,59 +1,920 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/Unit/unit.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Stage/Player/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Stage/Terrain/Instances/meadow.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Stage/Terrain/Instances/forest.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Stage/Terrain/Instances/mountain.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Stage/Unit/Sprite/Sprites/Eirika/eirika.tres" type="SpriteFrames" id=7]
+[ext_resource path="res://Stage/Unit/Sprite/Sprites/Revenant/revenant.tres" type="SpriteFrames" id=8]
+[ext_resource path="res://Fonts/Simpletown.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://Stage/UI/unit_panel.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Stage/UI/order_ui.gd" type="Script" id=11]
+
+[sub_resource type="DynamicFont" id=1]
+size = 58
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends AnimatedSprite
+
+onready var _unit : Unit = $\"../\"
+
+func _process(_delta: float) -> void:
+	animation = \"blue_idle\" if _unit.type == Unit.UnitType.ALLY else \"red_idle\"
+"
 
 [node name="Stage" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -640, -704 )
 anchor_mode = 0
 current = true
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Order UI" type="Node" parent="UI"]
+script = ExtResource( 11 )
+
+[node name="Panel" type="Panel" parent="UI/Order UI"]
+modulate = Color( 1, 1, 1, 0.596078 )
+margin_left = 33.0
+margin_top = 32.0
+margin_right = 113.0
+margin_bottom = 672.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Round Counter" type="Label" parent="UI/Order UI"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 112.0
+margin_bottom = 128.0
+custom_fonts/font = SubResource( 1 )
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit Panels" type="Node" parent="UI/Order UI"]
+
+[node name="Panel1" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
+position = Vector2( 48, 128 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="Panel2" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
+position = Vector2( 48, 192 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="Panel3" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
+position = Vector2( 48, 256 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="Panel4" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
+position = Vector2( 48, 320 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="Panel5" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
+position = Vector2( 48, 384 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="Panel6" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
+position = Vector2( 48, 448 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="Panel7" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
+position = Vector2( 48, 512 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="Panel8" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
+position = Vector2( 48, 576 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="Terrain" type="Node2D" parent="."]
+
+[node name="Meadow" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 640, 256 )
+
+[node name="Meadow2" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 704, 256 )
+
+[node name="Meadow3" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 640, 320 )
+
+[node name="Meadow4" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 704, 320 )
+
+[node name="Meadow5" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 576, 320 )
+
+[node name="Meadow9" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 704, 192 )
+
+[node name="Meadow10" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 448, 256 )
+
+[node name="Meadow11" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 448, 320 )
+
+[node name="Meadow12" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 512, 320 )
+
+[node name="Meadow13" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 448, 384 )
+
+[node name="Meadow14" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 512, 384 )
+
+[node name="Meadow16" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 384, 320 )
+
+[node name="Meadow17" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 384, 256 )
+
+[node name="Meadow19" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 320, 448 )
+
+[node name="Meadow20" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 256, 448 )
+
+[node name="Meadow21" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 192, 512 )
+
+[node name="Meadow22" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 192, 384 )
+
+[node name="Meadow44" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 192, 448 )
+
+[node name="Meadow18" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 320, 256 )
+
+[node name="Meadow23" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 512, 448 )
+
+[node name="Meadow24" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 512, 512 )
+
+[node name="Meadow25" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 576, 384 )
+
+[node name="Meadow26" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 640, 384 )
+
+[node name="Meadow27" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 704, 384 )
+
+[node name="Meadow28" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 768, 320 )
+
+[node name="Meadow32" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 832, 320 )
+
+[node name="Meadow33" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 832, 384 )
+
+[node name="Meadow34" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 832, 448 )
+
+[node name="Meadow29" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 768, 256 )
+
+[node name="Meadow30" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 768, 192 )
+
+[node name="Meadow36" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 512, 192 )
+
+[node name="Meadow37" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 576, 192 )
+
+[node name="Meadow39" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 576, 128 )
+
+[node name="Meadow40" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 640, 128 )
+
+[node name="Meadow38" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 640, 192 )
+
+[node name="Meadow41" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 576, 256 )
+
+[node name="Meadow42" parent="Terrain" instance=ExtResource( 4 )]
+position = Vector2( 512, 256 )
+
+[node name="Mountain" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 512, 128 )
+
+[node name="Mountain2" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 576, 64 )
+
+[node name="Mountain3" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 512, 64 )
+
+[node name="Mountain4" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 640, 64 )
+
+[node name="Mountain5" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 704, 128 )
+
+[node name="Mountain6" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 704, 64 )
+
+[node name="Mountain7" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 448, 128 )
+
+[node name="Mountain8" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 448, 192 )
+
+[node name="Mountain9" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 384, 192 )
+
+[node name="Mountain10" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 320, 192 )
+
+[node name="Mountain11" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 256 )
+
+[node name="Mountain12" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 192 )
+
+[node name="Mountain13" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 320 )
+
+[node name="Mountain14" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 384 )
+
+[node name="Mountain15" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 192, 320 )
+
+[node name="Mountain16" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 320 )
+
+[node name="Mountain44" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 384 )
+
+[node name="Mountain45" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 448 )
+
+[node name="Mountain46" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 512 )
+
+[node name="Mountain47" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 576 )
+
+[node name="Mountain63" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 640 )
+
+[node name="Mountain77" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 704 )
+
+[node name="Mountain78" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 192, 704 )
+
+[node name="Mountain79" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 704 )
+
+[node name="Mountain80" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 320, 704 )
+
+[node name="Mountain81" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 384, 704 )
+
+[node name="Mountain82" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 448, 704 )
+
+[node name="Mountain83" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 512, 704 )
+
+[node name="Mountain84" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 576, 704 )
+
+[node name="Mountain85" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 640, 704 )
+
+[node name="Mountain86" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 704, 704 )
+
+[node name="Mountain87" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 768, 704 )
+
+[node name="Mountain88" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 832, 704 )
+
+[node name="Mountain89" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 896, 704 )
+
+[node name="Mountain90" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 704 )
+
+[node name="Mountain141" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 0 )
+
+[node name="Mountain142" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 192, 0 )
+
+[node name="Mountain143" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 0 )
+
+[node name="Mountain157" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 0 )
+
+[node name="Mountain180" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 64 )
+
+[node name="Mountain181" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 192, 64 )
+
+[node name="Mountain182" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 64 )
+
+[node name="Mountain183" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 320, 64 )
+
+[node name="Mountain184" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 384, 64 )
+
+[node name="Mountain185" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 448, 64 )
+
+[node name="Mountain186" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 384, 128 )
+
+[node name="Mountain187" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 320, 128 )
+
+[node name="Mountain188" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 128 )
+
+[node name="Mountain189" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 192, 128 )
+
+[node name="Mountain190" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 128 )
+
+[node name="Mountain191" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 192 )
+
+[node name="Mountain192" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 192, 192 )
+
+[node name="Mountain193" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 128, 256 )
+
+[node name="Mountain194" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 192, 256 )
+
+[node name="Mountain144" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 320, 0 )
+
+[node name="Mountain145" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 384, 0 )
+
+[node name="Mountain146" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 448, 0 )
+
+[node name="Mountain147" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 512, 0 )
+
+[node name="Mountain148" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 576, 0 )
+
+[node name="Mountain149" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 640, 0 )
+
+[node name="Mountain150" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 704, 0 )
+
+[node name="Mountain151" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 768, 0 )
+
+[node name="Mountain152" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 832, 0 )
+
+[node name="Mountain153" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 896, 0 )
+
+[node name="Mountain154" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 0 )
+
+[node name="Mountain91" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 704 )
+
+[node name="Mountain92" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 704 )
+
+[node name="Mountain93" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 704 )
+
+[node name="Mountain94" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 704 )
+
+[node name="Mountain95" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 704 )
+
+[node name="Mountain96" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 640 )
+
+[node name="Mountain97" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 640 )
+
+[node name="Mountain98" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 640 )
+
+[node name="Mountain99" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 640 )
+
+[node name="Mountain100" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 576 )
+
+[node name="Mountain101" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 576 )
+
+[node name="Mountain102" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 576 )
+
+[node name="Mountain103" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 576 )
+
+[node name="Mountain104" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 512 )
+
+[node name="Mountain105" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 512 )
+
+[node name="Mountain106" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 512 )
+
+[node name="Mountain107" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 448 )
+
+[node name="Mountain108" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 448 )
+
+[node name="Mountain109" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 448 )
+
+[node name="Mountain110" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 384 )
+
+[node name="Mountain111" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 384 )
+
+[node name="Mountain112" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 384 )
+
+[node name="Mountain113" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 320 )
+
+[node name="Mountain114" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 320 )
+
+[node name="Mountain115" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 320 )
+
+[node name="Mountain116" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 256 )
+
+[node name="Mountain117" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 256 )
+
+[node name="Mountain118" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 256 )
+
+[node name="Mountain119" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 192 )
+
+[node name="Mountain120" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 192 )
+
+[node name="Mountain121" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 192 )
+
+[node name="Mountain122" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 128 )
+
+[node name="Mountain123" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 128 )
+
+[node name="Mountain124" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 128 )
+
+[node name="Mountain125" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 64 )
+
+[node name="Mountain126" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 64 )
+
+[node name="Mountain127" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 64 )
+
+[node name="Mountain128" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1088, 0 )
+
+[node name="Mountain129" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1152, 0 )
+
+[node name="Mountain130" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1216, 0 )
+
+[node name="Mountain155" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 704 )
+
+[node name="Mountain156" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 640 )
+
+[node name="Mountain158" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 576 )
+
+[node name="Mountain159" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 512 )
+
+[node name="Mountain160" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 448 )
+
+[node name="Mountain161" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 384 )
+
+[node name="Mountain162" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 320 )
+
+[node name="Mountain163" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 256 )
+
+[node name="Mountain164" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 192 )
+
+[node name="Mountain165" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 128 )
+
+[node name="Mountain166" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 0, 64 )
+
+[node name="Mountain167" parent="Terrain" instance=ExtResource( 6 )]
+
+[node name="Mountain168" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 704 )
+
+[node name="Mountain169" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 640 )
+
+[node name="Mountain170" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 576 )
+
+[node name="Mountain171" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 512 )
+
+[node name="Mountain172" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 448 )
+
+[node name="Mountain173" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 384 )
+
+[node name="Mountain174" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 320 )
+
+[node name="Mountain175" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 256 )
+
+[node name="Mountain176" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 192 )
+
+[node name="Mountain177" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 128 )
+
+[node name="Mountain178" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 64 )
+
+[node name="Mountain179" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 64, 0 )
+
+[node name="Mountain131" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 576 )
+
+[node name="Mountain132" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 512 )
+
+[node name="Mountain133" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 448 )
+
+[node name="Mountain134" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 384 )
+
+[node name="Mountain135" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 320 )
+
+[node name="Mountain136" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 256 )
+
+[node name="Mountain137" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 192 )
+
+[node name="Mountain138" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 128 )
+
+[node name="Mountain139" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 64 )
+
+[node name="Mountain140" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 1024, 0 )
+
+[node name="Mountain64" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 192, 640 )
+
+[node name="Mountain65" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 640 )
+
+[node name="Mountain66" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 320, 640 )
+
+[node name="Mountain67" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 384, 640 )
+
+[node name="Mountain68" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 448, 640 )
+
+[node name="Mountain69" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 576, 640 )
+
+[node name="Mountain70" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 512, 640 )
+
+[node name="Mountain71" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 640, 640 )
+
+[node name="Mountain72" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 704, 640 )
+
+[node name="Mountain73" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 768, 640 )
+
+[node name="Mountain74" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 832, 640 )
+
+[node name="Mountain75" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 896, 640 )
+
+[node name="Mountain76" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 640 )
+
+[node name="Mountain48" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 192, 576 )
+
+[node name="Mountain49" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 576 )
+
+[node name="Mountain50" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 320, 576 )
+
+[node name="Mountain51" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 384, 576 )
+
+[node name="Mountain17" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 320, 512 )
+
+[node name="Mountain28" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 256, 512 )
+
+[node name="Mountain18" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 384, 512 )
+
+[node name="Mountain19" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 448, 512 )
+
+[node name="Mountain20" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 512, 576 )
+
+[node name="Mountain21" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 448, 576 )
+
+[node name="Mountain22" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 576, 576 )
+
+[node name="Mountain23" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 576, 512 )
+
+[node name="Mountain24" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 576, 448 )
+
+[node name="Mountain25" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 640, 448 )
+
+[node name="Mountain26" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 704, 448 )
+
+[node name="Mountain27" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 768, 384 )
+
+[node name="Mountain29" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 896, 256 )
+
+[node name="Mountain30" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 896, 320 )
+
+[node name="Mountain31" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 896, 384 )
+
+[node name="Mountain43" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 896, 448 )
+
+[node name="Mountain52" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 704, 512 )
+
+[node name="Mountain53" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 704, 576 )
+
+[node name="Mountain54" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 768, 576 )
+
+[node name="Mountain55" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 832, 576 )
+
+[node name="Mountain56" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 896, 576 )
+
+[node name="Mountain57" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 576 )
+
+[node name="Mountain58" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 512 )
+
+[node name="Mountain59" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 448 )
+
+[node name="Mountain60" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 384 )
+
+[node name="Mountain61" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 640, 512 )
+
+[node name="Mountain62" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 640, 576 )
+
+[node name="Mountain32" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 768, 448 )
+
+[node name="Mountain33" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 768, 128 )
+
+[node name="Mountain34" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 768, 64 )
+
+[node name="Mountain35" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 832, 64 )
+
+[node name="Mountain36" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 896, 64 )
+
+[node name="Mountain37" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 64 )
+
+[node name="Mountain38" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 128 )
+
+[node name="Mountain39" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 192 )
+
+[node name="Mountain40" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 256 )
+
+[node name="Mountain41" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 320 )
+
+[node name="Mountain42" parent="Terrain" instance=ExtResource( 6 )]
+position = Vector2( 960, 320 )
+
+[node name="Forest" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 320, 320 )
+
+[node name="Forest2" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 320, 384 )
+
+[node name="Forest3" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 384, 384 )
+
+[node name="Forest4" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 384, 448 )
+
+[node name="Forest5" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 448, 448 )
+
+[node name="Forest6" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 832, 128 )
+
+[node name="Forest12" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 832, 192 )
+
+[node name="Forest13" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 832, 256 )
+
+[node name="Forest7" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 896, 128 )
+
+[node name="Forest8" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 896, 192 )
+
+[node name="Forest9" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 832, 512 )
+
+[node name="Forest10" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 768, 512 )
+
+[node name="Forest11" parent="Terrain" instance=ExtResource( 5 )]
+position = Vector2( 896, 512 )
 
 [node name="Units" type="Node2D" parent="."]
 
 [node name="Ally" type="Node2D" parent="Units"]
 
 [node name="Eirika" parent="Units/Ally" instance=ExtResource( 2 )]
-position = Vector2( -64, -384 )
-type = 0
+position = Vector2( 192, 512 )
+unit_name = "Eirika"
 stats = {
-0: 0,
-1: 0,
-2: 0,
-3: 0,
-4: 0,
+0: 5,
+1: 6,
+2: 8,
+3: 7,
+4: 7,
 5: 8
 }
 
+[node name="Unit Sprite" parent="Units/Ally/Eirika" index="1"]
+frames = ExtResource( 7 )
+animation = "blue_idle"
+frame = 5
+script = SubResource( 2 )
+
 [node name="Enemy" type="Node2D" parent="Units"]
 
-[node name="Marta" parent="Units/Enemy" instance=ExtResource( 2 )]
-position = Vector2( 384, -128 )
+[node name="Revenant" parent="Units/Enemy" instance=ExtResource( 2 )]
+position = Vector2( 576, 128 )
+unit_name = "Revenant"
+type = 1
 stats = {
-0: 0,
-1: 0,
-2: 0,
-3: 0,
-4: 0,
-5: 6
-}
-
-[node name="Jean" parent="Units/Enemy" instance=ExtResource( 2 )]
-position = Vector2( -512, -576 )
-stats = {
-0: 0,
-1: 0,
-2: 0,
-3: 0,
-4: 0,
+0: 8,
+1: 7,
+2: 4,
+3: 3,
+4: 3,
 5: 5
 }
 
+[node name="Unit Sprite" parent="Units/Enemy/Revenant" index="1"]
+frames = ExtResource( 8 )
+animation = "red_idle"
+frame = 3
+
+[node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
+position = Vector2( 896, 128 )
+unit_name = "Revenant"
+type = 1
+stats = {
+0: 8,
+1: 7,
+2: 4,
+3: 3,
+4: 3,
+5: 5
+}
+
+[node name="Unit Sprite" parent="Units/Enemy/Revenant2" index="1"]
+frames = ExtResource( 8 )
+animation = "red_idle"
+frame = 7
+
+[node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
+position = Vector2( 832, 512 )
+unit_name = "Revenant"
+type = 1
+stats = {
+0: 8,
+1: 7,
+2: 4,
+3: 3,
+4: 3,
+5: 5
+}
+
+[node name="Unit Sprite" parent="Units/Enemy/Revenant3" index="1"]
+frames = ExtResource( 8 )
+animation = "red_idle"
+frame = 8
+
 [node name="Neutral" type="Node2D" parent="Units"]
 
-[node name="Terrain" type="Node2D" parent="."]
+[node name="Player" parent="." instance=ExtResource( 3 )]
+
+[editable path="Units/Ally/Eirika"]
+
+[editable path="Units/Enemy/Revenant"]
+
+[editable path="Units/Enemy/Revenant2"]
+
+[editable path="Units/Enemy/Revenant3"]
