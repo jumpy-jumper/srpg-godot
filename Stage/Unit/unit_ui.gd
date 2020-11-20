@@ -3,15 +3,15 @@ extends Control
 
 func update_ui(unit: Unit) -> void:
 	# Update initiative label
-	if unit.ini > 0:
-		if unit.ini_bonus > 0:
+	if unit.get_ini() > 0:
+		if unit.ini_bonus > 1:
 			$"Initiative".modulate = Color.lightgreen
 		else:
 			$"Initiative".modulate = Color.white
 	else:
 		$"Initiative".modulate = Color.deeppink
 
-	$"Initiative".text = str(unit.ini) if unit.ini > 0 else "í ½í»‡í ½í»‡í ½í»‡-"
+	$"Initiative".text = str(unit.ini) if unit.get_ini() > 0 else "í ½í»‡í ½í»‡í ½í»‡-"
 
 	# Update health label
 	match unit.health:

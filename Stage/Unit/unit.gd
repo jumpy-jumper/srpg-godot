@@ -19,11 +19,14 @@ export(Dictionary) var stats: Dictionary = {
 }
 
 var type: int = UnitType.ENEMY
-export(int) var ini: int = 0
-var ini_base: int = 0
-var ini_bonus: int = 0
+export(int) var ini_base: int = 0
+var ini_bonus: float = 1
 
 var greenlit: bool = false # whether the unit is allowed to issue commands
+
+
+func get_ini() -> int:
+	return int(ini_base * ini_bonus)
 
 
 func _enter_tree() -> void:
@@ -38,8 +41,6 @@ func _process(delta: float) -> void:
 func _on_Stage_round_started() -> void:
 	ini_base = stats[CombatStats.FOR]
 	ini_bonus = 0
-	ini = ini_base + ini_bonus
-
 
 func _on_Stage_unit_greenlit(unit: Unit) -> void:
 	greenlit = unit == self

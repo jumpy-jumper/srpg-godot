@@ -46,7 +46,7 @@ func _process(_delta: float) -> void:
 
 
 func _order_criteria(a, b) -> bool:
-	if a.ini > b.ini:
+	if a.get_ini() > b.get_ini():
 		return true
 	return false
 
