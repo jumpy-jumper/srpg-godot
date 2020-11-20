@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/Unit/unit.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Fonts/Simpletown.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Stage/UI/unit_panel.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Stage/UI/order_ui.gd" type="Script" id=11]
+[ext_resource path="res://Stage/Player/player.gd" type="Script" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 58
@@ -848,7 +849,7 @@ stats = {
 [node name="Unit Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 5
+frame = 1
 script = SubResource( 2 )
 
 [node name="Enemy" type="Node2D" parent="Units"]
@@ -869,7 +870,7 @@ stats = {
 [node name="Unit Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 3
+frame = 2
 
 [node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 896, 128 )
@@ -887,7 +888,7 @@ stats = {
 [node name="Unit Sprite" parent="Units/Enemy/Revenant2" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 7
+frame = 6
 
 [node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 832, 512 )
@@ -905,11 +906,19 @@ stats = {
 [node name="Unit Sprite" parent="Units/Enemy/Revenant3" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 8
+frame = 7
 
 [node name="Neutral" type="Node2D" parent="Units"]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
+script = ExtResource( 12 )
+
+[node name="Player HUD" parent="Player" index="1"]
+script = null
+[connection signal="terrain_hovered" from="." to="Player" method="_on_Stage_terrain_hovered"]
+[connection signal="unit_hovered" from="." to="Player" method="_on_Stage_unit_hovered"]
+[connection signal="position_clicked" from="Player/Cursor" to="." method="_on_Cursor_position_clicked"]
+[connection signal="position_updated" from="Player/Cursor" to="." method="_on_Cursor_position_updated"]
 
 [editable path="Units/Ally/Eirika"]
 
@@ -918,3 +927,5 @@ frame = 8
 [editable path="Units/Enemy/Revenant2"]
 
 [editable path="Units/Enemy/Revenant3"]
+
+[editable path="Player"]

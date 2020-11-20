@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Cursor",
 "language": "GDScript",
-"path": "res://Stage/Player/Cursor/cursor.gd"
+"path": "res://Stage/Player/cursor.gd"
 }, {
 "base": "Node2D",
 "class": "MovementSolver",
@@ -23,11 +23,6 @@ _global_script_classes=[ {
 "class": "MovementTile",
 "language": "GDScript",
 "path": "res://Stage/Unit/Movement/Tile/movement_tile.gd"
-}, {
-"base": "CanvasLayer",
-"class": "PlayerHUD",
-"language": "GDScript",
-"path": "res://Stage/Player/UI/player_hud.gd"
 }, {
 "base": "Node",
 "class": "Stage",
@@ -58,7 +53,6 @@ _global_script_class_icons={
 "Cursor": "",
 "MovementSolver": "",
 "MovementTile": "",
-"PlayerHUD": "",
 "Stage": "",
 "Terrain": "",
 "Unit": "",

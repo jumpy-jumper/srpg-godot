@@ -1,6 +1,8 @@
 class_name Stage
 extends Node
 
+signal unit_hovered(unit)
+signal terrain_hovered(terrain)
 
 const GRID_SIZE: int = 64
 
@@ -29,7 +31,14 @@ func _process(_delta: float) -> void:
 		cur_unit.turn_start()
 		cur_unit.on_selected()
 
-func get_unit_at(pos: Vector2) -> Unit:
+
+static func POSITION_IN_GRID(pos: Vector2) -> Vector2:
+	pos.x = floor(pos.x / GRID_SIZE) * GRID_SIZE
+	pos.y = floor(pos.y / GRID_SIZE) * GRID_SIZE
+	return pos
+
+
+func _get_unit_at(pos: Vector2) -> Unit:
 	for cat in _units.get_children():
 		for u in cat.get_children():
 			if u.position == pos:
@@ -37,7 +46,7 @@ func get_unit_at(pos: Vector2) -> Unit:
 	return null
 
 
-func get_all_units(offset: Vector2 = Vector2()) -> Dictionary:
+func _get_all_units(offset: Vector2 = Vector2()) -> Dictionary:
 	var all = []
 	for cat in _units.get_children():
 		for u in cat.get_children():
@@ -53,14 +62,14 @@ func get_all_units(offset: Vector2 = Vector2()) -> Dictionary:
 	return ret
 
 
-func get_terrain_at(pos: Vector2) -> Terrain:
+func _get_terrain_at(pos: Vector2) -> Terrain:
 	for t in _terrain.get_children():
 		if t.position == pos:
 			return t
 	return null
 
 
-func get_all_terrain(offset: Vector2 = Vector2()) -> Dictionary:
+func _get_all_terrain(offset: Vector2 = Vector2()) -> Dictionary:
 	var all = []
 	for t in _terrain.get_children():
 			all.append(t)
@@ -89,7 +98,7 @@ func _start_round() -> void:
 		for u in cat.get_children():
 			if u.health != Unit.HealthLevels.UNCONSCIOUS:
 				u.base_initiative = u.stats[Unit.CombatStats.FOR]
-				u.bonus_initiative = (get_terrain_at(u.position).ini_multiplier - 1) * u.base_initiative
+				u.bonus_initiative = (_get_terrain_at(u.position).ini_multiplier - 1) * u.base_initiative
 				u.initiative = u.base_initiative + u.bonus_initiative
 				order.append(u)
 	order.sort_custom(self, "_order_criteria")
@@ -113,3 +122,12 @@ func _next_unit() -> void:
 			else:
 				cur_unit = order[i + 1]
 			break
+
+
+func _on_Cursor_position_updated(pos: Vector2) -> void:
+	emit_signal("unit_hovered", _get_unit_at(pos))
+	emit_signal("terrain_hovered", _get_terrain_at(pos))
+
+
+func _on_Cursor_position_clicked(pos: Vector2) -> void:
+	pass
