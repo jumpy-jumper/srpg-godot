@@ -4,8 +4,8 @@ extends Node
 signal unit_hovered(unit)
 signal unit_clicked(unit)
 signal terrain_hovered(terrain)
-#signal round_started()
-#signal unit_greenlit(unit)
+signal round_started()
+signal unit_greenlit(unit)
 
 const GRID_SIZE: int = 64
 static func GET_POSITION_IN_GRID(pos: Vector2) -> Vector2:
@@ -14,11 +14,9 @@ static func GET_POSITION_IN_GRID(pos: Vector2) -> Vector2:
 	return pos
 
 var cur_round: int = 0
+var cur_unit: Unit = null
 
 var _order: Array = []
-var _history: Array = []
-
-var AdvanceRoundCommand = load("res://Stage/Commands/advance_round_command.gd")
 
 func _ready() -> void:
 	for cat in $Units.get_children():
@@ -32,37 +30,47 @@ func _ready() -> void:
 				"Neutral":
 					u.type = Unit.UnitType.NEUTRAL
 
+	_start_round()
+	emit_signal("unit_greenlit", cur_unit)
 
 func _connect_with_unit(unit: Unit) -> void:
+	unit.connect("done", self, "_on_Unit_done")
 	connect("unit_hovered", unit, "_on_Stage_unit_hovered")
 	connect("unit_clicked", unit, "_on_Stage_unit_clicked")
 	connect("terrain_hovered", unit, "_on_Stage_terrain_hovered")
-
+	connect("round_started", unit, "_on_Stage_round_started")
+	connect("unit_greenlit", unit, "_on_Stage_unit_greenlit")
 
 func _process(_delta: float) -> void:
-	if (Input.is_action_just_pressed("ui_accept")):
-		_history.append(AdvanceRoundCommand.new())
-		_history.back().execute(self)
-
-	if (len(_history) > 0 and Input.is_action_just_pressed("ui_cancel")):
-		_history.pop_back().undo()
-
-	$UI.visible = cur_round > 0
 	$UI.update_order(self)
 
 
-func get_all_units() -> Array:
-	var ret: Array = []
-	ret += $Units/Ally.get_children()
-	ret += $Units/Enemy.get_children()
-	ret += $Units/Neutral.get_children()
-	return ret
-
-
 func _order_criteria(a, b) -> bool:
-	if a._ini > b._ini:
+	if a.ini > b.ini:
 		return true
 	return false
+
+
+func _start_round() -> void:
+	cur_round += 1
+	_order = []
+	for cat in $Units.get_children():
+		for u in cat.get_children():
+			if u.health != Unit.HealthLevels.UNCONSCIOUS:
+				_order.append(u)
+	_order.sort_custom(self, "_order_criteria")
+	cur_unit = _order[0]
+	emit_signal("round_started")
+
+
+func _next_unit() -> void:
+	for i in range (len(_order)):
+		if _order[i] == cur_unit:
+			if i == len(_order) - 1:
+				_start_round()
+			else:
+				cur_unit = _order[i + 1]
+			break
 
 
 func _get_unit_at(pos: Vector2) -> Unit:
@@ -90,3 +98,9 @@ func _on_Cursor_position_changed(pos: Vector2) -> void:
 
 func _on_Cursor_position_clicked(pos: Vector2) -> void:
 	emit_signal("unit_clicked", _get_unit_at(pos))
+
+
+func _on_Unit_done() -> void:
+	_next_unit()
+	emit_signal("unit_greenlit", cur_unit)
+

@@ -3,7 +3,7 @@ extends Control
 
 func update_ui(unit: Unit) -> void:
 	# Update initiative label
-	if unit._ini > 0:
+	if unit.ini > 0:
 		if unit.ini_bonus > 0:
 			$"Initiative".modulate = Color.lightgreen
 		else:
@@ -11,7 +11,7 @@ func update_ui(unit: Unit) -> void:
 	else:
 		$"Initiative".modulate = Color.deeppink
 
-	$"Initiative".text = str(unit._ini) if unit._ini > 0 else "í ½í»‡í ½í»‡í ½í»‡-"
+	$"Initiative".text = str(unit.ini) if unit.ini > 0 else "í ½í»‡í ½í»‡í ½í»‡-"
 
 	# Update health label
 	match unit.health:
