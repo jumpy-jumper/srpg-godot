@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Stage/Unit/unit.gd" type="Script" id=1]
+[ext_resource path="res://Stage/Unit/unit_ui.gd" type="Script" id=2]
 [ext_resource path="res://Fonts/Dynamic Fonts/initiative.tres" type="DynamicFont" id=5]
 
 [node name="Unit" type="Node2D"]
@@ -27,28 +28,36 @@ playing = true
 centered = false
 offset = Vector2( -8, -16 )
 
-[node name="Initiative" type="Label" parent="."]
+[node name="UI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Initiative" type="Label" parent="UI"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 0.527557
-margin_top = 35.5843
-margin_right = 64.5276
-margin_bottom = 70.5843
+margin_left = -39.4724
+margin_top = -4.4157
+margin_right = 24.5276
+margin_bottom = 30.5843
 custom_fonts/font = ExtResource( 5 )
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Health" type="Label" parent="."]
+[node name="Health" type="Label" parent="UI"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = -39.0
-margin_top = 36.0
+margin_top = -4.0
 margin_right = 35.1823
-margin_bottom = 71.0
+margin_bottom = 31.0
 custom_fonts/font = ExtResource( 5 )
 align = 1
 __meta__ = {

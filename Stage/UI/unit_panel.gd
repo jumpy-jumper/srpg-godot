@@ -13,10 +13,10 @@ func _process(_delta: float) -> void:
 			$"Unit Sprite".frames = cur_unit.get_node("Sprite").frames
 		if $"Unit Sprite".animation != cur_unit.get_node("Sprite").animation:
 			$"Unit Sprite".animation = cur_unit.get_node("Sprite").animation
-		$"Initiative Label".text = cur_unit.get_node("Initiative").text
-		$"Initiative Label".modulate = cur_unit.get_node("Initiative").modulate
-		$"Health Label".text = cur_unit.get_node("Health").text
-		$"Health Label".modulate = cur_unit.get_node("Health").modulate
+		$"Initiative Label".text = cur_unit.get_node("UI/Initiative").text
+		$"Initiative Label".modulate = cur_unit.get_node("UI/Initiative").modulate
+		$"Health Label".text = cur_unit.get_node("UI/Health").text
+		$"Health Label".modulate = cur_unit.get_node("UI/Health").modulate
 		$"Current".visible = current
 	else:
 		visible = false

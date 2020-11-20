@@ -21,9 +21,7 @@ var _order: Array = []
 func _ready() -> void:
 	for cat in $Units.get_children():
 		for u in cat.get_children():
-			u.connect("done", self, "_on_Unit_done")
-			connect("unit_greenlit", u, "_on_Stage_unit_greenlit")
-			connect("unit_clicked", u, "_on_Stage_unit_clicked")
+			_connect_with_unit(u)
 			match cat.name:
 				"Ally":
 					u.type = Unit.UnitType.ALLY
@@ -35,17 +33,16 @@ func _ready() -> void:
 	_start_round()
 	emit_signal("unit_greenlit", cur_unit)
 
-	$"UI/Unit UI".visible = false
-	$"UI/Terrain UI".visible = false
-
+func _connect_with_unit(unit: Unit) -> void:
+	unit.connect("done", self, "_on_Unit_done")
+	connect("unit_hovered", unit, "_on_Stage_unit_hovered")
+	connect("unit_clicked", unit, "_on_Stage_unit_clicked")
+	connect("terrain_hovered", unit, "_on_Stage_terrain_hovered")
+	connect("round_started", unit, "_on_Stage_round_started")
+	connect("unit_greenlit", unit, "_on_Stage_unit_greenlit")
 
 func _process(_delta: float) -> void:
-	# Update order UI
-	$"UI/Order UI/Round Counter".text = str(cur_round)
-	var panels : Array = $"UI/Order UI/Unit Panels".get_children()
-	for i in range (len(panels)):
-		panels[i].cur_unit = _order[i] if i < len(_order) else null
-		panels[i].current = panels[i].cur_unit == cur_unit
+	$UI.update_order(self)
 
 
 func _order_criteria(a, b) -> bool:
@@ -56,7 +53,6 @@ func _order_criteria(a, b) -> bool:
 
 func _start_round() -> void:
 	cur_round += 1
-	print("Round ", cur_round, " start.")
 	_order = []
 	for cat in $Units.get_children():
 		for u in cat.get_children():
@@ -85,22 +81,6 @@ func _get_unit_at(pos: Vector2) -> Unit:
 	return null
 
 
-func _get_all_units(offset: Vector2 = Vector2()) -> Dictionary:
-	var all = []
-	for cat in $Units.get_children():
-		for u in cat.get_children():
-			all.append(u)
-
-	var ret = {}
-	for u in all:
-		var pos = (u.position - offset) / GRID_SIZE
-		if ret.has(pos):
-			ret[pos].append(u)
-		else:
-			ret[pos] = [u]
-	return ret
-
-
 func _get_terrain_at(pos: Vector2) -> Terrain:
 	for t in $Terrain.get_children():
 		if t.position == pos:
@@ -108,46 +88,12 @@ func _get_terrain_at(pos: Vector2) -> Terrain:
 	return null
 
 
-func _get_all_terrain(offset: Vector2 = Vector2()) -> Dictionary:
-	var all = []
-	for t in $Terrain.get_children():
-			all.append(t)
-
-	var ret = {}
-	for t in all:
-		var pos = (t.position - offset) / GRID_SIZE
-		if ret.has(pos):
-			ret[pos].append(t)
-		else:
-			ret[pos] = [t]
-	return ret
-
-
-func _on_Cursor_position_updated(pos: Vector2) -> void:
+func _on_Cursor_position_changed(pos: Vector2) -> void:
 	var unit: Unit = _get_unit_at(pos)
 	var terrain: Terrain = _get_terrain_at(pos)
 
 	emit_signal("unit_hovered", unit)
 	emit_signal("terrain_hovered", terrain)
-
-	# Update UI
-	if unit:
-		$"UI/Unit UI".visible = true
-		$"UI/Unit UI/Name".text = unit.unit_name
-		$"UI/Unit UI/Initiative".text = str(unit.ini_base) + " + " + str(unit.ini_bonus)
-		$"UI/Unit UI/Health".text = str(Unit.HealthLevels.keys()[unit.health])
-	else:
-		$"UI/Unit UI".visible = false
-
-	if terrain:
-		$"UI/Terrain UI".visible = true
-		$"UI/Terrain UI/Name".text = terrain.terrain_name
-		$"UI/Terrain UI/Initiative Bonus".text = "INI *" + str(terrain.ini_multiplier)
-
-		$"UI/Terrain UI/Stat Bonus".text = Unit.CombatStats.keys()[terrain.stat]
-		$"UI/Terrain UI/Stat Bonus".text += " *" + str(terrain.stat_multiplier)
-	else:
-		$"UI/Terrain UI".visible = false
 
 
 func _on_Cursor_position_clicked(pos: Vector2) -> void:

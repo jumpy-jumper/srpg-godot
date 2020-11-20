@@ -6,7 +6,7 @@ extends Node2D
 # The cursor emits signals when it updates position or clicks a position.
 
 
-signal position_updated(pos)
+signal position_changed(pos)
 signal position_clicked(pos)
 
 var _operatable: bool = true
@@ -19,8 +19,11 @@ func _process(_delta) -> void:
 
 	visible = true
 
+	var previous: Vector2 = position
 	position = Stage.GET_POSITION_IN_GRID(get_global_mouse_position())
-	emit_signal("position_updated", position)
+	if position != previous:
+		emit_signal("position_changed", position)
+		$AnimatedSprite.play("default")
 
 	if Input.is_action_just_pressed("ui_accept"):
 		$AnimatedSprite.play("select")

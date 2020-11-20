@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/Unit/unit.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Stage/Unit/Sprite/Sprites/Revenant/revenant.tres" type="SpriteFrames" id=8]
 [ext_resource path="res://Fonts/Simpletown.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Stage/UI/unit_panel.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Stage/UI/stage_ui.gd" type="Script" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 58
@@ -29,6 +30,7 @@ anchor_mode = 0
 current = true
 
 [node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 11 )
 
 [node name="Order UI" type="Control" parent="UI"]
 __meta__ = {
@@ -976,7 +978,7 @@ stats = {
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 7
+frame = 4
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -995,7 +997,6 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 5
 
 [node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 896, 128 )
@@ -1012,7 +1013,6 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant2" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 5
 
 [node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 832, 512 )
@@ -1029,13 +1029,15 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant3" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 4
+frame = 8
 
 [node name="Neutral" type="Node2D" parent="Units"]
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
+[connection signal="terrain_hovered" from="." to="UI" method="_on_Stage_terrain_hovered"]
+[connection signal="unit_hovered" from="." to="UI" method="_on_Stage_unit_hovered"]
+[connection signal="position_changed" from="Cursor" to="." method="_on_Cursor_position_changed"]
 [connection signal="position_clicked" from="Cursor" to="." method="_on_Cursor_position_clicked"]
-[connection signal="position_updated" from="Cursor" to="." method="_on_Cursor_position_updated"]
 
 [editable path="Units/Ally/Eirika"]
 
