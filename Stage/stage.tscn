@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/Unit/unit.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Stage/Player/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Stage/Player/cursor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Stage/Terrain/Instances/meadow.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Stage/Terrain/Instances/forest.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Stage/Terrain/Instances/mountain.tscn" type="PackedScene" id=6]
@@ -10,16 +10,25 @@
 [ext_resource path="res://Stage/Unit/Sprite/Sprites/Revenant/revenant.tres" type="SpriteFrames" id=8]
 [ext_resource path="res://Fonts/Simpletown.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Stage/UI/unit_panel.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Stage/UI/order_ui.gd" type="Script" id=11]
-[ext_resource path="res://Stage/Player/player.gd" type="Script" id=12]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+
+
+"
+
+[sub_resource type="DynamicFont" id=2]
 size = 58
 outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 9 )
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 9 )
+
+[sub_resource type="GDScript" id=4]
 script/source = "extends AnimatedSprite
 
 onready var _unit : Unit = $\"../\"
@@ -37,8 +46,11 @@ current = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Order UI" type="Node" parent="UI"]
-script = ExtResource( 11 )
+[node name="Order UI" type="Control" parent="UI"]
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="UI/Order UI"]
 modulate = Color( 1, 1, 1, 0.596078 )
@@ -55,7 +67,7 @@ margin_left = 32.0
 margin_top = 32.0
 margin_right = 112.0
 margin_bottom = 128.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "1"
 align = 1
 valign = 1
@@ -63,7 +75,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Unit Panels" type="Node" parent="UI/Order UI"]
+[node name="Unit Panels" type="Control" parent="UI/Order UI"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel1" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
 position = Vector2( 48, 128 )
@@ -96,6 +111,135 @@ scale = Vector2( 0.75, 0.75 )
 [node name="Panel8" parent="UI/Order UI/Unit Panels" instance=ExtResource( 10 )]
 position = Vector2( 48, 576 )
 scale = Vector2( 0.75, 0.75 )
+
+[node name="Unit UI" type="Control" parent="UI"]
+margin_top = -448.0
+margin_right = 40.0
+margin_bottom = -408.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UI/Unit UI"]
+modulate = Color( 1, 1, 1, 0.392157 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 952.0
+margin_top = 480.0
+margin_right = 1208.0
+margin_bottom = 672.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="UI/Unit UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 952.0
+margin_top = 480.0
+margin_right = 1208.0
+margin_bottom = 544.0
+custom_fonts/font = SubResource( 3 )
+text = "ASDF"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Initiative" type="Label" parent="UI/Unit UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 952.0
+margin_top = 544.0
+margin_right = 1208.0
+margin_bottom = 608.0
+custom_fonts/font = SubResource( 3 )
+text = "17+12"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Label" parent="UI/Unit UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 952.0
+margin_top = 608.0
+margin_right = 1208.0
+margin_bottom = 672.0
+custom_fonts/font = SubResource( 3 )
+text = "Healthy"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Terrain UI" type="Control" parent="UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UI/Terrain UI"]
+modulate = Color( 1, 1, 1, 0.392157 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 952.0
+margin_top = 480.0
+margin_right = 1208.0
+margin_bottom = 672.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="UI/Terrain UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 952.0
+margin_top = 480.0
+margin_right = 1208.0
+margin_bottom = 544.0
+custom_fonts/font = SubResource( 3 )
+text = "Terrain"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Initiative Bonus" type="Label" parent="UI/Terrain UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 952.0
+margin_top = 544.0
+margin_right = 1208.0
+margin_bottom = 608.0
+custom_fonts/font = SubResource( 3 )
+text = "INI *3.0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stat Bonus" type="Label" parent="UI/Terrain UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 952.0
+margin_top = 608.0
+margin_right = 1208.0
+margin_bottom = 672.0
+custom_fonts/font = SubResource( 3 )
+text = "DEF *2.0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Terrain" type="Node2D" parent="."]
 
@@ -849,8 +993,7 @@ stats = {
 [node name="Unit Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 1
-script = SubResource( 2 )
+script = SubResource( 4 )
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -870,7 +1013,7 @@ stats = {
 [node name="Unit Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 2
+frame = 6
 
 [node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 896, 128 )
@@ -888,7 +1031,7 @@ stats = {
 [node name="Unit Sprite" parent="Units/Enemy/Revenant2" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 6
+frame = 1
 
 [node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 832, 512 )
@@ -906,19 +1049,13 @@ stats = {
 [node name="Unit Sprite" parent="Units/Enemy/Revenant3" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 7
+frame = 2
 
 [node name="Neutral" type="Node2D" parent="Units"]
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
-script = ExtResource( 12 )
-
-[node name="Player HUD" parent="Player" index="1"]
-script = null
-[connection signal="terrain_hovered" from="." to="Player" method="_on_Stage_terrain_hovered"]
-[connection signal="unit_hovered" from="." to="Player" method="_on_Stage_unit_hovered"]
-[connection signal="position_clicked" from="Player/Cursor" to="." method="_on_Cursor_position_clicked"]
-[connection signal="position_updated" from="Player/Cursor" to="." method="_on_Cursor_position_updated"]
+[node name="Cursor" parent="." instance=ExtResource( 3 )]
+[connection signal="position_clicked" from="Cursor" to="." method="_on_Cursor_position_clicked"]
+[connection signal="position_updated" from="Cursor" to="." method="_on_Cursor_position_updated"]
 
 [editable path="Units/Ally/Eirika"]
 
@@ -927,5 +1064,3 @@ script = null
 [editable path="Units/Enemy/Revenant2"]
 
 [editable path="Units/Enemy/Revenant3"]
-
-[editable path="Player"]

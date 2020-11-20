@@ -2,8 +2,8 @@ class_name Cursor
 extends Node2D
 # The player's main tool for interacting with the stage.
 # When operatable, the player can move the cursor around the stage.
-# The cursor holds a hovered unit and a hovered terrain, which correspond to
-# its position on the stage grid.
+# The cursor snaps to the stage's grid.
+# The cursor emits signals when it updates position or clicks a position.
 
 signal position_updated(pos)
 signal position_clicked(pos)
