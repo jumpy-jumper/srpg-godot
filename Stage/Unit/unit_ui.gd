@@ -11,7 +11,7 @@ func update_ui(unit: Unit) -> void:
 	else:
 		$"Initiative".modulate = Color.deeppink
 
-	$"Initiative".text = str(unit.ini) if unit.get_ini() > 0 else "í ½í»‡í ½í»‡í ½í»‡-"
+	$"Initiative".text = str(unit.get_ini()) if unit.get_ini() > 0 else "í ½í»‡í ½í»‡í ½í»‡-"
 
 	# Update health label
 	match unit.health:
