@@ -9,17 +9,17 @@ signal round_started(cur_round)
 signal unit_greenlit(unit)
 
 const GRID_SIZE: int = 64
-static func GET_POSITION_IN_GRID(pos: Vector2) -> Vector2:
+static func GET_POSITION_IN_GRID(pos):
 	pos.x = floor(pos.x / GRID_SIZE) * GRID_SIZE
 	pos.y = floor(pos.y / GRID_SIZE) * GRID_SIZE
 	return pos
 
-var cur_round: int = 0
-var order: Array = []
-var snapshots: Array = []
+var cur_round = 0
+var order = []
+var snapshots = []
 
 
-func _ready() -> void:
+func _ready():
 	for cat in $Units.get_children():
 		for u in cat.get_children():
 			connect_with_unit(u)
@@ -32,7 +32,7 @@ func _ready() -> void:
 					u.type = Unit.UnitType.NEUTRAL
 
 
-func connect_with_unit(unit: Unit) -> void:
+func connect_with_unit(unit):
 	unit.connect("done", self, "_on_Unit_done")
 	#connect("unit_hovered", unit, "_on_Stage_unit_hovered")
 	connect("unit_clicked", unit, "_on_Stage_unit_clicked")
@@ -42,7 +42,7 @@ func connect_with_unit(unit: Unit) -> void:
 	$Cursor.connect("position_clicked", unit, "_on_Cursor_position_clicked")
 
 
-func _process(_delta: float) -> void:
+func _process(_delta):
 	if cur_round == 0 and Input.is_action_just_pressed("ui_accept"):
 		yield(get_tree(), "idle_frame")
 		snapshots.append(get_state())
@@ -55,13 +55,13 @@ func _process(_delta: float) -> void:
 	$UI.update_order(self)
 
 
-func order_criteria(a, b) -> bool:
+func order_criteria(a, b):
 	if a.get_ini() > b.get_ini():
 		return true
 	return false
 
 
-func start_round() -> void:
+func start_round():
 	cur_round += 1
 	emit_signal("round_started", cur_round)
 	order = []
@@ -74,7 +74,7 @@ func start_round() -> void:
 	emit_signal("unit_greenlit", order[0])
 
 
-func next_unit() -> void:
+func next_unit():
 	if cur_round == 0:
 		start_round()
 	else:
@@ -88,7 +88,7 @@ func next_unit() -> void:
 	snapshots.append(get_state())
 
 
-func get_unit_at(pos: Vector2) -> Unit:
+func get_unit_at(pos):
 	for cat in $Units.get_children():
 		for u in cat.get_children():
 			if u.position == pos:
@@ -96,15 +96,15 @@ func get_unit_at(pos: Vector2) -> Unit:
 	return null
 
 
-func get_all_units() -> Array:
-	var ret: Array = []
+func get_all_units():
+	var ret = []
 	ret += $Units/Ally.get_children()
 	ret += $Units/Enemy.get_children()
 	ret += $Units/Neutral.get_children()
 	return ret
 
 
-func get_terrain_at(pos: Vector2) -> Terrain:
+func get_terrain_at(pos):
 	for t in $Terrain.get_children():
 		if t.position == pos:
 			return t
@@ -113,12 +113,12 @@ func get_terrain_at(pos: Vector2) -> Terrain:
 
 class State:
 	var cur_round: int
-	var order: Array
-	var unit_states: Dictionary # [Unit, Unit.State]
+	var order
+	var unit_states
 
 
-func get_state() -> State:
-	var ret: State = State.new()
+func get_state():
+	var ret = State.new()
 	ret.cur_round = cur_round
 	ret.order = order
 	for u in get_all_units():
@@ -126,22 +126,22 @@ func get_state() -> State:
 	return ret
 
 
-func load_state(state: State) -> void:
+func load_state(state) -> void:
 	cur_round = state.cur_round
 	order = state.order
 	for u in state.unit_states.keys():
 		u.load_state(state.unit_states[u])
 
 
-func _on_Cursor_position_changed(pos: Vector2) -> void:
-	var unit: Unit = get_unit_at(pos)
-	var terrain: Terrain = get_terrain_at(pos)
+func _on_Cursor_position_changed(pos) -> void:
+	var unit = get_unit_at(pos)
+	var terrain = get_terrain_at(pos)
 
 	emit_signal("unit_hovered", unit)
 	emit_signal("terrain_hovered", terrain)
 
 
-func _on_Cursor_position_clicked(pos: Vector2) -> void:
+func _on_Cursor_position_clicked(pos) -> void:
 	emit_signal("unit_clicked", get_unit_at(pos))
 
 
