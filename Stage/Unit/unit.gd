@@ -21,7 +21,7 @@ export(Dictionary) var stats = {
 
 var type = UnitType.ENEMY
 export(int) var ini_base = 0
-var ini_bonus = 1
+var ini_bonus = 1.0
 var greenlit = false # whether the unit is allowed to issue commands
 
 

@@ -8,7 +8,7 @@ func _ready():
 	$"Unit UI".visible = false
 	$"Terrain UI".visible = false
 
-func _process(delta):
+func _process(_delta):
 	if not visible:
 		$"Order UI".visible = false
 		$"Unit UI".visible = false
