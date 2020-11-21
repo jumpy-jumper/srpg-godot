@@ -33,6 +33,7 @@ var ini_bonus = 1.0
 var stage = null
 var terrain = null
 var greenlit = false # whether the unit is allowed to issue commands
+export(Resource) var weapon = null
 
 
 func _process(_delta):
@@ -91,5 +92,4 @@ func _on_Cursor_position_hovered(pos):
 func _on_Cursor_position_clicked(pos):
 	if greenlit:
 		yield(get_tree(), "idle_frame")
-		position = pos
 		emit_signal("done")
