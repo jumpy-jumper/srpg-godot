@@ -1,0 +1,23 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Stage/Unit/Classes/class.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Revenant"
+base_stats = {
+0: 6,
+1: 4,
+2: 2,
+3: 0,
+4: 0,
+5: 5
+}
+growths = {
+0: 0.8,
+1: 0.5,
+2: 0.3,
+3: 0.0,
+4: 0.0,
+5: 0.4
+}

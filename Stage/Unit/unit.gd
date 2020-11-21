@@ -18,8 +18,10 @@ enum HealthLevels { HEALTHY, WOUNDED, CRIPPLED, UNCONSCIOUS }
 enum CombatStats { STR, END, AGI, INT, PER, FOR }
 
 export(String) var unit_name = ""
+export(int) var level = 1
+export(Resource) var unit_class = null
 export(HealthLevels) var health = HealthLevels.HEALTHY
-export(Dictionary) var stats = {
+export(Dictionary) var stat_offsets = {
 	CombatStats.STR : 0,
 	CombatStats.END : 0,
 	CombatStats.AGI : 0,
@@ -69,7 +71,7 @@ func load_state(state):
 
 
 func _on_Stage_round_started(cur_round):
-	ini_base = stats[CombatStats.FOR]
+	ini_base = get_stats()[CombatStats.FOR]
 
 
 func _on_Stage_unit_greenlit(unit):
@@ -96,7 +98,10 @@ func _on_Cursor_position_clicked(pos):
 	if greenlit:
 		var unit = stage.get_unit_at(pos)
 		if unit:
-			fight(unit)
+			if unit == self:
+				print_stats()
+			else:
+				fight(unit)
 		emit_signal("done")
 
 
@@ -118,6 +123,7 @@ class CombatResults:
 		print("INI to Wound: ", wound_cond)
 		print("INI to Crit: ", crit_cond)
 		print("INI to Lethal: ", lethal_cond)
+		print()
 
 	func _init(a, d):
 		self.attacker = a
@@ -127,7 +133,7 @@ class CombatResults:
 		var def = 0
 		if attacker.weapon:
 			atk = a.weapon.might
-			def = d.stats[a.weapon.stat]
+			def = d.get_stats()[a.weapon.stat]
 
 		wound_cond = def - atk
 		crit_cond = (def * 2) - atk
@@ -148,8 +154,8 @@ class CombatResults:
 
 		if type == Type.CLASH:
 			defender_ini = d.get_ini()
-			var a_atk = max(a.stats[a.weapon.stat], 0)
-			var d_atk = max(d.stats[d.weapon.stat], 0)
+			var a_atk = max(a.get_stats()[a.weapon.stat], 0)
+			var d_atk = max(d.get_stats()[d.weapon.stat], 0)
 			if a_atk == 0 and d_atk == 0:
 				attacker_ini = 0
 				defender_ini = 0
@@ -192,3 +198,18 @@ func take_damage():
 			health = HealthLevels.CRIPPLED
 		HealthLevels.CRIPPLED:
 			health = HealthLevels.UNCONSCIOUS
+
+
+func print_stats():
+	print("Name: ", unit_name)
+	print("Class: ", unit_class.name)
+	for s in get_stats():
+		print(CombatStats.keys()[s], ": ", get_stats()[s])
+	print()
+
+
+func get_stats():
+	var ret = {}
+	for s in unit_class.base_stats:
+		ret[s] = unit_class.base_stats[s] + floor(unit_class.growths[s] * level) + stat_offsets[s]
+	return ret

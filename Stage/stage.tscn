@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/Unit/unit.tscn" type="PackedScene" id=2]
@@ -13,6 +13,8 @@
 [ext_resource path="res://Stage/UI/stage_ui.gd" type="Script" id=11]
 [ext_resource path="res://Stage/Unit/Weapons/claw.tres" type="Resource" id=12]
 [ext_resource path="res://Stage/Unit/Weapons/bronze_rapier.tres" type="Resource" id=13]
+[ext_resource path="res://Stage/Unit/Classes/Allies/eirika.tres" type="Resource" id=14]
+[ext_resource path="res://Stage/Unit/Classes/Enemies/revenant.tres" type="Resource" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 size = 58
@@ -968,76 +970,51 @@ position = Vector2( 896, 512 )
 [node name="Eirika" parent="Units/Ally" instance=ExtResource( 2 )]
 position = Vector2( 192, 512 )
 unit_name = "Eirika"
-stats = {
-0: 3,
-1: 4,
-2: 6,
-3: 5,
-4: 5,
-5: 6
-}
+unit_class = ExtResource( 14 )
 weapon = ExtResource( 13 )
 
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 4
+frame = 3
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
 [node name="Revenant" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 576, 128 )
 unit_name = "Revenant"
-stats = {
-0: 8,
-1: 7,
-2: 4,
-3: 3,
-4: 3,
-5: 5
-}
+level = 4
+unit_class = ExtResource( 15 )
 weapon = ExtResource( 12 )
 
 [node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 7
+frame = 6
 
 [node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 896, 128 )
 unit_name = "Revenant"
-stats = {
-0: 8,
-1: 7,
-2: 4,
-3: 3,
-4: 3,
-5: 5
-}
+level = 4
+unit_class = ExtResource( 15 )
 weapon = ExtResource( 12 )
 
 [node name="Sprite" parent="Units/Enemy/Revenant2" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 7
+frame = 6
 
 [node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 832, 512 )
 unit_name = "Revenant"
-stats = {
-0: 8,
-1: 7,
-2: 4,
-3: 3,
-4: 3,
-5: 5
-}
+level = 4
+unit_class = ExtResource( 15 )
 weapon = ExtResource( 12 )
 
 [node name="Sprite" parent="Units/Enemy/Revenant3" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 6
+frame = 5
 
 [node name="Neutral" type="Node2D" parent="Units"]
 

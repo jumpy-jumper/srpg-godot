@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "Class",
+"language": "GDScript",
+"path": "res://Stage/Unit/Classes/class.gd"
+}, {
 "base": "Node2D",
 "class": "Cursor",
 "language": "GDScript",
@@ -40,6 +45,7 @@ _global_script_classes=[ {
 "path": "res://Stage/Unit/Weapons/weapon.gd"
 } ]
 _global_script_class_icons={
+"Class": "",
 "Cursor": "",
 "Stage": "",
 "Terrain": "",
