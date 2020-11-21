@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "UnitPanel",
 "language": "GDScript",
 "path": "res://Stage/UI/unit_panel.gd"
+}, {
+"base": "Resource",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://Stage/Unit/Weapons/weapon.gd"
 } ]
 _global_script_class_icons={
 "Cursor": "",
 "Stage": "",
 "Terrain": "",
 "Unit": "",
-"UnitPanel": ""
+"UnitPanel": "",
+"Weapon": ""
 }
 
 [application]

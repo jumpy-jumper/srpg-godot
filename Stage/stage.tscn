@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/Unit/unit.tscn" type="PackedScene" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Fonts/Simpletown.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Stage/UI/unit_panel.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Stage/UI/stage_ui.gd" type="Script" id=11]
+[ext_resource path="res://Stage/Unit/Weapons/claw.tres" type="Resource" id=12]
+[ext_resource path="res://Stage/Unit/Weapons/bronze_rapier.tres" type="Resource" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 58
@@ -974,11 +976,12 @@ stats = {
 4: 5,
 5: 6
 }
+weapon = ExtResource( 13 )
 
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 3
+frame = 1
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -993,11 +996,12 @@ stats = {
 4: 3,
 5: 5
 }
+weapon = ExtResource( 12 )
 
 [node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 6
+frame = 1
 
 [node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 896, 128 )
@@ -1010,11 +1014,12 @@ stats = {
 4: 3,
 5: 5
 }
+weapon = ExtResource( 12 )
 
 [node name="Sprite" parent="Units/Enemy/Revenant2" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 6
+frame = 1
 
 [node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 832, 512 )
@@ -1027,11 +1032,11 @@ stats = {
 4: 3,
 5: 5
 }
+weapon = ExtResource( 12 )
 
 [node name="Sprite" parent="Units/Enemy/Revenant3" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 5
 
 [node name="Neutral" type="Node2D" parent="Units"]
 
