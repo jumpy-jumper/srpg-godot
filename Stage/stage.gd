@@ -102,11 +102,19 @@ func get_unit_at(pos):
 	return null
 
 
-func get_all_units():
+func get_units():
 	var ret = []
 	ret += $Units/Ally.get_children()
 	ret += $Units/Enemy.get_children()
 	ret += $Units/Neutral.get_children()
+	return ret
+
+
+func get_units_around(pos):
+	var ret = {}
+	var all = get_units()
+	for u in all:
+		ret[(u.position - pos) / GRID_SIZE] = u
 	return ret
 
 
@@ -117,11 +125,19 @@ func get_terrain_at(pos):
 	return null
 
 
+func get_terrain_around(pos):
+	var ret = {}
+	var all = $Terrain.get_children()
+	for t in all:
+		ret[(t.position - pos) / GRID_SIZE] = t
+	return ret
+
+
 func get_state():
 	var ret = State.new()
 	ret.cur_round = cur_round
 	ret.order = order
-	for u in get_all_units():
+	for u in get_units():
 		ret.unit_states[u] = u.get_state()
 	return ret
 
