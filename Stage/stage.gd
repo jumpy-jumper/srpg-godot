@@ -162,5 +162,6 @@ func _on_Cursor_position_clicked(pos) -> void:
 
 
 func _on_Unit_done() -> void:
+	yield(get_tree(), "idle_frame")
 	next_unit()
 

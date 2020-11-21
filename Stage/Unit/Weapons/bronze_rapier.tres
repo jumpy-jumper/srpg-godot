@@ -5,6 +5,5 @@
 [resource]
 script = ExtResource( 1 )
 name = ""
-might = 2
-weight = 2
+might = 5
 stat = 2
