@@ -2,11 +2,11 @@ class_name UnitPanel
 extends Node2D
 
 
-var current : bool = false
-var cur_unit: Unit
+var current = false
+var cur_unit = null
 
 
-func _process(_delta: float) -> void:
+func _process(_delta):
 	if cur_unit:
 		visible = true
 		if $"Unit Sprite".frames != cur_unit.get_node("Sprite").frames:

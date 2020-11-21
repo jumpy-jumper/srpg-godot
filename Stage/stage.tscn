@@ -978,6 +978,7 @@ stats = {
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
+frame = 9
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -996,7 +997,7 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 5
+frame = 1
 
 [node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 896, 128 )
@@ -1013,7 +1014,7 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant2" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 5
+frame = 1
 
 [node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 832, 512 )
@@ -1030,7 +1031,6 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant3" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 4
 
 [node name="Neutral" type="Node2D" parent="Units"]
 

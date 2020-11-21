@@ -9,17 +9,17 @@ extends Node2D
 signal position_changed(pos)
 signal position_clicked(pos)
 
-var operatable: bool = true
+var operatable = true
 
 
-func _process(_delta) -> void:
+func _process(_delta):
 	if not operatable:
 		visible = false
 		return
 
 	visible = true
 
-	var previous: Vector2 = position
+	var previous = position
 	position = Stage.GET_POSITION_IN_GRID(get_global_mouse_position())
 	if position != previous:
 		emit_signal("position_changed", position)

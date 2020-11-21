@@ -1,25 +1,25 @@
 extends CanvasLayer
 
 
-var visible: bool = true
+var visible = true
 
 
-func _ready() -> void:
+func _ready():
 	$"Unit UI".visible = false
 	$"Terrain UI".visible = false
 
-func _process(delta: float) -> void:
+func _process(delta):
 	if not visible:
 		$"Order UI".visible = false
 		$"Unit UI".visible = false
 		$"Terrain UI".visible = false
 
-func update_order(stage: Stage) -> void:
+func update_order(stage):
 	if not visible:
 		return
 	$"Order UI".visible = true
 	$"Order UI/Round Counter".text = str(stage.cur_round)
-	var panels : Array = $"Order UI/Unit Panels".get_children()
+	var panels = $"Order UI/Unit Panels".get_children()
 	for i in range (len(panels)):
 		if i < len(stage.order):
 			panels[i].cur_unit = stage.order[i]
@@ -29,7 +29,7 @@ func update_order(stage: Stage) -> void:
 			panels[i].current = false
 
 
-func _on_Stage_unit_hovered(unit: Unit) -> void:
+func _on_Stage_unit_hovered(unit):
 	if not visible:
 		return
 	if unit:
@@ -41,7 +41,7 @@ func _on_Stage_unit_hovered(unit: Unit) -> void:
 		$"Unit UI".visible = false
 
 
-func _on_Stage_terrain_hovered(terrain) -> void:
+func _on_Stage_terrain_hovered(terrain):
 	if not visible:
 		return
 	if terrain:
