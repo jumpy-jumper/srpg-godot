@@ -9,11 +9,11 @@ extends Node2D
 signal position_changed(pos)
 signal position_clicked(pos)
 
-var _operatable: bool = true
+var operatable: bool = true
 
 
 func _process(_delta) -> void:
-	if not _operatable:
+	if not operatable:
 		visible = false
 		return
 

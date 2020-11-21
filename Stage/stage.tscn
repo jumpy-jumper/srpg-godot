@@ -967,18 +967,18 @@ position = Vector2( 896, 512 )
 position = Vector2( 192, 512 )
 unit_name = "Eirika"
 stats = {
-0: 5,
-1: 6,
-2: 8,
-3: 7,
-4: 7,
-5: 8
+0: 3,
+1: 4,
+2: 6,
+3: 5,
+4: 5,
+5: 6
 }
 
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 6
+frame = 8
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -997,7 +997,7 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 6
+frame = 4
 
 [node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 896, 128 )
@@ -1014,7 +1014,7 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant2" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 6
+frame = 4
 
 [node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 832, 512 )
@@ -1031,7 +1031,7 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant3" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 5
+frame = 3
 
 [node name="Neutral" type="Node2D" parent="Units"]
 

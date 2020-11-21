@@ -21,8 +21,8 @@ func update_order(stage: Stage) -> void:
 	$"Order UI/Round Counter".text = str(stage.cur_round)
 	var panels : Array = $"Order UI/Unit Panels".get_children()
 	for i in range (len(panels)):
-		if i < len(stage._order):
-			panels[i].cur_unit = stage._order[i]
+		if i < len(stage.order):
+			panels[i].cur_unit = stage.order[i]
 			panels[i].current = panels[i].cur_unit.greenlit
 		else:
 			panels[i].cur_unit = null
