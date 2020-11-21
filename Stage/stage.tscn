@@ -211,7 +211,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Stat Bonus" type="Label" parent="UI/Terrain UI"]
+[node name="Movement Cost" type="Label" parent="UI/Terrain UI"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = 952.0
@@ -978,7 +978,6 @@ stats = {
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 8
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -997,7 +996,7 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 4
+frame = 5
 
 [node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 896, 128 )
@@ -1014,7 +1013,7 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant2" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 4
+frame = 5
 
 [node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 832, 512 )
@@ -1031,7 +1030,7 @@ stats = {
 [node name="Sprite" parent="Units/Enemy/Revenant3" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 3
+frame = 4
 
 [node name="Neutral" type="Node2D" parent="Units"]
 

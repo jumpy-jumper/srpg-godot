@@ -31,9 +31,6 @@ func _ready() -> void:
 				"Neutral":
 					u.type = Unit.UnitType.NEUTRAL
 
-	start_round()
-	snapshots.append(get_state())
-
 
 func connect_with_unit(unit: Unit) -> void:
 	unit.connect("done", self, "_on_Unit_done")
@@ -42,14 +39,20 @@ func connect_with_unit(unit: Unit) -> void:
 	#connect("terrain_hovered", unit, "_on_Stage_terrain_hovered")
 	connect("round_started", unit, "_on_Stage_round_started")
 	connect("unit_greenlit", unit, "_on_Stage_unit_greenlit")
+	$Cursor.connect("position_clicked", unit, "_on_Cursor_position_clicked")
 
 
 func _process(_delta: float) -> void:
-	$UI.update_order(self)
-	if len(snapshots) > 0 and Input.is_action_just_pressed("ui_cancel"):
-		var last_state: State = snapshots.pop_back()
-		load_state(last_state)
+	if cur_round == 0 and Input.is_action_just_pressed("ui_accept"):
+		yield(get_tree(), "idle_frame")
+		snapshots.append(get_state())
+		next_unit()
+	elif len(snapshots) > 1 and Input.is_action_just_pressed("ui_cancel"):
+		snapshots.pop_back()
+		load_state(snapshots.back())
 		# last_state.free()
+	$UI.visible = cur_round > 0
+	$UI.update_order(self)
 
 
 func order_criteria(a, b) -> bool:
@@ -72,13 +75,17 @@ func start_round() -> void:
 
 
 func next_unit() -> void:
-	for i in range (len(order)):
-		if order[i].greenlit:
-			if i == len(order) - 1:
-				start_round()
-			else:
-				emit_signal("unit_greenlit", order[i + 1])
-			break
+	if cur_round == 0:
+		start_round()
+	else:
+		for i in range (len(order)):
+			if order[i].greenlit:
+				if i == len(order) - 1:
+					start_round()
+				else:
+					emit_signal("unit_greenlit", order[i + 1])
+				break
+	snapshots.append(get_state())
 
 
 func get_unit_at(pos: Vector2) -> Unit:
@@ -139,7 +146,5 @@ func _on_Cursor_position_clicked(pos: Vector2) -> void:
 
 
 func _on_Unit_done() -> void:
-	snapshots.append(get_state())
-	yield(get_tree(), "idle_frame")
 	next_unit()
 

@@ -69,5 +69,11 @@ func _on_Stage_unit_greenlit(unit: Unit) -> void:
 
 
 func _on_Stage_unit_clicked(unit: Unit) -> void:
+	pass
+
+
+func _on_Cursor_position_clicked(pos: Vector2) -> void:
 	if greenlit:
+		yield(get_tree(), "idle_frame")
+		position = pos
 		emit_signal("done")

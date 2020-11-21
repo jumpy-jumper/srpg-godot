@@ -7,8 +7,7 @@
 script = ExtResource( 1 )
 terrain_name = "Forest"
 ini_multiplier = 1.5
-stat = 2
-stat_multiplier = 1.2
+movement_cost = -1
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 4, 4 )

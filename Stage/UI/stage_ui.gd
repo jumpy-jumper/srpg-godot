@@ -48,8 +48,7 @@ func _on_Stage_terrain_hovered(terrain) -> void:
 		$"Terrain UI".visible = true
 		$"Terrain UI/Name".text = terrain.terrain_name
 		$"Terrain UI/Initiative Bonus".text = "INI *" + str(terrain.ini_multiplier)
-
-		$"Terrain UI/Stat Bonus".text = Unit.CombatStats.keys()[terrain.stat]
-		$"Terrain UI/Stat Bonus".text += " *" + str(terrain.stat_multiplier)
+		$"Terrain UI/Movement Cost".text = "MOV " + ("+" if terrain.movement_cost >= 0 else "-")
+		$"Terrain UI/Movement Cost".text += str(abs(terrain.movement_cost))
 	else:
 		$"Terrain UI".visible = false
