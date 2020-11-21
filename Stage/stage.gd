@@ -8,6 +8,11 @@ signal terrain_hovered(terrain)
 signal round_started(cur_round)
 signal unit_greenlit(unit)
 
+class State:
+	var cur_round
+	var order
+	var unit_states = {}
+
 const GRID_SIZE: int = 64
 static func GET_POSITION_IN_GRID(pos):
 	pos.x = floor(pos.x / GRID_SIZE) * GRID_SIZE
@@ -33,12 +38,14 @@ func _ready():
 
 
 func connect_with_unit(unit):
+	unit.stage = self
 	unit.connect("done", self, "_on_Unit_done")
-	#connect("unit_hovered", unit, "_on_Stage_unit_hovered")
-	connect("unit_clicked", unit, "_on_Stage_unit_clicked")
-	#connect("terrain_hovered", unit, "_on_Stage_terrain_hovered")
 	connect("round_started", unit, "_on_Stage_round_started")
 	connect("unit_greenlit", unit, "_on_Stage_unit_greenlit")
+	connect("unit_hovered", unit, "_on_Stage_unit_hovered")
+	connect("unit_clicked", unit, "_on_Stage_unit_clicked")
+	connect("terrain_hovered", unit, "_on_Stage_terrain_hovered")
+	$Cursor.connect("position_hovered", unit, "_on_Cursor_position_hovered")
 	$Cursor.connect("position_clicked", unit, "_on_Cursor_position_clicked")
 
 
@@ -69,7 +76,6 @@ func start_round():
 		for u in cat.get_children():
 			if u.health != Unit.HealthLevels.UNCONSCIOUS:
 				order.append(u)
-				u.ini_bonus = get_terrain_at(u.position).ini_multiplier
 	order.sort_custom(self, "order_criteria")
 	emit_signal("unit_greenlit", order[0])
 
@@ -111,12 +117,6 @@ func get_terrain_at(pos):
 	return null
 
 
-class State:
-	var cur_round: int
-	var order
-	var unit_states
-
-
 func get_state():
 	var ret = State.new()
 	ret.cur_round = cur_round
@@ -126,7 +126,7 @@ func get_state():
 	return ret
 
 
-func load_state(state) -> void:
+func load_state(state):
 	cur_round = state.cur_round
 	order = state.order
 	for u in state.unit_states.keys():

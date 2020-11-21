@@ -3,5 +3,5 @@ extends Node2D
 
 
 export(String) var terrain_name = ""
-export(float) var ini_multiplier = 1.0
+export(float) var ini_bonus = 1.0
 export(int) var movement_cost = 0
