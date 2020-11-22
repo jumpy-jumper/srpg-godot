@@ -976,45 +976,19 @@ weapon = ExtResource( 13 )
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 3
+frame = 7
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
-[node name="Revenant" parent="Units/Enemy" instance=ExtResource( 2 )]
+[node name="Unit" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 576, 128 )
 unit_name = "Revenant"
-level = 4
 unit_class = ExtResource( 15 )
 weapon = ExtResource( 12 )
 
-[node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
+[node name="Sprite" parent="Units/Enemy/Unit" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 6
-
-[node name="Revenant2" parent="Units/Enemy" instance=ExtResource( 2 )]
-position = Vector2( 896, 128 )
-unit_name = "Revenant"
-level = 4
-unit_class = ExtResource( 15 )
-weapon = ExtResource( 12 )
-
-[node name="Sprite" parent="Units/Enemy/Revenant2" index="1"]
-frames = ExtResource( 8 )
-animation = "red_idle"
-frame = 6
-
-[node name="Revenant3" parent="Units/Enemy" instance=ExtResource( 2 )]
-position = Vector2( 832, 512 )
-unit_name = "Revenant"
-level = 4
-unit_class = ExtResource( 15 )
-weapon = ExtResource( 12 )
-
-[node name="Sprite" parent="Units/Enemy/Revenant3" index="1"]
-frames = ExtResource( 8 )
-animation = "red_idle"
-frame = 5
 
 [node name="Neutral" type="Node2D" parent="Units"]
 
@@ -1026,8 +1000,4 @@ frame = 5
 
 [editable path="Units/Ally/Eirika"]
 
-[editable path="Units/Enemy/Revenant"]
-
-[editable path="Units/Enemy/Revenant2"]
-
-[editable path="Units/Enemy/Revenant3"]
+[editable path="Units/Enemy/Unit"]

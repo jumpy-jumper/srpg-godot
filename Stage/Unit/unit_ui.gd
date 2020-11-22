@@ -4,7 +4,7 @@ extends Control
 func update_ui(unit):
 	# Update initiative label
 	if unit.get_ini() > 0:
-		if unit.ini_bonus > 1:
+		if unit.get_ini_bonus() > 1:
 			$"Initiative".modulate = Color.lightgreen
 		else:
 			$"Initiative".modulate = Color.white

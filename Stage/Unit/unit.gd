@@ -2,25 +2,18 @@ class_name Unit
 extends Node2D
 
 
+signal acted()
 signal done()
-
-
-class State:
-	var pos
-	var type
-	var health
-	var ini_base
-	var ini_bonus
-	var greenlit
 
 enum UnitType { ALLY, ENEMY, NEUTRAL }
 enum HealthLevels { HEALTHY, WOUNDED, CRIPPLED, UNCONSCIOUS }
 enum CombatStats { STR, END, AGI, INT, PER, FOR }
+enum IniBonusType { HEALTH, TERRAIN, OTHER }
 
 export(String) var unit_name = ""
 export(int) var level = 1
 export(Resource) var unit_class = null
-export(HealthLevels) var health = HealthLevels.HEALTHY
+var type = UnitType.ENEMY
 export(Dictionary) var stat_offsets = {
 	CombatStats.STR : 0,
 	CombatStats.END : 0,
@@ -30,24 +23,50 @@ export(Dictionary) var stat_offsets = {
 	CombatStats.FOR : 0,
 }
 
-var type = UnitType.ENEMY
+export(HealthLevels) var health = HealthLevels.HEALTHY
 export(int) var ini_base = 0
-var ini_bonus = 1.0
+var ini_bonuses = {
+	IniBonusType.HEALTH : 1.0,
+	IniBonusType.TERRAIN : 1.0,
+	IniBonusType.OTHER : 1.0
+}
+
 var stage = null
-var terrain = null
 var greenlit = false # whether the unit is allowed to issue commands
+
 export(Resource) var weapon = null
 
 
 func _process(_delta):
-	terrain = stage.get_terrain_at(position)
-	ini_bonus = terrain.ini_bonus
 	$"Sprite".animation = "blue_idle" if type == UnitType.ALLY else "red_idle"
 	$UI.update_ui(self)
 
 
+func get_ini_bonus():
+	var ret = 1
+	for b in ini_bonuses.values():
+		ret *= b
+	return ret
+
+
 func get_ini():
-	return int(ini_base * ini_bonus)
+	return int(ini_base * get_ini_bonus())
+
+
+func get_stats():
+	var ret = {}
+	for s in unit_class.base_stats:
+		ret[s] = unit_class.base_stats[s] + floor(unit_class.growths[s] * level) + stat_offsets[s]
+	return ret
+
+
+class State:
+	var pos
+	var type
+	var health
+	var ini_base
+	var ini_bonuses = {}
+	var greenlit
 
 
 func get_state():
@@ -56,7 +75,8 @@ func get_state():
 	ret.type = type
 	ret.health = health
 	ret.ini_base = ini_base
-	ret.ini_bonus = ini_bonus
+	for b in ini_bonuses:
+		ret.ini_bonuses[b] = ini_bonuses[b]
 	ret.greenlit = greenlit
 	return ret
 
@@ -66,8 +86,42 @@ func load_state(state):
 	type = state.type
 	health = state.health
 	ini_base = state.ini_base
-	ini_bonus = state.ini_bonus
+	for b in state.ini_bonuses:
+		ini_bonuses[b] = state.ini_bonuses[b]
 	greenlit = state.greenlit
+
+
+func take_damage():
+	match health:
+		HealthLevels.HEALTHY:
+			health = HealthLevels.WOUNDED
+		HealthLevels.WOUNDED:
+			health = HealthLevels.CRIPPLED
+		HealthLevels.CRIPPLED:
+			health = HealthLevels.UNCONSCIOUS
+
+
+func fight(unit):
+	var results = CombatResults.new(self, unit)
+	results._print()
+	match results.type:
+		CombatResults.Type.CLASH:
+			ini_base = results.attacker_ini
+			unit.ini_base = results.defender_ini
+		CombatResults.Type.WOUND:
+			unit.take_damage()
+		CombatResults.Type.CRITICAL:
+			unit.take_damage()
+			unit.take_damage()
+		CombatResults.Type.LETHAL:
+			unit.take_damage()
+			unit.take_damage()
+			unit.take_damage()
+	return results
+
+
+func _on_Stage_round_advanced(cur_round):
+	pass
 
 
 func _on_Stage_round_started(cur_round):
@@ -100,104 +154,15 @@ func _on_Cursor_position_clicked(pos):
 		if unit:
 			if unit == self:
 				print_stats()
+				emit_signal("done")
 			else:
+				var prev = unit.get_ini()
 				fight(unit)
-		emit_signal("done")
-
-
-class CombatResults:
-	enum Type { CLASH, WOUND, CRITICAL, LETHAL }
-	var type
-	var attacker
-	var defender
-	var attacker_ini
-	var defender_ini
-	var wound_cond
-	var crit_cond
-	var lethal_cond
-
-	func _print():
-		print("Type: ", Type.keys()[type])
-		print("Final Attacker INI: ", attacker_ini)
-		print("Final Defender INI: ", defender_ini)
-		print("INI to Wound: ", wound_cond)
-		print("INI to Crit: ", crit_cond)
-		print("INI to Lethal: ", lethal_cond)
-		print()
-
-	func _init(a, d):
-		self.attacker = a
-		self.defender = d
-
-		var atk = 0
-		var def = 0
-		if attacker.weapon:
-			atk = a.weapon.might
-			def = d.get_stats()[a.weapon.stat]
-
-		wound_cond = def - atk
-		crit_cond = (def * 2) - atk
-		lethal_cond = (def * 3) - atk
-
-		if a.get_ini() >= d.get_ini() * 2 and a.get_ini() >= wound_cond:
-			if a.get_ini() >= lethal_cond:
-				type = Type.LETHAL
-			elif a.get_ini() >= crit_cond:
-				type = Type.CRITICAL
-			else:
-				type = Type.WOUND
+				if (prev <= 0 or unit.get_ini() > 0) and get_ini() > 0:
+					emit_signal("done")
 		else:
-			type = Type.CLASH
-
-		attacker_ini = a.get_ini()
-		defender_ini = 0
-
-		if type == Type.CLASH:
-			defender_ini = d.get_ini()
-			var a_atk = max(a.get_stats()[a.weapon.stat], 0)
-			var d_atk = max(d.get_stats()[d.weapon.stat], 0)
-			if a_atk == 0 and d_atk == 0:
-				attacker_ini = 0
-				defender_ini = 0
-			else:
-				var a_turn = true
-				while attacker_ini > 0 and defender_ini > 0:
-					if a_turn:
-						defender_ini -= a_atk
-					else:
-						attacker_ini -= d_atk
-					a_turn = !a_turn
-
-		attacker_ini -= a.get_ini() - a.ini_base
-		defender_ini -= d.get_ini() - d.ini_base
-
-
-func fight(unit):
-	var results = CombatResults.new(self, unit)
-	results._print()
-	match results.type:
-		CombatResults.Type.CLASH:
-			ini_base = results.attacker_ini
-			unit.ini_base = results.defender_ini
-		CombatResults.Type.WOUND:
-			unit.take_damage()
-		CombatResults.Type.CRITICAL:
-			unit.take_damage()
-			unit.take_damage()
-		CombatResults.Type.LETHAL:
-			unit.take_damage()
-			unit.take_damage()
-			unit.take_damage()
-
-
-func take_damage():
-	match health:
-		HealthLevels.HEALTHY:
-			health = HealthLevels.WOUNDED
-		HealthLevels.WOUNDED:
-			health = HealthLevels.CRIPPLED
-		HealthLevels.CRIPPLED:
-			health = HealthLevels.UNCONSCIOUS
+			position = pos
+			emit_signal("acted")
 
 
 func print_stats():
@@ -205,11 +170,5 @@ func print_stats():
 	print("Class: ", unit_class.name)
 	for s in get_stats():
 		print(CombatStats.keys()[s], ": ", get_stats()[s])
+	print(get_ini_bonus())
 	print()
-
-
-func get_stats():
-	var ret = {}
-	for s in unit_class.base_stats:
-		ret[s] = unit_class.base_stats[s] + floor(unit_class.growths[s] * level) + stat_offsets[s]
-	return ret
