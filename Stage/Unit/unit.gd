@@ -4,9 +4,10 @@ extends Node2D
 
 signal acted()
 signal done()
+signal dead(unit)
 
 enum UnitType { ALLY, ENEMY, NEUTRAL }
-enum HealthLevels { HEALTHY, WOUNDED, CRIPPLED, UNCONSCIOUS }
+enum HealthLevels { HEALTHY, WOUNDED, CRIPPLED }
 enum CombatStats { STR, END, AGI, INT, PER, FOR }
 enum IniBonusType { HEALTH, TERRAIN, OTHER }
 
@@ -61,44 +62,68 @@ func get_stats():
 
 
 class State:
-	var pos
+	var frames
+	var unit_name
+	var level
+	var unit_class
 	var type
+	var stat_offsets = {}
+	var pos
 	var health
 	var ini_base
 	var ini_bonuses = {}
 	var greenlit
+	var weapon
 
 
 func get_state():
 	var ret = State.new()
-	ret.pos = position
+	ret.frames = $Sprite.frames
+	ret.unit_name = unit_name
+	ret.level = level
 	ret.type = type
+	ret.unit_class = unit_class
+	ret.pos = position
 	ret.health = health
 	ret.ini_base = ini_base
 	for b in ini_bonuses:
 		ret.ini_bonuses[b] = ini_bonuses[b]
 	ret.greenlit = greenlit
+	ret.weapon = weapon
 	return ret
 
 
 func load_state(state):
-	position = state.pos
+	$Sprite.frames = state.frames
+	unit_name = state.unit_name
+	level = state.level
 	type = state.type
+	unit_class = state.unit_class
+	position = state.pos
 	health = state.health
 	ini_base = state.ini_base
 	for b in state.ini_bonuses:
 		ini_bonuses[b] = state.ini_bonuses[b]
+	self.stage = stage
 	greenlit = state.greenlit
+	weapon = state.weapon
 
 
-func take_damage():
-	match health:
-		HealthLevels.HEALTHY:
-			health = HealthLevels.WOUNDED
-		HealthLevels.WOUNDED:
-			health = HealthLevels.CRIPPLED
-		HealthLevels.CRIPPLED:
-			health = HealthLevels.UNCONSCIOUS
+func die():
+	emit_signal("dead", self)
+	queue_free()
+
+
+func take_damage(times = 1):
+	for i in range (times):
+		match health:
+			HealthLevels.HEALTHY:
+				health = HealthLevels.WOUNDED
+			HealthLevels.WOUNDED:
+				health = HealthLevels.CRIPPLED
+			HealthLevels.CRIPPLED:
+				die()
+				return
 
 
 func fight(unit):
@@ -111,12 +136,9 @@ func fight(unit):
 		CombatResults.Type.WOUND:
 			unit.take_damage()
 		CombatResults.Type.CRITICAL:
-			unit.take_damage()
-			unit.take_damage()
+			unit.take_damage(2)
 		CombatResults.Type.LETHAL:
-			unit.take_damage()
-			unit.take_damage()
-			unit.take_damage()
+			unit.take_damage(3)
 	return results
 
 
@@ -160,6 +182,8 @@ func _on_Cursor_position_clicked(pos):
 				fight(unit)
 				if (prev <= 0 or unit.get_ini() > 0) and get_ini() > 0:
 					emit_signal("done")
+				else:
+					emit_signal("acted")
 		else:
 			position = pos
 			emit_signal("acted")

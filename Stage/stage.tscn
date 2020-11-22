@@ -28,6 +28,7 @@ font_data = ExtResource( 9 )
 
 [node name="Stage" type="Node"]
 script = ExtResource( 1 )
+default_unit = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -976,7 +977,7 @@ weapon = ExtResource( 13 )
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 7
+frame = 3
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -989,6 +990,7 @@ weapon = ExtResource( 12 )
 [node name="Sprite" parent="Units/Enemy/Unit" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
+frame = 6
 
 [node name="Neutral" type="Node2D" parent="Units"]
 

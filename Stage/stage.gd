@@ -9,10 +9,7 @@ signal round_advanced(cur_round)
 signal round_started(cur_round)
 signal unit_greenlit(unit)
 
-class State:
-	var cur_round
-	var order
-	var unit_states = {}
+export(PackedScene) var default_unit
 
 const GRID_SIZE: int = 64
 static func GET_POSITION_IN_GRID(pos):
@@ -36,6 +33,14 @@ func _ready():
 					u.type = Unit.UnitType.ENEMY
 				"Neutral":
 					u.type = Unit.UnitType.NEUTRAL
+			cat.remove_child(u)
+			$Units.add_child(u)
+			order.append(u)
+
+	$Units/Ally.free()
+	$Units/Enemy.free()
+	$Units/Neutral.free()
+
 	snapshots.append(get_state())
 
 
@@ -43,6 +48,7 @@ func connect_with_unit(unit):
 	unit.stage = self
 	unit.connect("done", self, "_on_Unit_done")
 	unit.connect("acted", self, "_on_Unit_acted")
+	unit.connect("dead", self, "_on_Unit_dead")
 	connect("round_advanced", unit, "_on_Stage_round_advanced")
 	connect("round_started", unit, "_on_Stage_round_started")
 	connect("unit_greenlit", unit, "_on_Stage_unit_greenlit")
@@ -64,11 +70,10 @@ func _process(_delta):
 		# last_state.free()
 	$UI.visible = cur_round > 0
 	$UI.update_order(self)
-	print(len(snapshots))
 
 
 func update_units():
-	for u in get_units():
+	for u in $Units.get_children():
 		u.ini_bonuses[Unit.IniBonusType.TERRAIN] = get_terrain_at(u.position).ini_bonus
 
 
@@ -82,10 +87,8 @@ func start_round():
 	cur_round += 1
 	emit_signal("round_started", cur_round)
 	order = []
-	for cat in $Units.get_children():
-		for u in cat.get_children():
-			if u.health != Unit.HealthLevels.UNCONSCIOUS:
-				order.append(u)
+	for u in $Units.get_children():
+		order.append(u)
 	order.sort_custom(self, "order_criteria")
 	emit_signal("unit_greenlit", order[0])
 
@@ -105,25 +108,15 @@ func next_unit():
 
 
 func get_unit_at(pos):
-	for cat in $Units.get_children():
-		for u in cat.get_children():
-			if u.position == pos:
-				return u
+	for u in $Units.get_children():
+		if u.position == pos:
+			return u
 	return null
-
-
-func get_units():
-	var ret = []
-	ret += $Units/Ally.get_children()
-	ret += $Units/Enemy.get_children()
-	ret += $Units/Neutral.get_children()
-	return ret
 
 
 func get_units_around(pos):
 	var ret = {}
-	var all = get_units()
-	for u in all:
+	for u in $Units.get_children():
 		ret[(u.position - pos) / GRID_SIZE] = u
 	return ret
 
@@ -143,20 +136,31 @@ func get_terrain_around(pos):
 	return ret
 
 
+class State:
+	var cur_round
+	var order
+	var unit_states = []
+
+
 func get_state():
 	var ret = State.new()
 	ret.cur_round = cur_round
-	ret.order = order
-	for u in get_units():
-		ret.unit_states[u] = u.get_state()
+	for u in order:
+		ret.unit_states.append(u.get_state())
 	return ret
 
 
 func load_state(state):
 	cur_round = state.cur_round
-	order = state.order
-	for u in state.unit_states.keys():
-		u.load_state(state.unit_states[u])
+	order = []
+	for u in $Units.get_children():
+		u.free()
+	for s in state.unit_states:
+		var new = default_unit.instance()
+		new.load_state(s)
+		$Units.add_child(new)
+		connect_with_unit(new)
+		order.append(new)
 
 
 func _on_Cursor_position_changed(pos):
@@ -182,3 +186,9 @@ func _on_Unit_done():
 	next_unit()
 	snapshots.append(get_state())
 
+func _on_Unit_dead(unit):
+	order.remove(order.find(unit))
+	update_units()
+	if unit.greenlit:
+		next_unit()
+		snapshots.append(get_state())

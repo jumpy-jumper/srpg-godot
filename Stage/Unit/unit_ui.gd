@@ -23,6 +23,3 @@ func update_ui(unit):
 		Unit.HealthLevels.CRIPPLED:
 			$"Health".text = "-2"
 			$"Health".modulate = Color.red
-		Unit.HealthLevels.UNCONSCIOUS:
-			$"Health".text = "-3"
-			$"Health".modulate = Color.crimson
