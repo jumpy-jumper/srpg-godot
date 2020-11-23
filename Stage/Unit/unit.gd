@@ -2,7 +2,7 @@ class_name Unit
 extends Node2D
 
 
-signal acted()
+signal acted(done)
 signal done()
 signal dead(unit)
 
@@ -176,17 +176,17 @@ func _on_Cursor_position_clicked(pos):
 		if unit:
 			if unit == self:
 				print_stats()
-				emit_signal("done")
+				emit_signal("acted", true)
 			else:
 				var prev = unit.get_ini()
 				fight(unit)
-				if (prev <= 0 or unit.get_ini() > 0) and get_ini() > 0:
-					emit_signal("done")
+				if prev <= 0 or unit.get_ini() > 0 or get_ini() <= 0:
+					emit_signal("acted", true)
 				else:
-					emit_signal("acted")
+					emit_signal("acted", false)
 		else:
 			position = pos
-			emit_signal("acted")
+			emit_signal("acted", false)
 
 
 func print_stats():
@@ -194,5 +194,4 @@ func print_stats():
 	print("Class: ", unit_class.name)
 	for s in get_stats():
 		print(CombatStats.keys()[s], ": ", get_stats()[s])
-	print(get_ini_bonus())
 	print()

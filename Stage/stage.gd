@@ -46,7 +46,6 @@ func _ready():
 
 func connect_with_unit(unit):
 	unit.stage = self
-	unit.connect("done", self, "_on_Unit_done")
 	unit.connect("acted", self, "_on_Unit_acted")
 	unit.connect("dead", self, "_on_Unit_dead")
 	connect("round_advanced", unit, "_on_Stage_round_advanced")
@@ -90,6 +89,7 @@ func start_round():
 	for u in $Units.get_children():
 		order.append(u)
 	order.sort_custom(self, "order_criteria")
+	update_units()
 	emit_signal("unit_greenlit", order[0])
 
 
@@ -153,14 +153,16 @@ func get_state():
 func load_state(state):
 	cur_round = state.cur_round
 	order = []
-	for u in $Units.get_children():
-		u.free()
+	var previous = $Units.get_children()
 	for s in state.unit_states:
 		var new = default_unit.instance()
 		new.load_state(s)
 		$Units.add_child(new)
 		connect_with_unit(new)
 		order.append(new)
+	yield(get_tree(), "idle_frame")
+	for u in previous:
+		u.free()
 
 
 func _on_Cursor_position_changed(pos):
@@ -175,16 +177,13 @@ func _on_Cursor_position_clicked(pos):
 	emit_signal("unit_clicked", get_unit_at(pos))
 
 
-func _on_Unit_acted():
+func _on_Unit_acted(done):
 	update_units()
+	if done:
+		yield(get_tree(), "idle_frame")
+		next_unit()
 	snapshots.append(get_state())
 
-
-func _on_Unit_done():
-	yield(get_tree(), "idle_frame")
-	update_units()
-	next_unit()
-	snapshots.append(get_state())
 
 func _on_Unit_dead(unit):
 	order.remove(order.find(unit))

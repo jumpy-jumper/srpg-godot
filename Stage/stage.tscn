@@ -3,16 +3,16 @@
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/Unit/unit.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Stage/Cursor/cursor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Stage/Terrain/Instances/meadow.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Stage/Terrain/Instances/forest.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Stage/Terrain/Instances/mountain.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Instances/Terrain/meadow.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Instances/Terrain/forest.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Instances/Terrain/mountain.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Stage/Unit/Sprite/Sprites/Eirika/eirika.tres" type="SpriteFrames" id=7]
 [ext_resource path="res://Stage/Unit/Sprite/Sprites/Revenant/revenant.tres" type="SpriteFrames" id=8]
 [ext_resource path="res://Fonts/Simpletown.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Stage/UI/unit_panel.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Stage/UI/stage_ui.gd" type="Script" id=11]
-[ext_resource path="res://Stage/Unit/Weapons/claw.tres" type="Resource" id=12]
-[ext_resource path="res://Stage/Unit/Weapons/bronze_rapier.tres" type="Resource" id=13]
+[ext_resource path="res://Instances/Weapons/claw.tres" type="Resource" id=12]
+[ext_resource path="res://Instances/Weapons/bronze_rapier.tres" type="Resource" id=13]
 [ext_resource path="res://Stage/Unit/Classes/Allies/eirika.tres" type="Resource" id=14]
 [ext_resource path="res://Stage/Unit/Classes/Enemies/revenant.tres" type="Resource" id=15]
 
@@ -977,20 +977,20 @@ weapon = ExtResource( 13 )
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 3
+frame = 9
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
-[node name="Unit" parent="Units/Enemy" instance=ExtResource( 2 )]
+[node name="Revenant" parent="Units/Enemy" instance=ExtResource( 2 )]
 position = Vector2( 576, 128 )
 unit_name = "Revenant"
 unit_class = ExtResource( 15 )
 weapon = ExtResource( 12 )
 
-[node name="Sprite" parent="Units/Enemy/Unit" index="1"]
+[node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 6
+frame = 1
 
 [node name="Neutral" type="Node2D" parent="Units"]
 
@@ -1002,4 +1002,4 @@ frame = 6
 
 [editable path="Units/Ally/Eirika"]
 
-[editable path="Units/Enemy/Unit"]
+[editable path="Units/Enemy/Revenant"]
