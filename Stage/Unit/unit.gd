@@ -33,7 +33,7 @@ var ini_bonuses = {
 }
 
 var stage = null
-var greenlit = false # whether the unit is allowed to issue commands
+var greenlit = false # whether the unit is allowed to act
 
 export(Resource) var weapon = null
 
@@ -109,23 +109,6 @@ func load_state(state):
 	weapon = state.weapon
 
 
-func die():
-	emit_signal("dead", self)
-	queue_free()
-
-
-func take_damage(times = 1):
-	for i in range (times):
-		match health:
-			HealthLevels.HEALTHY:
-				health = HealthLevels.WOUNDED
-			HealthLevels.WOUNDED:
-				health = HealthLevels.CRIPPLED
-			HealthLevels.CRIPPLED:
-				die()
-				return
-
-
 func fight(unit):
 	var results = CombatResults.new(self, unit)
 	results._print()
@@ -140,6 +123,23 @@ func fight(unit):
 		CombatResults.Type.LETHAL:
 			unit.take_damage(3)
 	return results
+
+
+func take_damage(times = 1):
+	for i in range (times):
+		match health:
+			HealthLevels.HEALTHY:
+				health = HealthLevels.WOUNDED
+			HealthLevels.WOUNDED:
+				health = HealthLevels.CRIPPLED
+			HealthLevels.CRIPPLED:
+				die()
+				return
+
+
+func die():
+	emit_signal("dead", self)
+	queue_free()
 
 
 func _on_Stage_round_advanced(cur_round):

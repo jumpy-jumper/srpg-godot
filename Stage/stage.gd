@@ -37,10 +37,6 @@ func _ready():
 			$Units.add_child(u)
 			order.append(u)
 
-	$Units/Ally.free()
-	$Units/Enemy.free()
-	$Units/Neutral.free()
-
 	snapshots.append(get_state())
 
 
@@ -63,23 +59,24 @@ func _process(_delta):
 		yield(get_tree(), "idle_frame")
 		next_unit()
 		snapshots.append(get_state())
+
 	elif len(snapshots) > 1 and Input.is_action_just_pressed("ui_cancel"):
 		snapshots.pop_back()
 		load_state(snapshots.back())
-		# last_state.free()
+
 	$UI.visible = cur_round > 0
 	$UI.update_order(self)
 
 
 func update_units():
-	for u in $Units.get_children():
-		u.ini_bonuses[Unit.IniBonusType.TERRAIN] = get_terrain_at(u.position).ini_bonus
+	for u in order:
+		var t = get_terrain_at(u.position)
+		if t:
+			u.ini_bonuses[Unit.IniBonusType.TERRAIN] = t.ini_bonus
 
 
 func order_criteria(a, b):
-	if a.get_ini() > b.get_ini():
-		return true
-	return false
+	return a.get_ini() > b.get_ini()
 
 
 func start_round():
@@ -108,7 +105,7 @@ func next_unit():
 
 
 func get_unit_at(pos):
-	for u in $Units.get_children():
+	for u in order:
 		if u.position == pos:
 			return u
 	return null
@@ -116,7 +113,7 @@ func get_unit_at(pos):
 
 func get_units_around(pos):
 	var ret = {}
-	for u in $Units.get_children():
+	for u in order:
 		ret[(u.position - pos) / GRID_SIZE] = u
 	return ret
 
@@ -152,8 +149,8 @@ func get_state():
 
 func load_state(state):
 	cur_round = state.cur_round
+	var previous = order
 	order = []
-	var previous = $Units.get_children()
 	for s in state.unit_states:
 		var new = default_unit.instance()
 		new.load_state(s)
