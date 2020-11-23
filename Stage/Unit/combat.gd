@@ -1,4 +1,4 @@
-class_name CombatResults
+class_name Combat
 
 
 enum Type { CLASH, WOUND, CRITICAL, LETHAL }

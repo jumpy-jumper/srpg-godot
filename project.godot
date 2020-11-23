@@ -15,9 +15,9 @@ _global_script_classes=[ {
 "path": "res://Stage/Unit/Classes/class.gd"
 }, {
 "base": "Reference",
-"class": "CombatResults",
+"class": "Combat",
 "language": "GDScript",
-"path": "res://Stage/Unit/combat_results.gd"
+"path": "res://Stage/Unit/combat.gd"
 }, {
 "base": "Node2D",
 "class": "Cursor",
@@ -51,7 +51,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Class": "",
-"CombatResults": "",
+"Combat": "",
 "Cursor": "",
 "Stage": "",
 "Terrain": "",

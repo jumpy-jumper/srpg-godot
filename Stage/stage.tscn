@@ -977,7 +977,7 @@ weapon = ExtResource( 13 )
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 5
+frame = 6
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -990,6 +990,7 @@ weapon = ExtResource( 12 )
 [node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
+frame = 8
 
 [node name="Neutral" type="Node2D" parent="Units"]
 

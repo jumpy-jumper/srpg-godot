@@ -36,6 +36,7 @@ func _ready():
 			cat.remove_child(u)
 			$Units.add_child(u)
 			order.append(u)
+		cat.free()
 
 	snapshots.append(get_state())
 

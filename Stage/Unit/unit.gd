@@ -110,17 +110,17 @@ func load_state(state):
 
 
 func fight(unit):
-	var results = CombatResults.new(self, unit)
+	var results = Combat.new(self, unit)
 	results._print()
 	match results.type:
-		CombatResults.Type.CLASH:
+		Combat.Type.CLASH:
 			ini_base = results.attacker_ini
 			unit.ini_base = results.defender_ini
-		CombatResults.Type.WOUND:
+		Combat.Type.WOUND:
 			unit.take_damage()
-		CombatResults.Type.CRITICAL:
+		Combat.Type.CRITICAL:
 			unit.take_damage(2)
-		CombatResults.Type.LETHAL:
+		Combat.Type.LETHAL:
 			unit.take_damage(3)
 	return results
 
