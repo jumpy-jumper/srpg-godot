@@ -8,7 +8,7 @@ signal dead(unit)
 
 enum UnitType { ALLY, ENEMY, NEUTRAL }
 enum HealthLevels { HEALTHY, WOUNDED, CRIPPLED }
-enum CombatStats { STR, END, AGI, INT, PER, FOR }
+enum CombatStats { STR, END, AGI, INT, PER, FOR, MOV }
 enum IniBonusType { HEALTH, TERRAIN, OTHER }
 
 export(String) var unit_name = ""
@@ -22,6 +22,7 @@ export(Dictionary) var stat_offsets = {
 	CombatStats.INT : 0,
 	CombatStats.PER : 0,
 	CombatStats.FOR : 0,
+	CombatStats.MOV : 0,
 }
 
 export(HealthLevels) var health = HealthLevels.HEALTHY

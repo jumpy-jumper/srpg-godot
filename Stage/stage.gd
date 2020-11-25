@@ -112,26 +112,11 @@ func get_unit_at(pos):
 	return null
 
 
-func get_units_around(pos):
-	var ret = {}
-	for u in order:
-		ret[(u.position - pos) / GRID_SIZE] = u
-	return ret
-
-
 func get_terrain_at(pos):
 	for t in $Terrain.get_children():
 		if t.position == pos:
 			return t
 	return null
-
-
-func get_terrain_around(pos):
-	var ret = {}
-	var all = $Terrain.get_children()
-	for t in all:
-		ret[(t.position - pos) / GRID_SIZE] = t
-	return ret
 
 
 class State:

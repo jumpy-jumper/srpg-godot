@@ -972,12 +972,21 @@ position = Vector2( 896, 512 )
 position = Vector2( 192, 512 )
 unit_name = "Eirika"
 unit_class = ExtResource( 14 )
+stat_offsets = {
+0: 0,
+1: 0,
+2: 0,
+3: 0,
+4: 0,
+5: 0,
+6: 0
+}
 weapon = ExtResource( 13 )
 
 [node name="Sprite" parent="Units/Ally/Eirika" index="1"]
 frames = ExtResource( 7 )
 animation = "blue_idle"
-frame = 6
+frame = 2
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -990,7 +999,7 @@ weapon = ExtResource( 12 )
 [node name="Sprite" parent="Units/Enemy/Revenant" index="1"]
 frames = ExtResource( 8 )
 animation = "red_idle"
-frame = 8
+frame = 4
 
 [node name="Neutral" type="Node2D" parent="Units"]
 
