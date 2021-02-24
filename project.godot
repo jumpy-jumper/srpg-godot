@@ -29,7 +29,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Stage/stage.gd"
 }, {
-"base": "Node2D",
+"base": "Resource",
 "class": "Terrain",
 "language": "GDScript",
 "path": "res://Stage/Terrain/terrain.gd"
@@ -115,3 +115,7 @@ ui_cancel={
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+
+[rendering]
+
+quality/2d/use_pixel_snap=true

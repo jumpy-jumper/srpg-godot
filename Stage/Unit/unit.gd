@@ -3,7 +3,6 @@ extends Node2D
 
 
 signal acted(done)
-signal done()
 signal dead(unit)
 
 enum UnitType { ALLY, ENEMY, NEUTRAL }
@@ -152,7 +151,10 @@ func _on_Stage_round_started(cur_round):
 
 
 func _on_Stage_unit_greenlit(unit):
-	greenlit = unit == self
+	if unit == self:
+		greenlit = true
+	else:
+		greenlit = false
 
 
 func _on_Stage_unit_hovered(unit):

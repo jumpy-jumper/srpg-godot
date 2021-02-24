@@ -48,7 +48,7 @@ func _on_Stage_terrain_hovered(terrain):
 		$"Terrain UI".visible = true
 		$"Terrain UI/Name".text = terrain.terrain_name
 		$"Terrain UI/Initiative Bonus".text = "INI *" + str(terrain.ini_bonus)
-		$"Terrain UI/Movement Cost".text = "MOV " + ("+" if terrain.movement_cost >= 0 else "-")
-		$"Terrain UI/Movement Cost".text += str(abs(terrain.movement_cost))
+		$"Terrain UI/Movement Cost".text = "MOV " + ("+" if terrain.cost >= 0 else "-")
+		$"Terrain UI/Movement Cost".text += str(abs(terrain.cost))
 	else:
 		$"Terrain UI".visible = false

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Stage/Unit/Movement/Tile/Sprites/movement_tile.png" type="Texture" id=1]
+
+[node name="Sprite" type="Sprite"]
+modulate = Color( 0.184314, 0.6, 0.654902, 1 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 1 )
+offset = Vector2( 8, 8 )

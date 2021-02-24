@@ -10,12 +10,10 @@ signal round_started(cur_round)
 signal unit_greenlit(unit)
 
 export(PackedScene) var default_unit
+export(Array, Resource) var terrain
 
-const GRID_SIZE: int = 64
-static func GET_POSITION_IN_GRID(pos):
-	pos.x = floor(pos.x / GRID_SIZE) * GRID_SIZE
-	pos.y = floor(pos.y / GRID_SIZE) * GRID_SIZE
-	return pos
+func GET_POSITION_IN_GRID(pos):
+	return $Terrain.map_to_world($Terrain.world_to_map(pos))
 
 var cur_round = 0
 var order = []
@@ -39,6 +37,8 @@ func _ready():
 		cat.free()
 
 	snapshots.append(get_state())
+
+	$Cursor.stage = self
 
 
 func connect_with_unit(unit):
@@ -113,10 +113,8 @@ func get_unit_at(pos):
 
 
 func get_terrain_at(pos):
-	for t in $Terrain.get_children():
-		if t.position == pos:
-			return t
-	return null
+	var cell = $Terrain.get_cellv($Terrain.world_to_map(pos))
+	return terrain[cell] if cell >= 0 else null
 
 
 class State:
@@ -139,9 +137,9 @@ func load_state(state):
 	order = []
 	for s in state.unit_states:
 		var new = default_unit.instance()
+		connect_with_unit(new)
 		new.load_state(s)
 		$Units.add_child(new)
-		connect_with_unit(new)
 		order.append(new)
 	yield(get_tree(), "idle_frame")
 	for u in previous:

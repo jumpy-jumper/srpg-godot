@@ -10,7 +10,7 @@ signal position_changed(pos)
 signal position_clicked(pos)
 
 var operatable = true
-
+var stage = null
 
 func _process(_delta):
 	if not operatable:
@@ -20,7 +20,7 @@ func _process(_delta):
 	visible = true
 
 	var previous = position
-	position = Stage.GET_POSITION_IN_GRID(get_global_mouse_position())
+	position = stage.GET_POSITION_IN_GRID(get_global_mouse_position())
 	if position != previous:
 		emit_signal("position_changed", position)
 		$AnimatedSprite.play("default")

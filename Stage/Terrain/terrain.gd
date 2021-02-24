@@ -1,7 +1,7 @@
 class_name Terrain
-extends Node2D
+extends Resource
 
 
 export(String) var terrain_name = ""
 export(float) var ini_bonus = 1.0
-export(int) var movement_cost = 0
+export(int) var cost = 0
