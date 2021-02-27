@@ -37,6 +37,5 @@ scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 frame = 1
 playing = true
-centered = false
 script = ExtResource( 10 )
 [connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="_on_AnimatedSprite_animation_finished"]

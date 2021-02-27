@@ -9,7 +9,7 @@ extends Node2D
 signal position_changed(pos)
 signal position_clicked(pos)
 
-var operatable = true
+export var operatable = true
 var stage = null
 
 func _process(_delta):
@@ -20,11 +20,15 @@ func _process(_delta):
 	visible = true
 
 	var previous = position
-	position = stage.GET_POSITION_IN_GRID(get_global_mouse_position())
+	if stage:
+		position = stage.get_position_in_grid(get_global_mouse_position())
+	else:
+		position = get_global_mouse_position()
+
 	if position != previous:
 		emit_signal("position_changed", position)
-		$AnimatedSprite.play("default")
 
 	if Input.is_action_just_pressed("ui_accept"):
+		$AnimatedSprite.play("default")
 		$AnimatedSprite.play("select")
 		emit_signal("position_clicked", position)

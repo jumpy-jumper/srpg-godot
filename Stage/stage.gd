@@ -12,7 +12,7 @@ signal unit_greenlit(unit)
 export(PackedScene) var default_unit
 export(Array, Resource) var terrain
 
-func GET_POSITION_IN_GRID(pos):
+func get_position_in_grid(pos):
 	return $Terrain.map_to_world($Terrain.world_to_map(pos))
 
 var cur_round = 0

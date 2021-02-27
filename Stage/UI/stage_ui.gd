@@ -35,8 +35,8 @@ func _on_Stage_unit_hovered(unit):
 	if unit:
 		$"Unit UI".visible = true
 		$"Unit UI/Name".text = unit.unit_name
-		$"Unit UI/Initiative".text = str(unit.ini_base) + " + " + str(unit.get_ini() - unit.ini_base)
-		$"Unit UI/Health".text = str(Unit.HealthLevels.keys()[unit.health])
+		$"Unit UI/Initiative".text = str(unit.ini)
+		$"Unit UI/Health".text = str(unit.hp)
 	else:
 		$"Unit UI".visible = false
 
