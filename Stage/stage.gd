@@ -2,63 +2,65 @@ class_name Stage
 extends Node
 
 
+signal player_phase_started(cur_round)
+signal enemy_phase_started(cur_round)
+signal tile_hovered(tile)
+signal tile_clicked(tile)
 signal unit_hovered(unit)
 signal unit_clicked(unit)
 signal terrain_hovered(terrain)
-signal round_advanced(cur_round)
-signal round_started(cur_round)
-signal unit_greenlit(unit)
+signal terrain_clicked(terrain)
 
-export(PackedScene) var default_unit
-export(Array, Resource) var terrain
+
+export(PackedScene) var summoner_template
+export(PackedScene) var follower_template
+export(PackedScene) var gate_template
+export(PackedScene) var enemy_template
+export(Array, Resource) var terrain_types
+
+
+var cur_round = 0
+var player_phase = true
+var snapshots = []
+
 
 func get_position_in_grid(pos):
 	return $Terrain.map_to_world($Terrain.world_to_map(pos))
 
-var cur_round = 0
-var order = []
-var snapshots = []
+func get_tilemap_position(pos):
+	return $Terrain.world_to_map(pos)
+
+func get_world_position(pos):
+	return $Terrain.map_to_world(pos)
+
+
+func get_unit_at(pos):
+	for cat in $Units.get_children():
+		for u in cat.get_children():
+			if u.position == pos:
+				return u
+	return null
+
+
+func get_terrain_at(pos):
+	var cell = $Terrain.get_cellv($Terrain.world_to_map(pos))
+	return terrain_types[cell] if cell >= 0 else null
 
 
 func _ready():
 	for cat in $Units.get_children():
 		for u in cat.get_children():
 			connect_with_unit(u)
-			match cat.name:
-				"Ally":
-					u.type = Unit.UnitType.ALLY
-				"Enemy":
-					u.type = Unit.UnitType.ENEMY
-				"Neutral":
-					u.type = Unit.UnitType.NEUTRAL
-			cat.remove_child(u)
-			$Units.add_child(u)
-			order.append(u)
-		cat.free()
 
 	snapshots.append(get_state())
 
 	$Cursor.stage = self
 
 
-func connect_with_unit(unit):
-	unit.stage = self
-	unit.connect("acted", self, "_on_Unit_acted")
-	unit.connect("dead", self, "_on_Unit_dead")
-	connect("round_advanced", unit, "_on_Stage_round_advanced")
-	connect("round_started", unit, "_on_Stage_round_started")
-	connect("unit_greenlit", unit, "_on_Stage_unit_greenlit")
-	connect("unit_hovered", unit, "_on_Stage_unit_hovered")
-	connect("unit_clicked", unit, "_on_Stage_unit_clicked")
-	connect("terrain_hovered", unit, "_on_Stage_terrain_hovered")
-	$Cursor.connect("position_hovered", unit, "_on_Cursor_position_hovered")
-	$Cursor.connect("position_clicked", unit, "_on_Cursor_position_clicked")
-
-
 func _process(_delta):
 	if cur_round == 0 and Input.is_action_just_pressed("ui_accept"):
 		yield(get_tree(), "idle_frame")
-		next_unit()
+		start_player_phase()
 		snapshots.append(get_state())
 
 	elif len(snapshots) > 1 and Input.is_action_just_pressed("ui_cancel"):
@@ -66,109 +68,87 @@ func _process(_delta):
 		load_state(snapshots.back())
 
 	$UI.visible = cur_round > 0
-	$UI.update_order(self)
 
 
-func update_units():
-	for u in order:
-		var t = get_terrain_at(u.position)
-		if t:
-			u.ini_bonuses[Unit.IniBonusType.TERRAIN] = t.ini_bonus
-
-
-func order_criteria(a, b):
-	return a.get_ini() > b.get_ini()
-
-
-func start_round():
+func start_player_phase():
 	cur_round += 1
-	emit_signal("round_started", cur_round)
-	order = []
-	for u in $Units.get_children():
-		order.append(u)
-	order.sort_custom(self, "order_criteria")
-	update_units()
-	emit_signal("unit_greenlit", order[0])
+	emit_signal("player_phase_started", cur_round)
 
 
-func next_unit():
-	emit_signal("round_advanced", cur_round)
-	if cur_round == 0:
-		start_round()
-	else:
-		for i in range (len(order)):
-			if order[i].greenlit:
-				if i == len(order) - 1:
-					start_round()
-				else:
-					emit_signal("unit_greenlit", order[i + 1])
-				break
-
-
-func get_unit_at(pos):
-	for u in order:
-		if u.position == pos:
-			return u
-	return null
-
-
-func get_terrain_at(pos):
-	var cell = $Terrain.get_cellv($Terrain.world_to_map(pos))
-	return terrain[cell] if cell >= 0 else null
-
-
-class State:
-	var cur_round
-	var order
-	var unit_states = []
+func start_enemy_phase():
+	emit_signal("enemy_phase_started", cur_round)
 
 
 func get_state():
-	var ret = State.new()
-	ret.cur_round = cur_round
-	for u in order:
-		ret.unit_states.append(u.get_state())
-	return ret
+	var units = []
+	for cat in $Units.get_children():
+		for u in cat.get_children():
+			units.append(to_json(u.get_state()))
+
+	var state = {
+		"cur_round" : cur_round,
+		"player_phase" : player_phase,
+		"units" : units,
+	}
+
+	return state
 
 
 func load_state(state):
-	cur_round = state.cur_round
-	var previous = order
-	order = []
-	for s in state.unit_states:
-		var new = default_unit.instance()
-		connect_with_unit(new)
-		new.load_state(s)
-		$Units.add_child(new)
-		order.append(new)
-	yield(get_tree(), "idle_frame")
-	for u in previous:
-		u.free()
+	cur_round = state["cur_round"]
+	player_phase = state["player_phase"]
+
+	for cat in $Units.get_children():
+		for u in cat.get_children():
+			u.queue_free()
+
+
+	for u in state["units"]:
+		u = parse_json(u)
+		var unit
+		if u["unit_type"] == Unit.UnitType.SUMMONER:
+				unit = summoner_template.instance()
+				$Units/Summoners.add_child(unit)
+		elif u["unit_type"] == Unit.UnitType.FOLLOWER:
+				unit = follower_template.instance()
+				$Units/Followers.add_child(unit)
+		elif u["unit_type"] == Unit.UnitType.GATE:
+				unit = gate_template.instance()
+				$Units/Gates.add_child(unit)
+		elif u["unit_type"] == Unit.UnitType.ENEMY:
+				unit = enemy_template.instance()
+				$Units/Enemies.add_child(unit)
+
+		connect_with_unit(unit)
+		unit.load_state(u)
+
+
+func connect_with_unit(unit):
+	unit.stage = self
+	unit.connect("acted", self, "_on_Unit_acted")
+	unit.connect("dead", self, "_on_Unit_dead")
+	connect("player_phase_started", unit, "_on_Stage_player_phase_started")
+	connect("enemy_phase_started", unit, "_on_Stage_enemy_phase_started")
+	connect("tile_hovered", unit, "_on_Stage_tile_hovered")
+	connect("tile_clicked", unit, "_on_Stage_tile_clicked")
+	connect("unit_hovered", unit, "_on_Stage_unit_hovered")
+	connect("unit_clicked", unit, "_on_Stage_unit_clicked")
 
 
 func _on_Cursor_position_changed(pos):
-	var unit = get_unit_at(pos)
-	var terrain = get_terrain_at(pos)
-
-	emit_signal("unit_hovered", unit)
-	emit_signal("terrain_hovered", terrain)
+	emit_signal("terrain_hovered", get_terrain_at(pos))
+	emit_signal("unit_hovered", get_unit_at(pos))
+	emit_signal("tile_hovered", $Terrain.world_to_map(pos))
 
 
 func _on_Cursor_position_clicked(pos):
+	emit_signal("terrain_clicked", get_terrain_at(pos))
 	emit_signal("unit_clicked", get_unit_at(pos))
+	emit_signal("tile_clicked", $Terrain.world_to_map(pos))
 
 
-func _on_Unit_acted(done):
-	update_units()
-	if done:
-		yield(get_tree(), "idle_frame")
-		next_unit()
+func _on_Unit_acted():
 	snapshots.append(get_state())
 
-
 func _on_Unit_dead(unit):
-	order.remove(order.find(unit))
-	update_units()
-	if unit.greenlit:
-		next_unit()
-		snapshots.append(get_state())
+	snapshots.append(get_state())

@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Resource",
-"class": "Class",
-"language": "GDScript",
-"path": "res://Stage/Unit/Classes/class.gd"
-}, {
 "base": "Reference",
 "class": "Combat",
 "language": "GDScript",
@@ -27,22 +22,27 @@ _global_script_classes=[ {
 "base": "Unit",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://Stage/Unit/Enemies/enemy.gd"
+"path": "res://Stage/Unit/Enemy/Enemies/enemy.gd"
 }, {
-"base": "Unit",
+"base": "PlayerUnit",
 "class": "Follower",
 "language": "GDScript",
-"path": "res://Stage/Unit/Followers/follower.gd"
+"path": "res://Stage/Unit/Player/Followers/follower.gd"
+}, {
+"base": "Unit",
+"class": "PlayerUnit",
+"language": "GDScript",
+"path": "res://Stage/Unit/Player/player_unit.gd"
 }, {
 "base": "Node",
 "class": "Stage",
 "language": "GDScript",
 "path": "res://Stage/stage.gd"
 }, {
-"base": "Unit",
+"base": "PlayerUnit",
 "class": "Summoner",
 "language": "GDScript",
-"path": "res://Stage/Unit/Summoners/summoner.gd"
+"path": "res://Stage/Unit/Player/Summoners/summoner.gd"
 }, {
 "base": "Resource",
 "class": "Terrain",
@@ -60,11 +60,11 @@ _global_script_classes=[ {
 "path": "res://Stage/UI/unit_panel.gd"
 } ]
 _global_script_class_icons={
-"Class": "",
 "Combat": "",
 "Cursor": "",
 "Enemy": "",
 "Follower": "",
+"PlayerUnit": "",
 "Stage": "",
 "Summoner": "",
 "Terrain": "",

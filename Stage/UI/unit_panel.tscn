@@ -2,7 +2,9 @@
 
 [ext_resource path="res://Stage/UI/unit_panel.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/Dynamic Fonts/initiative.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Stage/Unit/Movement/Tile/Sprites/movement_tile.png" type="Texture" id=3]
+[ext_resource path="res://Stage/Unit/Enemy/Gates/Movement/Tile/Sprites/movement_tile.png" type="Texture" id=3]
+
+
 
 [node name="UnitPanel" type="Node2D"]
 script = ExtResource( 1 )

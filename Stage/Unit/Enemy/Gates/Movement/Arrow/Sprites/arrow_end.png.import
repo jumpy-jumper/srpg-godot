@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arrow_link.png-b0db6f384dc1b307dfbedcec811e0aa9.stex"
+path="res://.import/arrow_end.png-678c786af99d221e6e8da5c8d4272327.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Stage/Unit/Movement/Arrow/Sprites/arrow_link.png"
-dest_files=[ "res://.import/arrow_link.png-b0db6f384dc1b307dfbedcec811e0aa9.stex" ]
+source_file="res://Stage/Unit/Enemy/Gates/Movement/Arrow/Sprites/arrow_end.png"
+dest_files=[ "res://.import/arrow_end.png-678c786af99d221e6e8da5c8d4272327.stex" ]
 
 [params]
 

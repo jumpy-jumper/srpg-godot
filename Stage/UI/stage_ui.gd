@@ -10,23 +10,8 @@ func _ready():
 
 func _process(_delta):
 	if not visible:
-		$"Order UI".visible = false
 		$"Unit UI".visible = false
 		$"Terrain UI".visible = false
-
-func update_order(stage):
-	if not visible:
-		return
-	$"Order UI".visible = true
-	$"Order UI/Round Counter".text = str(stage.cur_round)
-	var panels = $"Order UI/Unit Panels".get_children()
-	for i in range (len(panels)):
-		if i < len(stage.order):
-			panels[i].cur_unit = stage.order[i]
-			panels[i].current = panels[i].cur_unit.greenlit
-		else:
-			panels[i].cur_unit = null
-			panels[i].current = false
 
 
 func _on_Stage_unit_hovered(unit):

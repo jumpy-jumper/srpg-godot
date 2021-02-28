@@ -22,8 +22,10 @@ func _process(_delta):
 	var previous = position
 	if stage:
 		position = stage.get_position_in_grid(get_global_mouse_position())
+		$AnimatedSprite.centered = false
 	else:
 		position = get_global_mouse_position()
+		$AnimatedSprite.centered = true
 
 	if position != previous:
 		emit_signal("position_changed", position)

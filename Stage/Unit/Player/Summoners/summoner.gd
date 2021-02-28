@@ -1,8 +1,12 @@
 class_name Summoner
-extends Unit
+extends PlayerUnit
 
 
 export(Array, PackedScene) var followers = []
+
+
+func get_unit_type():
+	return UnitType.SUMMONER
 
 
 func get_state():

@@ -4,15 +4,24 @@ extends Node2D
 signal acted()
 signal dead(unit)
 
+enum UnitType {NULL, SUMMONER, FOLLOWER, GATE, ENEMY}
+
 export var unit_name = ""
 export var max_hp = 2
 export var hp = 2
+export var max_ini = 8
 export var ini = 8
 
 var stage = null
 
+
+func get_unit_type():
+	return UnitType.NULL
+
+
 func get_state():
 	var state = {
+		"unit_type" : get_unit_type(),
 		"pos_x" : position.x,
 		"pos_y" : position.y,
 		"path_to_frames" : $Sprite.frames.resource_path,
@@ -37,11 +46,25 @@ func die():
 	queue_free()
 
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		print(to_json(get_state()))
-	if Input.is_action_just_pressed("ui_cancel"):
-		var savefile = File.new()
-		savefile.open("user://testsave.sav", File.READ)
-		load_state(parse_json(savefile.get_line()))
-		savefile.close()
+func _on_Stage_player_phase_started(cur_round):
+	pass
+
+
+func _on_Stage_enemy_phase_started(cur_round):
+	pass
+
+
+func _on_Stage_tile_hovered(tile):
+	pass
+
+
+func _on_Stage_tile_clicked(tile):
+	pass
+
+
+func _on_Stage_unit_hovered(unit):
+	pass
+
+
+func _on_Stage_unit_clicked(unit):
+	pass
