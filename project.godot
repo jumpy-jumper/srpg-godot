@@ -12,58 +12,70 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Combat",
 "language": "GDScript",
-"path": "res://Stage/Unit/combat.gd"
+"path": "res://Scripts/Unit/combat.gd"
 }, {
 "base": "Node2D",
 "class": "Cursor",
 "language": "GDScript",
-"path": "res://Stage/Cursor/cursor.gd"
+"path": "res://Scripts/cursor.gd"
 }, {
 "base": "Unit",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://Stage/Unit/Enemy/Enemies/enemy.gd"
+"path": "res://Scripts/Unit/enemy.gd"
+}, {
+"base": "Unit",
+"class": "EnemyUnit",
+"language": "GDScript",
+"path": "res://Scripts/Unit/enemy_unit.gd"
 }, {
 "base": "PlayerUnit",
 "class": "Follower",
 "language": "GDScript",
-"path": "res://Stage/Unit/Player/Followers/follower.gd"
+"path": "res://Scripts/Unit/follower.gd"
+}, {
+"base": "EnemyUnit",
+"class": "Gate",
+"language": "GDScript",
+"path": "res://Scripts/Unit/gate.gd"
 }, {
 "base": "Unit",
 "class": "PlayerUnit",
 "language": "GDScript",
-"path": "res://Stage/Unit/Player/player_unit.gd"
+"path": "res://Scripts/Unit/player_unit.gd"
 }, {
 "base": "Node",
 "class": "Stage",
 "language": "GDScript",
-"path": "res://Stage/stage.gd"
+"path": "res://Scripts/stage.gd"
 }, {
 "base": "PlayerUnit",
 "class": "Summoner",
 "language": "GDScript",
-"path": "res://Stage/Unit/Player/Summoners/summoner.gd"
+"path": "res://Scripts/Unit/summoner.gd"
 }, {
 "base": "Resource",
 "class": "Terrain",
 "language": "GDScript",
-"path": "res://Stage/Terrain/terrain.gd"
+"path": "res://Scripts/terrain.gd"
 }, {
 "base": "Node2D",
 "class": "Unit",
 "language": "GDScript",
-"path": "res://Stage/Unit/unit.gd"
+"path": "res://Scripts/Unit/unit.gd"
 }, {
 "base": "Node2D",
 "class": "UnitPanel",
 "language": "GDScript",
-"path": "res://Stage/UI/unit_panel.gd"
+"path": "res://Scripts/unit_panel.gd"
 } ]
 _global_script_class_icons={
 "Combat": "",
 "Cursor": "",
 "Enemy": "",
+"EnemyUnit": "",
 "Follower": "",
+"Gate": "",
 "PlayerUnit": "",
 "Stage": "",
 "Summoner": "",
@@ -75,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="SRPG"
-run/main_scene="res://Stage/stage.tscn"
+run/main_scene="res://Scenes/Stage/stage.tscn"
 
 [display]
 
@@ -118,6 +130,7 @@ ui_accept={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":90,"unicode":0,"echo":false,"script":null)
  ]
 }
 ui_cancel={
@@ -126,6 +139,7 @@ ui_cancel={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"unicode":0,"echo":false,"script":null)
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"pressed":false,"doubleclick":false,"script":null)
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":88,"unicode":0,"echo":false,"script":null)
  ]
 }
 

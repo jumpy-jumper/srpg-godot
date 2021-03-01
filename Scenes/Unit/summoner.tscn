@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Unit/summoner.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Unit/player_unit.tscn" type="PackedScene" id=2]
+
+[node name="Summoner" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+max_hp = 1
+hp = 1
+max_ini = 20
+ini = 20
+
+[node name="Sprite" parent="." index="0"]
+frame = 6
+
+[node name="Selected" parent="." index="2"]
+modulate = Color( 1, 1, 1, 1 )
+scale = Vector2( 4.5, 4.5 )
