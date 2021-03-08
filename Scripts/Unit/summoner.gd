@@ -5,10 +5,6 @@ extends PlayerUnit
 export(Array, PackedScene) var followers = []
 
 
-func _ready():
-	$UI/Health.visible = false
-
-
 func get_unit_type():
 	return UnitType.SUMMONER
 

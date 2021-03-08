@@ -11,7 +11,6 @@
 [ext_resource path="res://Scripts/cursor.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/cursor_sprite.gd" type="Script" id=10]
 
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [  ],

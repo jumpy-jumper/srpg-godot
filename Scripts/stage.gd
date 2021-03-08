@@ -29,7 +29,6 @@ func get_position_in_grid(pos):
 func get_tilemap_position(pos):
 	return $Terrain.world_to_map(pos)
 
-
 func get_world_position(pos):
 	return $Terrain.map_to_world(pos)
 
