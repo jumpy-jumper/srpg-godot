@@ -1,7 +1,7 @@
 class_name Unit
 extends Node2D
 
-signal acted()
+signal acted(unit, description)
 signal dead(unit)
 
 enum UnitType {NULL, SUMMONER, FOLLOWER, GATE, ENEMY}

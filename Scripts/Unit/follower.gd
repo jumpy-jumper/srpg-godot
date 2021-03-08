@@ -23,5 +23,5 @@ func _on_Stage_tile_clicked(tile):
 			selected = tile == stage.get_tilemap_position(position)
 		elif selected:
 			position = stage.get_world_position(tile)
-			emit_signal("acted")
+			emit_signal("acted", self, "moved to " + str(stage.get_tilemap_position(position)))
 			selected = false

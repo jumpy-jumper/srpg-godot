@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
+
+[node name="State Panel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -768.0
+margin_bottom = -688.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color( 1, 1, 1, 0.392157 )
+margin_right = 512.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Index" type="Label" parent="."]
+margin_right = 56.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 1 )
+text = "1"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="."]
+margin_left = 64.0
+margin_right = 512.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 1 )
+text = "[Unit] Action description"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

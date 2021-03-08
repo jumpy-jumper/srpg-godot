@@ -10,6 +10,9 @@ signal unit_hovered(unit)
 signal unit_clicked(unit)
 signal terrain_hovered(terrain)
 signal terrain_clicked(terrain)
+signal undo_issued()
+signal redo_issued()
+
 
 export(PackedScene) var summoner_template
 export(PackedScene) var follower_template
@@ -19,8 +22,10 @@ export(Array, Resource) var terrain_types
 
 var cur_round = 0
 var player_phase = true
-var snapshots = []
 
+var states = []
+var state_description = []
+var cur_state_index = -1
 
 func get_position_in_grid(pos):
 	return $Terrain.map_to_world($Terrain.world_to_map(pos))
@@ -57,13 +62,18 @@ func _ready():
 
 	start_player_phase()
 
-	snapshots.append(get_state())
+	append_state("Initial state")
 
 
 func _process(_delta):
 	$UI.visible = cur_round > 0
 	$UI.update_unit(get_unit_at($Cursor.position))
 	$UI.update_terrain(get_terrain_at($Cursor.position))
+
+	if Input.is_action_just_pressed("undo"):
+		undo()
+	elif Input.is_action_just_pressed("redo"):
+		redo()
 
 
 func start_player_phase():
@@ -133,6 +143,29 @@ func connect_with_unit(unit):
 	connect("unit_clicked", unit, "_on_Stage_unit_clicked")
 
 
+func undo():
+	if cur_state_index > 0:
+		load_state(states[cur_state_index - 1])
+		cur_state_index -= 1
+	emit_signal("undo_issued")
+
+
+func redo():
+	if cur_state_index < len(states) - 1:
+		load_state(states[cur_state_index + 1])
+		cur_state_index += 1
+	emit_signal("redo_issued")
+
+
+func append_state(description):
+	cur_state_index += 1
+	while len(states) > cur_state_index:
+		states.pop_back()
+		state_description.pop_back()
+	states.append(get_state())
+	state_description.append(description)
+
+
 func _on_Cursor_moved(pos):
 	emit_signal("terrain_hovered", get_terrain_at(pos))
 	emit_signal("unit_hovered", get_unit_at(pos))
@@ -146,13 +179,11 @@ func _on_Cursor_confirm_issued(pos):
 
 
 func _on_Cursor_cancel_issued(pos):
-	if len(snapshots) > 1:
-		snapshots.pop_back()
-		load_state(snapshots.back())
+	pass
 
 
-func _on_Unit_acted():
-	snapshots.append(get_state())
+func _on_Unit_acted(unit, description):
+	append_state("[" + unit.unit_name + "] " + description)
 
 func _on_Unit_dead(unit):
-	snapshots.append(get_state())
+	append_state("[" + unit.unit_name + "] Dead")
