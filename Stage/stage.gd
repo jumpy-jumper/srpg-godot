@@ -4,12 +4,6 @@ extends Node
 
 signal player_phase_started(cur_round)
 signal enemy_phase_started(cur_round)
-signal tile_hovered(tile)
-signal tile_clicked(tile)
-signal unit_hovered(unit)
-signal unit_clicked(unit)
-signal terrain_hovered(terrain)
-signal terrain_clicked(terrain)
 signal undo_issued()
 signal redo_issued()
 
@@ -30,15 +24,13 @@ var cur_state_index = -1
 
 var selected_unit = null
 
-func get_position_in_grid(pos):
+
+func get_cell_size():
+	return $Terrain.cell_size().x
+
+
+func clamp_to_grid(pos):
 	return $Terrain.map_to_world($Terrain.world_to_map(pos))
-
-
-func get_tilemap_position(pos):
-	return $Terrain.world_to_map(pos)
-
-func get_world_position(pos):
-	return $Terrain.map_to_world(pos)
 
 
 func get_unit_at(pos):
@@ -135,9 +127,7 @@ func load_state(state):
 	selected_unit = null
 
 
-func spawn_unit(unit, pos):
-	unit = unit.instance()
-	
+func add_unit(unit, pos):
 	if unit.get_unit_type() == Unit.UnitType.SUMMONER:
 			$Units/Player/Summoners.add_child(unit)
 			unit.operatable = player_phase
@@ -149,7 +139,7 @@ func spawn_unit(unit, pos):
 	elif unit.get_unit_type() == Unit.UnitType.ENEMY:
 			$Units/PlayerEnemies.add_child(unit)
 	
-	unit.global_position = get_position_in_grid(pos)
+	unit.global_position = clamp_to_grid(pos)
 	connect_with_unit(unit)
 
 
@@ -161,10 +151,7 @@ func connect_with_unit(unit):
 	unit.connect("deselected", self, "_on_Unit_deselected")
 	connect("player_phase_started", unit, "_on_Stage_player_phase_started")
 	connect("enemy_phase_started", unit, "_on_Stage_enemy_phase_started")
-	connect("tile_hovered", unit, "_on_Stage_tile_hovered")
-	connect("tile_clicked", unit, "_on_Stage_tile_clicked")
-	connect("unit_hovered", unit, "_on_Stage_unit_hovered")
-	connect("unit_clicked", unit, "_on_Stage_unit_clicked")
+	$Cursor.connect("confirm_issued", unit, "_on_Cursor_confirm_issued")
 
 
 func undo():
@@ -191,15 +178,11 @@ func append_state(description):
 
 
 func _on_Cursor_moved(pos):
-	emit_signal("terrain_hovered", get_terrain_at(pos))
-	emit_signal("unit_hovered", get_unit_at(pos))
-	emit_signal("tile_hovered", $Terrain.world_to_map(pos))
+	pass
 
 
 func _on_Cursor_confirm_issued(pos):
-	emit_signal("terrain_clicked", get_terrain_at(pos))
-	emit_signal("unit_clicked", get_unit_at(pos))
-	emit_signal("tile_clicked", $Terrain.world_to_map(pos))
+	pass
 
 
 func _on_Cursor_cancel_issued(pos):

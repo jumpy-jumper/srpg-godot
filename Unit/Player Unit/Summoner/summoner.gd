@@ -2,7 +2,7 @@ class_name Summoner
 extends PlayerUnit
 
 
-export(Array, PackedScene) var followers = []
+export(Array, Resource) var followers = []
 
 
 func get_unit_type():
@@ -24,10 +24,12 @@ func load_state(state):
 		followers.append(load(r))
 
 
-func _on_Stage_tile_clicked(tile):
-	if selected and stage.get_unit_at(stage.get_world_position(tile)) == null:
-		if stage.get_unit_at(stage.get_world_position(tile)) == null:
-			stage.spawn_unit(followers[randi() % len(followers)], get_global_mouse_position())
-			emit_signal("acted", self, "summoned.")
-			selected = false
-			emit_signal("deselected", self)
+func _on_Cursor_confirm_issued(pos):
+	._on_Cursor_confirm_issued(pos)
+	var unit = followers[randi() % len(followers)].instance()
+	if stage.selected_unit == self and stage.get_unit_at(pos) == null and stage.get_terrain_at(pos) in unit.deployable_terrain:
+		stage.add_unit(unit, get_global_mouse_position())
+		emit_signal("acted", self, "summoned.")
+		emit_signal("deselected", self)
+	else:
+		unit.free()

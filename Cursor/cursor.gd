@@ -9,7 +9,6 @@ extends Node2D
 signal moved(pos)
 signal confirm_issued(pos)
 signal cancel_issued(pos)
-signal end_turn_issued()
 
 
 const DEFAULT_CELL_SIZE = 64
@@ -49,10 +48,11 @@ func _process(_delta):
 
 		if stage:
 			position += stage.get_node("Terrain").cell_size * movement
-			if stage.get_node("Terrain").get_cellv(stage.get_tilemap_position(position)) == -1:
-				if stage.get_node("Terrain").get_cellv(stage.get_tilemap_position(Vector2(position.x, previous.y))) > -1:
+			stage.get_terrain_at(position)
+			if stage.get_terrain_at(position) == null:
+				if stage.get_terrain_at(Vector2(position.x, previous.y)) != null:
 					position = Vector2(position.x, previous.y)
-				elif stage.get_node("Terrain").get_cellv(stage.get_tilemap_position(Vector2(previous.x, position.y))) > -1:
+				elif stage.get_terrain_at(Vector2(previous.x, position.y)) != null:
 					position = Vector2(previous.x, position.y)
 				else:
 					position = previous
@@ -63,7 +63,7 @@ func _process(_delta):
 			old_keyboard_pos = position
 	elif enable_mouse_input:
 		if stage:
-			position = stage.get_position_in_grid(mouse_pos)
+			position = stage.clamp_to_grid(mouse_pos)
 		else:
 			position = mouse_pos
 

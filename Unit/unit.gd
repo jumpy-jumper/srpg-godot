@@ -54,17 +54,5 @@ func _on_Stage_enemy_phase_started(cur_round):
 	pass
 
 
-func _on_Stage_tile_hovered(tile):
-	pass
-
-
-func _on_Stage_tile_clicked(tile):
-	pass
-
-
-func _on_Stage_unit_hovered(unit):
-	pass
-
-
-func _on_Stage_unit_clicked(unit):
+func _on_Cursor_confirm_issued(pos):
 	pass

@@ -6,7 +6,6 @@ signal selected(unit)
 signal deselected(unit)
 
 var operatable = false
-var selected = false
 
 
 func get_state():
@@ -16,18 +15,20 @@ func get_state():
 
 
 func _process(_delta):
-	$Selected.visible = selected
+	$Selected.visible = stage.selected_unit == self
 
 
 func _on_Stage_player_phase_started(cur_round):
+	._on_Stage_player_phase_started(cur_round)
 	operatable = true
 
 
 func _on_Stage_enemy_phase_started(cur_round):
+	._on_Stage_enemy_phase_started(cur_round)
 	operatable = false
 
 
-func _on_Stage_unit_clicked(unit):
-	if operatable and unit == self and stage.selected_unit == null:
-		selected = true
+func _on_Cursor_confirm_issued(pos):
+	._on_Cursor_confirm_issued(pos)
+	if operatable and stage.get_unit_at(pos) == self and stage.selected_unit == null:
 		emit_signal("selected", self)
