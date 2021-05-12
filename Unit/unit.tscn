@@ -1,11 +1,19 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Fonts/Dynamic Fonts/initiative.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Unit/sp_ui.gd" type="Script" id=1]
 [ext_resource path="res://Unit/Player Unit/Follower/Eirika/eirika.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://Unit/Player Unit/Follower/follower.gd" type="Script" id=3]
-[ext_resource path="res://Unit/unit_ui.gd" type="Script" id=4]
+[ext_resource path="res://Unit/hp_ui.gd" type="Script" id=4]
 
-[sub_resource type="StreamTexture" id=1]
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.603922, 1, 0.270588, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.341176, 1, 1, 1 )
+
+[sub_resource type="StreamTexture" id=4]
 load_path = "res://.import/cursor_default0.png-8adba084a8cf7015ba3f2250c4fff637.stex"
 
 [node name="Unit" type="Node2D"]
@@ -14,10 +22,13 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
+hp = 200
+sp = 0
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 2 )
+frame = 1
 playing = true
 centered = false
 offset = Vector2( -8, -16 )
@@ -25,27 +36,41 @@ offset = Vector2( -8, -16 )
 [node name="UI" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP" type="ProgressBar" parent="UI"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = 16.0
+margin_right = 45.0
+margin_bottom = 20.0
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+value = 100.0
+percent_visible = false
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SP" type="Label" parent="UI"]
-anchor_left = 1.0
+[node name="SP" type="ProgressBar" parent="UI"]
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 1 )
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Health" type="Label" parent="UI"]
-anchor_left = 1.0
-anchor_right = 1.0
-custom_fonts/font = ExtResource( 1 )
-align = 1
+margin_left = -20.0
+margin_top = 20.0
+margin_right = 45.0
+margin_bottom = 24.0
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 2 )
+percent_visible = false
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -55,4 +80,4 @@ visible = false
 modulate = Color( 0.662745, 1, 0.615686, 1 )
 position = Vector2( 32, 32 )
 scale = Vector2( 5, 5 )
-texture = SubResource( 1 )
+texture = SubResource( 4 )

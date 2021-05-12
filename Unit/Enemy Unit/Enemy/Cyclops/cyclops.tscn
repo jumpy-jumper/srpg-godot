@@ -4,7 +4,8 @@
 [ext_resource path="res://Unit/Enemy Unit/Enemy/enemy.tscn" type="PackedScene" id=2]
 
 [node name="Cyclops" instance=ExtResource( 2 )]
+unit_name = "Cyclops"
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 3
+frame = 2

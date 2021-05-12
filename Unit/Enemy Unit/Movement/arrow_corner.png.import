@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arrow_end.png-5f9856729613d27aabd9ef56bc8d1514.stex"
+path="res://.import/arrow_corner.png-d05c15e3014cdec011f4d9fc98d349d9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Unit/Movement/arrow_end.png"
-dest_files=[ "res://.import/arrow_end.png-5f9856729613d27aabd9ef56bc8d1514.stex" ]
+source_file="res://Unit/Enemy Unit/Movement/arrow_corner.png"
+dest_files=[ "res://.import/arrow_corner.png-d05c15e3014cdec011f4d9fc98d349d9.stex" ]
 
 [params]
 

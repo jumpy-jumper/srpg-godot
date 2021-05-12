@@ -7,8 +7,16 @@ signal dead(unit)
 enum UnitType {NULL, SUMMONER, FOLLOWER, GATE, ENEMY}
 
 export var unit_name = ""
-export var max_hp = 2
-var hp = max_hp
+export var max_hp = 200
+export (int) var hp = max_hp
+export var max_sp = 99
+export var sp = 20
+
+export var level = 1
+export var base_atk = 500
+export var base_def = 200
+export var base_res = 0
+
 
 var stage = null
 
@@ -26,6 +34,8 @@ func get_state():
 		"unit_name" : unit_name,
 		"max_hp" : max_hp,
 		"hp" : hp,
+		"max_sp" : max_sp,
+		"sp" : sp
 	}
 	return state
 

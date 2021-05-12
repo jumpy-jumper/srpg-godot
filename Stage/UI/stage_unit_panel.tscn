@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Fonts/Dynamic Fonts/stage_ui.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Stage/UI/stage_unit_panel.gd" type="Script" id=2]
+
+[node name="Unit Panel" type="Control"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color( 1, 1, 1, 0.431373 )
+margin_right = 192.0
+margin_bottom = 128.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stats" type="Label" parent="."]
+margin_left = 96.0
+margin_top = 8.0
+margin_right = 188.0
+margin_bottom = 128.0
+custom_fonts/font = ExtResource( 1 )
+text = "ATK	 500
+DEF 500
+RES 10
+MOV 10"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="."]
+margin_top = 8.0
+margin_right = 92.0
+margin_bottom = 128.0
+custom_fonts/font = ExtResource( 1 )
+text = "Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

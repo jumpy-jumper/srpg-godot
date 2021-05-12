@@ -61,14 +61,15 @@ func _ready():
 
 
 func _process(_delta):
-	$UI.visible = cur_round > 0
-	$UI.update_unit(get_unit_at($Cursor.position))
-	$UI.update_terrain(get_terrain_at($Cursor.position))
-
 	if Input.is_action_just_pressed("undo"):
 		undo()
 	elif Input.is_action_just_pressed("redo"):
 		redo()
+	
+	if Input.is_action_just_pressed("debug_state_log"):
+		for i in range (len(state_description)) :
+			print(("> " if i == cur_state_index else "  ") + state_description[i])
+		print()
 
 
 func start_player_phase():
@@ -144,7 +145,6 @@ func add_unit(unit, pos):
 
 
 func connect_with_unit(unit):
-	print(unit.name)
 	unit.stage = self
 	unit.connect("acted", self, "_on_Unit_acted")
 	unit.connect("dead", self, "_on_Unit_dead")
@@ -169,6 +169,7 @@ func redo():
 
 
 func append_state(description):
+	yield(get_tree(), "idle_frame")
 	cur_state_index += 1
 	while len(states) > cur_state_index:
 		states.pop_back()

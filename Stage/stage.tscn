@@ -10,14 +10,14 @@
 [ext_resource path="res://Unit/Player Unit/Summoner/summoner.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=9]
 [ext_resource path="res://Unit/Enemy Unit/Enemy/enemy.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Stage/stage_ui.gd" type="Script" id=11]
-[ext_resource path="res://Unit/Enemy Unit/Enemy/Dog/dog.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Stage/UI/stage_unit_panel.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Unit/Enemy Unit/Enemy/Hound/hound.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Unit/Player Unit/Follower/Eirika/eirika.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Stage/State/state_panel.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Stage/State/state_ui.gd" type="Script" id=15]
 [ext_resource path="res://Stage/Terrain/mountain.tres" type="Resource" id=21]
 
-[sub_resource type="TileSet" id=3]
+[sub_resource type="TileSet" id=1]
 0/name = "tilemap.png 0"
 0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
@@ -73,76 +73,45 @@ anchor_mode = 0
 current = true
 zoom = Vector2( 0.7, 0.7 )
 
+[node name="Terrain" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+format = 1
+tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 65536, 2, 0, 65537, 2, 0, 65538, 2, 0, 65539, 2, 0, 65540, 2, 0, 65541, 2, 0, 65542, 2, 0, 65543, 2, 0, 65544, 2, 0, 65545, 2, 0, 65546, 2, 0, 65547, 2, 0, 65548, 2, 0, 65549, 2, 0, 131072, 2, 0, 131073, 2, 0, 131074, 2, 0, 131075, 2, 0, 131076, 2, 0, 131077, 2, 0, 131078, 2, 0, 131079, 2, 0, 131080, 2, 0, 131081, 2, 0, 131082, 2, 0, 131083, 2, 0, 131084, 2, 0, 131085, 2, 0, 196608, 2, 0, 196609, 2, 0, 196610, 2, 0, 196611, 0, 0, 196612, 1, 0, 196613, 1, 0, 196614, 0, 0, 196615, 0, 0, 196616, 2, 0, 196617, 0, 0, 196618, 1, 0, 196619, 0, 0, 196620, 2, 0, 196621, 2, 0, 262144, 2, 0, 262145, 2, 0, 262146, 0, 0, 262147, 1, 0, 262148, 0, 0, 262149, 2, 0, 262150, 0, 0, 262151, 1, 0, 262152, 1, 0, 262153, 0, 0, 262154, 0, 0, 262155, 2, 0, 262156, 2, 0, 262157, 2, 0, 327680, 2, 0, 327681, 2, 0, 327682, 2, 0, 327683, 2, 0, 327684, 2, 0, 327685, 2, 0, 327686, 2, 0, 327687, 2, 0, 327688, 2, 0, 327689, 2, 0, 327690, 2, 0, 327691, 2, 0, 327692, 2, 0, 327693, 2, 0, 393216, 2, 0, 393217, 2, 0, 393218, 2, 0, 393219, 2, 0, 393220, 2, 0, 393221, 2, 0, 393222, 2, 0, 393223, 2, 0, 393224, 2, 0, 393225, 2, 0, 393226, 2, 0, 393227, 2, 0, 393228, 2, 0, 393229, 2, 0, 458752, 2, 0, 458753, 2, 0, 458754, 2, 0, 458755, 2, 0, 458756, 2, 0, 458757, 2, 0, 458758, 2, 0, 458759, 2, 0, 458760, 2, 0, 458761, 2, 0, 458762, 2, 0, 458763, 2, 0, 458764, 2, 0, 458765, 2, 0 )
+
+[node name="Units" type="Node2D" parent="."]
+
+[node name="Player" type="Node2D" parent="Units"]
+
+[node name="Summoners" type="Node2D" parent="Units/Player"]
+
+[node name="Girl" parent="Units/Player/Summoners" instance=ExtResource( 4 )]
+position = Vector2( 128, 256 )
+base_atk = 500
+base_def = 200
+
+[node name="Followers" type="Node2D" parent="Units/Player"]
+
+[node name="Eirika" parent="Units/Player/Followers" instance=ExtResource( 13 )]
+position = Vector2( 320, 192 )
+hp = 200
+sp = 0
+
+[node name="Enemy" type="Node2D" parent="Units"]
+
+[node name="Gates" type="Node2D" parent="Units/Enemy"]
+
+[node name="Enemies" type="Node2D" parent="Units/Enemy"]
+
+[node name="Dog" parent="Units/Enemy/Enemies" instance=ExtResource( 12 )]
+position = Vector2( 704, 192 )
+
+[node name="Dog2" parent="Units/Enemy/Enemies" instance=ExtResource( 12 )]
+position = Vector2( 512, 256 )
+
+[node name="Cursor" parent="." instance=ExtResource( 3 )]
+rapid_fire_wait = 10
+
 [node name="UI" type="Control" parent="."]
-visible = false
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Unit UI" type="Control" parent="UI"]
-visible = false
-margin_left = 992.0
-margin_top = -416.0
-margin_right = 1032.0
-margin_bottom = -376.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="UI/Unit UI"]
-modulate = Color( 1, 1, 1, 0.392157 )
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -40.0
-margin_top = 448.0
-margin_right = 216.0
-margin_bottom = 640.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Name" type="Label" parent="UI/Unit UI"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -40.0
-margin_top = 448.0
-margin_right = 216.0
-margin_bottom = 512.0
-custom_fonts/font = ExtResource( 9 )
-text = "ASDF"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SP" type="Label" parent="UI/Unit UI"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -40.0
-margin_top = 512.0
-margin_right = 216.0
-margin_bottom = 576.0
-custom_fonts/font = ExtResource( 9 )
-text = "17+12"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Health" type="Label" parent="UI/Unit UI"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -40.0
-margin_top = 576.0
-margin_right = 216.0
-margin_bottom = 640.0
-custom_fonts/font = ExtResource( 9 )
-text = "Healthy"
-align = 1
-valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -282,40 +251,13 @@ margin_bottom = -8.0
 margin_right = -40.0
 margin_bottom = -40.0
 
-[node name="Terrain" type="TileMap" parent="."]
-tile_set = SubResource( 3 )
-format = 1
-tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 65536, 2, 0, 65537, 2, 0, 65538, 2, 0, 65539, 2, 0, 65540, 2, 0, 65541, 2, 0, 65542, 2, 0, 65543, 2, 0, 65544, 2, 0, 65545, 2, 0, 65546, 2, 0, 65547, 2, 0, 65548, 2, 0, 65549, 2, 0, 131072, 2, 0, 131073, 2, 0, 131074, 2, 0, 131075, 2, 0, 131076, 2, 0, 131077, 2, 0, 131078, 2, 0, 131079, 2, 0, 131080, 2, 0, 131081, 2, 0, 131082, 2, 0, 131083, 2, 0, 131084, 2, 0, 131085, 2, 0, 196608, 2, 0, 196609, 2, 0, 196610, 2, 0, 196611, 1, 0, 196612, 1, 0, 196613, 1, 0, 196614, 0, 0, 196615, 0, 0, 196616, 2, 0, 196617, 0, 0, 196618, 1, 0, 196619, 0, 0, 196620, 2, 0, 196621, 2, 0, 262144, 2, 0, 262145, 2, 0, 262146, 0, 0, 262147, 1, 0, 262148, 1, 0, 262149, 2, 0, 262150, 0, 0, 262151, 1, 0, 262152, 1, 0, 262153, 0, 0, 262154, 0, 0, 262155, 2, 0, 262156, 2, 0, 262157, 2, 0, 327680, 2, 0, 327681, 2, 0, 327682, 2, 0, 327683, 2, 0, 327684, 2, 0, 327685, 2, 0, 327686, 2, 0, 327687, 2, 0, 327688, 2, 0, 327689, 2, 0, 327690, 2, 0, 327691, 2, 0, 327692, 2, 0, 327693, 2, 0, 393216, 2, 0, 393217, 2, 0, 393218, 2, 0, 393219, 2, 0, 393220, 2, 0, 393221, 2, 0, 393222, 2, 0, 393223, 2, 0, 393224, 2, 0, 393225, 2, 0, 393226, 2, 0, 393227, 2, 0, 393228, 2, 0, 393229, 2, 0, 458752, 2, 0, 458753, 2, 0, 458754, 2, 0, 458755, 2, 0, 458756, 2, 0, 458757, 2, 0, 458758, 2, 0, 458759, 2, 0, 458760, 2, 0, 458761, 2, 0, 458762, 2, 0, 458763, 2, 0, 458764, 2, 0, 458765, 2, 0 )
-
-[node name="Units" type="Node2D" parent="."]
-
-[node name="Player" type="Node2D" parent="Units"]
-
-[node name="Summoners" type="Node2D" parent="Units/Player"]
-
-[node name="Girl" parent="Units/Player/Summoners" instance=ExtResource( 4 )]
-position = Vector2( 128, 256 )
-
-[node name="Followers" type="Node2D" parent="Units/Player"]
-
-[node name="Eirika" parent="Units/Player/Followers" instance=ExtResource( 13 )]
-position = Vector2( 320, 192 )
-
-[node name="Enemy" type="Node2D" parent="Units"]
-
-[node name="Gates" type="Node2D" parent="Units/Enemy"]
-
-[node name="Enemies" type="Node2D" parent="Units/Enemy"]
-
-[node name="Dog" parent="Units/Enemy/Enemies" instance=ExtResource( 12 )]
-position = Vector2( 448, 256 )
-
-[node name="Dog2" parent="Units/Enemy/Enemies" instance=ExtResource( 12 )]
-position = Vector2( 704, 192 )
-
-[node name="Cursor" parent="." instance=ExtResource( 3 )]
-rapid_fire_wait = 10
+[node name="Unit Panel" parent="UI" instance=ExtResource( 11 )]
+margin_left = 672.0
+margin_top = 32.0
+margin_right = 640.0
+margin_bottom = 64.0
 
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
 [connection signal="moved" from="Cursor" to="." method="_on_Cursor_moved"]
+[connection signal="moved" from="Cursor" to="UI/Unit Panel" method="_on_Cursor_moved"]
