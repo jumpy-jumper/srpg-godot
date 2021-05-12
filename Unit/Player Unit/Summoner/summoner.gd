@@ -27,9 +27,11 @@ func load_state(state):
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	var unit = followers[randi() % len(followers)].instance()
-	if stage.selected_unit == self and stage.get_unit_at(pos) == null and stage.get_terrain_at(pos) in unit.deployable_terrain:
-		stage.add_unit(unit, get_global_mouse_position())
-		emit_signal("acted", self, "summoned.")
-		emit_signal("deselected", self)
+	if stage.selected_unit == self \
+		and stage.get_unit_at(pos) == null \
+		and stage.get_terrain_at(pos) in unit.deployable_terrain:
+			stage.add_unit(unit, get_global_mouse_position())
+			emit_signal("acted", self, "summoned.")
+			stage.selected_unit = null
 	else:
 		unit.free()

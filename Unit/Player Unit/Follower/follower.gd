@@ -23,4 +23,4 @@ func _on_Cursor_confirm_issued(pos):
 	if stage.selected_unit == self and stage.get_unit_at(pos) == null:
 		position = pos
 		emit_signal("acted", self, "moved to " + str(pos))
-		emit_signal("deselected", self)
+		stage.selected_unit = null

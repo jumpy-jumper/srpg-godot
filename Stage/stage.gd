@@ -147,8 +147,6 @@ func connect_with_unit(unit):
 	unit.stage = self
 	unit.connect("acted", self, "_on_Unit_acted")
 	unit.connect("dead", self, "_on_Unit_dead")
-	unit.connect("selected", self, "_on_Unit_selected")
-	unit.connect("deselected", self, "_on_Unit_deselected")
 	connect("player_phase_started", unit, "_on_Stage_player_phase_started")
 	connect("enemy_phase_started", unit, "_on_Stage_enemy_phase_started")
 	$Cursor.connect("confirm_issued", unit, "_on_Cursor_confirm_issued")
@@ -191,11 +189,3 @@ func _on_Cursor_cancel_issued(pos):
 
 func _on_Unit_acted(unit, description):
 	append_state("[" + unit.unit_name + "] " + description)
-
-
-func _on_Unit_selected(unit):
-	selected_unit = unit
-
-
-func _on_Unit_deselected(unit):
-	selected_unit = null

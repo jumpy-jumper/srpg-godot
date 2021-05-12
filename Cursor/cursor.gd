@@ -13,9 +13,11 @@ signal cancel_issued(pos)
 
 const DEFAULT_CELL_SIZE = 64
 
+
 export var operatable = true
 export var enable_mouse_input = true
 export var decouple_mouse_and_keyboard = false
+
 
 var stage = null
 var old_mouse_pos = position
