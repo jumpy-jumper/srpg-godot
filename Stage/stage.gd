@@ -57,8 +57,6 @@ func _ready():
 
 	start_player_phase()
 
-	append_state("Initial state")
-
 
 func _process(_delta):
 	if Input.is_action_just_pressed("undo"):
@@ -75,6 +73,7 @@ func _process(_delta):
 func start_player_phase():
 	cur_round += 1
 	emit_signal("player_phase_started", cur_round)
+	append_state("Round " + str(cur_round) + " started.")
 
 
 func start_enemy_phase():
@@ -191,7 +190,13 @@ func _on_Cursor_moved(pos):
 
 
 func _on_Cursor_confirm_issued(pos):
-	pass
+	if not get_unit_at(pos):
+		start_enemy_phase()
+		for follower in $Units/Player/Followers.get_children():
+			follower.act()
+		for enemy in $Units/Enemy/Enemies.get_children():
+			enemy.act()
+		start_player_phase()
 
 
 func _on_Cursor_cancel_issued(pos):

@@ -24,6 +24,10 @@ func load_state(state):
 	.load_state(state)
 
 
+func act():
+	pass
+
+
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	if stage.selected_unit == self and stage.get_unit_at(pos) == null:

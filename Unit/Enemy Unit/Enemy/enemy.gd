@@ -9,6 +9,10 @@ func get_unit_type():
 	return UnitType.ENEMY
 
 
+func act():
+	pass
+
+
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	var unit = stage.get_unit_at(pos)

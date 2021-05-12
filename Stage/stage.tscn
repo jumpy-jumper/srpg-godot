@@ -256,6 +256,8 @@ margin_top = 32.0
 margin_right = 640.0
 margin_bottom = 64.0
 
+[connection signal="enemy_phase_started" from="." to="Cursor" method="_on_Stage_enemy_phase_started"]
+[connection signal="player_phase_started" from="." to="Cursor" method="_on_Stage_player_phase_started"]
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
 [connection signal="moved" from="Cursor" to="UI/Unit Panel" method="_on_Cursor_moved"]

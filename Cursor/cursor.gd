@@ -109,3 +109,10 @@ func get_movement(dir):
 	else:
 		return Input.is_action_just_pressed(dir)
 
+
+func _on_Stage_player_phase_started(cur_round):
+	operatable = true
+
+
+func _on_Stage_enemy_phase_started(cur_round):
+	operatable = false
