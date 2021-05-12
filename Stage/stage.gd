@@ -154,6 +154,14 @@ func connect_with_unit(unit):
 	$Cursor.connect("cancel_issued", unit, "_on_Cursor_cancel_issued")
 
 
+func select(unit):
+	selected_unit = unit
+
+
+func deselect():
+	selected_unit = null
+
+
 func undo():
 	if cur_state_index > 0:
 		load_state(states[cur_state_index - 1])

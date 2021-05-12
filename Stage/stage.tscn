@@ -93,7 +93,6 @@ base_def = 200
 
 [node name="Eirika" parent="Units/Player/Followers" instance=ExtResource( 13 )]
 position = Vector2( 320, 192 )
-hp = 200
 sp = 0
 
 [node name="Enemy" type="Node2D" parent="Units"]
@@ -259,5 +258,5 @@ margin_bottom = 64.0
 
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
-[connection signal="moved" from="Cursor" to="." method="_on_Cursor_moved"]
 [connection signal="moved" from="Cursor" to="UI/Unit Panel" method="_on_Cursor_moved"]
+[connection signal="moved" from="Cursor" to="." method="_on_Cursor_moved"]

@@ -21,6 +21,11 @@ export var base_res = 0
 var stage = null
 
 
+func _process(_delta):
+	if stage:
+		$Selected.visible = stage.selected_unit == self
+		
+
 func get_unit_type():
 	return UnitType.NULL
 
@@ -45,6 +50,12 @@ func load_state(state):
 		set(v, state[v])
 	position = Vector2(state["pos_x"], state["pos_y"])
 	$Sprite.frames = load(state["frames"])
+
+
+func take_damage(val):
+	hp -= val
+	if hp <= 0:
+		die()
 
 
 func die():

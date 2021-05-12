@@ -5,10 +5,12 @@
 
 [node name="Follower" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+max_hp = 2000
+hp = 2000
 max_sp = 5
 
 [node name="Sprite" parent="." index="0"]
-frame = 2
+frame = 4
 
 [node name="Selected" parent="." index="2"]
 modulate = Color( 0.576471, 1, 0.968627, 1 )

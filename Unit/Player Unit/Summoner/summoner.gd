@@ -33,7 +33,7 @@ func _on_Cursor_confirm_issued(pos):
 			stage.add_unit(unit, stage.get_node("Cursor").position)
 			sp -= unit.cost
 			emit_signal("acted", self, "summoned " + unit.unit_name + " at " + str(pos))
-			stage.selected_unit = null
+			stage.deselect()
 	else:
 		unit.free()
 
@@ -41,4 +41,4 @@ func _on_Cursor_confirm_issued(pos):
 func _on_Cursor_cancel_issued(pos):
 	._on_Cursor_cancel_issued(pos)
 	if stage.selected_unit == self:
-		stage.selected_unit = null
+		stage.deselect()
