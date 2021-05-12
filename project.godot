@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Unit",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://Unit/Enemy Unit/enemy.gd"
+"path": "res://Unit/Enemy Unit/Enemy/enemy.gd"
 }, {
 "base": "PlayerUnit",
 "class": "Follower",
@@ -82,7 +82,7 @@ _global_script_class_icons={
 
 config/name="Dream in Tiles (SRPG)"
 run/main_scene="res://Stage/stage.tscn"
-config/icon="res://Unit/Sprites/Blue/Eirika/blue_idle0.png"
+config/icon="res://Unit/Player Unit/Follower/Eirika/idle0.png"
 
 [autoload]
 

@@ -117,10 +117,10 @@ func load_state(state):
 				$Units/Player/Followers.add_child(unit)
 		elif u["unit_type"] == Unit.UnitType.GATE:
 				unit = gate_template.instance()
-				$Units/Player/Gates.add_child(unit)
+				$Units/Enemy/Gates.add_child(unit)
 		elif u["unit_type"] == Unit.UnitType.ENEMY:
 				unit = enemy_template.instance()
-				$Units/PlayerEnemies.add_child(unit)
+				$Units/Enemy/Enemies.add_child(unit)
 
 		connect_with_unit(unit)
 		unit.load_state(u)
@@ -135,21 +135,23 @@ func add_unit(unit, pos):
 			$Units/Player/Followers.add_child(unit)
 			unit.operatable = player_phase
 	elif unit.get_unit_type() == Unit.UnitType.GATE:
-			$Units/Player/Gates.add_child(unit)
+			$Units/Enemy/Gates.add_child(unit)
 	elif unit.get_unit_type() == Unit.UnitType.ENEMY:
-			$Units/PlayerEnemies.add_child(unit)
+			$Units/Enemy/Enemies.add_child(unit)
 	
 	unit.global_position = clamp_to_grid(pos)
 	connect_with_unit(unit)
 
 
 func connect_with_unit(unit):
+	print(unit.name)
 	unit.stage = self
 	unit.connect("acted", self, "_on_Unit_acted")
 	unit.connect("dead", self, "_on_Unit_dead")
 	connect("player_phase_started", unit, "_on_Stage_player_phase_started")
 	connect("enemy_phase_started", unit, "_on_Stage_enemy_phase_started")
 	$Cursor.connect("confirm_issued", unit, "_on_Cursor_confirm_issued")
+	$Cursor.connect("cancel_issued", unit, "_on_Cursor_cancel_issued")
 
 
 func undo():

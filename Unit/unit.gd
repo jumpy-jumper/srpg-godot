@@ -8,9 +8,7 @@ enum UnitType {NULL, SUMMONER, FOLLOWER, GATE, ENEMY}
 
 export var unit_name = ""
 export var max_hp = 2
-export var hp = 2
-export var max_sp = 99
-export var sp = 5
+var hp = max_hp
 
 var stage = null
 
@@ -28,8 +26,6 @@ func get_state():
 		"unit_name" : unit_name,
 		"max_hp" : max_hp,
 		"hp" : hp,
-		"max_sp" : max_sp,
-		"sp" : sp,
 	}
 	return state
 
@@ -55,4 +51,8 @@ func _on_Stage_enemy_phase_started(cur_round):
 
 
 func _on_Cursor_confirm_issued(pos):
+	pass
+
+
+func _on_Cursor_cancel_issued(pos):
 	pass

@@ -18,7 +18,7 @@ func update_unit(unit):
 	if unit:
 		$"Unit UI".visible = true
 		$"Unit UI/Name".text = unit.unit_name
-		$"Unit UI/SP".text = str(unit.sp)
+		$"Unit UI/SP".text = "0"
 		$"Unit UI/Health".text = str(unit.hp)
 	else:
 		$"Unit UI".visible = false
