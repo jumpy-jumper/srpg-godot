@@ -12,68 +12,62 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Combat",
 "language": "GDScript",
-"path": "res://Scripts/Unit/combat.gd"
+"path": "res://Unit/combat.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
 "class": "Cursor",
 "language": "GDScript",
-"path": "res://Scripts/cursor.gd"
+"path": "res://Cursor/cursor.gd"
 }, {
 "base": "Unit",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://Scripts/Unit/enemy.gd"
-}, {
-"base": "Unit",
-"class": "EnemyUnit",
-"language": "GDScript",
-"path": "res://Scripts/Unit/enemy_unit.gd"
+"path": "res://Unit/Enemy Unit/enemy.gd"
 }, {
 "base": "PlayerUnit",
 "class": "Follower",
 "language": "GDScript",
-"path": "res://Scripts/Unit/follower.gd"
+"path": "res://Unit/Player Unit/Follower/follower.gd"
 }, {
-"base": "EnemyUnit",
+"base": "Reference",
 "class": "Gate",
 "language": "GDScript",
-"path": "res://Scripts/Unit/gate.gd"
+"path": "res://Unit/Enemy Unit/Gate/gate.gd"
 }, {
 "base": "Unit",
 "class": "PlayerUnit",
 "language": "GDScript",
-"path": "res://Scripts/Unit/player_unit.gd"
+"path": "res://Unit/Player Unit/player_unit.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "Stage",
 "language": "GDScript",
-"path": "res://Scripts/stage.gd"
+"path": "res://Stage/stage.gd"
 }, {
 "base": "PlayerUnit",
 "class": "Summoner",
 "language": "GDScript",
-"path": "res://Scripts/Unit/summoner.gd"
+"path": "res://Unit/Player Unit/Summoner/summoner.gd"
 }, {
-"base": "Resource",
+"base": "Reference",
 "class": "Terrain",
 "language": "GDScript",
-"path": "res://Scripts/terrain.gd"
+"path": "res://Stage/Terrain/terrain.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
 "class": "Unit",
 "language": "GDScript",
-"path": "res://Scripts/Unit/unit.gd"
+"path": "res://Unit/unit.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
 "class": "UnitPanel",
 "language": "GDScript",
-"path": "res://Scripts/unit_panel.gd"
+"path": "res://Stage/unit_panel.gd"
 } ]
 _global_script_class_icons={
 "Combat": "",
 "Cursor": "",
 "Enemy": "",
-"EnemyUnit": "",
 "Follower": "",
 "Gate": "",
 "PlayerUnit": "",
@@ -86,8 +80,13 @@ _global_script_class_icons={
 
 [application]
 
-config/name="SRPG"
-run/main_scene="res://Scenes/Stage/stage.tscn"
+config/name="Dream in Tiles (SRPG)"
+run/main_scene="res://Stage/stage.tscn"
+config/icon="res://Unit/Sprites/Blue/Eirika/blue_idle0.png"
+
+[autoload]
+
+Game="*res://game.tscn"
 
 [display]
 
@@ -145,7 +144,7 @@ ui_cancel={
 undo={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":88,"unicode":0,"echo":false,"script":null)
-, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 redo={
@@ -154,7 +153,13 @@ redo={
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+fullscreen={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777247,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [rendering]
 
+2d/snapping/use_gpu_pixel_snap=true
 quality/2d/use_pixel_snap=true

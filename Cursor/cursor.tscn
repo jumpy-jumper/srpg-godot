@@ -1,0 +1,40 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Cursor/Sprites/cursor_default1.png" type="Texture" id=1]
+[ext_resource path="res://Cursor/Sprites/cursor_selection1.png" type="Texture" id=2]
+[ext_resource path="res://Cursor/Sprites/cursor_default0.png" type="Texture" id=3]
+[ext_resource path="res://Cursor/Sprites/cursor_selection6.png" type="Texture" id=4]
+[ext_resource path="res://Cursor/Sprites/cursor_selection4.png" type="Texture" id=5]
+[ext_resource path="res://Cursor/Sprites/cursor_selection3.png" type="Texture" id=6]
+[ext_resource path="res://Cursor/Sprites/cursor_selection5.png" type="Texture" id=7]
+[ext_resource path="res://Cursor/Sprites/cursor_selection2.png" type="Texture" id=8]
+[ext_resource path="res://Cursor/cursor.gd" type="Script" id=9]
+[ext_resource path="res://Cursor/cursor_sprite.gd" type="Script" id=10]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ) ],
+"loop": false,
+"name": "select",
+"speed": 100.0
+} ]
+
+[node name="Cursor" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 4, 4 )
+frames = SubResource( 1 )
+playing = true
+script = ExtResource( 10 )
+[connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="_on_AnimatedSprite_animation_finished"]

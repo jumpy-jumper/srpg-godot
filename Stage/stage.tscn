@@ -1,0 +1,336 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Stage/stage.gd" type="Script" id=1]
+[ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=2]
+[ext_resource path="res://Cursor/cursor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Stage/Terrain/meadow.tres" type="Resource" id=5]
+[ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=6]
+[ext_resource path="res://Unit/Player Unit/Follower/follower.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Unit/Player Unit/Summoner/summoner.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=9]
+[ext_resource path="res://Unit/Enemy Unit/Gate/gate.gd" type="Script" id=10]
+[ext_resource path="res://Stage/stage_ui.gd" type="Script" id=11]
+[ext_resource path="res://Unit/Player Unit/Summoner/knoll.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Stage/State/state_panel.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Stage/State/state_ui.gd" type="Script" id=15]
+[ext_resource path="res://Stage/Terrain/mountain.tres" type="Resource" id=21]
+
+[sub_resource type="PackedScene" id=1]
+_bundled = {
+"base_scene": 0,
+"conn_count": 0,
+"conns": PoolIntArray(  ),
+"editable_instances": [  ],
+"names": PoolStringArray( "Gate", "script", "Sprite", "frame" ),
+"node_count": 2,
+"node_paths": [ NodePath(".") ],
+"nodes": PoolIntArray( -1, -1, 2147483647, 0, -1, 1, 1, 1, 0, 1073741824, -1, 2147483647, 262146, -1, 1, 3, 2, 0 ),
+"variants": [ null, ExtResource( 10 ), 1 ],
+"version": 2
+}
+
+[sub_resource type="PackedScene" id=2]
+_bundled = {
+"base_scene": 0,
+"conn_count": 0,
+"conns": PoolIntArray(  ),
+"editable_instances": [  ],
+"names": PoolStringArray( "Enemy", "script", "Sprite", "frame" ),
+"node_count": 2,
+"node_paths": [ NodePath(".") ],
+"nodes": PoolIntArray( -1, -1, 2147483647, 0, -1, 1, 1, 1, 0, 1073741824, -1, 2147483647, 262146, -1, 1, 3, 2, 0 ),
+"variants": [ null, null, 5 ],
+"version": 2
+}
+
+[sub_resource type="TileSet" id=3]
+0/name = "tilemap.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 64, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "tilemap.png 1"
+1/texture = ExtResource( 2 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 64, 64 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "tilemap.png 2"
+2/texture = ExtResource( 2 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 128, 0, 64, 64 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+
+[node name="Stage" type="Node"]
+script = ExtResource( 1 )
+summoner_template = ExtResource( 8 )
+follower_template = ExtResource( 7 )
+gate_template = SubResource( 1 )
+enemy_template = SubResource( 2 )
+terrain_types = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 21 ) ]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+zoom = Vector2( 0.7, 0.7 )
+
+[node name="UI" type="Control" parent="."]
+visible = false
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit UI" type="Control" parent="UI"]
+visible = false
+margin_left = 992.0
+margin_top = -416.0
+margin_right = 1032.0
+margin_bottom = -376.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UI/Unit UI"]
+modulate = Color( 1, 1, 1, 0.392157 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_top = 448.0
+margin_right = 216.0
+margin_bottom = 640.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="UI/Unit UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_top = 448.0
+margin_right = 216.0
+margin_bottom = 512.0
+custom_fonts/font = ExtResource( 9 )
+text = "ASDF"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SP" type="Label" parent="UI/Unit UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_top = 512.0
+margin_right = 216.0
+margin_bottom = 576.0
+custom_fonts/font = ExtResource( 9 )
+text = "17+12"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Label" parent="UI/Unit UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_top = 576.0
+margin_right = 216.0
+margin_bottom = 640.0
+custom_fonts/font = ExtResource( 9 )
+text = "Healthy"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Terrain UI" type="Control" parent="UI"]
+visible = false
+margin_left = 992.0
+margin_top = 480.0
+margin_right = 1032.0
+margin_bottom = 520.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UI/Terrain UI"]
+modulate = Color( 1, 1, 1, 0.392157 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_right = 216.0
+margin_bottom = 192.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="UI/Terrain UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_right = 216.0
+margin_bottom = 64.0
+custom_fonts/font = ExtResource( 9 )
+text = "Terrain"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Initiative Bonus" type="Label" parent="UI/Terrain UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_top = 64.0
+margin_right = 216.0
+margin_bottom = 128.0
+custom_fonts/font = ExtResource( 9 )
+text = "INI *3.0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Movement Cost" type="Label" parent="UI/Terrain UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_top = 128.0
+margin_right = 216.0
+margin_bottom = 192.0
+custom_fonts/font = ExtResource( 9 )
+text = "DEF *2.0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="State UI" type="Control" parent="UI"]
+visible = false
+margin_left = 32.0
+margin_top = 288.0
+margin_right = 72.0
+margin_bottom = 328.0
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="State Panel" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 352.0
+margin_right = -40.0
+margin_bottom = 312.0
+
+[node name="State Panel2" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 320.0
+margin_right = -40.0
+margin_bottom = 280.0
+
+[node name="State Panel3" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 288.0
+margin_right = -40.0
+margin_bottom = 248.0
+
+[node name="State Panel4" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 256.0
+margin_right = -40.0
+margin_bottom = 216.0
+
+[node name="State Panel5" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 224.0
+margin_right = -40.0
+margin_bottom = 184.0
+
+[node name="State Panel6" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 192.0
+margin_right = -40.0
+margin_bottom = 152.0
+
+[node name="State Panel7" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 160.0
+margin_right = -40.0
+margin_bottom = 120.0
+
+[node name="State Panel8" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 128.0
+margin_right = -40.0
+margin_bottom = 88.0
+
+[node name="State Panel9" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 96.0
+margin_right = -40.0
+margin_bottom = 56.0
+
+[node name="State Panel10" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 64.0
+margin_right = -40.0
+margin_bottom = 24.0
+
+[node name="State Panel11" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_top = 32.0
+margin_right = -40.0
+margin_bottom = -8.0
+
+[node name="State Panel12" parent="UI/State UI" instance=ExtResource( 14 )]
+margin_right = -40.0
+margin_bottom = -40.0
+
+[node name="Terrain" type="TileMap" parent="."]
+tile_set = SubResource( 3 )
+format = 1
+tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 65536, 2, 0, 65537, 2, 0, 65538, 2, 0, 65539, 2, 0, 65540, 2, 0, 65541, 2, 0, 65542, 2, 0, 65543, 2, 0, 65544, 2, 0, 65545, 2, 0, 65546, 2, 0, 65547, 2, 0, 65548, 2, 0, 65549, 2, 0, 131072, 2, 0, 131073, 2, 0, 131074, 2, 0, 131075, 2, 0, 131076, 2, 0, 131077, 2, 0, 131078, 2, 0, 131079, 2, 0, 131080, 2, 0, 131081, 2, 0, 131082, 2, 0, 131083, 2, 0, 131084, 2, 0, 131085, 2, 0, 196608, 2, 0, 196609, 2, 0, 196610, 2, 0, 196611, 1, 0, 196612, 1, 0, 196613, 1, 0, 196614, 0, 0, 196615, 0, 0, 196616, 2, 0, 196617, 0, 0, 196618, 1, 0, 196619, 0, 0, 196620, 2, 0, 196621, 2, 0, 262144, 2, 0, 262145, 2, 0, 262146, 0, 0, 262147, 1, 0, 262148, 1, 0, 262149, 2, 0, 262150, 0, 0, 262151, 1, 0, 262152, 1, 0, 262153, 0, 0, 262154, 0, 0, 262155, 2, 0, 262156, 2, 0, 262157, 2, 0, 327680, 2, 0, 327681, 2, 0, 327682, 2, 0, 327683, 2, 0, 327684, 2, 0, 327685, 2, 0, 327686, 2, 0, 327687, 2, 0, 327688, 2, 0, 327689, 2, 0, 327690, 2, 0, 327691, 2, 0, 327692, 2, 0, 327693, 2, 0, 393216, 2, 0, 393217, 2, 0, 393218, 2, 0, 393219, 2, 0, 393220, 2, 0, 393221, 2, 0, 393222, 2, 0, 393223, 2, 0, 393224, 2, 0, 393225, 2, 0, 393226, 2, 0, 393227, 2, 0, 393228, 2, 0, 393229, 2, 0, 458752, 2, 0, 458753, 2, 0, 458754, 2, 0, 458755, 2, 0, 458756, 2, 0, 458757, 2, 0, 458758, 2, 0, 458759, 2, 0, 458760, 2, 0, 458761, 2, 0, 458762, 2, 0, 458763, 2, 0, 458764, 2, 0, 458765, 2, 0 )
+
+[node name="Units" type="Node2D" parent="."]
+
+[node name="Player" type="Node2D" parent="Units"]
+
+[node name="Summoners" type="Node2D" parent="Units/Player"]
+
+[node name="Knoll" parent="Units/Player/Summoners" instance=ExtResource( 13 )]
+position = Vector2( 128, 256 )
+sp = 20
+
+[node name="Followers" type="Node2D" parent="Units/Player"]
+
+[node name="Enemy" type="Node2D" parent="Units"]
+
+[node name="Gates" type="Node2D" parent="Units/Enemy"]
+
+[node name="Enemies" type="Node2D" parent="Units/Enemy"]
+
+[node name="Cursor" parent="." instance=ExtResource( 3 )]
+rapid_fire_wait = 10
