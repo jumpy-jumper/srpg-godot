@@ -65,7 +65,7 @@ func _process(_delta):
 			old_keyboard_pos = position
 	elif enable_mouse_input:
 		if stage:
-			position = stage.clamp_to_grid(mouse_pos)
+			position = stage.get_clamped_position(mouse_pos)
 		else:
 			position = mouse_pos
 

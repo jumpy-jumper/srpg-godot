@@ -28,7 +28,7 @@ func _on_Stage_enemy_phase_started(cur_round):
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	if operatable and stage.get_unit_at(pos) == self and stage.selected_unit == null:
-		stage.select(self)
+		stage.select_unit(self)
 		
 		
 func _on_Cursor_cancel_issued(pos):
