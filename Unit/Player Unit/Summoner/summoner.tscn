@@ -14,7 +14,7 @@ base_atk = 0
 base_def = 0
 
 [node name="Sprite" parent="." index="0"]
-frame = 5
+frame = 4
 
 [node name="HP" parent="UI" index="0"]
 visible = false
@@ -27,8 +27,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -40.0
-margin_right = 24.0
+margin_left = -20.0
+margin_right = 44.0
+margin_bottom = 59.0
 custom_fonts/font = ExtResource( 4 )
 text = "100
 "

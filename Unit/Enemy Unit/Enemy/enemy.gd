@@ -9,10 +9,6 @@ func get_unit_type():
 	return UnitType.ENEMY
 
 
-func act():
-	pass
-
-
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	var unit = stage.get_unit_at(pos)
@@ -21,7 +17,7 @@ func _on_Cursor_confirm_issued(pos):
 		if unit != null:
 			if unit is PlayerUnit:
 				var dmg = (base_atk - unit.base_def) if unit is Follower else 1
-				unit.take_damage(dmg)
+				unit.take_damage(dmg, DamageType.PHYSICAL)
 				emit_signal("acted", self, "attacked " + unit.unit_name \
 					+ " for " + str(dmg))
 				stage.selected_unit = null
@@ -31,9 +27,18 @@ func _on_Cursor_confirm_issued(pos):
 			stage.deselect_unit()
 	elif stage.selected_unit == null and pos == position:
 		stage.select_unit(self)
-	
-	
+
+
 func _on_Cursor_cancel_issued(pos):
 	._on_Cursor_cancel_issued(pos)
 	if stage.selected_unit == self:
 		stage.deselect_unit()
+
+
+###############################################################################
+#        Tick and basic action                                                #
+###############################################################################
+
+
+func tick():
+	pass

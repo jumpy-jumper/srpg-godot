@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Unit/Enemy Unit/Enemy/enemy.gd" type="Script" id=1]
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=2]
 
 [node name="Enemy" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+base_max_hp = 2000
+
+[node name="Sprite" parent="." index="0"]
+frame = 7
 
 [node name="Selected" parent="." index="2"]
 modulate = Color( 1, 0.382813, 0.382813, 1 )

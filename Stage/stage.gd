@@ -2,8 +2,8 @@ class_name Stage
 extends Node
 
 
-signal player_phase_started(cur_round)
-signal enemy_phase_started(cur_round)
+signal player_phase_started(cur_tick)
+signal enemy_phase_started(cur_tick)
 signal undo_issued()
 signal redo_issued()
 
@@ -21,7 +21,7 @@ export(Array, Resource) var terrain_types
 
 
 func _ready():
-	for cat in $Units.get_children():
+	for cat in $Level/Units.get_children():
 		for cat2 in cat.get_children():
 			for u in cat2.get_children():
 				connect_with_unit(u)
@@ -45,15 +45,27 @@ func _process(_delta):
 func _on_Cursor_confirm_issued(pos):
 	if not get_unit_at(pos) and selected_unit == null:
 		start_enemy_phase()
-		for follower in $Units/Player/Followers.get_children():
-			follower.act()
-		for enemy in $Units/Enemy/Enemies.get_children():
-			enemy.act()
+		for follower in $Level/Units/Player/Followers.get_children():
+			follower.tick()
+		for enemy in $Level/Units/Enemy/Enemies.get_children():
+			enemy.tick()
 		start_player_phase()
 
 
+func _on_Cursor_cancel_issued(pos):
+	pass
+
+
+func _on_Cursor_moved(pos):
+	pass
+
+
 func _on_Unit_acted(unit, description):
-	append_state("[" + unit.unit_name + "] " + description)
+	unit_acted_this_tick = true
+
+
+func _on_Unit_dead(unit):
+	pass
 
 
 ###############################################################################
@@ -62,16 +74,16 @@ func _on_Unit_acted(unit, description):
 
 
 func get_cell_size():
-	return $Terrain.cell_size().x	# The grid is the same size in both axes.
+	return $Level/Terrain.cell_size.x	# The grid is the same size in both axes.
 
 
 # Returns the real-world position of the origin the tile in the given position.
 func get_clamped_position(pos):
-	return $Terrain.map_to_world($Terrain.world_to_map(pos))
+	return $Level/Terrain.map_to_world($Level/Terrain.world_to_map(pos))
 
 
 func get_unit_at(pos):
-	for cat in $Units.get_children():
+	for cat in $Level/Units.get_children():
 		for cat2 in cat.get_children():
 			for u in cat2.get_children():
 				if u.position == pos:
@@ -81,27 +93,29 @@ func get_unit_at(pos):
 
 # Returns the terrain resource for the given real-world position.
 func get_terrain_at(pos):
-	var cell = $Terrain.get_cellv($Terrain.world_to_map(pos))
+	var cell = $Level/Terrain.get_cellv($Level/Terrain.world_to_map(pos))
 	return terrain_types[cell] if cell >= 0 else null
 
 
 ###############################################################################
-#        Round logic                                                          #
+#        Tick logic                                                          #
 ###############################################################################
 
 
-var cur_round = 0
+var cur_tick = 0
 var player_phase = true
+var unit_acted_this_tick = false
 
 
 func start_player_phase():
-	cur_round += 1
-	emit_signal("player_phase_started", cur_round)
-	append_state("Round " + str(cur_round) + " started.")
+	cur_tick += 1
+	unit_acted_this_tick = false
+	emit_signal("player_phase_started", cur_tick)
+	append_state("Tick " + str(cur_tick) + " started.")
 
 
 func start_enemy_phase():
-	emit_signal("enemy_phase_started", cur_round)
+	emit_signal("enemy_phase_started", cur_tick)
 
 
 ###############################################################################
@@ -132,15 +146,15 @@ func connect_with_unit(unit):
 
 func add_unit(unit, pos):
 	if unit is Summoner:
-			$Units/Player/Summoners.add_child(unit)
+			$Level/Units/Player/Summoners.add_child(unit)
 			unit.operatable = player_phase
 	elif unit is Follower:
-			$Units/Player/Followers.add_child(unit)
+			$Level/Units/Player/Followers.add_child(unit)
 			unit.operatable = player_phase
 	elif unit is Gate:
-			$Units/Enemy/Gates.add_child(unit)
+			$Level/Units/Enemy/Gates.add_child(unit)
 	elif unit is Enemy:
-			$Units/Enemy/Enemies.add_child(unit)
+			$Level/Units/Enemy/Enemies.add_child(unit)
 	
 	unit.global_position = get_clamped_position(pos)
 	connect_with_unit(unit)
@@ -158,13 +172,13 @@ var cur_state_index = -1
 
 func get_state():
 	var units = []
-	for cat in $Units.get_children():
+	for cat in $Level/Units.get_children():
 		for cat2 in cat.get_children():
 			for u in cat2.get_children():
 				units.append(to_json(u.get_state()))
 
 	var state = {
-		"cur_round" : cur_round,
+		"cur_tick" : cur_tick,
 		"player_phase" : player_phase,
 		"units" : units,
 	}
@@ -183,10 +197,10 @@ func append_state(description):
 
 
 func load_state(state):
-	cur_round = state["cur_round"]
+	cur_tick = state["cur_tick"]
 	player_phase = state["player_phase"]
 
-	for cat in $Units.get_children():
+	for cat in $Level/Units.get_children():
 		for cat2 in cat.get_children():
 			for u in cat2.get_children():
 				u.queue_free()
@@ -196,16 +210,16 @@ func load_state(state):
 		var unit
 		if u["unit_type"] == Unit.UnitType.SUMMONER:
 				unit = summoner_template.instance()
-				$Units/Player/Summoners.add_child(unit)
+				$Level/Units/Player/Summoners.add_child(unit)
 		elif u["unit_type"] == Unit.UnitType.FOLLOWER:
 				unit = follower_template.instance()
-				$Units/Player/Followers.add_child(unit)
+				$Level/Units/Player/Followers.add_child(unit)
 		elif u["unit_type"] == Unit.UnitType.GATE:
 				unit = gate_template.instance()
-				$Units/Enemy/Gates.add_child(unit)
+				$Level/Units/Enemy/Gates.add_child(unit)
 		elif u["unit_type"] == Unit.UnitType.ENEMY:
 				unit = enemy_template.instance()
-				$Units/Enemy/Enemies.add_child(unit)
+				$Level/Units/Enemy/Enemies.add_child(unit)
 
 		connect_with_unit(unit)
 		unit.load_state(u)
@@ -214,7 +228,10 @@ func load_state(state):
 
 
 func undo():
-	if cur_state_index > 0:
+	if unit_acted_this_tick:
+		load_state(states[cur_state_index])
+		unit_acted_this_tick = false
+	elif cur_state_index > 0:
 		load_state(states[cur_state_index - 1])
 		cur_state_index -= 1
 		

@@ -5,16 +5,6 @@ extends Unit
 var operatable = false
 
 
-func get_state():
-	var state = .get_state()
-	state["operatable"] = operatable
-	return state
-	
-	
-func load_state(state):
-	.load_state(state)
-
-
 func _on_Stage_player_phase_started(cur_round):
 	._on_Stage_player_phase_started(cur_round)
 	operatable = true
@@ -33,3 +23,18 @@ func _on_Cursor_confirm_issued(pos):
 		
 func _on_Cursor_cancel_issued(pos):
 	._on_Cursor_cancel_issued(pos)
+
+
+###############################################################################
+#        State logic                                                          #
+###############################################################################
+
+
+func get_state():
+	var state = .get_state()
+	state["operatable"] = operatable
+	return state
+	
+	
+func load_state(state):
+	.load_state(state)

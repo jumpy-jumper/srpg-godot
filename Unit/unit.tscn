@@ -22,23 +22,19 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
-hp = 200
+hp = 2000
 sp = 0
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 2 )
-frame = 1
 playing = true
 centered = false
 offset = Vector2( -8, -16 )
 
-[node name="UI" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="UI" type="Node2D" parent="."]
+position = Vector2( 20, 40 )
+z_index = 1
 
 [node name="HP" type="ProgressBar" parent="UI"]
 anchor_left = 0.5
@@ -81,3 +77,5 @@ modulate = Color( 0.662745, 1, 0.615686, 1 )
 position = Vector2( 32, 32 )
 scale = Vector2( 5, 5 )
 texture = SubResource( 4 )
+
+[node name="Skills" type="Node" parent="."]

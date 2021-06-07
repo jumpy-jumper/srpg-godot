@@ -4,28 +4,17 @@ extends PlayerUnit
 
 enum Facing {RIGHT, DOWN, LEFT, UP}
 
+
 export(Array) var deployable_terrain = null
 export var cost = 9
+
 
 var facing = Facing.UP
 
 
-func get_unit_type():
-	return UnitType.FOLLOWER
-
-
-func get_state():
-	var state = .get_state()
-	state["facing"] = facing
-	return state
-
-
-func load_state(state):
-	.load_state(state)
-
-
-func act():
-	pass
+###############################################################################
+#        Main logic                                                           #
+###############################################################################
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -43,3 +32,32 @@ func _on_Cursor_cancel_issued(pos):
 		emit_signal("acted", self, "retreated")
 	elif stage.selected_unit == self:
 		stage.deselect_unit()
+
+
+###############################################################################
+#        Tick and basic action                                                #
+###############################################################################
+
+
+func tick():
+	for skill in $Skills.get_children():
+		skill.tick()
+
+
+###############################################################################
+#        State logic                                                          #
+###############################################################################
+
+
+func get_unit_type():
+	return UnitType.FOLLOWER
+
+
+func get_state():
+	var state = .get_state()
+	state["facing"] = facing
+	return state
+
+
+func load_state(state):
+	.load_state(state)
