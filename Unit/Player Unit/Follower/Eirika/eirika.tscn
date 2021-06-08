@@ -8,7 +8,7 @@ unit_name = "Eirika"
 deployable_terrain = [ ExtResource( 2 ) ]
 
 [node name="Sprite" parent="." index="0"]
-frame = 7
+frame = 2
 
 [node name="Basic Attack" parent="Skills" index="0"]
-skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 1, -1 ), Vector2( 0, 1 ), Vector2( 0, -1 ), Vector2( 1, 1 ) ]
+skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 1, -1 ), Vector2( 0, 1 ), Vector2( 0, -1 ), Vector2( 1, 1 ), Vector2( 4, 0 ), Vector2( 2, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 2, -1 ) ]

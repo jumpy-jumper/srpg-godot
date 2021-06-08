@@ -154,6 +154,7 @@ func connect_with_unit(unit):
 	$Cursor.connect("confirm_issued", unit, "_on_Cursor_confirm_issued")
 	$Cursor.connect("cancel_issued", unit, "_on_Cursor_cancel_issued")
 	$Cursor.connect("moved", unit, "_on_Cursor_moved")
+	$Cursor.connect("hovered", unit, "_on_Cursor_hovered")
 	
 
 func add_unit(unit, pos):

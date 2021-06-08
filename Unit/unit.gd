@@ -29,6 +29,14 @@ func _on_Stage_enemy_phase_started(cur_tick):
 	pass
 
 
+func _on_Cursor_moved(pos):
+	pass
+
+
+func _on_Cursor_hovered(pos):
+	pass
+
+
 func _on_Cursor_confirm_issued(pos):
 	pass
 
@@ -81,6 +89,9 @@ func die():
 ###############################################################################
 
 
+var skill_template = preload("res://Skill/skill.tscn")
+
+
 enum UnitType {NULL, SUMMONER, FOLLOWER, GATE, ENEMY}
 
 
@@ -90,6 +101,7 @@ func get_type_of_self():
 
 func get_state():
 	var state = {
+		"node_name" : name,
 		"unit_type" : get_type_of_self(),
 		"pos_x" : position.x,
 		"pos_y" : position.y,
@@ -98,13 +110,29 @@ func get_state():
 		"base_max_hp" : base_max_hp,
 		"hp" : hp,
 		"base_max_sp" : base_max_sp,
-		"sp" : sp
+		"sp" : sp,
+		"skills" : []
 	}
+	
+	for s in $Skills.get_children():
+		state["skills"].append(s.get_state())
+	
 	return state
 
 
 func load_state(state):
 	for v in get_state().keys():
 		set(v, state[v])
+	name = state["node_name"]
 	position = Vector2(state["pos_x"], state["pos_y"])
 	$Sprite.frames = load(state["frames"])
+	
+	for skill in $Skills.get_children():
+		skill.queue_free()
+	
+	for skill_state in state["skills"]:
+		var new_skill = skill_template.instance()
+		$Skills.add_child(new_skill)
+		new_skill.script = load(skill_state["script_path"])
+		new_skill.unit = self
+		new_skill.load_state(skill_state)

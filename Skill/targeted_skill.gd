@@ -10,9 +10,13 @@ class_name TargetedSkill
 export(Array) var skill_range = [Vector2(0, 0)]
 
 
+func get_skill_range():
+	return skill_range
+
+
 func get_units_in_range_of_type(unit_type):
 	var ret = []
-	for pos in skill_range:
+	for pos in get_skill_range():
 		var u = unit.stage.get_unit_at(unit.position + pos * unit.stage.get_cell_size())
 		if u and u.get_type_of_self() == unit_type:
 			ret.append(u)
@@ -47,8 +51,26 @@ func select_targets(units):
 
 
 func distance_comparison(a, b):
-	return (a.position - unit.position).length_squared() < (b.position - unit.position).length_squared()
+	return abs((a.position - unit.position).length_squared()) < abs((b.position - unit.position).length_squared())
 
 
 func lowest_hp_percentage_comparison(a, b):
 	return float(a.hp) / a.base_max_hp < float(b.hp) / b.base_max_hp
+
+
+###############################################################################
+#        State logic                                                          #
+###############################################################################
+
+
+func get_state():
+	var state = .get_state()
+	state["skill_range"] = var2str(skill_range)
+	state["target_count"] = target_count
+	state["targeting_priority"] = targeting_priority
+	return state
+
+
+func load_state(state):
+	.load_state(state)
+	skill_range = str2var(state["skill_range"])

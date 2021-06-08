@@ -71,6 +71,7 @@ position = Vector2( 192, 320 )
 
 [node name="Eirika" parent="Units/Player/Followers" instance=ExtResource( 6 )]
 position = Vector2( 512, 320 )
+facing = 90
 
 [node name="Enemy" type="Node2D" parent="Units"]
 
@@ -82,7 +83,7 @@ position = Vector2( 512, 320 )
 position = Vector2( 576, 320 )
 
 [node name="Dog3" parent="Units/Enemy/Enemies" instance=ExtResource( 2 )]
-position = Vector2( 640, 320 )
+position = Vector2( 704, 320 )
 
 [node name="Dog4" parent="Units/Enemy/Enemies" instance=ExtResource( 2 )]
 position = Vector2( 896, 384 )

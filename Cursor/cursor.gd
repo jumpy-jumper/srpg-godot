@@ -7,6 +7,7 @@ extends Node2D
 
 
 signal moved(pos)
+signal hovered(pos)
 signal confirm_issued(pos)
 signal cancel_issued(pos)
 
@@ -79,6 +80,8 @@ func _process(_delta):
 
 	if position != previous:
 		emit_signal("moved", position)
+		
+	emit_signal("hovered", position)
 
 	old_mouse_pos = get_global_mouse_position()
 

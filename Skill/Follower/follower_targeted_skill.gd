@@ -1,9 +1,13 @@
-extends Node
-class_name Skill
+extends TargetedSkill
+class_name FollowerTargetedSkill
 
 
-onready var unit = $"../.."
-
+func get_skill_range():
+	var ret = []
+	for r in .get_skill_range():
+		ret.append(r.rotated(deg2rad(unit.facing)).round())
+	return ret
+	
 
 ###############################################################################
 #        State logic                                                          #
@@ -11,14 +15,9 @@ onready var unit = $"../.."
 
 
 func get_state():
-	var state = {
-		"node_name" : name,
-		"script_path" : get_script().get_path()
-	}
+	var state = .get_state()
 	return state
 
 
 func load_state(state):
-	for v in state.keys():
-		set(v, state[v])
-	name = state["node_name"]
+	.load_state(state)
