@@ -17,6 +17,11 @@ var facing = Facing.UP
 ###############################################################################
 
 
+func _ready():
+	yield(get_tree(), "idle_frame")
+	$Range.update_range($"Skills/Basic Attack".skill_range, stage.get_cell_size())
+
+
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	if stage.selected_unit == self and stage.get_unit_at(pos) == null:
@@ -32,6 +37,14 @@ func _on_Cursor_cancel_issued(pos):
 		emit_signal("acted", self, "retreated")
 	elif stage.selected_unit == self:
 		stage.deselect_unit()
+
+
+func _on_Cursor_moved(pos):
+	if position == pos:
+		$Range.update_range($"Skills/Basic Attack".skill_range, stage.get_cell_size())
+		$Range.visible = true
+	else:
+		$Range.visible = false
 
 
 ###############################################################################
