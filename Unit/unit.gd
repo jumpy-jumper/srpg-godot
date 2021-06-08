@@ -92,11 +92,11 @@ func die():
 var skill_template = preload("res://Skill/skill.tscn")
 
 
-enum UnitType {NULL, SUMMONER, FOLLOWER, GATE, ENEMY}
+enum UnitType {UNDEFINED, SUMMONER, FOLLOWER, GATE, ENEMY}
 
 
 func get_type_of_self():
-	return UnitType.NULL
+	return UnitType.UNDEFINED
 
 
 func get_state():

@@ -8,11 +8,15 @@ signal undo_issued()
 signal redo_issued()
 
 
-export(PackedScene) var summoner_template
-export(PackedScene) var follower_template
-export(PackedScene) var gate_template
-export(PackedScene) var enemy_template
 export(Array, Resource) var terrain_types
+
+
+var followers_cache = []
+var summoners_cache = []
+var enemies_cache = []
+
+
+onready var level = get_tree().get_nodes_in_group("Level")[0]
 
 
 ###############################################################################
@@ -21,10 +25,15 @@ export(Array, Resource) var terrain_types
 
 
 func _ready():
-	for cat in $Level/Units.get_children():
-		for cat2 in cat.get_children():
-			for u in cat2.get_children():
-				connect_with_unit(u)
+	for u in level.get_children():
+		if u is Unit:
+			connect_with_unit(u)
+			if u is Follower:
+				followers_cache.append(u)
+			elif u is Summoner:
+				summoners_cache.append(u)
+			elif u is Enemy:
+				enemies_cache.append(u)
 
 	$Cursor.stage = self
 
@@ -67,7 +76,12 @@ func _on_Unit_acted(unit, description):
 
 
 func _on_Unit_dead(unit):
-	pass
+	if unit is Follower:
+		followers_cache.erase(unit)
+	elif unit is Summoner:
+		summoners_cache.erase(unit)
+	elif unit is Enemy:
+		enemies_cache.erase(unit)
 
 
 ###############################################################################
@@ -76,26 +90,24 @@ func _on_Unit_dead(unit):
 
 
 func get_cell_size():
-	return $Level/Terrain.cell_size.x	# The grid is the same size in both axes.
+	return level.get_node("Terrain").cell_size.x	# The grid is the same size in both axes.
 
 
 # Returns the real-world position of the origin the tile in the given position.
 func get_clamped_position(pos):
-	return $Level/Terrain.map_to_world($Level/Terrain.world_to_map(pos))
+	return level.get_node("Terrain").map_to_world(level.get_node("Terrain").world_to_map(pos))
 
 
 func get_unit_at(pos):
-	for cat in $Level/Units.get_children():
-		for cat2 in cat.get_children():
-			for u in cat2.get_children():
-				if u.position == pos:
+	for u in followers_cache + summoners_cache + enemies_cache:
+		if u.position == pos:
 					return u
 	return null
 
 
 # Returns the terrain resource for the given real-world position.
 func get_terrain_at(pos):
-	var cell = $Level/Terrain.get_cellv($Level/Terrain.world_to_map(pos))
+	var cell = level.get_node("Terrain").get_cellv(level.get_node("Terrain").world_to_map(pos))
 	return terrain_types[cell] if cell >= 0 else null
 
 
@@ -111,10 +123,8 @@ var unit_acted_this_tick = false
 
 func advance_tick():
 	start_enemy_phase()
-	for cat in $Level/Units/.get_children():
-		for cat2 in cat.get_children():
-			for unit in cat2.get_children():
-				unit.tick()
+	for u in followers_cache + summoners_cache + enemies_cache:
+		u.tick()
 	start_player_phase()
 
 
@@ -159,15 +169,13 @@ func connect_with_unit(unit):
 
 func add_unit(unit, pos):
 	if unit is Summoner:
-			$Level/Units/Player/Summoners.add_child(unit)
+			summoners_cache.append(unit)
 			unit.operatable = player_phase
 	elif unit is Follower:
-			$Level/Units/Player/Followers.add_child(unit)
+			followers_cache.append(unit)
 			unit.operatable = player_phase
-	elif unit is Gate:
-			$Level/Units/Enemy/Gates.add_child(unit)
 	elif unit is Enemy:
-			$Level/Units/Enemy/Enemies.add_child(unit)
+			enemies_cache.append(unit)
 	
 	unit.global_position = get_clamped_position(pos)
 	connect_with_unit(unit)
@@ -183,12 +191,16 @@ var state_description = []
 var cur_state_index = -1
 
 
+var summoner_template = preload("res://Unit/Player Unit/Summoner/summoner.tscn")
+var follower_template = preload("res://Unit/Player Unit/Follower/follower.tscn")
+var gate_template = null
+var enemy_template = preload("res://Unit/Enemy Unit/Enemy/enemy.tscn")
+
+
 func get_state():
 	var units = []
-	for cat in $Level/Units.get_children():
-		for cat2 in cat.get_children():
-			for u in cat2.get_children():
-				units.append(to_json(u.get_state()))
+	for u in followers_cache + summoners_cache + enemies_cache:
+		units.append(to_json(u.get_state()))
 
 	var state = {
 		"cur_tick" : cur_tick,
@@ -213,26 +225,26 @@ func load_state(state):
 	cur_tick = state["cur_tick"]
 	player_phase = state["player_phase"]
 
-	for cat in $Level/Units.get_children():
-		for cat2 in cat.get_children():
-			for u in cat2.get_children():
-				u.queue_free()
+	for u in followers_cache + summoners_cache + enemies_cache:
+		u.queue_free()
+	
+	followers_cache = []
+	summoners_cache = []
+	enemies_cache = []
 
 	for u in state["units"]:
 		u = parse_json(u)
 		var unit
 		if u["unit_type"] == Unit.UnitType.SUMMONER:
 				unit = summoner_template.instance()
-				$Level/Units/Player/Summoners.add_child(unit)
+				summoners_cache.append(unit)
 		elif u["unit_type"] == Unit.UnitType.FOLLOWER:
 				unit = follower_template.instance()
-				$Level/Units/Player/Followers.add_child(unit)
-		elif u["unit_type"] == Unit.UnitType.GATE:
-				unit = gate_template.instance()
-				$Level/Units/Enemy/Gates.add_child(unit)
+				followers_cache.append(unit)
 		elif u["unit_type"] == Unit.UnitType.ENEMY:
 				unit = enemy_template.instance()
-				$Level/Units/Enemy/Enemies.add_child(unit)
+				enemies_cache.append(unit)
+		add_child(unit)
 
 		connect_with_unit(unit)
 		unit.load_state(u)
