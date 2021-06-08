@@ -176,6 +176,7 @@ func add_unit(unit, pos):
 			unit.operatable = player_phase
 	elif unit is Enemy:
 			enemies_cache.append(unit)
+	add_child(unit)
 	
 	unit.global_position = get_clamped_position(pos)
 	connect_with_unit(unit)

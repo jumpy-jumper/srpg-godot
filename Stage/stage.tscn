@@ -1,14 +1,12 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Levels/test_level.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Cursor/cursor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Stage/round_panel.gd" type="Script" id=4]
 [ext_resource path="res://Stage/Terrain/meadow.tres" type="Resource" id=5]
 [ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=6]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=9]
-[ext_resource path="res://Stage/UI/stage_unit_panel.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Stage/State/state_panel.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Stage/State/state_ui.gd" type="Script" id=15]
 [ext_resource path="res://Stage/camera.gd" type="Script" id=16]
 [ext_resource path="res://Stage/Terrain/mountain.tres" type="Resource" id=21]
 
@@ -25,158 +23,47 @@ script = ExtResource( 16 )
 z_index = 1
 rapid_fire_wait = 7
 
-[node name="UI" type="Control" parent="."]
-visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Terrain UI" type="Control" parent="UI"]
-visible = false
-margin_left = 992.0
-margin_top = 480.0
-margin_right = 1032.0
-margin_bottom = 520.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="UI/Terrain UI"]
-modulate = Color( 1, 1, 1, 0.392157 )
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -40.0
-margin_right = 216.0
-margin_bottom = 192.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Name" type="Label" parent="UI/Terrain UI"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -40.0
-margin_right = 216.0
-margin_bottom = 64.0
-custom_fonts/font = ExtResource( 9 )
-text = "Terrain"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Initiative Bonus" type="Label" parent="UI/Terrain UI"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -40.0
-margin_top = 64.0
-margin_right = 216.0
-margin_bottom = 128.0
-custom_fonts/font = ExtResource( 9 )
-text = "INI *3.0"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Movement Cost" type="Label" parent="UI/Terrain UI"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -40.0
-margin_top = 128.0
-margin_right = 216.0
-margin_bottom = 192.0
-custom_fonts/font = ExtResource( 9 )
-text = "DEF *2.0"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="State UI" type="Control" parent="UI"]
-visible = false
-margin_left = 32.0
-margin_top = 288.0
-margin_right = 72.0
-margin_bottom = 328.0
-script = ExtResource( 15 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="State Panel" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 352.0
-margin_right = -40.0
-margin_bottom = 312.0
-
-[node name="State Panel2" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 320.0
-margin_right = -40.0
-margin_bottom = 280.0
-
-[node name="State Panel3" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 288.0
-margin_right = -40.0
-margin_bottom = 248.0
-
-[node name="State Panel4" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 256.0
-margin_right = -40.0
-margin_bottom = 216.0
-
-[node name="State Panel5" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 224.0
-margin_right = -40.0
-margin_bottom = 184.0
-
-[node name="State Panel6" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 192.0
-margin_right = -40.0
-margin_bottom = 152.0
-
-[node name="State Panel7" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 160.0
-margin_right = -40.0
-margin_bottom = 120.0
-
-[node name="State Panel8" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 128.0
-margin_right = -40.0
-margin_bottom = 88.0
-
-[node name="State Panel9" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 96.0
-margin_right = -40.0
-margin_bottom = 56.0
-
-[node name="State Panel10" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 64.0
-margin_right = -40.0
-margin_bottom = 24.0
-
-[node name="State Panel11" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_top = 32.0
-margin_right = -40.0
-margin_bottom = -8.0
-
-[node name="State Panel12" parent="UI/State UI" instance=ExtResource( 14 )]
-margin_right = -40.0
-margin_bottom = -40.0
-
-[node name="Unit Panel" parent="UI" instance=ExtResource( 11 )]
-visible = false
-margin_left = 672.0
-margin_top = 32.0
-margin_right = 640.0
-margin_bottom = 64.0
-
 [node name="TestLevel" parent="." instance=ExtResource( 2 )]
+
+[node name="UI" type="Control" parent="."]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Round Panel" type="Control" parent="UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UI/Round Panel"]
+modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 320.0
+margin_bottom = 128.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Round Panel"]
+margin_left = 32.0
+margin_top = 40.0
+margin_right = 320.0
+margin_bottom = 128.0
+custom_fonts/normal_font = ExtResource( 9 )
+bbcode_enabled = true
+bbcode_text = "[center]100 // North-4
+E S W N[/center]"
+text = "100 // North-4
+E S W N"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
-[connection signal="moved" from="Cursor" to="UI/Unit Panel" method="_on_Cursor_moved"]
 [connection signal="moved" from="Cursor" to="." method="_on_Cursor_moved"]
 [connection signal="moved" from="Cursor" to="Camera2D" method="_on_Cursor_moved"]
