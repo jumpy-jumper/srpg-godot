@@ -32,24 +32,26 @@ func _ready():
 
 
 func _process(_delta):
-	if Input.is_action_just_pressed("undo"):
-		undo()
-	elif Input.is_action_just_pressed("redo"):
-		redo()
-	elif Input.is_action_just_pressed("debug_state_log"):
+	if Input.is_action_just_pressed("debug_state_log"):
 		for i in range (len(state_description)) :
 			print(("> " if i == cur_state_index else "  ") + state_description[i])
 		print()
 
 
+func _input(event):
+	if event.is_action_pressed("undo"):
+		undo()
+	elif event.is_action_pressed("redo"):
+		if unit_acted_this_tick:
+			advance_tick()
+		elif cur_state_index < len(states) - 1:
+			redo()
+		else:
+			advance_tick()
+
+
 func _on_Cursor_confirm_issued(pos):
-	if not get_unit_at(pos) and selected_unit == null:
-		start_enemy_phase()
-		for follower in $Level/Units/Player/Followers.get_children():
-			follower.tick()
-		for enemy in $Level/Units/Enemy/Enemies.get_children():
-			enemy.tick()
-		start_player_phase()
+	pass
 
 
 func _on_Cursor_cancel_issued(pos):
@@ -105,6 +107,15 @@ func get_terrain_at(pos):
 var cur_tick = 0
 var player_phase = true
 var unit_acted_this_tick = false
+
+
+func advance_tick():
+	start_enemy_phase()
+	for cat in $Level/Units/.get_children():
+		for cat2 in cat.get_children():
+			for unit in cat2.get_children():
+				unit.tick()
+	start_player_phase()
 
 
 func start_player_phase():

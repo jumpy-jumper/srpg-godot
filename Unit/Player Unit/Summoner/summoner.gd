@@ -36,7 +36,8 @@ func _on_Cursor_cancel_issued(pos):
 
 
 func tick():
-	pass
+	for skill in $Skills.get_children():
+		skill.tick()
 
 
 ###############################################################################
@@ -44,7 +45,7 @@ func tick():
 ###############################################################################
 
 
-func get_unit_type():
+func get_type_of_self():
 	return UnitType.SUMMONER
 
 

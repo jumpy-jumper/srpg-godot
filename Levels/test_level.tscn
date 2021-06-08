@@ -79,6 +79,7 @@ position = Vector2( 512, 320 )
 [node name="Enemies" type="Node2D" parent="Units/Enemy"]
 
 [node name="Dog2" parent="Units/Enemy/Enemies" instance=ExtResource( 2 )]
+position = Vector2( 576, 320 )
 
 [node name="Dog3" parent="Units/Enemy/Enemies" instance=ExtResource( 2 )]
 position = Vector2( 640, 320 )
@@ -93,4 +94,4 @@ position = Vector2( 1024, 320 )
 position = Vector2( 640, 576 )
 
 [node name="Eye2" parent="Units/Enemy/Enemies" instance=ExtResource( 3 )]
-position = Vector2( 768, 128 )
+position = Vector2( 512, 384 )

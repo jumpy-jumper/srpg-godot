@@ -5,8 +5,12 @@ extends Unit
 export var base_mov = 3
 
 
-func get_unit_type():
+func get_type_of_self():
 	return UnitType.ENEMY
+
+
+func get_enemy_unit_type():
+	return UnitType.FOLLOWER
 
 
 func _on_Cursor_confirm_issued(pos):

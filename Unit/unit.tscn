@@ -17,7 +17,6 @@ bg_color = Color( 0.341176, 1, 1, 1 )
 load_path = "res://.import/cursor_default0.png-8adba084a8cf7015ba3f2250c4fff637.stex"
 
 [node name="Unit" type="Node2D"]
-position = Vector2( 576, 320 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -28,6 +27,7 @@ sp = 0
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 2 )
+frame = 3
 playing = true
 centered = false
 offset = Vector2( -8, -16 )

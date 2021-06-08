@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://Skill/Follower/basic_skill_follower.gd" type="Script" id=1]
-
-[node name="Follower Basic" type="Node"]
-script = ExtResource( 1 )
-skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ) ]

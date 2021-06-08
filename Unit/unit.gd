@@ -84,13 +84,13 @@ func die():
 enum UnitType {NULL, SUMMONER, FOLLOWER, GATE, ENEMY}
 
 
-func get_unit_type():
+func get_type_of_self():
 	return UnitType.NULL
 
 
 func get_state():
 	var state = {
-		"unit_type" : get_unit_type(),
+		"unit_type" : get_type_of_self(),
 		"pos_x" : position.x,
 		"pos_y" : position.y,
 		"frames" : $Sprite.frames.resource_path,

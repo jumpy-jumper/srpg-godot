@@ -8,4 +8,4 @@ unit_name = "Cyclops"
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 2
+frame = 1

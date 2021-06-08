@@ -49,8 +49,12 @@ func tick():
 ###############################################################################
 
 
-func get_unit_type():
+func get_type_of_self():
 	return UnitType.FOLLOWER
+
+
+func get_type_of_enemy():
+	return UnitType.ENEMY
 
 
 func get_state():
