@@ -89,12 +89,14 @@ func _process(_delta):
 export var rapid_fire_wait = 20
 export var rapid_fire_interval = 3
 
+
 var timers = {
 	"ui_right" : 0,
 	"ui_left" : 0,
 	"ui_down" : 0,
 	"ui_up" : 0,
 }
+
 
 func get_movement(dir):
 	if Input.is_action_just_released(dir) or not Input.is_action_pressed(dir):

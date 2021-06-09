@@ -61,33 +61,13 @@ func get_movement():
 	return base_mov
 
 
-func get_path():
+func get_path_to_target():
+	var astar = stage.get_astar_graph(traversable)
+
 	target = stage.summoners_cache[0]
-	
-	var astar = AStar2D.new()
-	
-	var terrain = stage.level.get_node("Terrain")
-	var this_tile = terrain.world_to_map(position)
-	astar.add_point(0, this_tile)
-	
-	var adjacent = [Vector2(0, 1), Vector2(0, -1), Vector2(-1, 0), Vector2(1, 0)]
-	var visited_id = [0]
-	var visited_pos = [this_tile]
-	while len(visited_id) > 0:
-		var cur_id = visited_id.pop_back()
-		var cur_pos = astar.get_point_position(cur_id)
-		for a in adjacent:
-			if terrain.get_cellv(cur_pos + a) != -1 \
-				and not cur_pos + a in visited_pos \
-				and stage.terrain_types[terrain.get_cellv(cur_pos + a)] in traversable:
-					var id = astar.get_available_point_id()
-					visited_id.append(id)
-					visited_pos.append(cur_pos + a)
-					astar.add_point(id, cur_pos + a)
-					astar.connect_points(cur_id, id)
+	var path = astar.get_point_path(astar.get_closest_point(stage.terrain.world_to_map(position)), 
+		astar.get_closest_point(stage.terrain.world_to_map(target.position)))
 
-
-	var path = astar.get_point_path(0, astar.get_closest_point(terrain.world_to_map(target.position)))
 	var ret = []
 	for v in path:
 		ret.append(v * stage.get_cell_size())
@@ -95,7 +75,7 @@ func get_path():
 
 
 func move():
-	var path = get_path()
+	var path = get_path_to_target()
 
 	var movement = get_movement()
 	movement = movement[(stage.cur_tick - 1) % len(movement)]

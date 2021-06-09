@@ -17,6 +17,7 @@ var enemies_cache = []
 
 
 onready var level = get_tree().get_nodes_in_group("Level")[0]
+onready var terrain = level.get_node("Terrain")
 
 
 ###############################################################################
@@ -90,12 +91,12 @@ func _on_Unit_dead(unit):
 
 
 func get_cell_size():
-	return level.get_node("Terrain").cell_size.x	# The grid is the same size in both axes.
+	return terrain.cell_size.x	# The grid is the same size in both axes.
 
 
 # Returns the real-world position of the origin the tile in the given position.
 func get_clamped_position(pos):
-	return level.get_node("Terrain").map_to_world(level.get_node("Terrain").world_to_map(pos))
+	return terrain.map_to_world(terrain.world_to_map(pos))
 
 
 func get_unit_at(pos):
@@ -107,8 +108,28 @@ func get_unit_at(pos):
 
 # Returns the terrain resource for the given real-world position.
 func get_terrain_at(pos):
-	var cell = level.get_node("Terrain").get_cellv(level.get_node("Terrain").world_to_map(pos))
+	var cell = terrain.get_cellv(terrain.world_to_map(pos))
 	return terrain_types[cell] if cell >= 0 else null
+
+
+func get_astar_graph(traversable):
+	var astar = AStar2D.new()
+	
+	var all_tiles = terrain.get_used_cells()
+	
+	for pos in all_tiles:
+		if terrain_types[terrain.get_cellv(pos)] in traversable:
+			astar.add_point(astar.get_available_point_id(), pos)
+	
+	var adjacent = [Vector2(0, 1), Vector2(1, 0)]
+	for p in astar.get_points():
+		for a in adjacent:
+			var closest = astar.get_closest_point(astar.get_point_position(p) + a)
+			if (astar.get_point_position(closest) - astar.get_point_position(p)).length() == 1:
+				astar.connect_points(p, closest)
+
+
+	return astar
 
 
 ###############################################################################
