@@ -65,5 +65,5 @@ __meta__ = {
 
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
-[connection signal="moved" from="Cursor" to="." method="_on_Cursor_moved"]
 [connection signal="moved" from="Cursor" to="Camera2D" method="_on_Cursor_moved"]
+[connection signal="moved" from="Cursor" to="." method="_on_Cursor_moved"]
