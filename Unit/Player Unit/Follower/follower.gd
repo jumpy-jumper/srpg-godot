@@ -13,14 +13,15 @@ export var cost = 9
 
 func _ready():
 	yield(get_tree(), "idle_frame")
-	$Range.update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size())
+	if stage:
+		$Range.update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size())
 
 
 func _process(_delta):
 	if (Input.is_action_just_pressed("debug_change_facing")):
 		if (stage.get_node("Cursor").position == position):
 			facing = int(facing + 90) % 360
-	if $Range.visible:
+	if $Range.visible and stage:
 		$Range.update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size())
 
 

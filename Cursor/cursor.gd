@@ -50,7 +50,7 @@ func _process(_delta):
 			position = old_keyboard_pos
 
 		if stage:
-			position += stage.level.get_node("Terrain").cell_size * movement
+			position += stage.get_cell_size() * movement
 			stage.get_terrain_at(position)
 			if stage.get_terrain_at(position) == null:
 				if stage.get_terrain_at(Vector2(position.x, previous.y)) != null:

@@ -59,6 +59,8 @@ tile_data = PoolIntArray( 131073, 2, 0, 131074, 2, 0, 131075, 2, 0, 131076, 2, 0
 
 [node name="Girl" parent="." instance=ExtResource( 1 )]
 position = Vector2( 192, 320 )
+base_atk = 500
+base_def = 200
 
 [node name="Eye" parent="." instance=ExtResource( 3 )]
 position = Vector2( 960, 192 )
