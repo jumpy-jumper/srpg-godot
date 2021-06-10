@@ -1,7 +1,6 @@
 extends Node
 
 
-
 func _ready():
 	var vector = "[ "
 	for cell in $TileMap.get_used_cells():

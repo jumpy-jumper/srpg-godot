@@ -20,12 +20,14 @@ current = true
 script = ExtResource( 16 )
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
+position = Vector2( -64, -64 )
 z_index = 1
 rapid_fire_wait = 7
 
 [node name="TestLevel" parent="." instance=ExtResource( 2 )]
 
 [node name="UI" type="Control" parent="."]
+visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -55,10 +57,6 @@ margin_right = 320.0
 margin_bottom = 128.0
 custom_fonts/normal_font = ExtResource( 9 )
 bbcode_enabled = true
-bbcode_text = "[center]100 // North-4
-E S W N[/center]"
-text = "100 // North-4
-E S W N"
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -11,7 +11,11 @@ export(Array) var skill_range = [Vector2(0, 0)]
 
 
 func get_skill_range():
-	return skill_range
+	var ret = skill_range
+	for status in unit.get_node("Statuses").get_children():
+		if status.stat_overwrites.has("range"):
+			ret = status.stat_overwrites["range"]
+	return ret
 
 
 func get_units_in_range_of_type(unit_type):

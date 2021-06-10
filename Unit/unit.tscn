@@ -29,7 +29,7 @@ sp = 0
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 2 )
-frame = 7
+frame = 5
 playing = true
 centered = false
 offset = Vector2( -8, -16 )
@@ -87,3 +87,5 @@ scale = Vector2( 5, 5 )
 texture = SubResource( 4 )
 
 [node name="Skills" type="Node" parent="."]
+
+[node name="Statuses" type="Node" parent="."]
