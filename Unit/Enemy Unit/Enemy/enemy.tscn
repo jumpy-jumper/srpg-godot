@@ -20,7 +20,7 @@ centered = false
 offset = Vector2( 32, 32 )
 
 [node name="Sprite" parent="." index="1"]
-frame = 0
+frame = 7
 
 [node name="Selected" parent="." index="4"]
 modulate = Color( 1, 0.382813, 0.382813, 1 )

@@ -13,7 +13,7 @@ bg_color = Color( 0.603922, 1, 0.270588, 1 )
 [sub_resource type="StyleBoxFlat" id=2]
 
 [sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.341176, 1, 1, 1 )
+bg_color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="StreamTexture" id=4]
 load_path = "res://.import/cursor_default0.png-8adba084a8cf7015ba3f2250c4fff637.stex"
@@ -29,7 +29,7 @@ sp = 0
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 2 )
-frame = 5
+frame = 3
 playing = true
 centered = false
 offset = Vector2( -8, -16 )

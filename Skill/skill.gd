@@ -10,10 +10,13 @@ onready var unit = $"../.."
 ###############################################################################
 
 
-enum Activation { NONE, TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO }
-
-
+enum Activation { NONE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO }
 export(Activation) var activation = Activation.NONE
+export var base_cost = 15
+export var base_initial_sp = 10
+var sp = base_initial_sp
+export var base_duration = 30
+var ticks_left = base_duration
 
 
 var active = false
@@ -22,21 +25,48 @@ var active = false
 func _ready():
 	if activation == Activation.DEPLOYMENT:
 		activate()
+	sp = get_initial_sp()
+
+
+func get_initial_sp():
+	return base_initial_sp
+
+
+func get_cost():
+	if activation == Activation.SP_MANUAL or activation == Activation.SP_AUTO:
+		return base_cost
+	else:
+		return 0
+
+
+func get_duration():
+	return base_duration
 
 
 func tick():
-	if activation == Activation.TICK:
+	if activation == Activation.EVERY_TICK:
 		activate()
 		deactivate()
-
+	elif activation == Activation.SP_MANUAL or activation == Activation.SP_AUTO:
+		if not active:
+			var sp_cost = get_cost()
+			sp = min(sp + 1, sp_cost)
+			if activation == Activation.SP_AUTO and sp == sp_cost:
+				activate()
+		else:
+			ticks_left = max(0, ticks_left - 1)
+			if ticks_left == 0:
+				deactivate()
 
 func activate():
 	active = true
+	ticks_left = get_duration()
 	add_statuses()
 
 
 func deactivate():
 	active = false
+	sp = 0
 	remove_statuses()
 
 
