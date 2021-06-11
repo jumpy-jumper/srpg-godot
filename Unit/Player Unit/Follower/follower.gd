@@ -14,15 +14,33 @@ export var cost = 9
 func _ready():
 	yield(get_tree(), "idle_frame")
 	if stage:
-		$Range.update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size())
+		update_range()
 
 
 func _process(_delta):
 	if (Input.is_action_just_pressed("debug_change_facing")):
 		if (stage.get_node("Cursor").position == position):
 			facing = int(facing + 90) % 360
+	elif (Input.is_action_just_pressed("debug_activate_skill")):
+		if (stage.get_node("Cursor").position == position):
+			for skill in $Skills.get_children():
+				if skill.activation != skill.Activation.NONE \
+					and skill.activation != skill.Activation.TICK:
+						if skill.active:
+							skill.deactivate()
+						else:
+							skill.activate()
 	if $Range.visible and stage:
-		$Range.update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size())
+		update_range()
+
+
+func update_range():
+	var skill_active = false
+	for skill in $Skills.get_children():
+		if skill.active:
+			skill_active = true
+			break
+	$Range.update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size(), skill_active)
 
 
 func _on_Cursor_confirm_issued(pos):

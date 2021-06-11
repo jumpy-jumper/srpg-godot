@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Status/status.gd" type="Script" id=1]
 
-[node name="status_truesilverslash" type="Node"]
+[node name="True Silver Slash" type="Node"]
 script = ExtResource( 1 )
 stat_overwrites = {
 "range": [ Vector2( 0, -5 ), Vector2( 0, -4 ), Vector2( 1, -4 ), Vector2( 0, -3 ), Vector2( 1, -3 ), Vector2( 2, -3 ), Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 2, -2 ), Vector2( 3, -2 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 3, -1 ), Vector2( 4, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 4, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 2, 2 ), Vector2( 3, 2 ), Vector2( 0, 3 ), Vector2( 1, 3 ), Vector2( 2, 3 ), Vector2( 0, 4 ), Vector2( 1, 4 ), Vector2( 0, 5 ) ]

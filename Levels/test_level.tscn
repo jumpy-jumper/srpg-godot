@@ -64,5 +64,3 @@ base_def = 200
 
 [node name="Eye" parent="." instance=ExtResource( 3 )]
 position = Vector2( 960, 192 )
-hp = 2000
-sp = 0
