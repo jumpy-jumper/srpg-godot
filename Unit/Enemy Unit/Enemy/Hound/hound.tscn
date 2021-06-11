@@ -5,8 +5,8 @@
 
 [node name="Hound" instance=ExtResource( 2 )]
 unit_name = "Hound"
-base_mov = [ 1, 1, 1, 2 ]
+base_movement = [ 1, 1, 1, 2 ]
 
 [node name="Sprite" parent="." index="1"]
 frames = ExtResource( 1 )
-frame = 5
+frame = 0

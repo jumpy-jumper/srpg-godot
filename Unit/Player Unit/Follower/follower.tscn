@@ -20,4 +20,7 @@ modulate = Color( 0.576471, 1, 0.968627, 1 )
 [node name="Basic Attack" type="Node" parent="Skills" index="0"]
 script = ExtResource( 3 )
 activation = 1
+base_skill_cost = 0
+base_skill_initial_sp = 0
+base_skill_duration = 0
 skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ) ]

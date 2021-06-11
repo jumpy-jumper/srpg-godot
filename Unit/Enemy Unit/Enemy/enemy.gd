@@ -17,7 +17,8 @@ func _on_Cursor_confirm_issued(pos):
 	if stage.selected_unit == self:
 		if unit != null:
 			if unit is PlayerUnit:
-				var dmg = (base_atk - unit.base_def) if unit is Follower else 1
+				var dmg = (get_stat_after_statuses("atk", base_atk) \
+					- unit.get_stat_after_statuses("def", unit.base_def)) if unit is Follower else 1
 				unit.take_damage(dmg, DamageType.PHYSICAL)
 				emit_signal("acted", self, "attacked " + unit.unit_name \
 					+ " for " + str(dmg))
@@ -53,12 +54,8 @@ func tick():
 var target = null
 
 
-export var base_mov = [0, 1, 0, 1]
+export var base_movement = [0, 1, 0, 1]
 export(Array, Resource) var traversable = []
-
-
-func get_movement():
-	return base_mov
 
 
 func get_path_to_target():
@@ -77,7 +74,7 @@ func get_path_to_target():
 func move():
 	var path = get_path_to_target()
 
-	var movement = get_movement()
+	var movement = get_stat_after_statuses("movement", base_movement)
 	movement = movement[(stage.cur_tick - 1) % len(movement)]
 	
 	if len(path) > movement:

@@ -4,6 +4,16 @@ extends PlayerUnit
 
 export(Array, Resource) var followers = []
 
+	
+
+###############################################################################
+#        Stats logic                                                          #
+###############################################################################
+
+
+export var base_max_sp = 99
+export (int) var sp = 20
+
 
 ###############################################################################
 #        Main logic                                                           #
@@ -54,6 +64,8 @@ func get_state():
 	state["followers"] = []
 	for r in followers:
 		state["followers"].append(r.resource_path)
+	state["base_max_sp"] = base_max_sp
+	state["sp"] = sp
 	return state
 
 

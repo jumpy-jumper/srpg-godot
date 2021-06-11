@@ -11,10 +11,9 @@ script = ExtResource( 1 )
 base_atk = 0
 base_def = 0
 hp = 3
-sp = 20
 
 [node name="Sprite" parent="." index="0"]
-frame = 3
+frame = 4
 
 [node name="HP" parent="UI" index="0"]
 visible = false

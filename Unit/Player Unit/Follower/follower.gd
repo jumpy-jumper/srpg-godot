@@ -92,12 +92,6 @@ var base_block_range = [Vector2(0, -1)]
 var is_blocking = [false, false, false, false]
 
 
-func get_block_range():
-	var ret = []
-	for r in base_block_range:
-		ret.append(r.rotate(deg2rad(facing)))
-
-
 func attempt_block(enemy, pos):
 	pass
 

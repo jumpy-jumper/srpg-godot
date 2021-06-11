@@ -52,14 +52,45 @@ func _on_Cursor_cancel_issued(pos):
 
 export var base_level = 1
 export var base_max_hp = 2000
-export var base_max_sp = 99
 export var base_atk = 500
 export var base_def = 200
 export var base_res = 0
 
-export (int) var hp = base_max_hp	
-export (int) var sp = 20
+export (int) var hp = base_max_hp
 
+
+func get_stat_after_statuses(stat_name, base_value):
+	var ret = base_value
+	
+	if stat_name == "movement":
+		for status in $Statuses.get_children():
+			if status.movement_overwrite:
+				return status.movement_overwrite
+			elif status.movement_bonus:
+				for i in range(len(ret)):
+					ret[i] += status.movement_bonus[i]
+		return ret
+	
+	if stat_name == "skill_range":
+		for status in $Statuses.get_children():
+			if status.skill_range_overwrite:
+				return status.skill_range_overwrite
+		return ret
+	
+	var additive_multiplier = 1.0 
+	var multiplicative_multiplier = 1.0
+
+	for status in $Statuses.get_children():
+		if status.stat_overwrites.has(stat_name):
+			return status.stat_overwrites[stat_name]
+		if status.stat_flat_bonuses.has(stat_name):
+			ret += status.stat_flat_bonuses[stat_name]
+		if status.stat_additive_multipliers.has(stat_name):
+			additive_multiplier += status.stat_additive_multipliers[stat_name]
+		if status.stat_multiplicative_multipliers.has(stat_name):
+			multiplicative_multiplier *= status.stat_multiplicative_multipliers[stat_name]
+	
+	return ret * additive_multiplier * multiplicative_multiplier
 
 
 ###############################################################################
@@ -109,8 +140,6 @@ func get_state():
 		"unit_name" : unit_name,
 		"base_max_hp" : base_max_hp,
 		"hp" : hp,
-		"base_max_sp" : base_max_sp,
-		"sp" : sp,
 		"skills" : []
 	}
 	

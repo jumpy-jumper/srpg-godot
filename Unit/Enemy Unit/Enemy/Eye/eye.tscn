@@ -8,9 +8,9 @@
 
 [node name="Eye" instance=ExtResource( 2 )]
 unit_name = "Eye"
-base_mov = [ 0, 1, 1, 1 ]
+base_movement = [ 0, 1, 1, 1 ]
 traversable = [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ) ]
 
 [node name="Sprite" parent="." index="1"]
 frames = ExtResource( 1 )
-frame = 4
+frame = 1
