@@ -144,26 +144,3 @@ func distance_comparison(a, b):
 func lowest_hp_percentage_comparison(a, b):
 	return float(a.hp) / a.get_stat_after_statuses("max_hp", a.base_max_hp) <\
 		float(b.hp) / b.get_stat_after_statuses("max_hp", b.base_max_hp)
-
-
-###############################################################################
-#        State logic                                                          #
-###############################################################################
-
-
-func get_state():
-	var state = {
-		"node_name" : name,
-		"script_path" : get_script().get_path()
-	}
-	state["base_skill_range"] = var2str(base_skill_range)
-	state["base_skill_target_count"] = base_skill_target_count
-	state["targeting_priority"] = targeting_priority
-	return state
-
-
-func load_state(state):
-	for v in state.keys():
-		set(v, state[v])
-	name = state["node_name"]
-	base_skill_range = str2var(state["base_skill_range"])

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Skill/Follower/tss_status.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Skill/skill.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=4]
+[ext_resource path="res://Unit/Follower/Joshua/joshua.tres" type="SpriteFrames" id=5]
+
+[node name="Joshua" instance=ExtResource( 1 )]
+unit_name = "Joshua"
+deployable_terrain = [ ExtResource( 4 ) ]
+
+[node name="Sprite" parent="." index="0"]
+frames = ExtResource( 5 )
+frame = 1
+
+[node name="Basic Attack" parent="Skills" index="0"]
+base_skill_range = [ Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ) ]
+
+[node name="Truesilver Slash" parent="Skills" index="1" instance=ExtResource( 3 )]
+activation = 4
+base_skill_cost = 30
+base_skill_initial_sp = 20
+base_skill_duration = 15
+statuses = [ ExtResource( 2 ) ]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Levels/test_level.tscn" type="PackedScene" id=2]
@@ -6,9 +6,24 @@
 [ext_resource path="res://Stage/round_panel.gd" type="Script" id=4]
 [ext_resource path="res://Stage/Terrain/meadow.tres" type="Resource" id=5]
 [ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=6]
+[ext_resource path="res://Fonts/calibri.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=9]
-[ext_resource path="res://Stage/camera.gd" type="Script" id=16]
 [ext_resource path="res://Stage/Terrain/mountain.tres" type="Resource" id=21]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Camera2D
+
+
+onready var stage = $\"..\"
+
+
+func _on_Cursor_moved(pos):
+	pass
+"
+
+[sub_resource type="DynamicFont" id=2]
+size = 200
+font_data = ExtResource( 7 )
 
 [node name="Stage" type="Node"]
 script = ExtResource( 1 )
@@ -17,7 +32,7 @@ terrain_types = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 21 ) ]
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
-script = ExtResource( 16 )
+script = SubResource( 1 )
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
 position = Vector2( -64, -64 )
@@ -27,12 +42,12 @@ rapid_fire_wait = 7
 [node name="TestLevel" parent="." instance=ExtResource( 2 )]
 
 [node name="UI" type="Control" parent="."]
-visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Round Panel" type="Control" parent="UI"]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 4 )
@@ -61,7 +76,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
-[connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
+[node name="Game Over" type="Node2D" parent="UI"]
+visible = false
+z_index = 1
+
+[node name="Panel" type="Panel" parent="UI/Game Over"]
+modulate = Color( 1, 1, 1, 0.647059 )
+margin_right = 1280.0
+margin_bottom = 768.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/Game Over"]
+margin_right = 1280.0
+margin_bottom = 768.0
+custom_fonts/font = SubResource( 2 )
+text = "YOU LOSE :("
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="moved" from="Cursor" to="Camera2D" method="_on_Cursor_moved"]
-[connection signal="moved" from="Cursor" to="." method="_on_Cursor_moved"]

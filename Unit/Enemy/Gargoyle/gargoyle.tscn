@@ -1,0 +1,10 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Unit/Enemy/Gargoyle/gargoyle.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Unit/Enemy/enemy.tscn" type="PackedScene" id=2]
+
+[node name="Gargoyle" instance=ExtResource( 2 )]
+unit_name = "Gargoyle"
+
+[node name="Sprite" parent="." index="0"]
+frames = ExtResource( 1 )

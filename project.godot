@@ -17,22 +17,17 @@ _global_script_classes=[ {
 "base": "Unit",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://Unit/Enemy Unit/Enemy/enemy.gd"
+"path": "res://Unit/Enemy/enemy.gd"
 }, {
-"base": "PlayerUnit",
+"base": "Unit",
 "class": "Follower",
 "language": "GDScript",
-"path": "res://Unit/Player Unit/Follower/follower.gd"
+"path": "res://Unit/Follower/follower.gd"
 }, {
 "base": "Reference",
 "class": "Gate",
 "language": "GDScript",
-"path": "res://Unit/Enemy Unit/Gate/gate.gd"
-}, {
-"base": "Unit",
-"class": "PlayerUnit",
-"language": "GDScript",
-"path": "res://Unit/Player Unit/player_unit.gd"
+"path": "res://Unit/Gate/gate.gd"
 }, {
 "base": "Node",
 "class": "Skill",
@@ -49,12 +44,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Status/status.gd"
 }, {
-"base": "PlayerUnit",
+"base": "Unit",
 "class": "Summoner",
 "language": "GDScript",
-"path": "res://Unit/Player Unit/Summoner/summoner.gd"
+"path": "res://Unit/Summoner/summoner.gd"
 }, {
-"base": "Reference",
+"base": "Resource",
 "class": "Terrain",
 "language": "GDScript",
 "path": "res://Stage/Terrain/terrain.gd"
@@ -69,7 +64,6 @@ _global_script_class_icons={
 "Enemy": "",
 "Follower": "",
 "Gate": "",
-"PlayerUnit": "",
 "Skill": "",
 "Stage": "",
 "Status": "",
@@ -82,7 +76,7 @@ _global_script_class_icons={
 
 config/name="Dream in Tiles (SRPG)"
 run/main_scene="res://Stage/stage.tscn"
-config/icon="res://Unit/Player Unit/Follower/Eirika/idle0.png"
+config/icon="res://Unit/Follower/Eirika/idle0.png"
 
 [autoload]
 

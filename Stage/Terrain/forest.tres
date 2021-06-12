@@ -5,5 +5,3 @@
 [resource]
 script = ExtResource( 1 )
 terrain_name = "Forest"
-ini_bonus = 1.5
-cost = 2
