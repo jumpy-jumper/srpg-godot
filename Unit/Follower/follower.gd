@@ -77,6 +77,8 @@ func update_range():
 func die():
 	.die()
 	facing = Facing.RIGHT
+	for skill in $Skills.get_children():
+		skill.initialize()
 	if summoner:
 		summoner.recover_faith(ceil(cost / 2))
 	for enemy in blocked:

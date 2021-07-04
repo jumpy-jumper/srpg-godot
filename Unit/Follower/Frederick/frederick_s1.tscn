@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Skill/skill.gd" type="Script" id=1]
+[ext_resource path="res://Unit/Follower/Frederick/frederick_s1_status.tscn" type="PackedScene" id=2]
+
+[node name="Unwavering Will" type="Node"]
+script = ExtResource( 1 )
+description = "ATK +120%. Incoming damage becomes 0%."
+activation = 3
+base_skill_cost = 48
+base_skill_initial_sp = 24
+base_skill_duration = 16
+statuses = [ ExtResource( 2 ) ]

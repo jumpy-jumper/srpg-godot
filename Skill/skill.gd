@@ -24,12 +24,6 @@ var ticks_left = base_skill_duration
 var active = false
 
 
-func _ready():
-	if activation == Activation.DEPLOYMENT:
-		activate()
-	sp = unit.get_stat_after_statuses("skill_initial_sp", base_skill_initial_sp)
-
-
 func tick():
 	if activation == Activation.EVERY_TICK:
 		activate()
@@ -57,6 +51,13 @@ func deactivate():
 	active = false
 	sp = 0
 	remove_statuses()
+
+
+func initialize():
+	active = false
+	sp = unit.get_stat_after_statuses("skill_initial_sp", base_skill_initial_sp)
+	if activation == Activation.DEPLOYMENT:
+		activate()
 
 
 ###############################################################################

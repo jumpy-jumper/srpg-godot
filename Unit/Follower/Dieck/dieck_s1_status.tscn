@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Status/status.gd" type="Script" id=1]
+
+[node name="dieck_s1_status" type="Node"]
+script = ExtResource( 1 )
+stat_flat_bonuses = {
+"block_count": 1,
+"res": 50,
+"target_count": 3
+}
+stat_additive_multipliers = {
+"atk": 1.4,
+"def": 0.7
+}
+skill_range_overwrite = [ Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ) ]
+block_range_overwrite = [ Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ) ]
