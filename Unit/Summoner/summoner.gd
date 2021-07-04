@@ -28,6 +28,8 @@ func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if hp <= 0:
 		die()
 
+func recover_faith(amount = 1):
+	faith = min(faith + amount, get_stat_after_statuses("max_faith", base_max_faith))
 
 func die():
 	emit_signal("dead", self)

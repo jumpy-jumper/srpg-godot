@@ -7,11 +7,11 @@ export(SkillType) var skill_type = SkillType.ATTACK
 
 export(Unit.DamageType) var damage_type = Unit.DamageType.PHYSICAL
 
-export var attack_count = 1
+export var base_attack_count = 1
 
 func activate():
 	.activate()
-	for i in range (unit.get_stat_after_statuses("attack_count", attack_count)):
+	for i in range (unit.get_stat_after_statuses("attack_count", base_attack_count)):
 		if skill_type == SkillType.ATTACK: 
 			var possible_targets = []
 			match(unit.get_type_of_self()):

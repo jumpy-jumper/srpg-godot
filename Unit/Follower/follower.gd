@@ -40,6 +40,8 @@ func _on_Cursor_confirm_issued(pos):
 		print("ATK: " + str(get_stat_after_statuses("atk", base_atk)))
 		print("DEF: " + str(get_stat_after_statuses("def", base_def)))
 		print("RES: " + str(get_stat_after_statuses("res", base_res)))
+		print("Target Count: " + str(get_stat_after_statuses("target_count", $"Skills/Basic Attack".base_target_count)))
+		print("Attack Count: " + str(get_stat_after_statuses("attack_count", $"Skills/Basic Attack".base_attack_count)))
 		print()
 
 
@@ -76,7 +78,7 @@ func die():
 	.die()
 	facing = Facing.RIGHT
 	if summoner:
-		summoner.faith += ceil(cost / 2)
+		summoner.recover_faith(ceil(cost / 2))
 	for enemy in blocked:
 		enemy.blocker = null
 

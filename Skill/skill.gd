@@ -45,6 +45,7 @@ func tick():
 			if ticks_left == 0:
 				deactivate()
 
+
 func activate():
 	if activation != Activation.NONE and activation != Activation.EVERY_TICK:
 		active = true
@@ -103,7 +104,7 @@ func get_skill_range():
 enum TargetingPriority { CLOSEST, LOWEST_HP_PERCENTAGE }
 
 
-export var base_skill_target_count = 1
+export var base_target_count = 1
 export(TargetingPriority) var targeting_priority = TargetingPriority.CLOSEST
 
 
@@ -116,7 +117,7 @@ func select_targets(units):
 		TargetingPriority.LOWEST_HP_PERCENTAGE:
 			units.sort_custom(self, "lowest_hp_percentage_comparison")
 	
-	for i in range(min(unit.get_stat_after_statuses("skill_target_count", base_skill_target_count), len(units))):
+	for i in range(min(unit.get_stat_after_statuses("target_count", base_target_count), len(units))):
 		ret.append(units[i])
 	
 	return ret

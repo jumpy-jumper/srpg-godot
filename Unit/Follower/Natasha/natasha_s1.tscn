@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Skill/skill.gd" type="Script" id=1]
+[ext_resource path="res://Unit/Follower/Natasha/natasha_s1_status.tscn" type="PackedScene" id=2]
+
+[node name="Emergency Tactics" type="Node"]
+script = ExtResource( 1 )
+description = "ATK +70%. Target count +2."
+activation = 3
+base_skill_cost = 20
+base_skill_initial_sp = 0
+base_skill_duration = 12
+statuses = [ ExtResource( 2 ) ]
