@@ -62,7 +62,7 @@ position = Vector2( 192, 320 )
 base_max_hp = 1
 
 [node name="Hound" parent="." instance=ExtResource( 2 )]
-position = Vector2( 768, 384 )
+position = Vector2( 1024, 320 )
 
 [node name="Hound2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 896, 320 )
+position = Vector2( 960, 320 )

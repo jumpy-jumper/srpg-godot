@@ -35,6 +35,12 @@ func _on_Cursor_confirm_issued(pos):
 	if stage.selected_unit == self and stage.get_unit_at(pos) == null:
 		position = pos
 		stage.deselect_unit()
+	elif pos == position:
+		print(unit_name)
+		print("ATK: " + str(get_stat_after_statuses("atk", base_atk)))
+		print("DEF: " + str(get_stat_after_statuses("def", base_def)))
+		print("RES: " + str(get_stat_after_statuses("res", base_res)))
+		print()
 
 
 func _on_Cursor_cancel_issued(pos):

@@ -4,6 +4,8 @@ class_name Skill
 
 onready var unit = $"../.."
 
+export(String, MULTILINE) var description = ""
+
 
 ###############################################################################
 #        Activation logic                                                     #

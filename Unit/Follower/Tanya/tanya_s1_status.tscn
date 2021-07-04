@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Status/status.gd" type="Script" id=1]
+
+[node name="Tanya S1 Status" type="Node"]
+script = ExtResource( 1 )
+stat_overwrites = {
+"attack_count": 5
+}
+stat_additive_multipliers = {
+"atk": -0.3
+}
