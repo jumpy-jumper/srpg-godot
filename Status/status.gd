@@ -11,3 +11,4 @@ export(Array, int) var movement_overwrite = null
 export(Array, int) var movement_flat_bonus = null
 
 export(Array, Vector2) var skill_range_overwrite = null
+export(Array, Vector2) var block_range_overwrite = null

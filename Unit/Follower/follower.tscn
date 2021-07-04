@@ -1,32 +1,20 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=3]
+[ext_resource path="res://Unit/Range/range.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Skill/basic_attack.gd" type="Script" id=4]
 
-[sub_resource type="PackedScene" id=1]
-_bundled = {
-"base_scene": 0,
-"conn_count": 0,
-"conns": PoolIntArray(  ),
-"editable_instances": [  ],
-"names": PoolStringArray( "PlayerUnit", "script" ),
-"node_count": 1,
-"node_paths": [  ],
-"nodes": PoolIntArray( -1, -1, 2147483647, 0, -1, 1, 1, 1, 0 ),
-"variants": [ ExtResource( 1 ), null ],
-"version": 2
-}
-
 [node name="Follower" instance=ExtResource( 1 )]
-script = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="0"]
-frame = 5
+frame = 6
 
-[node name="Range" parent="." index="1"]
-skill_inactive_color = Color( 0.223529, 1, 0.913725, 0.470588 )
-skill_active_color = Color( 1, 0.513726, 0.12549, 0.470588 )
+[node name="Skill Range" parent="Ranges" index="0"]
+inactive_color = Color( 0.223529, 1, 0.913725, 0.470588 )
+active_color = Color( 1, 0.513726, 0.12549, 0.470588 )
+
+[node name="Block Range" parent="Ranges" index="1" instance=ExtResource( 2 )]
+inactive_color = Color( 0.290196, 0.356863, 0.788235, 0.501961 )
 
 [node name="Selected" parent="." index="3"]
 modulate = Color( 0.576471, 1, 0.968627, 1 )

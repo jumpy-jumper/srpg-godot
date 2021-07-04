@@ -29,6 +29,7 @@ func _ready():
 
 
 func _process(_delta):
+		
 	if alive:
 		if stage:
 			$Selected.visible = stage.selected_unit == self
@@ -41,17 +42,18 @@ func _process(_delta):
 									skill.deactivate()
 								else:
 									skill.activate()
-		if $Range.visible and stage:
+		if $Ranges.visible and stage:
 			update_range()
 
 
 func update_range():
-	var skill_active = false
-	for skill in $Skills.get_children():
-		if skill.active:
-			skill_active = true
-			break
-	$Range.update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size(), skill_active)
+	if len($Skills.get_children()) > 0:
+		var skill_active = false
+		for skill in $Skills.get_children():
+			if skill.active:
+				skill_active = true
+				break
+		$"Ranges/Skill Range".update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size(), skill_active)
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -63,7 +65,7 @@ func _on_Cursor_cancel_issued(pos):
 
 
 func _on_Cursor_hovered(pos):
-	$Range.visible = position == pos
+	$Ranges.visible = position == pos
 		
 		
 func _on_Cursor_moved(pos):
@@ -71,6 +73,7 @@ func _on_Cursor_moved(pos):
 
 
 func tick():
+	print(name)
 	if alive:
 		for skill in $Skills.get_children():
 			skill.tick()
@@ -108,6 +111,12 @@ func get_stat_after_statuses(stat_name, base_value):
 				return status.skill_range_overwrite
 		return ret
 	
+	if stat_name == "block_range":
+		for status in $Statuses.get_children():
+			if status.block_range_overwrite:
+				return status.block_range_overwrite
+		return ret
+	
 	var additive_multiplier = 1.0 
 	var multiplicative_multiplier = 1.0
 
@@ -136,6 +145,13 @@ enum DamageType {PHYSICAL, MAGIC, TRUE}
 
 
 func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
+	amount *= get_stat_after_statuses("incoming_damage", 1)
+	
+	if damage_type == DamageType.PHYSICAL:
+		amount -= get_stat_after_statuses("def", base_def)
+	elif damage_type == DamageType.MAGIC:
+		amount *= (1 - (get_stat_after_statuses("res", base_res) / 100.0))
+	
 	hp -= max(amount, 0)
 	if hp <= 0:
 		die()
@@ -144,3 +160,18 @@ func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 func die():
 	emit_signal("dead", self)
 	alive = false
+
+
+
+###############################################################################
+#        Range logic                                                          #
+###############################################################################
+
+
+func get_units_in_range_of_type(_range, unit_type):
+	var ret = []
+	for pos in _range:
+		var u = stage.get_unit_at(position + pos * stage.get_cell_size())
+		if u and u.get_type_of_self() == unit_type:
+			ret.append(u)
+	return ret

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Unit/Range/range_indicator.gd" type="Script" id=1]
+[ext_resource path="res://Unit/Range/range_indicator_tile.tscn" type="PackedScene" id=2]
+
+[node name="Skill Range" type="Node2D"]
+z_index = 1
+script = ExtResource( 1 )
+range_indicator_tile = ExtResource( 2 )

@@ -90,24 +90,7 @@ export(Array) var base_skill_range = [Vector2(0, 0)]
 
 
 func get_skill_range():
-	var ret = unit.get_stat_after_statuses("skill_range", base_skill_range)
-	
-	if unit.get_type_of_self() == unit.UnitType.FOLLOWER:	
-		var rotated = []
-		for pos in ret:
-			rotated.append(pos.rotated(deg2rad(unit.facing)).round())
-		return rotated
-			
-	return ret
-
-
-func get_units_in_range_of_type(unit_type):
-	var ret = []
-	for pos in get_skill_range():
-		var u = unit.stage.get_unit_at(unit.position + pos * unit.stage.get_cell_size())
-		if u and u.get_type_of_self() == unit_type:
-			ret.append(u)
-	return ret
+	return unit.get_stat_after_statuses("skill_range", base_skill_range)
 
 
 ###############################################################################

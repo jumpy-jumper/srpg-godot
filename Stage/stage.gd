@@ -71,7 +71,7 @@ func get_clamped_position(pos):
 
 
 func get_all_units():
-	return followers_cache + enemies_cache + summoners_cache
+	return summoners_cache + followers_cache + enemies_cache
 
 
 func get_unit_at(pos):
@@ -87,13 +87,13 @@ func get_terrain_at(pos):
 	return terrain_types[cell] if cell >= 0 else null
 
 
-func get_astar_graph(traversable):
+func get_astar_graph(traversable_tiles):
 	var astar = AStar2D.new()
 	
 	var all_tiles = terrain.get_used_cells()
 	
 	for pos in all_tiles:
-		if terrain_types[terrain.get_cellv(pos)] in traversable:
+		if terrain_types[terrain.get_cellv(pos)] in traversable_tiles:
 			astar.add_point(astar.get_available_point_id(), pos)
 	
 	var adjacent = [Vector2(0, 1), Vector2(1, 0)]

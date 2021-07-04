@@ -6,7 +6,7 @@
 [ext_resource path="res://Stage/Terrain/meadow.tres" type="Resource" id=4]
 [ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=5]
 [ext_resource path="res://Skill/basic_attack.gd" type="Script" id=6]
-[ext_resource path="res://blank.png" type="Texture" id=7]
+[ext_resource path="res://Unit/Enemy/warning.png" type="Texture" id=7]
 
 [node name="Enemy" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
@@ -15,6 +15,7 @@ traversable = [ ExtResource( 5 ), ExtResource( 4 ) ]
 [node name="Blocked" type="Sprite" parent="." index="0"]
 visible = false
 modulate = Color( 0.996078, 1, 0.447059, 1 )
+position = Vector2( -15.874, -13.0961 )
 scale = Vector2( 0.2, 0.2 )
 z_index = 1
 texture = ExtResource( 7 )
@@ -22,11 +23,11 @@ centered = false
 offset = Vector2( 32, 32 )
 
 [node name="Sprite" parent="." index="1"]
-frame = 1
+frame = 2
 
-[node name="Range" parent="." index="2"]
-skill_inactive_color = Color( 1, 0.556863, 0.556863, 0.47451 )
-skill_active_color = Color( 1, 0.556863, 0.556863, 0.47451 )
+[node name="Skill Range" parent="Ranges" index="0"]
+inactive_color = Color( 0.898039, 0.521569, 0.521569, 0.501961 )
+active_color = Color( 0.898039, 0.521569, 0.521569, 0.501961 )
 
 [node name="Selected" parent="." index="4"]
 modulate = Color( 1, 0.382813, 0.382813, 1 )

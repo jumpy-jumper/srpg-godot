@@ -10,4 +10,4 @@ followers = [ ExtResource( 3 ) ]
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 5
+frame = 6

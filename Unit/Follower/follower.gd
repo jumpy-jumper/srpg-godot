@@ -40,6 +40,32 @@ func _on_Cursor_cancel_issued(pos):
 		stage.deselect_unit()
 
 
+func get_stat_after_statuses(stat_name, base_value):
+	var ret = .get_stat_after_statuses(stat_name, base_value)
+	if stat_name == "skill_range" or stat_name == "block_range":
+		var rotated = []
+		for pos in ret:
+			rotated.append(pos.rotated(deg2rad(facing)).round())
+		return rotated
+	return ret
+
+
+func tick():
+	.tick()
+	block_enemies_in_range()
+
+func update_range():
+	.update_range()
+	var block_range = get_stat_after_statuses("block_range", base_block_range)
+	$"Ranges/Block Range".update_range(block_range, stage.get_cell_size())
+
+
+func die():
+	.die()
+	for enemy in blocked:
+		enemy.blocker = null
+
+
 ###############################################################################
 #        Facing logic                                                         #
 ###############################################################################
@@ -50,13 +76,28 @@ export(Facing) var facing = Facing.RIGHT
 
 
 ###############################################################################
-#        Block logic                                                          #
+#        Blocking logic                                                       #
 ###############################################################################
 
 
-var base_block_range = [Vector2(0, -1)]
-var is_blocking = [false, false, false, false]
+export(Array, Vector2) var base_block_range = [Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(0, -1)]
+export var base_block_count = 2
 
 
-func attempt_block(enemy, pos):
-	pass
+var blocked = []
+
+
+func block_enemies_in_range():
+	var block_range = get_stat_after_statuses("block_range", base_block_range)
+	var block_count = get_stat_after_statuses("block_count", base_block_count)
+	
+	var blockable_enemies_in_range = get_units_in_range_of_type(block_range, UnitType.ENEMY)
+	
+	for enemy in blockable_enemies_in_range:
+		if enemy in blocked or enemy.blocker != null:
+			blockable_enemies_in_range.erase(enemy)
+	
+	while len(blocked) < block_count and len(blockable_enemies_in_range) > 0:
+		var enemy = blockable_enemies_in_range.pop_front()
+		blocked.append(enemy)
+		enemy.blocker = self
