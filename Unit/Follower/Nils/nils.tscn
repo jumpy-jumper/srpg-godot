@@ -6,6 +6,10 @@
 
 [node name="Nils" instance=ExtResource( 2 )]
 unit_name = "Nils"
+base_max_hp = 1250
+base_atk = 450
+base_def = 300
+base_res = 10
 portrait = ExtResource( 3 )
 mugshot_top_left = Vector2( 305, 90 )
 cost = 6
@@ -13,7 +17,7 @@ base_block_range = [ Vector2( 0, 0 ), Vector2( -1, 0 ) ]
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 6
+frame = 0
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( -1, 0 ) ]

@@ -9,6 +9,9 @@ export(Array) var deployable_terrain = null
 export var cost = 9
 
 
+var summoner = null
+
+
 func get_type_of_self():
 	return UnitType.FOLLOWER
 
@@ -20,7 +23,6 @@ func get_type_of_enemy():
 ###############################################################################
 #        Main logic                                                           #
 ###############################################################################
-
 
 func _process(_delta):
 	if (Input.is_action_just_pressed("debug_change_facing")):
@@ -66,6 +68,9 @@ func update_range():
 
 func die():
 	.die()
+	facing = Facing.RIGHT
+	if summoner:
+		summoner.faith += ceil(cost / 2)
 	for enemy in blocked:
 		enemy.blocker = null
 

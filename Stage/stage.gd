@@ -11,13 +11,18 @@ signal redo_issued()
 export(Array, Resource) var terrain_types
 
 
-var followers_cache = []
 var summoners_cache = []
-var enemies_cache = []
+var independent_followers_cache = []
+var independent_enemies_cache = []
 
 
 onready var level = get_tree().get_nodes_in_group("Level")[0]
 onready var terrain = level.get_node("Terrain")
+
+
+var selected_summoner_index = 0
+var selected_follower_index = 0
+
 
 ###############################################################################
 #        Main logic	                                                          #
@@ -28,12 +33,21 @@ func _ready():
 	for u in level.get_children():
 		if u is Unit:
 			connect_with_unit(u)
-			if u is Follower:
-				followers_cache.append(u)
-			elif u is Summoner:
+			if u is Summoner:
+				var followers_cache = []
+				for unit in u.followers:
+					unit = unit.instance()
+					level.add_child(unit)
+					followers_cache.append(unit)
+					unit.alive = false
+					unit.summoner = u
+					connect_with_unit(unit)
+				u.followers = followers_cache
 				summoners_cache.append(u)
 			elif u is Enemy:
-				enemies_cache.append(u)
+				independent_enemies_cache.append(u)
+			elif u is Follower:
+				independent_followers_cache.append(u)
 
 	$Cursor.stage = self
 
@@ -43,20 +57,34 @@ func _process(_delta):
 
 
 func _input(event):
-	if event.is_action_pressed("redo"):
+	if event.is_action_pressed("next_follower"):
+		selected_follower_index = (selected_follower_index + 1) % len(summoners_cache[0].followers)
+	elif event.is_action_pressed("previous_follower"):
+		selected_follower_index = posmod(selected_follower_index - 1, len(summoners_cache[0].followers))
+	elif event.is_action_pressed("redo"):
 		advance_tick()
 
 
 func _on_Unit_dead(unit):
-	if unit is Follower:
-		unit.visible = false
-		followers_cache.erase(unit)
-	elif unit is Enemy:
-		unit.visible = false
-		enemies_cache.erase(unit)
+	if unit is Enemy:
+		independent_enemies_cache.erase(unit)
 	elif unit is Summoner:
 		$Cursor.operatable = false
 		$"UI/Game Over".visible = true
+
+
+func _on_Cursor_confirm_issued(pos):
+	if get_unit_at(pos) == null:	
+		var summoner = summoners_cache[selected_summoner_index]	
+		var unit = summoner.followers[selected_follower_index]
+		if get_terrain_at(pos) in unit.deployable_terrain:
+			if unit.cost <= summoner.faith and not unit.alive:
+				unit.alive = true
+				unit.global_position = get_clamped_position(pos)
+				summoner.faith -= unit.cost
+				deselect_unit()
+#		else:
+#			advance_tick()
 
 
 ###############################################################################
@@ -74,13 +102,18 @@ func get_clamped_position(pos):
 
 
 func get_all_units():
-	return summoners_cache + followers_cache + enemies_cache
+	var followers_cache = []
+	for summoner in summoners_cache:
+		for unit in summoner.followers:
+			followers_cache.append(unit)
+	return summoners_cache + followers_cache \
+		+ independent_followers_cache + independent_enemies_cache
 
 
 func get_unit_at(pos):
 	for u in get_all_units():
-		if u.position == pos:
-					return u
+		if u.alive and u.position == pos:
+			return u
 	return null
 
 
@@ -120,7 +153,8 @@ var cur_tick = 1
 
 func advance_tick():
 	for u in get_all_units():
-		u.tick()
+		if u.alive:
+			u.tick()
 	cur_tick += 1
 
 
@@ -150,16 +184,3 @@ func connect_with_unit(unit):
 	$Cursor.connect("cancel_issued", unit, "_on_Cursor_cancel_issued")
 	$Cursor.connect("moved", unit, "_on_Cursor_moved")
 	$Cursor.connect("hovered", unit, "_on_Cursor_hovered")
-	
-
-func add_unit(unit, pos):
-	if unit is Summoner:
-			summoners_cache.append(unit)
-	elif unit is Follower:
-			followers_cache.append(unit)
-	elif unit is Enemy:
-			enemies_cache.append(unit)
-	level.add_child(unit)
-	
-	unit.global_position = get_clamped_position(pos)
-	connect_with_unit(unit)

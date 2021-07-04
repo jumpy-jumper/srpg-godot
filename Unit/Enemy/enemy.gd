@@ -10,9 +10,14 @@ func get_type_of_enemy():
 	return UnitType.FOLLOWER
 
 
+func _ready():
+	alive = true
+
+
 func _process(_delta):
 	._process(_delta)
 	$Blocked.visible = blocker != null
+
 
 func _on_Cursor_confirm_issued(pos):
 	if stage.selected_unit == self:

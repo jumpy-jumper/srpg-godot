@@ -7,7 +7,7 @@
 [ext_resource path="res://Stage/Terrain/meadow.tres" type="Resource" id=5]
 [ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=6]
 [ext_resource path="res://Fonts/calibri.ttf" type="DynamicFontData" id=7]
-[ext_resource path="res://Stage/follower_panels.gd" type="Script" id=8]
+[ext_resource path="res://Stage/UI/follower_panels.gd" type="Script" id=8]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=9]
 [ext_resource path="res://Fonts/Dynamic Fonts/summoner_sp_display.tres" type="DynamicFont" id=10]
 [ext_resource path="res://Unit/Summoner/Girl/girl.tres" type="SpriteFrames" id=11]
@@ -34,6 +34,7 @@ script = ExtResource( 1 )
 terrain_types = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 21 ) ]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, 64 )
 anchor_mode = 0
 current = true
 script = SubResource( 1 )
@@ -45,10 +46,7 @@ rapid_fire_wait = 7
 
 [node name="TestLevel" parent="." instance=ExtResource( 2 )]
 
-[node name="UI" type="Control" parent="."]
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Round Panel" type="Control" parent="UI"]
 visible = false
@@ -103,18 +101,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Follower Panels" type="Control" parent="UI"]
-margin_left = 32.0
-margin_top = 576.0
-margin_right = 1248.0
-margin_bottom = 704.0
+[node name="Follower Panels" type="Node2D" parent="UI"]
+visible = false
+position = Vector2( 32, 608 )
+scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Summoner UI" type="Node2D" parent="UI"]
-position = Vector2( 32, 512 )
+visible = false
+position = Vector2( 32, 564 )
+scale = Vector2( 0.706163, 0.695323 )
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
@@ -133,11 +129,11 @@ __meta__ = {
 position = Vector2( 32, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 3
+frame = 7
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
-margin_left = 64.0
+margin_left = 72.0
 margin_right = 192.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 10 )
@@ -147,4 +143,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
 [connection signal="moved" from="Cursor" to="Camera2D" method="_on_Cursor_moved"]

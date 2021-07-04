@@ -13,8 +13,8 @@
 
 [node name="Girl" instance=ExtResource( 2 )]
 unit_name = "Girl"
-followers = [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 3 ), ExtResource( 5 ) ]
+followers = [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 3 ), ExtResource( 5 ) ]
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 4
+frame = 2

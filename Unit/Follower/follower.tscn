@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Unit/Range/range.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=3]
 [ext_resource path="res://Skill/basic_attack.gd" type="Script" id=4]
 
 [node name="Follower" instance=ExtResource( 1 )]
+deployable_terrain = [ ExtResource( 3 ) ]
 
 [node name="Sprite" parent="." index="0"]
-frame = 0
+frame = 1
 
 [node name="Skill Range" parent="Ranges" index="0"]
 inactive_color = Color( 0.223529, 1, 0.913725, 0.470588 )

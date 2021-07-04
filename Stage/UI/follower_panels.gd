@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 
 
 onready var stage = $"../.."
@@ -8,6 +8,7 @@ var follower_panel = preload("res://Stage/UI/follower_panel.tscn")
 
 
 func update_ui():
+	visible = true
 	for panel in get_children():
 		panel.queue_free()	
 
@@ -16,5 +17,5 @@ func update_ui():
 		var unit = stage.summoners_cache[0].followers[i]
 		var panel = follower_panel.instance()
 		add_child(panel)
-		panel.update_unit(unit.instance())
+		panel.update_unit(unit, i == stage.selected_follower_index)
 		panel.position = Vector2(128 * i , 0)

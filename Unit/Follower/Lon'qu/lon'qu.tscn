@@ -6,6 +6,9 @@
 
 [node name="Lon\'qu" instance=ExtResource( 2 )]
 unit_name = "Lon'qu"
+base_max_hp = 1750
+base_atk = 700
+base_def = 250
 portrait = ExtResource( 3 )
 mugshot_top_left = Vector2( 160, 50 )
 cost = 18
@@ -13,6 +16,7 @@ base_block_range = [ Vector2( 0, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
+frame = 2
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ) ]

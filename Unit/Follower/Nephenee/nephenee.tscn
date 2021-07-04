@@ -6,14 +6,16 @@
 
 [node name="Nephenee" instance=ExtResource( 2 )]
 unit_name = "Nephenee"
+base_max_hp = 2100
+base_atk = 650
+base_def = 350
 portrait = ExtResource( 3 )
 mugshot_top_left = Vector2( 290, 80 )
-cost = 8
 base_block_range = [ Vector2( 1, 0 ), Vector2( 0, 0 ), Vector2( -1, 0 ) ]
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 6
+frame = 0
 
 [node name="Basic Attack" parent="Skills" index="0"]
-base_skill_range = [ Vector2( 0, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 0, 1 ), Vector2( -1, 0 ) ]
+base_skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( -1, 0 ) ]

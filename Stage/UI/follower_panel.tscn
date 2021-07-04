@@ -39,3 +39,22 @@ __meta__ = {
 modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 64, 64 )
 texture = ExtResource( 4 )
+
+[node name="CooldownPanel" type="Panel" parent="."]
+modulate = Color( 1, 1, 1, 0.784314 )
+margin_right = 128.0
+margin_bottom = 128.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cooldown" type="Label" parent="CooldownPanel"]
+margin_right = 128.0
+margin_bottom = 128.0
+custom_fonts/font = ExtResource( 1 )
+text = "16"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

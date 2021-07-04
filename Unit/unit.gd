@@ -29,7 +29,7 @@ func _ready():
 
 
 func _process(_delta):
-		
+	visible = alive
 	if alive:
 		if stage:
 			$Selected.visible = stage.selected_unit == self
@@ -37,7 +37,7 @@ func _process(_delta):
 				if (stage.get_node("Cursor").position == position):
 					for skill in $Skills.get_children():
 						if skill.activation != skill.Activation.NONE \
-							and skill.activation != skill.Activation.TICK:
+							and skill.activation != skill.Activation.EVERY_TICK:
 								if skill.active:
 									skill.deactivate()
 								else:
@@ -89,7 +89,7 @@ export var base_atk = 500
 export var base_def = 200
 export var base_res = 0
 
-export (int) var hp = base_max_hp
+onready var hp = base_max_hp
 
 
 func get_stat_after_statuses(stat_name, base_value):
@@ -156,9 +156,21 @@ func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 		die()
 
 
+func heal(amount = 1):
+	amount *= get_stat_after_statuses("incoming_healing", 1)
+	
+	hp += max(amount, 0)
+	hp = min(get_stat_after_statuses("max_hp", base_max_hp), hp)
+
+
+func heal_to_full():
+	hp = get_stat_after_statuses("max_hp", base_max_hp)
+
+
 func die():
 	emit_signal("dead", self)
 	alive = false
+	heal_to_full()
 
 
 

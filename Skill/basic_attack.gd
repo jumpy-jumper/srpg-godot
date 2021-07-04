@@ -21,3 +21,8 @@ func activate():
 		possible_targets += unit.get_units_in_range_of_type(get_skill_range(), unit.get_type_of_enemy())
 		for target in select_targets(possible_targets):
 			target.take_damage(unit.get_stat_after_statuses("atk", unit.base_atk), damage_type)
+	elif skill_type == SkillType.HEAL: 
+		var possible_targets = []
+		possible_targets += unit.get_units_in_range_of_type(get_skill_range(), unit.get_type_of_self())
+		for target in select_targets(possible_targets):
+			target.heal(unit.get_stat_after_statuses("atk", unit.base_atk))
