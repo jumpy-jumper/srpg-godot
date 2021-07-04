@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Unit/Follower/Nils/nils.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=2]
+
+[node name="Nils" instance=ExtResource( 2 )]
+unit_name = "Nils"
+base_block_range = [ Vector2 (0, 0), Vector2 ( -1, 0)]
+
+[node name="Sprite" parent="." index="0"]
+frames = ExtResource( 1 )
+frame = 3
+
+[node name="Basic Attack" parent="Skills" index="0"]
+base_skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2 (-1, 0)]

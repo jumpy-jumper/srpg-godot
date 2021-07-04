@@ -52,7 +52,8 @@ func get_stat_after_statuses(stat_name, base_value):
 
 func tick():
 	.tick()
-	block_enemies_in_range()
+	update_block()
+
 
 func update_range():
 	.update_range()
@@ -87,7 +88,7 @@ export var base_block_count = 2
 var blocked = []
 
 
-func block_enemies_in_range():
+func update_block():
 	var block_range = get_stat_after_statuses("block_range", base_block_range)
 	var block_count = get_stat_after_statuses("block_count", base_block_count)
 	
@@ -96,6 +97,7 @@ func block_enemies_in_range():
 	for enemy in blockable_enemies_in_range:
 		if enemy in blocked or enemy.blocker != null:
 			blockable_enemies_in_range.erase(enemy)
+	
 	
 	while len(blocked) < block_count and len(blockable_enemies_in_range) > 0:
 		var enemy = blockable_enemies_in_range.pop_front()

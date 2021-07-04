@@ -7,7 +7,7 @@
 [node name="Follower" instance=ExtResource( 1 )]
 
 [node name="Sprite" parent="." index="0"]
-frame = 6
+frame = 0
 
 [node name="Skill Range" parent="Ranges" index="0"]
 inactive_color = Color( 0.223529, 1, 0.913725, 0.470588 )

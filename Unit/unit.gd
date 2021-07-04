@@ -73,7 +73,6 @@ func _on_Cursor_moved(pos):
 
 
 func tick():
-	print(name)
 	if alive:
 		for skill in $Skills.get_children():
 			skill.tick()
