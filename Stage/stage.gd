@@ -19,7 +19,6 @@ var enemies_cache = []
 onready var level = get_tree().get_nodes_in_group("Level")[0]
 onready var terrain = level.get_node("Terrain")
 
-
 ###############################################################################
 #        Main logic	                                                          #
 ###############################################################################
@@ -37,6 +36,10 @@ func _ready():
 				enemies_cache.append(u)
 
 	$Cursor.stage = self
+
+
+func _process(_delta):
+	$"UI/Follower Panels".update_ui()
 
 
 func _input(event):

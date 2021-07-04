@@ -4,10 +4,9 @@
 
 [node name="Dieck" instance=ExtResource( 2 )]
 unit_name = "Dieck"
-base_block_range = [ Vector2 (0, 1), Vector2 (0, -1), Vector2 ( 1, 0), Vector2 ( 0, 0) ]
-
-[node name="Sprite" parent="." index="0"]
-frame = 4
+mugshot_top_left = Vector2( 220, 45 )
+cost = 24
+base_block_range = [ Vector2( 0, 1 ), Vector2( 0, -1 ), Vector2( 1, 0 ), Vector2( 0, 0 ) ]
 
 [node name="Basic Attack" parent="Skills" index="0"]
-base_skill_range = [ Vector2 ( 0, -1), Vector2 ( 0, 0), Vector2 ( 1, 0), Vector2 ( 2, 0), Vector2 ( 0, 1), Vector2 (3, 0) ]
+base_skill_range = [ Vector2( 0, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 0, 1 ), Vector2( 3, 0 ) ]

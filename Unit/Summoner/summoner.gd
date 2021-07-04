@@ -14,8 +14,8 @@ func get_type_of_self():
 ###############################################################################
 
 
-export var base_max_sp = 99
-export (int) var sp = 20
+export var base_max_faith = 99
+export (int) var faith = 20
 
 
 ###############################################################################
@@ -30,7 +30,7 @@ func _on_Cursor_confirm_issued(pos):
 			var unit = followers[randi() % len(followers)].instance()
 			if stage.get_terrain_at(pos) in unit.deployable_terrain:
 				stage.add_unit(unit, stage.get_node("Cursor").position)
-				sp -= unit.cost
+				faith -= unit.cost
 				stage.deselect_unit()
 	elif pos == position:
 		stage.select_unit(self)

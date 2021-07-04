@@ -5,4 +5,4 @@ onready var unit = $"../.."
 
 
 func _process(_delta):
-	text = str(unit.sp)
+	text = str(unit.faith)

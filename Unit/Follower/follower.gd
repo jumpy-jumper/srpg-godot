@@ -2,6 +2,9 @@ class_name Follower
 extends Unit
 
 
+export(Texture) var portrait = preload("res://Unit/Follower/Dieck/dieck_portrait.png")
+export(Vector2) var mugshot_top_left = Vector2.ZERO
+
 export(Array) var deployable_terrain = null
 export var cost = 9
 
