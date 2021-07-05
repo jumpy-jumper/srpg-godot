@@ -5,7 +5,7 @@
 
 [node name="Emergency Tactics" type="Node"]
 script = ExtResource( 1 )
-description = "ATK +70%. Target count +2."
+description = "Range shrinks. Target count +2."
 activation = 3
 base_skill_cost = 20
 base_skill_initial_sp = 0

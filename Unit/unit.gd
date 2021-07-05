@@ -116,6 +116,9 @@ func get_stat_after_statuses(stat_name, base_value):
 				return status.block_range_overwrite
 		return ret
 	
+	if stat_name == "faith_recovery":
+		return ret
+	
 	var additive_multiplier = 1.0 
 	var multiplicative_multiplier = 1.0
 

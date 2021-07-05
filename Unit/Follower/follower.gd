@@ -37,6 +37,7 @@ func _on_Cursor_confirm_issued(pos):
 		stage.deselect_unit()
 	elif pos == position:
 		print(unit_name)
+		print("HP: " + str(hp) + "/" + str(get_stat_after_statuses("max_hp", base_max_hp)))
 		print("ATK: " + str(get_stat_after_statuses("atk", base_atk)))
 		print("DEF: " + str(get_stat_after_statuses("def", base_def)))
 		print("RES: " + str(get_stat_after_statuses("res", base_res)))

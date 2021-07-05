@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Levels/test_level.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Fonts/Dynamic Fonts/summoner_sp_display.tres" type="DynamicFont" id=10]
 [ext_resource path="res://Unit/Summoner/Girl/girl.tres" type="SpriteFrames" id=11]
 [ext_resource path="res://Stage/summoner_ui.gd" type="Script" id=12]
+[ext_resource path="res://Stage/Terrain/hill.tres" type="Resource" id=13]
 [ext_resource path="res://Stage/Terrain/mountain.tres" type="Resource" id=21]
 
 [sub_resource type="GDScript" id=1]
@@ -31,7 +32,7 @@ font_data = ExtResource( 7 )
 
 [node name="Stage" type="Node"]
 script = ExtResource( 1 )
-terrain_types = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 21 ) ]
+terrain_types = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 21 ), ExtResource( 13 ) ]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, 64 )
@@ -129,7 +130,7 @@ __meta__ = {
 position = Vector2( 32, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 1
+frame = 4
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
