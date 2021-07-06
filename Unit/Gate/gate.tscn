@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Unit/Gate/gate.gd" type="Script" id=2]
+[ext_resource path="res://Unit/Gate/gate.tres" type="SpriteFrames" id=3]
+
+[node name="Gate" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+unit_name = "Default Gate"
+
+[node name="Sprite" parent="." index="0"]
+position = Vector2( -11.9791, -7.95812 )
+scale = Vector2( 0.502618, 0.502618 )
+frames = ExtResource( 3 )
+frame = 0
+
+[node name="HP" parent="UI" index="0"]
+visible = false
+
+[node name="SP" parent="UI" index="1"]
+visible = false

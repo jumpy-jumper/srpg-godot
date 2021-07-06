@@ -36,13 +36,20 @@ func _on_Cursor_confirm_issued(pos):
 	if stage.selected_unit == self and stage.get_unit_at(pos) == null:
 		position = pos
 		stage.deselect_unit()
+	if alive and pos == position:
+		for skill in $Skills.get_children():
+			if not skill.is_active() \
+				and skill.sp == get_stat("skill_cost", skill.base_skill_cost) \
+				and skill.activation == skill.Activation.SP_MANUAL:
+					skill.activate()
+					emit_signal("acted", self)
 
 
 func _on_Cursor_cancel_issued(pos):
 	._on_Cursor_cancel_issued(pos)
 	if stage.selected_unit == null and stage.get_unit_at(pos) == self:
-		die()
 		emit_signal("acted", self)
+		die()
 	elif stage.selected_unit == self:
 		stage.deselect_unit()
 
@@ -59,7 +66,8 @@ func get_stat(stat_name, base_value):
 
 func tick():
 	.tick()
-	update_block()
+	if alive:
+		update_block()
 	cooldown = max(0, cooldown - 1)
 
 

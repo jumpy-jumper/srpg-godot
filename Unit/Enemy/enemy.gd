@@ -2,6 +2,9 @@ class_name Enemy
 extends Unit
 
 
+var gate = null
+
+
 func get_type_of_self():
 	return UnitType.ENEMY
 

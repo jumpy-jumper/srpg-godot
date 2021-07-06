@@ -12,6 +12,7 @@ export(Array, Resource) var terrain_types
 
 
 var summoners_cache = []
+var gates_cache = []
 var independent_followers_cache = []
 var independent_enemies_cache = []
 
@@ -44,6 +45,16 @@ func _ready():
 					connect_with_unit(unit)
 				u.followers = followers_cache
 				summoners_cache.append(u)
+			elif u is Gate:
+				var enemies_cache = []
+				for tick in u.enemies.keys():
+					u.enemies[tick] = u.enemies[tick].instance()
+					level.add_child(u.enemies[tick])
+					enemies_cache.append(u.enemies[tick])
+					u.enemies[tick].alive = false
+					u.enemies[tick].gate = u
+					connect_with_unit(u.enemies[tick])
+				gates_cache.append(u)
 			elif u is Enemy:
 				independent_enemies_cache.append(u)
 			elif u is Follower:
@@ -124,11 +135,15 @@ func get_clamped_position(pos):
 
 func get_all_units():
 	var followers_cache = []
+	var enemies_cache = []
 	for summoner in summoners_cache:
 		for unit in summoner.followers:
 			followers_cache.append(unit)
-	return summoners_cache + followers_cache \
-		+ independent_followers_cache + independent_enemies_cache
+	for gate in gates_cache:
+		for unit in gate.enemies.values():
+			enemies_cache.append(unit)
+	return summoners_cache + followers_cache + independent_followers_cache \
+	+ enemies_cache + independent_enemies_cache + gates_cache
 
 
 func get_unit_at(pos):
@@ -277,7 +292,9 @@ func append_state():
 
 
 func undo():
-	if cur_state_index > 0:
+	if acted_this_tick:
+		load_state(states[cur_state_index])
+	elif cur_state_index > 0:
 		load_state(states[cur_state_index - 1])
 		cur_state_index -= 1
 
