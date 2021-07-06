@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Unit/Follower/Nils/nils_s1.gd" type="Script" id=1]
+[ext_resource path="res://Unit/Follower/Nils/nils_s1_status.tscn" type="PackedScene" id=2]
+
+[node name="Eastern Prayer" type="Node"]
+script = ExtResource( 1 )
+activation = 4
+base_skill_cost = 12
+base_skill_initial_sp = 8
+base_skill_duration = 8
+statuses = [ ExtResource( 2 ) ]

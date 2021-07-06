@@ -4,6 +4,9 @@
 
 [node name="lon\'qu_s1_status" type="Node"]
 script = ExtResource( 1 )
+stat_overwrites = {
+"skill_range": [ Vector2( -3, 0 ), Vector2( -2, 0 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ) ]
+}
 stat_flat_bonuses = {
 "target_count": 3
 }
@@ -12,4 +15,3 @@ stat_additive_multipliers = {
 "def": -0.9,
 "max_hp": -0.5
 }
-skill_range_overwrite = [ Vector2( -3, 0 ), Vector2( -2, 0 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ) ]

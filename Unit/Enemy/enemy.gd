@@ -18,8 +18,6 @@ func _ready():
 
 func _process(_delta):
 	._process(_delta)
-	$Blocked.visible = blocker != null
-	$"UI/Movement".visible = blocker == null
 
 
 func _on_Cursor_cancel_issued(pos):
@@ -74,18 +72,19 @@ func move():
 	var leftover_movement = movement
 	
 	for i in range(movement + 1):
-		var unit = stage.get_unit_at(path[i])
-		if unit:
-			if unit.get_type_of_self() == UnitType.SUMMONER:
-				unit.take_damage()
-				die()
-				break
-			elif unit.get_type_of_self() == UnitType.FOLLOWER:
-				continue
-			elif unit.get_type_of_self() == UnitType.ENEMY:
-				continue
-		position = path[i]
-		leftover_movement = movement - i
+		if i < len(path):
+			var unit = stage.get_unit_at(path[i])
+			if unit:
+				if unit.get_type_of_self() == UnitType.SUMMONER:
+					unit.take_damage()
+					die()
+					break
+				elif unit.get_type_of_self() == UnitType.FOLLOWER:
+					continue
+				elif unit.get_type_of_self() == UnitType.ENEMY:
+					continue
+			position = path[i]
+			leftover_movement = movement - i
 	
 	var movement_array = get_stat("movement", base_movement)
 	movement = leftover_movement + movement_array[(stage.cur_tick) % len(movement_array)]

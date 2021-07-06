@@ -4,10 +4,12 @@
 
 [node name="natasha_s1_status" type="Node"]
 script = ExtResource( 1 )
+stat_overwrites = {
+"skill_range": [ Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 3, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ) ]
+}
 stat_flat_bonuses = {
 "target_count": 2
 }
 stat_additive_multipliers = {
 "atk": 0.7
 }
-skill_range_overwrite = [ Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 3, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ) ]

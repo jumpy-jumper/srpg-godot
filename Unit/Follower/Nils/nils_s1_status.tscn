@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Status/status.gd" type="Script" id=1]
+
+[node name="nils_s1_status" type="Node"]
+script = ExtResource( 1 )
+stat_overwrites = {
+"attack_count": 0,
+"block_range": [ Vector2( 0, 0 ) ]
+}

@@ -43,7 +43,7 @@ func _process(_delta):
 
 
 func _on_Cursor_confirm_issued(pos):
-	if pos == position:
+	if pos == position and alive:
 		print(unit_name)
 		print("LV: " + str(get_stat("level", base_level)))
 		print("HP: " + str(hp) + "/" + str(get_stat("max_hp", base_max_hp)))
@@ -90,6 +90,11 @@ onready var hp = get_stat("max_hp", base_max_hp)
 
 
 const AFFECTED_BY_LEVEL = ["max_hp", "atk", "def"]
+const NUMERICAL_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
+	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
+	"block_count", "damage_type", "incoming_damage", "incoming_healing", \
+	"skill_duration"]
+const ARRAY_STATS = ["movement", "skill_range", "block_range", "faith_recovery"]
 
 
 const BONUS_PER_LEVEL = 0.067326582
@@ -103,46 +108,34 @@ func get_stat_after_level(stat_name, base_value):
 	
 	
 func get_stat_after_statuses(stat_name, base_value):
-	var ret = base_value
+	assert(stat_name in NUMERICAL_STATS + ARRAY_STATS)
 	
-	if stat_name == "movement":
-		for status in $Statuses.get_children():
-			if status.movement_overwrite:
-				return status.movement_overwrite
-			elif status.movement_bonus:
-				for i in range(len(ret)):
-					ret[i] += status.movement_bonus[i]
-		return ret
+	var ret = base_value if stat_name in NUMERICAL_STATS else [] + base_value
 	
-	if stat_name == "skill_range":
-		for status in $Statuses.get_children():
-			if status.skill_range_overwrite:
-				return status.skill_range_overwrite
-		return ret
-	
-	if stat_name == "block_range":
-		for status in $Statuses.get_children():
-			if status.block_range_overwrite:
-				return status.block_range_overwrite
-		return ret
-	
-	if stat_name == "faith_recovery":
-		return ret
+	for status in $Statuses.get_children():
+		if status.stat_overwrites.has(stat_name):
+			return status.stat_overwrites[stat_name]
 	
 	var additive_multiplier = 1.0 
 	var multiplicative_multiplier = 1.0
 
-	for status in $Statuses.get_children():
-		if status.stat_overwrites.has(stat_name):
-			return status.stat_overwrites[stat_name]
-		if status.stat_flat_bonuses.has(stat_name):
-			ret += status.stat_flat_bonuses[stat_name]
-		if status.stat_additive_multipliers.has(stat_name):
-			additive_multiplier += status.stat_additive_multipliers[stat_name]
-		if status.stat_multiplicative_multipliers.has(stat_name):
-			multiplicative_multiplier *= status.stat_multiplicative_multipliers[stat_name]
+	if stat_name in NUMERICAL_STATS:
+		for status in $Statuses.get_children():
+				if status.stat_flat_bonuses.has(stat_name):
+					ret += status.stat_flat_bonuses[stat_name]
+				if status.stat_additive_multipliers.has(stat_name):
+					additive_multiplier += status.stat_additive_multipliers[stat_name]
+				if status.stat_multiplicative_multipliers.has(stat_name):
+					multiplicative_multiplier *= status.stat_multiplicative_multipliers[stat_name]
+		return floor(ret * additive_multiplier * multiplicative_multiplier)
+
+	elif stat_name in ARRAY_STATS:
+		for status in $Statuses.get_children():
+			if status.stat_flat_bonuses.has(stat_name):
+				for i in range(len(ret)):
+					ret[i] += status.stat_flat_bonuses[stat_name][i]
+		return ret
 	
-	return floor(ret * additive_multiplier * multiplicative_multiplier)
 
 
 func get_stat(stat_name, base_value):

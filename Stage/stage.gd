@@ -111,6 +111,7 @@ func is_alive():
 			return false
 	return true
 
+
 func get_cell_size():
 	return terrain.cell_size.x	# The grid is the same size in both axes.
 

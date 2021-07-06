@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Skill/skill.tscn" type="PackedScene" id=2]
@@ -9,14 +9,32 @@
 [ext_resource path="res://Unit/Enemy/warning.png" type="Texture" id=7]
 [ext_resource path="res://Fonts/Dynamic Fonts/summoner_sp_display.tres" type="DynamicFont" id=8]
 
+[sub_resource type="GDScript" id=2]
+script/source = "extends Sprite
+
+
+onready var unit = $\"..\"
+
+
+func _process(_delta):
+	visible = unit.blocker != null
+"
+
 [sub_resource type="GDScript" id=1]
 script/source = "extends Label
 
 
 onready var unit = $\"../..\"
 
+var disabled = false
+
+
+func _ready():
+	disabled = not visible
+
 
 func _process(_delta):
+	visible = unit.blocker == null and not disabled
 	text = str(unit.movement)
 "
 
@@ -25,6 +43,7 @@ script = ExtResource( 3 )
 traversable = [ ExtResource( 5 ), ExtResource( 4 ) ]
 
 [node name="Blocked" type="Sprite" parent="." index="0"]
+visible = false
 modulate = Color( 0.996078, 1, 0.447059, 1 )
 position = Vector2( -15.874, -13.0961 )
 scale = Vector2( 0.2, 0.2 )
@@ -32,15 +51,17 @@ z_index = 1
 texture = ExtResource( 7 )
 centered = false
 offset = Vector2( 32, 32 )
+script = SubResource( 2 )
 
 [node name="Sprite" parent="." index="1"]
-frame = 0
+frame = 5
 
 [node name="Skill Range" parent="Ranges" index="0"]
 inactive_color = Color( 0.898039, 0.521569, 0.521569, 0.501961 )
 active_color = Color( 0.898039, 0.521569, 0.521569, 0.501961 )
 
 [node name="Movement" type="Label" parent="UI" index="2"]
+visible = false
 margin_left = -19.654
 margin_top = -39.6315
 margin_right = 50.346
