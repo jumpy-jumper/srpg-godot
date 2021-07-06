@@ -78,12 +78,12 @@ base_max_hp = 1
 
 [node name="Hound" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1024, 320 )
-base_level = 99
+base_level = 20
 
 [node name="Hound2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 960, 320 )
-base_level = 99
+base_level = 20
 
 [node name="Skeleton" parent="." instance=ExtResource( 3 )]
 position = Vector2( 832, 384 )
-base_level = 99
+base_level = 20

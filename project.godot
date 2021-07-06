@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Unit/Gate/gate.gd"
 }, {
+"base": "Node2D",
+"class": "RangeIndicator",
+"language": "GDScript",
+"path": "res://Unit/Range/range_indicator.gd"
+}, {
 "base": "Node",
 "class": "Skill",
 "language": "GDScript",
@@ -64,6 +69,7 @@ _global_script_class_icons={
 "Enemy": "",
 "Follower": "",
 "Gate": "",
+"RangeIndicator": "",
 "Skill": "",
 "Stage": "",
 "Status": "",

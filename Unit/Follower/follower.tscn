@@ -1,22 +1,30 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Unit/Range/range.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Range/range_indicator.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=3]
 [ext_resource path="res://Skill/basic_attack.gd" type="Script" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends RangeIndicator
+
+
+export var color = Color.black
+
+
+func _process(_delta):
+	update_range(unit.get_stat(\"block_range\", unit.base_block_range), color)
+"
 
 [node name="Follower" instance=ExtResource( 1 )]
 deployable_terrain = [ ExtResource( 3 ) ]
 
 [node name="Sprite" parent="." index="0"]
-frame = 1
-
-[node name="Skill Range" parent="Ranges" index="0"]
-inactive_color = Color( 0.223529, 1, 0.913725, 0.470588 )
-active_color = Color( 1, 0.513726, 0.12549, 0.470588 )
+frame = 7
 
 [node name="Block Range" parent="Ranges" index="1" instance=ExtResource( 2 )]
-inactive_color = Color( 0.290196, 0.356863, 0.788235, 0.501961 )
+script = SubResource( 1 )
+color = Color( 0.501961, 0.52549, 0.796078, 0.501961 )
 
 [node name="Selected" parent="." index="3"]
 modulate = Color( 0.576471, 1, 0.968627, 1 )

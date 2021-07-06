@@ -24,8 +24,6 @@ var alive = true
 
 func _ready():
 	yield(get_tree(), "idle_frame")
-	if stage:
-		update_range()
 
 
 func _process(_delta):
@@ -42,18 +40,6 @@ func _process(_delta):
 									skill.deactivate()
 								else:
 									skill.activate()
-		if $Ranges.visible and stage:
-			update_range()
-
-
-func update_range():
-	if len($Skills.get_children()) > 0:
-		var skill_active = false
-		for skill in $Skills.get_children():
-			if skill.is_active():
-				skill_active = true
-				break
-		$"Ranges/Skill Range".update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size(), skill_active)
 
 
 func _on_Cursor_confirm_issued(pos):

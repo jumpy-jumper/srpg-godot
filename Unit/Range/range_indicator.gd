@@ -1,19 +1,19 @@
 extends Node2D
+class_name RangeIndicator
 
 
-
-export(Color) var inactive_color
-export(Color) var active_color
+var range_indicator_tile = preload("res://Unit/Range/range_indicator_tile.tscn")
 
 
-export(PackedScene) var range_indicator_tile = null
+onready var unit = $"../.."
 
 
-func update_range(_range, cell_size, skill_active = false):
+func update_range(_range, color = Color.black):
 	for c in get_children():
 		c.queue_free()
 	for pos in _range:
 		var tile = range_indicator_tile.instance()
 		add_child(tile)
-		tile.position = position + (pos * cell_size) + Vector2(cell_size / 2, cell_size / 2)
-		tile.modulate = active_color if skill_active else inactive_color
+		tile.position = position + (pos * unit.stage.get_cell_size()) + \
+			Vector2(unit.stage.get_cell_size() / 2, unit.stage.get_cell_size() / 2)
+		tile.modulate = color

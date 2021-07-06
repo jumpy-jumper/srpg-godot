@@ -3,8 +3,18 @@
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/Dynamic Fonts/summoner_sp_display.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Skill/Summoner/summoner_tick.gd" type="Script" id=4]
-[ext_resource path="res://Unit/Summoner/summoner_sp_ui.gd" type="Script" id=5]
 [ext_resource path="res://Unit/Summoner/summoner.gd" type="Script" id=6]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Label
+
+
+onready var unit = $\"../..\"
+
+
+func _process(_delta):
+	text = str(unit.faith)
+"
 
 [node name="Summoner" instance=ExtResource( 1 )]
 script = ExtResource( 6 )
@@ -13,7 +23,7 @@ base_def = 0
 base_max_faith = 999
 
 [node name="Sprite" parent="." index="0"]
-frame = 1
+frame = 7
 
 [node name="HP" parent="UI" index="0"]
 visible = false
@@ -34,7 +44,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "100
 "
 align = 1
-script = ExtResource( 5 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

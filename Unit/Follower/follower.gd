@@ -23,6 +23,7 @@ func get_type_of_enemy():
 #        Main logic                                                           #
 ###############################################################################
 
+
 func _process(_delta):
 	if (Input.is_action_just_pressed("debug_change_facing")):
 		if (stage.get_node("Cursor").position == position):
@@ -63,7 +64,6 @@ func tick():
 func update_range():
 	.update_range()
 	var block_range = get_stat("block_range", base_block_range)
-	$"Ranges/Block Range".update_range(block_range, stage.get_cell_size())
 
 
 func die():

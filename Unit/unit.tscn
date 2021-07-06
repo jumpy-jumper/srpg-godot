@@ -1,20 +1,83 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Unit/sp_ui.gd" type="Script" id=1]
 [ext_resource path="res://Unit/Follower/Dieck/dieck.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=3]
-[ext_resource path="res://Unit/hp_ui.gd" type="Script" id=4]
-[ext_resource path="res://Unit/Range/range.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Unit/Range/range_indicator.tscn" type="PackedScene" id=5]
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends RangeIndicator
+
+
+export(Color) var inactive_color = Color.black
+export(Color) var active_color = Color.black
+
+
+func _process(_delta):
+	if len(unit.get_node(\"Skills\").get_children()) > 0:
+		var skill_active = false
+		for skill in unit.get_node(\"Skills\").get_children():
+			if skill.is_active():
+				skill_active = true
+				break
+		update_range(unit.get_node(\"Skills\").get_children()[0].get_skill_range(), \\
+			active_color if skill_active else inactive_color)
+"
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.603922, 1, 0.270588, 1 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="GDScript" id=8]
+script/source = "extends ProgressBar
+
+
+onready var unit = get_parent().get_parent()
+
+
+func _process(delta):
+	value = float(unit.hp) / unit.get_stat(\"max_hp\", unit.base_max_hp) * 100
+	if unit is Enemy:
+		visible = value != 100
+"
+
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="StreamTexture" id=4]
+[sub_resource type="GDScript" id=10]
+script/source = "extends ProgressBar
+
+
+onready var unit = get_parent().get_parent()
+
+
+export var skill_inactive_color = Color.cyan
+export var skill_active_color = Color.lightsalmon
+
+
+func _process(delta):
+	var activatable_skills = []
+	for skill in unit.get_node(\"Skills\").get_children():
+		if skill.activation == skill.Activation.SP_AUTO \\
+			or skill.activation == skill.Activation.SP_MANUAL:
+				activatable_skills.append(skill)
+	if len(activatable_skills) == 0:
+		visible = false
+	else:
+		visible = true
+		var skill = activatable_skills[0]
+		
+		var fg = get(\"custom_styles/fg\").duplicate()
+		if not skill.is_active():
+			value = float(skill.sp) / unit.get_stat(\"skill_cost\", skill.base_skill_cost) * 100
+			fg.set_bg_color(skill_inactive_color)
+		else:
+			value = float(skill.ticks_left) / unit.get_stat(\"skill_duration\", skill.base_skill_duration) * 100
+			fg.set_bg_color(skill_active_color)
+		set(\"custom_styles/fg\", fg)
+"
+
+[sub_resource type="StreamTexture" id=6]
 load_path = "res://.import/cursor_default0.png-8adba084a8cf7015ba3f2250c4fff637.stex"
 
 [node name="Unit" type="Node2D"]
@@ -22,12 +85,11 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
-hp = 2000
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 2 )
-frame = 6
+frame = 1
 playing = true
 centered = false
 offset = Vector2( -8, -16 )
@@ -35,6 +97,9 @@ offset = Vector2( -8, -16 )
 [node name="Ranges" type="Node2D" parent="."]
 
 [node name="Skill Range" parent="Ranges" instance=ExtResource( 5 )]
+script = SubResource( 7 )
+inactive_color = Color( 0.796078, 0.501961, 0.501961, 0.501961 )
+active_color = Color( 0.796078, 0.682353, 0.501961, 0.501961 )
 
 [node name="UI" type="Node2D" parent="."]
 position = Vector2( 20, 40 )
@@ -53,7 +118,7 @@ custom_styles/fg = SubResource( 1 )
 custom_styles/bg = SubResource( 2 )
 value = 100.0
 percent_visible = false
-script = ExtResource( 4 )
+script = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -67,10 +132,10 @@ margin_left = -20.0
 margin_top = 20.0
 margin_right = 45.0
 margin_bottom = 24.0
-custom_styles/fg = SubResource( 3 )
+custom_styles/fg = SubResource( 9 )
 custom_styles/bg = SubResource( 2 )
 percent_visible = false
-script = ExtResource( 1 )
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -80,7 +145,7 @@ visible = false
 modulate = Color( 0.662745, 1, 0.615686, 1 )
 position = Vector2( 32, 32 )
 scale = Vector2( 5, 5 )
-texture = SubResource( 4 )
+texture = SubResource( 6 )
 
 [node name="Skills" type="Node" parent="."]
 
