@@ -9,7 +9,9 @@ func update_unit(unit, selected):
 	$Mugshot.texture = unit.portrait
 	$Mugshot.region_rect.position = unit.mugshot_top_left
 	$Cost.text = str(unit.get_stat("cost", unit.base_cost))
+	$Cost.modulate = Color.lightpink if unit.summoner.faith < unit.get_stat("cost", unit.base_cost) else Color.white
 	$Border.modulate = selected_color if selected else deselected_color
 	$Cost.visible = not unit.alive
-	$CooldownPanel.visible = unit.alive
-	$CooldownPanel/Cooldown.text = "OUT"
+	$CooldownPanel.visible = unit.alive or unit.cooldown > 0
+	$CooldownPanel/Cooldown.text = "OUT" if unit.cooldown == 0 else str(unit.cooldown)
+	$CooldownPanel/Cooldown.modulate = Color.lightpink if unit.cooldown > 0 else Color.white

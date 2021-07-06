@@ -8,6 +8,7 @@ export(Vector2) var mugshot_top_left = Vector2.ZERO
 export(Array) var deployable_terrain = null
 export var base_cost = 9
 
+
 var summoner = null
 
 
@@ -59,12 +60,17 @@ func get_stat(stat_name, base_value):
 func tick():
 	.tick()
 	update_block()
+	cooldown = max(0, cooldown - 1)
 
 
 func update_range():
 	.update_range()
 	var block_range = get_stat("block_range", base_block_range)
 
+
+export var base_cooldown = 32
+
+var cooldown = 0
 
 func die():
 	.die()
@@ -75,6 +81,7 @@ func die():
 		summoner.recover_faith(ceil(get_stat("cost", base_cost) / 2))
 	for enemy in blocked:
 		enemy.blocker = null
+	cooldown = get_stat("cooldown", base_cooldown)
 
 
 ###############################################################################

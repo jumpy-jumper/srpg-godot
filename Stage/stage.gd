@@ -84,14 +84,15 @@ func _on_Cursor_confirm_issued(pos):
 		var summoner = summoners_cache[selected_summoner_index]	
 		var unit = summoner.followers[selected_follower_index]
 		if get_terrain_at(pos) in unit.deployable_terrain:
-			if unit.get_stat("cost", unit.base_cost) <= summoner.faith and not unit.alive:
-				unit.alive = true
-				unit.global_position = get_clamped_position(pos)
-				summoner.faith -= unit.get_stat("cost", unit.base_cost)
-				for skill in unit.get_node("Skills").get_children():
-					skill.initialize()
-				deselect_unit()
-				acted_this_tick = true
+			if unit.get_stat("cost", unit.base_cost) <= summoner.faith \
+				and not unit.alive and unit.cooldown == 0:
+					unit.alive = true
+					unit.global_position = get_clamped_position(pos)
+					summoner.faith -= unit.get_stat("cost", unit.base_cost)
+					for skill in unit.get_node("Skills").get_children():
+						skill.initialize()
+					deselect_unit()
+					acted_this_tick = true
 	elif get_unit_at(pos).get_type_of_self() == Unit.UnitType.SUMMONER:
 		advance_tick()
 
@@ -173,8 +174,7 @@ var cur_tick = 1
 
 func advance_tick():
 	for u in get_all_units():
-		if u.alive:
-			u.tick()
+		u.tick()
 	cur_tick += 1
 	append_state()
 	acted_this_tick = false
@@ -231,6 +231,7 @@ func get_state():
 			unit.UnitType.FOLLOWER:
 				unit_state["facing"] = unit.facing
 				unit_state["blocked"] = [] + unit.blocked
+				unit_state["cooldown"] = unit.cooldown
 			unit.UnitType.SUMMONER:
 				unit_state["faith"] = unit.faith
 			unit.UnitType.ENEMY:
@@ -256,6 +257,7 @@ func load_state(state):
 			unit.UnitType.FOLLOWER:
 				unit.facing = state[unit]["facing"]
 				unit.blocked = [] + state[unit]["blocked"]
+				unit.cooldown = state[unit]["cooldown"]
 			unit.UnitType.SUMMONER:
 				unit.faith = state[unit]["faith"]
 			unit.UnitType.ENEMY:

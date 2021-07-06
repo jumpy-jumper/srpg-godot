@@ -19,9 +19,6 @@ func _process(_delta):
 [node name="Follower" instance=ExtResource( 1 )]
 deployable_terrain = [ ExtResource( 3 ) ]
 
-[node name="Sprite" parent="." index="0"]
-frame = 7
-
 [node name="Block Range" parent="Ranges" index="1" instance=ExtResource( 2 )]
 script = SubResource( 1 )
 color = Color( 0.501961, 0.52549, 0.796078, 0.501961 )

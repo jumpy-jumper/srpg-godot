@@ -93,7 +93,7 @@ const AFFECTED_BY_LEVEL = ["max_hp", "atk", "def"]
 const NUMERICAL_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
 	"block_count", "damage_type", "incoming_damage", "incoming_healing", \
-	"skill_duration"]
+	"skill_duration", "cooldown"]
 const ARRAY_STATS = ["movement", "skill_range", "block_range", "faith_recovery"]
 
 
