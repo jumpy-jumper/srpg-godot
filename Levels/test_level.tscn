@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Unit/Summoner/Girl/girl.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Unit/Enemy/Hound/hound.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Enemy/Skeleton/skeleton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=5]
 
 [sub_resource type="TileSet" id=1]
@@ -77,6 +78,12 @@ base_max_hp = 1
 
 [node name="Hound" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1024, 320 )
+base_level = 99
 
 [node name="Hound2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 960, 320 )
+base_level = 99
+
+[node name="Skeleton" parent="." instance=ExtResource( 3 )]
+position = Vector2( 832, 384 )
+base_level = 99

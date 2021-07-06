@@ -5,7 +5,12 @@
 
 [node name="Centaur" instance=ExtResource( 2 )]
 unit_name = "Centaur"
+base_max_hp = 3200
+base_atk = 650
+base_def = 400
+base_res = 20
+base_movement = [ 1, 2, 1, 2 ]
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="1"]
 frames = ExtResource( 1 )
-frame = 6
+frame = 1

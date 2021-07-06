@@ -11,11 +11,11 @@ unit_name = "Natasha"
 base_max_hp = 1250
 base_atk = 550
 base_def = 100
-base_res = 35
+base_res = 50
 portrait = ExtResource( 3 )
 mugshot_top_left = Vector2( 195, 50 )
 deployable_terrain = [ ExtResource( 5 ) ]
-cost = 22
+base_cost = 22
 base_block_range = [  ]
 
 [node name="Sprite" parent="." index="0"]
@@ -23,7 +23,7 @@ frames = ExtResource( 1 )
 frame = 2
 
 [node name="Basic Attack" parent="Skills" index="0"]
-base_skill_range = [ Vector2 ( -1, -2), Vector2 ( 0, -2), Vector2 ( 1, -2), Vector2 ( 2, -2), Vector2 ( 3, -2), Vector2 ( -1, -1), Vector2 ( 0, -1), Vector2 ( 1, -1), Vector2 ( 2, -1), Vector2 ( 3, -1), Vector2 ( 4, -1), Vector2 ( -1, 0), Vector2 ( 0, 0), Vector2 ( 1, 0), Vector2 ( 2, 0), Vector2 ( 3, 0), Vector2 ( 4, 0), Vector2 ( -1, 1), Vector2 ( 0, 1), Vector2 ( 1, 1), Vector2 ( 2, 1), Vector2 ( 3, 1), Vector2 ( 4, 1), Vector2 ( -1, 2), Vector2 ( 0, 2), Vector2 ( 1, 2), Vector2 ( 2, 2), Vector2 ( 3, 2) ]
+base_skill_range = [ Vector2( -1, -2 ), Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 2, -2 ), Vector2( 3, -2 ), Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 3, -1 ), Vector2( 4, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 4, 1 ), Vector2( -1, 2 ), Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 2, 2 ), Vector2( 3, 2 ) ]
 targeting_priority = 1
 skill_type = 1
 damage_type = 2

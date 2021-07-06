@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Levels/test_level.tscn" type="PackedScene" id=2]
@@ -30,6 +30,21 @@ func _on_Cursor_moved(pos):
 size = 200
 font_data = ExtResource( 7 )
 
+[sub_resource type="GDScript" id=3]
+script/source = "extends Panel
+
+export var fade_in_duration = 1.0
+
+func _ready():
+	visible = true
+	var tween = Tween.new()
+	add_child(tween)
+	tween.interpolate_property(self, \"modulate:a\",
+		1, 0, fade_in_duration,
+		Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	tween.start()
+"
+
 [node name="Stage" type="Node"]
 script = ExtResource( 1 )
 terrain_types = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 21 ), ExtResource( 13 ) ]
@@ -41,7 +56,7 @@ current = true
 script = SubResource( 1 )
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
-position = Vector2( -64, -64 )
+position = Vector2( 96, 160 )
 z_index = 1
 rapid_fire_wait = 7
 
@@ -113,14 +128,11 @@ visible = false
 position = Vector2( 32, 564 )
 scale = Vector2( 0.706163, 0.695323 )
 script = ExtResource( 12 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Panel" type="Panel" parent="UI/Summoner UI"]
 modulate = Color( 1, 1, 1, 0.501961 )
 margin_top = 12.0
-margin_right = 128.0
+margin_right = 152.0
 margin_bottom = 64.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -135,14 +147,26 @@ playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
 margin_left = 72.0
-margin_right = 192.0
+margin_right = 136.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 10 )
 text = "200"
+align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Blackscreen" type="Panel" parent="UI"]
+visible = false
+modulate = Color( 0, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+fade_in_duration = 0.25
 
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
 [connection signal="moved" from="Cursor" to="Camera2D" method="_on_Cursor_moved"]

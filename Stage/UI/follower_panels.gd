@@ -10,7 +10,8 @@ var follower_panel = preload("res://Stage/UI/follower_panel.tscn")
 func update_ui():
 	visible = true
 	for panel in get_children():
-		panel.queue_free()	
+		if not panel is Tween:
+			panel.queue_free()	
 
 	var followers = stage.summoners_cache[0].followers
 	for i in range(len(followers)):

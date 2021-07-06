@@ -16,12 +16,15 @@ enum Activation { NONE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO }
 export(Activation) var activation = Activation.NONE
 export var base_skill_cost = 15
 export var base_skill_initial_sp = 10
-var sp = base_skill_initial_sp
 export var base_skill_duration = 30
-var ticks_left = base_skill_duration
 
 
-var active = false
+var sp = base_skill_initial_sp
+var ticks_left = 0
+
+
+func is_active():
+	return ticks_left > 0
 
 
 func tick():
@@ -29,8 +32,8 @@ func tick():
 		activate()
 		deactivate()
 	elif activation == Activation.SP_MANUAL or activation == Activation.SP_AUTO:
-		if not active:
-			var sp_cost = unit.get_stat_after_statuses("skill_cost", base_skill_cost)
+		if not is_active():
+			var sp_cost = unit.get_stat("skill_cost", base_skill_cost)
 			sp = min(sp + 1, sp_cost)
 			if activation == Activation.SP_AUTO and sp == sp_cost:
 				activate()
@@ -42,20 +45,19 @@ func tick():
 
 func activate():
 	if activation != Activation.NONE and activation != Activation.EVERY_TICK:
-		active = true
-		ticks_left = unit.get_stat_after_statuses("skill_duration", base_skill_duration)
-		add_statuses()
+		ticks_left = unit.get_stat("skill_duration", base_skill_duration)
+		update_statuses()
 
 
 func deactivate():
-	active = false
 	sp = 0
-	remove_statuses()
+	ticks_left = 0
+	update_statuses()
 
 
 func initialize():
-	active = false
-	sp = unit.get_stat_after_statuses("skill_initial_sp", base_skill_initial_sp)
+	sp = unit.get_stat("skill_initial_sp", base_skill_initial_sp)
+	ticks_left = 0
 	if activation == Activation.DEPLOYMENT:
 		activate()
 
@@ -69,6 +71,12 @@ export(Array, PackedScene) var statuses = []
 
 
 var status_cache = []
+
+
+func update_statuses():
+	remove_statuses()
+	if is_active():
+		add_statuses()
 
 
 func add_statuses():
@@ -94,7 +102,7 @@ export(Array) var base_skill_range = [Vector2(0, 0)]
 
 
 func get_skill_range():
-	return unit.get_stat_after_statuses("skill_range", base_skill_range)
+	return unit.get_stat("skill_range", base_skill_range)
 
 
 ###############################################################################
@@ -118,7 +126,7 @@ func select_targets(units):
 		TargetingPriority.LOWEST_HP_PERCENTAGE:
 			units.sort_custom(self, "lowest_hp_percentage_comparison")
 	
-	for i in range(min(unit.get_stat_after_statuses("target_count", base_target_count), len(units))):
+	for i in range(min(unit.get_stat("target_count", base_target_count), len(units))):
 		ret.append(units[i])
 	
 	return ret
@@ -129,5 +137,5 @@ func distance_comparison(a, b):
 
 
 func lowest_hp_percentage_comparison(a, b):
-	return float(a.hp) / a.get_stat_after_statuses("max_hp", a.base_max_hp) <\
-		float(b.hp) / b.get_stat_after_statuses("max_hp", b.base_max_hp)
+	return float(a.hp) / a.get_stat("max_hp", a.base_max_hp) <\
+		float(b.hp) / b.get_stat("max_hp", b.base_max_hp)

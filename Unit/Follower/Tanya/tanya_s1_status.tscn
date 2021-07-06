@@ -8,5 +8,5 @@ stat_overwrites = {
 "attack_count": 5
 }
 stat_additive_multipliers = {
-"atk": -0.3
+"atk": -0.1
 }

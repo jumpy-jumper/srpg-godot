@@ -12,20 +12,14 @@ func get_type_of_enemy():
 
 func _ready():
 	alive = true
+	var movement_array = get_stat("movement", base_movement)
+	movement = movement_array[0]
 
 
 func _process(_delta):
 	._process(_delta)
 	$Blocked.visible = blocker != null
-
-
-func _on_Cursor_confirm_issued(pos):
-	if stage.selected_unit == self:
-		if not stage.get_unit_at(pos):
-			position = pos
-			stage.deselect_unit()
-	elif stage.selected_unit == null and pos == position:
-		stage.select_unit(self)
+	$"UI/Movement".visible = blocker == null
 
 
 func _on_Cursor_cancel_issued(pos):
@@ -51,20 +45,17 @@ func die():
 ###############################################################################
 
 
-var target = null
-
-
 export var base_movement = [0, 1, 0, 1]
 export(Array, Resource) var traversable = []
 
 
-var banked_movement = 0
+var movement = 0
 
 
 func get_path_to_target():
 	var astar = stage.get_astar_graph(traversable)
 
-	target = stage.summoners_cache[0] # TEMPORARY
+	var target = stage.summoners_cache[0] # TEMPORARY
 	var path = astar.get_point_path(astar.get_closest_point(stage.terrain.world_to_map(position)), 
 		astar.get_closest_point(stage.terrain.world_to_map(target.position)))
 
@@ -79,11 +70,6 @@ func move():
 		return
 
 	var path = get_path_to_target()
-	
-	var movement = get_stat_after_statuses("movement", base_movement)
-	movement = movement[(stage.cur_tick - 1) % len(movement)]
-	movement += banked_movement
-	banked_movement = 0
 	
 	var leftover_movement = movement
 	
@@ -101,7 +87,8 @@ func move():
 		position = path[i]
 		leftover_movement = movement - i
 	
-	banked_movement += leftover_movement
+	var movement_array = get_stat("movement", base_movement)
+	movement = leftover_movement + movement_array[(stage.cur_tick) % len(movement_array)]
 
 
 ###############################################################################

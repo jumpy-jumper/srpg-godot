@@ -38,7 +38,7 @@ func _process(_delta):
 					for skill in $Skills.get_children():
 						if skill.activation != skill.Activation.NONE \
 							and skill.activation != skill.Activation.EVERY_TICK:
-								if skill.active:
+								if skill.is_active():
 									skill.deactivate()
 								else:
 									skill.activate()
@@ -50,14 +50,24 @@ func update_range():
 	if len($Skills.get_children()) > 0:
 		var skill_active = false
 		for skill in $Skills.get_children():
-			if skill.active:
+			if skill.is_active():
 				skill_active = true
 				break
 		$"Ranges/Skill Range".update_range($Skills.get_children()[0].get_skill_range(), stage.get_cell_size(), skill_active)
 
 
 func _on_Cursor_confirm_issued(pos):
-	pass
+	if pos == position:
+		print(unit_name)
+		print("LV: " + str(get_stat("level", base_level)))
+		print("HP: " + str(hp) + "/" + str(get_stat("max_hp", base_max_hp)))
+		print("ATK: " + str(get_stat("atk", base_atk)))
+		print("DEF: " + str(get_stat("def", base_def)))
+		print("RES: " + str(get_stat("res", base_res)))
+		if $"Skills/Basic Attack":
+			print("Target Count: " + str(get_stat("target_count", $"Skills/Basic Attack".base_target_count)))
+			print("Attack Count: " + str(get_stat("attack_count", $"Skills/Basic Attack".base_attack_count)))
+		print()
 
 
 func _on_Cursor_cancel_issued(pos):
@@ -76,6 +86,7 @@ func tick():
 	if alive:
 		for skill in $Skills.get_children():
 			skill.tick()
+	hp = min(hp, get_stat("max_hp", base_max_hp))
 		
 
 ###############################################################################
@@ -89,9 +100,22 @@ export var base_atk = 500
 export var base_def = 200
 export var base_res = 0
 
-onready var hp = base_max_hp
+onready var hp = get_stat("max_hp", base_max_hp)
 
 
+const AFFECTED_BY_LEVEL = ["max_hp", "atk", "def"]
+
+
+const BONUS_PER_LEVEL = 0.067326582
+
+
+func get_stat_after_level(stat_name, base_value):
+	if stat_name in AFFECTED_BY_LEVEL:
+		return floor(base_value * (1 + BONUS_PER_LEVEL * get_stat_after_statuses("level", base_level)))
+	else:
+		return base_value
+	
+	
 func get_stat_after_statuses(stat_name, base_value):
 	var ret = base_value
 	
@@ -132,7 +156,11 @@ func get_stat_after_statuses(stat_name, base_value):
 		if status.stat_multiplicative_multipliers.has(stat_name):
 			multiplicative_multiplier *= status.stat_multiplicative_multipliers[stat_name]
 	
-	return ret * additive_multiplier * multiplicative_multiplier
+	return floor(ret * additive_multiplier * multiplicative_multiplier)
+
+
+func get_stat(stat_name, base_value):
+	return get_stat_after_statuses(stat_name, get_stat_after_level(stat_name, base_value))
 
 
 ###############################################################################
@@ -140,6 +168,7 @@ func get_stat_after_statuses(stat_name, base_value):
 ###############################################################################
 
 
+signal acted(unit)
 signal dead(unit)
 
 
@@ -147,12 +176,12 @@ enum DamageType {PHYSICAL, MAGIC, TRUE}
 
 
 func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
-	amount *= get_stat_after_statuses("incoming_damage", 1)
+	amount = floor(amount * get_stat("incoming_damage", 1))
 	
 	if damage_type == DamageType.PHYSICAL:
-		amount -= get_stat_after_statuses("def", base_def)
+		amount -= get_stat("def", base_def)
 	elif damage_type == DamageType.MAGIC:
-		amount *= (1 - (get_stat_after_statuses("res", base_res) / 100.0))
+		amount *= (1 - (get_stat("res", base_res) / 100.0))
 	
 	hp -= max(amount, 0)
 	if hp <= 0:
@@ -160,14 +189,14 @@ func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 
 
 func heal(amount = 1):
-	amount *= get_stat_after_statuses("incoming_healing", 1)
+	amount *= get_stat("incoming_healing", 1)
 	
 	hp += max(amount, 0)
-	hp = min(get_stat_after_statuses("max_hp", base_max_hp), hp)
+	hp = min(get_stat("max_hp", base_max_hp), hp)
 
 
 func heal_to_full():
-	hp = get_stat_after_statuses("max_hp", base_max_hp)
+	hp = get_stat("max_hp", base_max_hp)
 
 
 func die():

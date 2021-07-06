@@ -10,7 +10,7 @@
 script = ExtResource( 6 )
 base_atk = 0
 base_def = 0
-hp = 3
+base_max_faith = 999
 
 [node name="Sprite" parent="." index="0"]
 frame = 1

@@ -5,7 +5,10 @@
 
 [node name="Hound" instance=ExtResource( 2 )]
 unit_name = "Hound"
-base_movement = [ 1, 1, 1, 2 ]
+base_max_hp = 1250
+base_def = 150
+base_res = 10
+base_movement = [ 1, 2, 1, 2 ]
 
 [node name="Sprite" parent="." index="1"]
 frames = ExtResource( 1 )

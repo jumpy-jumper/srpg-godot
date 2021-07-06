@@ -10,14 +10,15 @@ unit_name = "Frederick"
 base_max_hp = 4000
 base_atk = 1000
 base_def = 650
+base_res = 30
 portrait = ExtResource( 3 )
 mugshot_top_left = Vector2( 180, 40 )
-cost = 32
+base_cost = 36
 base_block_range = [ Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( -1, 0 ), Vector2( -1, -1 ), Vector2( -1, 1 ) ]
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 3
+frame = 5
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [  ]

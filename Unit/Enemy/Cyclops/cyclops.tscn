@@ -5,7 +5,10 @@
 
 [node name="Cyclops" instance=ExtResource( 2 )]
 unit_name = "Cyclops"
+base_max_hp = 3800
+base_atk = 700
+base_def = 450
 
 [node name="Sprite" parent="." index="1"]
 frames = ExtResource( 1 )
-frame = 2
+frame = 5

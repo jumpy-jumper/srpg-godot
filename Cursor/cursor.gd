@@ -16,7 +16,6 @@ const DEFAULT_CELL_SIZE = 64
 
 
 export var operatable = true
-export var enable_mouse_input = true
 export var decouple_mouse_and_keyboard = false
 
 
@@ -50,7 +49,7 @@ func _process(_delta):
 			position = old_keyboard_pos
 
 		if stage:
-			position += stage.get_cell_size() * movement
+			position += stage.get_clamped_position(stage.get_cell_size() * movement)
 			stage.get_terrain_at(position)
 			if stage.get_terrain_at(position) == null:
 				if stage.get_terrain_at(Vector2(position.x, previous.y)) != null:
@@ -64,7 +63,7 @@ func _process(_delta):
 
 		if movement.length() > 0:
 			old_keyboard_pos = position
-	elif enable_mouse_input:
+	elif Game.mouse_enabled:
 		if stage:
 			position = stage.get_clamped_position(mouse_pos)
 		else:

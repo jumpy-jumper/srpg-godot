@@ -6,7 +6,6 @@
 [ext_resource path="res://Stage/UI/follower_panel_border.png" type="Texture" id=4]
 
 [node name="Follower Panel" type="Node2D"]
-z_index = 2
 script = ExtResource( 3 )
 
 [node name="Panel" type="Panel" parent="."]

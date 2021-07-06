@@ -6,8 +6,7 @@ export(Texture) var portrait = preload("res://Unit/Follower/Dieck/dieck_portrait
 export(Vector2) var mugshot_top_left = Vector2.ZERO
 
 export(Array) var deployable_terrain = null
-export var cost = 9
-
+export var base_cost = 9
 
 var summoner = null
 
@@ -35,27 +34,19 @@ func _on_Cursor_confirm_issued(pos):
 	if stage.selected_unit == self and stage.get_unit_at(pos) == null:
 		position = pos
 		stage.deselect_unit()
-	elif pos == position:
-		print(unit_name)
-		print("HP: " + str(hp) + "/" + str(get_stat_after_statuses("max_hp", base_max_hp)))
-		print("ATK: " + str(get_stat_after_statuses("atk", base_atk)))
-		print("DEF: " + str(get_stat_after_statuses("def", base_def)))
-		print("RES: " + str(get_stat_after_statuses("res", base_res)))
-		print("Target Count: " + str(get_stat_after_statuses("target_count", $"Skills/Basic Attack".base_target_count)))
-		print("Attack Count: " + str(get_stat_after_statuses("attack_count", $"Skills/Basic Attack".base_attack_count)))
-		print()
 
 
 func _on_Cursor_cancel_issued(pos):
 	._on_Cursor_cancel_issued(pos)
 	if stage.selected_unit == null and stage.get_unit_at(pos) == self:
 		die()
+		emit_signal("acted", self)
 	elif stage.selected_unit == self:
 		stage.deselect_unit()
 
 
-func get_stat_after_statuses(stat_name, base_value):
-	var ret = .get_stat_after_statuses(stat_name, base_value)
+func get_stat(stat_name, base_value):
+	var ret = .get_stat(stat_name, base_value)
 	if stat_name == "skill_range" or stat_name == "block_range":
 		var rotated = []
 		for pos in ret:
@@ -71,7 +62,7 @@ func tick():
 
 func update_range():
 	.update_range()
-	var block_range = get_stat_after_statuses("block_range", base_block_range)
+	var block_range = get_stat("block_range", base_block_range)
 	$"Ranges/Block Range".update_range(block_range, stage.get_cell_size())
 
 
@@ -81,7 +72,7 @@ func die():
 	for skill in $Skills.get_children():
 		skill.initialize()
 	if summoner:
-		summoner.recover_faith(ceil(cost / 2))
+		summoner.recover_faith(ceil(get_stat("cost", base_cost) / 2))
 	for enemy in blocked:
 		enemy.blocker = null
 
@@ -108,8 +99,8 @@ var blocked = []
 
 
 func update_block():
-	var block_range = get_stat_after_statuses("block_range", base_block_range)
-	var block_count = get_stat_after_statuses("block_count", base_block_count)
+	var block_range = get_stat("block_range", base_block_range)
+	var block_count = get_stat("block_count", base_block_count)
 	
 	var blockable_enemies_in_range = get_units_in_range_of_type(block_range, UnitType.ENEMY)
 	
