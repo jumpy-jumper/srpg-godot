@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/idle1.png-f1076fa343808f445b4f8957e6cd53a4.stex"
+path="res://.import/idle0.png-4d0c647612ef91b4ffe37b052ff26992.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Unit/Summoner/Girl/idle1.png"
-dest_files=[ "res://.import/idle1.png-f1076fa343808f445b4f8957e6cd53a4.stex" ]
+source_file="res://Unit/Summoner/East Wind/idle0.png"
+dest_files=[ "res://.import/idle0.png-4d0c647612ef91b4ffe37b052ff26992.stex" ]
 
 [params]
 

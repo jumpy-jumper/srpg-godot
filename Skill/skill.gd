@@ -27,6 +27,10 @@ func is_active():
 	return ticks_left > 0
 
 
+func is_available():
+	return activation == Activation.SP_MANUAL and sp == unit.get_stat("skill_cost", base_skill_cost)
+
+
 func tick():
 	if activation == Activation.EVERY_TICK:
 		activate()
@@ -47,6 +51,7 @@ func activate():
 	if activation != Activation.NONE and activation != Activation.EVERY_TICK:
 		ticks_left = unit.get_stat("skill_duration", base_skill_duration)
 		update_statuses()
+	unit.emit_signal("acted", unit)
 
 
 func deactivate():

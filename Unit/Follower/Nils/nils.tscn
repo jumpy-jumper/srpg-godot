@@ -18,7 +18,7 @@ base_block_range = [ Vector2( 0, 0 ), Vector2( -1, 0 ) ]
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 0
+frame = 4
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( -1, 0 ) ]

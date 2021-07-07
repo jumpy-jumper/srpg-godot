@@ -2,10 +2,10 @@
 
 [ext_resource path="res://Unit/Enemy/Eye/eye.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Unit/Enemy/enemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Stage/Terrain/meadow.tres" type="Resource" id=3]
-[ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=4]
-[ext_resource path="res://Stage/Terrain/mountain.tres" type="Resource" id=5]
-[ext_resource path="res://Stage/Terrain/hill.tres" type="Resource" id=6]
+[ext_resource path="res://Stage/Terrain/low.tres" type="Resource" id=3]
+[ext_resource path="res://Stage/Terrain/deployable_low.tres" type="Resource" id=4]
+[ext_resource path="res://Stage/Terrain/high.tres" type="Resource" id=5]
+[ext_resource path="res://Stage/Terrain/deployable_high.tres" type="Resource" id=6]
 
 [node name="Eye" instance=ExtResource( 2 )]
 unit_name = "Eye"

@@ -29,31 +29,26 @@ func _ready():
 func _process(_delta):
 	visible = alive
 	if alive:
-		if stage:
-			$Selected.visible = stage.selected_unit == self
-			if (Input.is_action_just_pressed("debug_activate_skill")):
-				if (stage.get_node("Cursor").position == position):
-					for skill in $Skills.get_children():
-						if skill.activation != skill.Activation.NONE \
-							and skill.activation != skill.Activation.EVERY_TICK:
-								if skill.is_active():
-									skill.deactivate()
-								else:
-									skill.activate()
+		hp = min(hp, get_stat("max_hp", base_max_hp))
+		
+		if (Input.is_action_just_pressed("debug_activate_skill")):
+			if (stage.get_node("Cursor").position == position):
+				for skill in $Skills.get_children():
+					if skill.activation != skill.Activation.NONE \
+						and skill.activation != skill.Activation.EVERY_TICK:
+							if skill.is_active():
+								skill.deactivate()
+							else:
+								skill.activate()
+		
+		if (Input.is_action_just_pressed("debug_kill")):
+			if (stage.get_node("Cursor").position == position):
+				die()
+			
 
 
 func _on_Cursor_confirm_issued(pos):
-	if pos == position and alive:
-		print(unit_name)
-		print("LV: " + str(get_stat("level", base_level)))
-		print("HP: " + str(hp) + "/" + str(get_stat("max_hp", base_max_hp)))
-		print("ATK: " + str(get_stat("atk", base_atk)))
-		print("DEF: " + str(get_stat("def", base_def)))
-		print("RES: " + str(get_stat("res", base_res)))
-		if $"Skills/Basic Attack":
-			print("Target Count: " + str(get_stat("target_count", $"Skills/Basic Attack".base_target_count)))
-			print("Attack Count: " + str(get_stat("attack_count", $"Skills/Basic Attack".base_attack_count)))
-		print()
+	pass
 
 
 func _on_Cursor_cancel_issued(pos):

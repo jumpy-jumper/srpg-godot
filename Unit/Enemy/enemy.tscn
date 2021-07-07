@@ -3,11 +3,11 @@
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Skill/skill.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Unit/Enemy/enemy.gd" type="Script" id=3]
-[ext_resource path="res://Stage/Terrain/meadow.tres" type="Resource" id=4]
-[ext_resource path="res://Stage/Terrain/forest.tres" type="Resource" id=5]
+[ext_resource path="res://Stage/Terrain/low.tres" type="Resource" id=4]
+[ext_resource path="res://Stage/Terrain/deployable_low.tres" type="Resource" id=5]
 [ext_resource path="res://Skill/basic_attack.gd" type="Script" id=6]
 [ext_resource path="res://Unit/Enemy/warning.png" type="Texture" id=7]
-[ext_resource path="res://Fonts/Dynamic Fonts/summoner_sp_display.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=8]
 
 [sub_resource type="GDScript" id=2]
 script/source = "extends Sprite

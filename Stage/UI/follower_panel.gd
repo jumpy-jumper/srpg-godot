@@ -1,11 +1,15 @@
-extends Node2D
+extends Button
 
 
 export(Color) var selected_color = Color.lightpink
 export(Color) var deselected_color = Color.black
 
 
+var unit = null
+
+
 func update_unit(unit, selected):
+	self.unit = unit
 	$Mugshot.texture = unit.portrait
 	$Mugshot.region_rect.position = unit.mugshot_top_left
 	$Cost.text = str(unit.get_stat("cost", unit.base_cost))

@@ -11,5 +11,4 @@ stat_flat_bonuses = {
 "target_count": 2
 }
 stat_additive_multipliers = {
-"atk": 0.7
 }

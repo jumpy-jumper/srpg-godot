@@ -1,16 +1,22 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Fonts/Dynamic Fonts/summoner_sp_display.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Unit/Follower/Tanya/tanya_portrait.png" type="Texture" id=2]
 [ext_resource path="res://Stage/UI/follower_panel.gd" type="Script" id=3]
 [ext_resource path="res://Stage/UI/follower_panel_border.png" type="Texture" id=4]
 
-[node name="Follower Panel" type="Node2D"]
+[node name="Follower Panel" type="Button"]
+margin_right = 128.0
+margin_bottom = 128.0
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="."]
 margin_right = 128.0
 margin_bottom = 128.0
+mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -24,9 +30,10 @@ region_rect = Rect2( 260, 60, 128, 128 )
 [node name="Cost" type="Label" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_top = 8.0
-margin_right = 116.0
+margin_left = -128.0
+margin_right = -12.0
 margin_bottom = 36.0
+mouse_filter = 1
 custom_fonts/font = ExtResource( 1 )
 text = "20"
 align = 2
@@ -43,6 +50,7 @@ texture = ExtResource( 4 )
 modulate = Color( 1, 1, 1, 0.784314 )
 margin_right = 128.0
 margin_bottom = 128.0
+mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -50,6 +58,7 @@ __meta__ = {
 [node name="Cooldown" type="Label" parent="CooldownPanel"]
 margin_right = 128.0
 margin_bottom = 128.0
+mouse_filter = 1
 custom_fonts/font = ExtResource( 1 )
 text = "16"
 align = 1

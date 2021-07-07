@@ -5,6 +5,7 @@
 
 [node name="Eastern Prayer" type="Node"]
 script = ExtResource( 1 )
+description = "Block range shrinks. Stops attacking. Recovers 1 faith to this unit's summoner per round."
 activation = 4
 base_skill_cost = 24
 base_skill_initial_sp = 20

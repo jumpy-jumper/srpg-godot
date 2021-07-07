@@ -30,6 +30,9 @@ var selected_follower_index = 0
 ###############################################################################
 
 
+var paused = false
+
+
 func _ready():
 	for u in level.get_children():
 		if u is Unit:
@@ -66,28 +69,30 @@ func _ready():
 
 
 func _process(_delta):
+	$Cursor.operatable = not paused and is_alive() and pending_ui == 0
+
 	$"UI/Follower Panels".update_ui()
-	
-	$Cursor.operatable = is_alive()
 	$"UI/Game Over".visible = not is_alive()
 
 
 func _input(event):
-	if is_alive():
-		if event.is_action_pressed("next_follower"):
-			selected_follower_index = (selected_follower_index + 1) % len(summoners_cache[0].followers)
-		elif event.is_action_pressed("previous_follower"):
-			selected_follower_index = posmod(selected_follower_index - 1, len(summoners_cache[0].followers))
-		elif event.is_action_pressed("redo"):
-			redo()
-	if event.is_action_pressed("undo"):
-		undo()
-	elif event.is_action_pressed("restart"):
-		if Game.undoable_restart:
-			load_state(states[0])
-			append_state()
-		else:
-			get_tree().reload_current_scene()
+	if not paused:
+		if is_alive():
+			if event.is_action_pressed("next_follower"):
+				selected_follower_index = (selected_follower_index + 1) % len(summoners_cache[0].followers)
+			elif event.is_action_pressed("previous_follower"):
+				selected_follower_index = posmod(selected_follower_index - 1, len(summoners_cache[0].followers))
+			elif event.is_action_pressed("redo"):
+				redo()
+		if event.is_action_pressed("undo"):
+			undo()
+		elif event.is_action_pressed("restart"):
+			if Game.undoable_restart:
+				load_state(states[0])
+				append_state()
+				$UI/Blackscreen.animate()
+			else:
+				get_tree().reload_current_scene()
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -104,12 +109,50 @@ func _on_Cursor_confirm_issued(pos):
 						skill.initialize()
 					deselect_unit()
 					acted_this_tick = true
-	elif get_unit_at(pos).get_type_of_self() == Unit.UnitType.SUMMONER:
-		advance_tick()
+					unit.deployed_this_round = true
+
+
+func _on_Cursor_cancel_issued(pos):
+	if not paused:
+		var u = get_unit_at(pos)
+		if u:
+			$"UI/Unit UI".update_unit(u)
+			$"UI/Unit UI".show()
+			paused = true
+
+
+var pending_ui = 0
+
+
+func _on_UI_mouse_entered():
+	pending_ui += 1
+
+
+func _on_UI_mouse_exited():
+	pending_ui -= 1
+
+
+func _on_follower_button_pressed(button):
+	selected_follower_index = summoners_cache[selected_summoner_index].followers.find(button.unit)
+
+
+func _on_Unit_UI_exited():
+	paused = false
+
+
+func _on_Skill_UI_skill_activation_requested(skill):
+	if skill.is_available():
+		skill.activate()
+		yield(get_tree(), "idle_frame")
+		$"UI/Unit UI".update_unit($"UI/Unit UI".saved_unit)
 
 
 func _on_Unit_acted(unit):
 	acted_this_tick = true
+
+
+func _on_Unit_dead(unit):
+	pass
 
 
 ###############################################################################
@@ -257,6 +300,8 @@ func get_state():
 			var skill_state = {}
 			skill_state["sp"] = skill.sp
 			skill_state["ticks_left"] = skill.ticks_left
+			if skill is Lysithea_S1:
+				skill_state["bonus_atk"] = skill.bonus_atk
 			ret[skill] = skill_state
 	return ret
 
@@ -281,6 +326,12 @@ func load_state(state):
 		for skill in unit.get_node("Skills").get_children():
 			skill.sp = state[skill]["sp"]
 			skill.ticks_left = state[skill]["ticks_left"]
+			if skill is Lysithea_S1:
+				skill.bonus_atk = state[skill]["bonus_atk"]
+				if skill.bonus_atk_status_cache:
+					print(skill.bonus_atk_status_cache)
+					skill.bonus_atk_status_cache.queue_free()
+					skill.bonus_atk_status_cache = null
 			skill.update_statuses()
 
 
@@ -302,7 +353,7 @@ func undo():
 func redo():
 	if acted_this_tick:
 		advance_tick()
-	elif cur_state_index < len(states) - 1:
+	elif cur_state_index < len(states) - 1 and Game.redo_enabled:
 		load_state(states[cur_state_index + 1])
 		cur_state_index += 1
 	else:

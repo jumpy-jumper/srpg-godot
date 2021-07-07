@@ -4,7 +4,7 @@
 [ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Unit/Follower/Tanya/tanya_portrait.png" type="Texture" id=3]
 [ext_resource path="res://Unit/Follower/Tanya/tanya_s1.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Stage/Terrain/hill.tres" type="Resource" id=5]
+[ext_resource path="res://Stage/Terrain/deployable_high.tres" type="Resource" id=5]
 
 [node name="Tanya" instance=ExtResource( 2 )]
 unit_name = "Tanya"

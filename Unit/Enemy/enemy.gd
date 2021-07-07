@@ -23,11 +23,6 @@ func _process(_delta):
 	._process(_delta)
 
 
-func _on_Cursor_cancel_issued(pos):
-	if stage.selected_unit == self:
-		stage.deselect_unit()
-
-
 func tick():
 	.tick()
 	if alive:

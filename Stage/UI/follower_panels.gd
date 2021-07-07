@@ -3,20 +3,24 @@ extends Node2D
 
 onready var stage = $"../.."
 
-
-var follower_panel = preload("res://Stage/UI/follower_panel.tscn")
+func _ready():
+	for panel in get_children():
+		panel.connect("mouse_entered", stage, "_on_UI_mouse_entered")
+		panel.connect("mouse_exited", stage, "_on_UI_mouse_exited")
+		panel.connect("pressed", stage, "_on_follower_button_pressed", [panel])
 
 
 func update_ui():
 	visible = true
-	for panel in get_children():
-		if not panel is Tween:
-			panel.queue_free()	
 
 	var followers = stage.summoners_cache[0].followers
-	for i in range(len(followers)):
-		var unit = stage.summoners_cache[0].followers[i]
-		var panel = follower_panel.instance()
-		add_child(panel)
-		panel.update_unit(unit, i == stage.selected_follower_index)
-		panel.position = Vector2(128 * i , 0)
+	
+	var i = 0
+	for panel in get_children():
+		if i >= len(followers):
+			panel.visible = false
+		else:
+			panel.visible = true
+			var unit = stage.summoners_cache[0].followers[i]
+			panel.update_unit(unit, i == stage.selected_follower_index)
+		i += 1

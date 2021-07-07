@@ -2,11 +2,11 @@
 
 [ext_resource path="res://Status/status.gd" type="Script" id=1]
 
-[node name="Tanya S1 Status" type="Node"]
+[node name="lysithea_s1_status" type="Node"]
 script = ExtResource( 1 )
 stat_overwrites = {
-"attack_count": 7
+"target_count": 2147483647
 }
 stat_additive_multipliers = {
-"atk": -0.1
+"atk": 0.7
 }

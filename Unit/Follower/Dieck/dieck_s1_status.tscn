@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 stat_overwrites = {
 "block_range": [ Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ) ],
-"skill_range": [ Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ) ]
+"skill_range": [ Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 3, -1 ) ]
 }
 stat_flat_bonuses = {
 "block_count": 1,
@@ -14,6 +14,6 @@ stat_flat_bonuses = {
 "target_count": 3
 }
 stat_additive_multipliers = {
-"atk": 0.7,
-"def": 0.3
+"atk": 1.4,
+"def": 0.7
 }

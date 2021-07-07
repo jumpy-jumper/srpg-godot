@@ -2,7 +2,8 @@ extends Node
 
 
 export var mouse_enabled = true
-export var undoable_restart = false
+export var undoable_restart = true
+export var redo_enabled = false
 
 
 func _process(_delta):

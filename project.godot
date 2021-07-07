@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Unit/Gate/gate.gd"
 }, {
+"base": "Skill",
+"class": "Lysithea_S1",
+"language": "GDScript",
+"path": "res://Unit/Follower/Lysithea/lysithea_s1.gd"
+}, {
 "base": "Node2D",
 "class": "RangeIndicator",
 "language": "GDScript",
@@ -69,6 +74,7 @@ _global_script_class_icons={
 "Enemy": "",
 "Follower": "",
 "Gate": "",
+"Lysithea_S1": "",
 "RangeIndicator": "",
 "Skill": "",
 "Stage": "",
@@ -235,6 +241,11 @@ next_follower={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777249,"unicode":0,"echo":false,"script":null)
+ ]
+}
+debug_kill={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":75,"unicode":0,"echo":false,"script":null)
  ]
 }
 

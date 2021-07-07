@@ -3,5 +3,7 @@
 [ext_resource path="res://Fonts/calibri.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 42
+size = 36
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )

@@ -5,7 +5,7 @@
 
 [node name="Overloading Mode" type="Node"]
 script = ExtResource( 1 )
-description = "ATK -10%. Attacks five times per round."
+description = "ATK -10%. Attack count becomes 7."
 activation = 4
 base_skill_cost = 12
 base_skill_initial_sp = 12

@@ -25,35 +25,6 @@ func get_type_of_enemy():
 ###############################################################################
 
 
-func _process(_delta):
-	if (Input.is_action_just_pressed("debug_change_facing")):
-		if (stage.get_node("Cursor").position == position):
-			facing = int(facing + 90) % 360
-
-
-func _on_Cursor_confirm_issued(pos):
-	._on_Cursor_confirm_issued(pos)
-	if stage.selected_unit == self and stage.get_unit_at(pos) == null:
-		position = pos
-		stage.deselect_unit()
-	if alive and pos == position:
-		for skill in $Skills.get_children():
-			if not skill.is_active() \
-				and skill.sp == get_stat("skill_cost", skill.base_skill_cost) \
-				and skill.activation == skill.Activation.SP_MANUAL:
-					skill.activate()
-					emit_signal("acted", self)
-
-
-func _on_Cursor_cancel_issued(pos):
-	._on_Cursor_cancel_issued(pos)
-	if stage.selected_unit == null and stage.get_unit_at(pos) == self:
-		emit_signal("acted", self)
-		die()
-	elif stage.selected_unit == self:
-		stage.deselect_unit()
-
-
 func get_stat(stat_name, base_value):
 	var ret = .get_stat(stat_name, base_value)
 	if stat_name == "skill_range" or stat_name == "block_range":
@@ -64,11 +35,15 @@ func get_stat(stat_name, base_value):
 	return ret
 
 
+var deployed_this_round = false
+
+
 func tick():
 	.tick()
 	if alive:
 		update_block()
 	cooldown = max(0, cooldown - 1)
+	deployed_this_round = false
 
 
 func update_range():
@@ -99,6 +74,17 @@ func die():
 
 enum Facing {RIGHT = 0, DOWN = 90, LEFT = 180, UP = 270}
 export(Facing) var facing = Facing.RIGHT
+
+
+func _on_Cursor_confirm_issued(pos):
+	if pos == position:
+		if deployed_this_round:
+			facing = int(facing + 90) % 360
+		else:
+			for skill in $Skills.get_children():
+				if skill.is_available():
+					skill.activate()
+				emit_signal("acted", self)
 
 
 ###############################################################################

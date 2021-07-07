@@ -9,6 +9,16 @@ export(Unit.DamageType) var damage_type = Unit.DamageType.PHYSICAL
 
 export var base_attack_count = 1
 
+
+func _ready():
+	match(skill_type):
+		SkillType.ATTACK:
+			description = "Once per attack count, attacks blocked enemies then enemies in range up to the target count.\n"
+			description += "Physical damage is ATK - DEF.\nMagic damage is ATK * (1 - (RES/100))."
+		SkillType.HEAL:
+			description = "Heals allies in range equal to the target count, per attack count. Outgoing healing is equal to ATK."
+
+
 func activate():
 	.activate()
 	for i in range (unit.get_stat("attack_count", base_attack_count)):
