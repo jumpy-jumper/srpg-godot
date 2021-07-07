@@ -60,6 +60,7 @@ margin_top = -328.0
 margin_right = -96.0
 margin_bottom = -232.0
 custom_fonts/font = ExtResource( 1 )
+button_mask = 3
 text = "Training Room"
 script = SubResource( 1 )
 __meta__ = {
@@ -76,6 +77,7 @@ margin_top = -200.0
 margin_right = -96.0
 margin_bottom = -104.0
 custom_fonts/font = ExtResource( 1 )
+button_mask = 3
 text = "Test Level 1"
 script = SubResource( 2 )
 __meta__ = {
@@ -92,6 +94,7 @@ margin_top = -72.0
 margin_right = -96.0
 margin_bottom = 24.0
 custom_fonts/font = ExtResource( 1 )
+button_mask = 3
 text = "Test Level 2"
 script = SubResource( 3 )
 __meta__ = {
@@ -129,31 +132,7 @@ Select Next [E / Click on Face]
 Camera [WASD] (very scuffed)
 Undo [Ctrl Z, Wheel Up]
 Redo [Ctrl X, Wheel Down]
-
-Lysithea, Tanya and Natasha can be summoned on green hills. The rest can be summoned on forests."
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel2" type="Panel" parent="."]
-margin_left = 32.0
-margin_top = 416.0
-margin_right = 544.0
-margin_bottom = 704.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Panel2"]
-margin_left = 32.0
-margin_top = 32.0
-margin_right = 480.0
-margin_bottom = 256.0
-custom_fonts/font = ExtResource( 2 )
-text = "Player units attack enemies closest to the summoner, and enemies attack the closest unit to themselves (if they aren't being blocked).
-
-Units act in the order Summoners > Gates > Followers (summoned player units) > Enemies. Followers act in the order shown at the bottom (lowest base cost first)."
+Restart [R, F5]"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false

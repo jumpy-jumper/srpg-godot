@@ -101,7 +101,11 @@ func _input(event):
 			else:
 				get_tree().reload_current_scene()
 		elif event.is_action_pressed("unit_ui"):
-			show_unit_ui(get_unit_at($Cursor.position))
+			var unit = get_unit_at($Cursor.position)
+			if unit:
+				show_unit_ui(unit)
+			else:
+				show_unit_ui(summoners_cache[selected_summoner_index].followers[selected_follower_index])
 		elif event.is_action_pressed("debug_clear_pending_ui"):
 			pending_ui = 0
 
@@ -151,10 +155,6 @@ func _on_UI_mouse_entered():
 
 func _on_UI_mouse_exited():
 	pending_ui -= 1
-
-
-func _on_follower_button_pressed(button):
-	selected_follower_index = summoners_cache[selected_summoner_index].followers.find(button.unit)
 
 
 func _on_Unit_UI_exited():

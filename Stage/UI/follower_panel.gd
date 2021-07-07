@@ -19,3 +19,15 @@ func update_unit(unit, selected):
 	$CooldownPanel.visible = unit.alive or unit.cooldown > 0
 	$CooldownPanel/Cooldown.text = "OUT" if unit.cooldown == 0 else str(unit.cooldown)
 	$CooldownPanel/Cooldown.modulate = Color.lightpink if unit.cooldown > 0 else Color.white
+
+
+func _on_Follower_Panel_gui_input(event):
+	if event is InputEventMouseButton and event.pressed:
+		match event.button_index:
+			BUTTON_LEFT:
+				var follower_index = unit.stage.summoners_cache[unit.stage.selected_summoner_index].followers.find(unit)
+				unit.stage.selected_follower_index = follower_index
+			BUTTON_RIGHT:
+				unit.stage.show_unit_ui(unit)
+				var follower_index = unit.stage.summoners_cache[unit.stage.selected_summoner_index].followers.find(unit)
+				unit.stage.selected_follower_index = follower_index

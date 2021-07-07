@@ -7,7 +7,7 @@ func _ready():
 	for panel in get_children():
 		panel.connect("mouse_entered", stage, "_on_UI_mouse_entered")
 		panel.connect("mouse_exited", stage, "_on_UI_mouse_exited")
-		panel.connect("pressed", stage, "_on_follower_button_pressed", [panel])
+		#panel.connect("pressed", stage, "_on_follower_button_pressed", [panel])
 
 
 func update_ui():

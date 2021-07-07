@@ -32,6 +32,8 @@ func update_unit(unit):
 		$Sprite.texture = null
 
 	$Retreat.visible = true
+	$"Terrain 1".visible = false
+	$"Terrain 2".visible = false
 	
 	$"Name/Name Label".text = unit.unit_name
 	
@@ -121,9 +123,17 @@ func update_unit(unit):
 			if base_cooldown != cooldown:
 				other_stats += " (" + "+" if base_cooldown < cooldown else " (-"
 				other_stats += str(abs(base_cooldown - cooldown)) + ")"
-					
-	if unit.get_type_of_self() == unit.UnitType.ENEMY:
+		
+		for i in range(min(len(unit.deployable_terrain), 2)):
+			var tile = unit.deployable_terrain[i]
+			var node = $"Terrain 1" if i == 0 else $"Terrain 2"
+			node.visible = true
+			node.region_rect.position.x = int(unit.stage.terrain_types.find(tile) * unit.stage.get_cell_size())
+
+
+	if unit.get_type_of_self() != unit.UnitType.FOLLOWER:
 		$Retreat.visible = false
+	if unit.get_type_of_self() == unit.UnitType.ENEMY:
 		other_stats += "\nMovement: " + str(unit.get_stat("movement", unit.base_movement))
 		other_stats += "\nNext Movement: " + str(unit.movement)
 		
@@ -143,6 +153,7 @@ func show():
 	$Tween.start()
 	yield(get_tree(), "idle_frame")
 	visible = true
+	$Retreat.disabled = false
 
 
 func hide():
@@ -150,3 +161,4 @@ func hide():
 		1, 0, fade_in_duration,
 		Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	$Tween.start()
+	$Retreat.disabled = true

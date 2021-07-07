@@ -19,7 +19,7 @@ export var base_skill_initial_sp = 10
 export var base_skill_duration = 30
 
 
-var sp = base_skill_initial_sp
+onready var sp = base_skill_initial_sp
 var ticks_left = 0
 
 
@@ -65,8 +65,7 @@ func deactivate():
 func initialize():
 	sp = unit.get_stat("skill_initial_sp", base_skill_initial_sp)
 	ticks_left = 0
-	if activation == Activation.DEPLOYMENT:
-		activate()
+	update_statuses()
 
 
 ###############################################################################

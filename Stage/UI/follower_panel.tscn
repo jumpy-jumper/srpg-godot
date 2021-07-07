@@ -9,6 +9,7 @@
 margin_right = 128.0
 margin_bottom = 128.0
 action_mode = 0
+button_mask = 3
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -66,3 +67,5 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[connection signal="gui_input" from="." to="." method="_on_Follower_Panel_gui_input"]

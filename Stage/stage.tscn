@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/camera.gd" type="Script" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Stage/UI/follower_panel.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Stage/UI/Settings.png" type="Texture" id=20]
 [ext_resource path="res://Stage/Terrain/high.tres" type="Resource" id=21]
+[ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=22]
 
 [sub_resource type="DynamicFont" id=2]
 size = 42
@@ -48,7 +49,7 @@ func animate():
 
 [node name="Stage" type="Node"]
 script = ExtResource( 1 )
-terrain_types = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 21 ), ExtResource( 13 ) ]
+terrain_types = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 21 ), ExtResource( 13 ) ]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, 64 )
@@ -191,7 +192,7 @@ __meta__ = {
 position = Vector2( 32, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 7
+frame = 1
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -285,7 +286,7 @@ __meta__ = {
 
 [node name="Stats Panel" type="Panel" parent="UI/Unit UI/Basic Stats"]
 modulate = Color( 1, 1, 1, 0.572549 )
-margin_right = 288.0
+margin_right = 256.0
 margin_bottom = 160.0
 mouse_filter = 2
 __meta__ = {
@@ -295,7 +296,7 @@ __meta__ = {
 [node name="Stats Label" type="Label" parent="UI/Unit UI/Basic Stats"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 248.0
+margin_right = 216.0
 margin_bottom = 120.0
 custom_fonts/font = ExtResource( 9 )
 text = "Level: 1
@@ -321,6 +322,7 @@ __meta__ = {
 
 [node name="Stats Panel" type="Panel" parent="UI/Unit UI/Other Stats"]
 modulate = Color( 1, 1, 1, 0.572549 )
+margin_left = 32.0
 margin_right = 256.0
 margin_bottom = 160.0
 mouse_filter = 2
@@ -331,6 +333,7 @@ __meta__ = {
 [node name="Stats Label" type="Label" parent="UI/Unit UI/Other Stats"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 32.0
 margin_right = 216.0
 margin_bottom = 120.0
 custom_fonts/font = ExtResource( 9 )
@@ -482,6 +485,30 @@ clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Panel" type="Panel" parent="UI/Unit UI"]
+modulate = Color( 1, 1, 1, 0.572549 )
+margin_left = 912.0
+margin_top = 64.0
+margin_right = 1008.0
+margin_bottom = 160.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Terrain 1" type="Sprite" parent="UI/Unit UI"]
+position = Vector2( 960, 112 )
+texture = ExtResource( 22 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 64 )
+
+[node name="Terrain 2" type="Sprite" parent="UI/Unit UI"]
+visible = false
+position = Vector2( 960, 176 )
+texture = ExtResource( 22 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 64 )
 
 [node name="Blackscreen" type="Panel" parent="UI"]
 visible = false
