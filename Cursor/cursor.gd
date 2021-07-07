@@ -26,6 +26,9 @@ var old_keyboard_pos = position
 var mouse_inactive = 0
 
 
+var keyboard_used = false
+
+
 func _process(_delta):
 	if not operatable:
 		visible = false
@@ -45,6 +48,8 @@ func _process(_delta):
 	movement.x += -1 if get_movement("ui_left") else 0
 	movement.y += -1 if get_movement("ui_up") else 0
 	movement.y += 1 if get_movement("ui_down") else 0
+	
+	keyboard_used = movement.length_squared() > 0
 
 	if mouse_pos == old_mouse_pos:
 		mouse_inactive += _delta
@@ -78,7 +83,7 @@ func _process(_delta):
 		$AnimatedSprite.play("select")
 		emit_signal("confirm_issued", position)
 
-	if Input.is_action_just_pressed("cancel"):
+	if Input.is_action_just_pressed("cancel") and not Input.is_action_just_pressed("redo"):
 		emit_signal("cancel_issued", position)
 
 	if position != previous:

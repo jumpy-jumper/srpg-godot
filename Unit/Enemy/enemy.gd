@@ -44,24 +44,12 @@ export(Array, Resource) var traversable = []
 var movement = 0
 
 
-func get_path_to_target():
-	var astar = stage.get_astar_graph(traversable)
-
-	var target = stage.summoners_cache[0] # TEMPORARY
-	var path = astar.get_point_path(astar.get_closest_point(stage.terrain.world_to_map(position)), 
-		astar.get_closest_point(stage.terrain.world_to_map(target.position)))
-
-	var ret = []
-	for v in path:
-		ret.append(v * stage.get_cell_size())
-	return ret
-
-
 func move():
 	if blocker != null:
 		return
-
-	var path = get_path_to_target()
+		
+	var target = stage.summoners_cache[0]
+	var path = stage.get_path_to_target(position, target.position, traversable)
 	
 	var leftover_movement = movement
 	
@@ -79,7 +67,7 @@ func move():
 					continue
 			position = path[i]
 			leftover_movement = movement - i
-	
+
 	var movement_array = get_stat("movement", base_movement)
 	movement = leftover_movement + movement_array[(stage.cur_tick) % len(movement_array)]
 

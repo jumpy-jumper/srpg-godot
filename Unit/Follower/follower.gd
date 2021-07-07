@@ -32,6 +32,11 @@ func _process(_delta):
 		waiting_for_facing = false
 
 
+	if (Input.is_action_just_pressed("retreat")):
+		if (stage.get_node("Cursor").position == position):
+			die()
+
+
 var waiting_for_facing_flag = false # avoids confirming facing the same frame the unit is deployed
 
 

@@ -1,0 +1,150 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/Dynamic Fonts/ui_smaller.tres" type="DynamicFont" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Button
+
+
+var level = preload(\"res://Levels/training.tscn\")
+
+
+func _on_Button_pressed():
+	Game.level_to_load = level
+	get_tree().change_scene(\"res://Stage/stage.tscn\")
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Button
+
+
+var level = preload(\"res://Levels/test_level.tscn\")
+
+
+func _on_Button2_pressed():
+	Game.level_to_load = level
+	get_tree().change_scene(\"res://Stage/stage.tscn\")
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Button
+
+"
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends Panel
+
+export var fade_in_duration = 1.0
+
+func _ready():
+	visible = true
+	animate()
+
+func animate():
+	$Tween.interpolate_property(self, \"modulate:a\",
+		1, 0, fade_in_duration,
+		Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	$Tween.start()
+"
+
+[node name="Title" type="Node"]
+
+[node name="Button" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -608.0
+margin_top = -200.0
+margin_right = -96.0
+margin_bottom = -104.0
+custom_fonts/font = ExtResource( 1 )
+text = "Training Room"
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -608.0
+margin_top = -72.0
+margin_right = -96.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 1 )
+text = "Test Level 1"
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -608.0
+margin_top = 56.0
+margin_right = -96.0
+margin_bottom = 152.0
+custom_fonts/font = ExtResource( 1 )
+text = "Test Level 2"
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 608.0
+margin_top = 32.0
+margin_right = 1248.0
+margin_bottom = 704.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 608.0
+margin_bottom = 640.0
+custom_fonts/font = ExtResource( 2 )
+text = "Controls:
+
+Fullscreen toggle [F11]
+Return to this screen [F12]
+
+Move Cursor [←↓↑→ / Mouse]
+Summon [Z / Left Click] on summonable tile
+Advance Turn [Z / Left Click] on non-summonable tile
+Examine Unit [LShift / X / Right Click] on unit
+Mark Unit [F / Middle Click]
+Retreat [C]
+Select Previous [Q / Click on Face]
+Select Next [E / Click on Face]
+Camera [WASD] (very scuffed)
+Undo [Ctrl Z, Wheel Up]
+Redo [Ctrl X, Wheel Down]
+
+Lysithea, Tanya and Natasha can be summoned on green hills. The rest can be summoned on forests."
+autowrap = true
+
+[node name="Blackscreen" type="Panel" parent="."]
+visible = false
+modulate = Color( 0, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Blackscreen"]
+
+[connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
+[connection signal="pressed" from="Button2" to="Button2" method="_on_Button2_pressed"]

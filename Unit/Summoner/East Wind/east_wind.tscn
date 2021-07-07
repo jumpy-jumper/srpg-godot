@@ -17,3 +17,4 @@ followers = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource(
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
+frame = 4

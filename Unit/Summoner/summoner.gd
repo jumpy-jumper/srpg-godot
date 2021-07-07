@@ -5,8 +5,13 @@ extends Unit
 export(Array, Resource) var followers = []
 
 
+enum Wind {EAST, SOUTH, WEST, NORTH}
+export var wind = Wind.EAST
+
+
 func get_type_of_self():
 	return UnitType.SUMMONER
+	
 
 
 ###############################################################################
@@ -28,6 +33,7 @@ func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	hp -= 1
 	if hp <= 0:
 		die()
+
 
 func recover_faith(amount = 1):
 	faith = min(faith + amount, get_stat("max_faith", base_max_faith))

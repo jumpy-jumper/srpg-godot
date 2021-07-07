@@ -17,8 +17,8 @@ var independent_followers_cache = []
 var independent_enemies_cache = []
 
 
-onready var level = get_tree().get_nodes_in_group("Level")[0]
-onready var terrain = level.get_node("Terrain")
+var level = null
+var terrain = null
 
 
 var selected_summoner_index = 0
@@ -34,6 +34,12 @@ var paused = false
 
 
 func _ready():
+	assert(Game.level_to_load != null)
+	add_child(Game.level_to_load.instance())
+	
+	level = get_tree().get_nodes_in_group("Level")[0]
+	terrain = level.get_node("Terrain")
+
 	for u in level.get_children():
 		if u is Unit:
 			connect_with_unit(u)
@@ -49,14 +55,13 @@ func _ready():
 				u.followers = followers_cache
 				summoners_cache.append(u)
 			elif u is Gate:
-				var enemies_cache = []
 				for tick in u.enemies.keys():
-					u.enemies[tick] = u.enemies[tick].instance()
-					level.add_child(u.enemies[tick])
-					enemies_cache.append(u.enemies[tick])
-					u.enemies[tick].alive = false
-					u.enemies[tick].gate = u
-					connect_with_unit(u.enemies[tick])
+					var enemy = u.enemies[tick].instance()
+					u.enemies_cache[tick] = enemy
+					level.add_child(enemy)
+					enemy.alive = false
+					enemy.gate = u
+					connect_with_unit(enemy)
 				gates_cache.append(u)
 			elif u is Enemy:
 				independent_enemies_cache.append(u)
@@ -82,10 +87,10 @@ func _input(event):
 				selected_follower_index = (selected_follower_index + 1) % len(summoners_cache[0].followers)
 			elif event.is_action_pressed("previous_follower"):
 				selected_follower_index = posmod(selected_follower_index - 1, len(summoners_cache[0].followers))
-			elif event.is_action_pressed("redo"):
-				redo()
 		if event.is_action_pressed("undo"):
 			undo()
+		elif event.is_action_pressed("redo"):
+			redo()
 		elif event.is_action_pressed("restart"):
 			if Game.undoable_restart:
 				for unit in get_all_units():
@@ -97,6 +102,8 @@ func _input(event):
 				get_tree().reload_current_scene()
 		elif event.is_action_pressed("unit_ui"):
 			show_unit_ui(get_unit_at($Cursor.position))
+		elif event.is_action_pressed("debug_clear_pending_ui"):
+			pending_ui = 0
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -197,7 +204,7 @@ func get_all_units():
 		for unit in summoner.followers:
 			followers_cache.append(unit)
 	for gate in gates_cache:
-		for unit in gate.enemies.values():
+		for unit in gate.enemies_cache.values():
 			enemies_cache.append(unit)
 	return summoners_cache + followers_cache + independent_followers_cache \
 	+ enemies_cache + independent_enemies_cache + gates_cache
@@ -234,6 +241,18 @@ func get_astar_graph(traversable_tiles):
 
 
 	return astar
+
+
+func get_path_to_target(start, end, traversable):
+	var astar = get_astar_graph(traversable)
+	
+	var path = astar.get_point_path(astar.get_closest_point(terrain.world_to_map(start)), 
+		astar.get_closest_point(terrain.world_to_map(end)))
+
+	var ret = []
+	for v in path:
+		ret.append(v * get_cell_size())
+	return ret
 
 
 ###############################################################################
@@ -368,3 +387,11 @@ func redo():
 	if cur_state_index < len(states) - 1 and Game.redo_enabled:
 		load_state(states[cur_state_index + 1])
 		cur_state_index += 1
+
+
+func _on_Retreat_pressed():
+	var unit = $"UI/Unit UI".saved_unit
+	unit.die()
+	unit.emit_signal("acted", unit)
+	paused = false
+	$"UI/Unit UI".hide()

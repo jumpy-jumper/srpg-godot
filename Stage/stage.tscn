@@ -1,7 +1,7 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
-[ext_resource path="res://Levels/test_level.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Stage/camera.gd" type="Script" id=2]
 [ext_resource path="res://Cursor/cursor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Stage/round_panel.gd" type="Script" id=4]
 [ext_resource path="res://Stage/Terrain/low.tres" type="Resource" id=5]
@@ -21,17 +21,6 @@
 [ext_resource path="res://Stage/UI/follower_panel.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Stage/UI/Settings.png" type="Texture" id=20]
 [ext_resource path="res://Stage/Terrain/high.tres" type="Resource" id=21]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Camera2D
-
-
-onready var stage = $\"..\"
-
-
-func _on_Cursor_moved(pos):
-	pass
-"
 
 [sub_resource type="DynamicFont" id=2]
 size = 42
@@ -65,14 +54,15 @@ terrain_types = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 21 ), ExtReso
 position = Vector2( 0, 64 )
 anchor_mode = 0
 current = true
-script = SubResource( 1 )
+script = ExtResource( 2 )
+speed = 0.0
+
+[node name="Tween" type="Tween" parent="Camera2D"]
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
 position = Vector2( 96, 160 )
 z_index = 1
 rapid_fire_wait = 7
-
-[node name="TestLevel" parent="." instance=ExtResource( 2 )]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -130,7 +120,7 @@ __meta__ = {
 
 [node name="Follower Panels" type="Node2D" parent="UI"]
 visible = false
-position = Vector2( 32, 608 )
+position = Vector2( 32, 576 )
 scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 8 )
 
@@ -184,7 +174,7 @@ focus_mode = 0
 
 [node name="Summoner UI" type="Node2D" parent="UI"]
 visible = false
-position = Vector2( 32, 564 )
+position = Vector2( 32, 532 )
 scale = Vector2( 0.706163, 0.695323 )
 script = ExtResource( 12 )
 
@@ -201,7 +191,7 @@ __meta__ = {
 position = Vector2( 32, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 1
+frame = 7
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -259,8 +249,8 @@ __meta__ = {
 
 [node name="Name Panel" type="Panel" parent="UI/Unit UI/Name"]
 modulate = Color( 1, 1, 1, 0.572549 )
-margin_left = -128.0
-margin_right = 160.0
+margin_left = -192.0
+margin_right = 384.0
 margin_bottom = 64.0
 mouse_filter = 2
 __meta__ = {
@@ -270,8 +260,8 @@ __meta__ = {
 [node name="Name Label" type="Label" parent="UI/Unit UI/Name"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -128.0
-margin_right = 120.0
+margin_left = -192.0
+margin_right = 344.0
 margin_bottom = 24.0
 custom_fonts/font = ExtResource( 10 )
 text = "The West Wind"
@@ -471,6 +461,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Retreat" type="Button" parent="UI/Unit UI"]
+margin_left = 480.0
+margin_top = 128.0
+margin_right = 608.0
+margin_bottom = 256.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/Unit UI/Retreat"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 9 )
+text = "RETREAT"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Blackscreen" type="Panel" parent="UI"]
 visible = false
 modulate = Color( 0, 0, 0, 1 )
@@ -569,12 +581,12 @@ __meta__ = {
 
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
-[connection signal="moved" from="Cursor" to="Camera2D" method="_on_Cursor_moved"]
 [connection signal="exited" from="UI/Unit UI" to="." method="_on_Unit_UI_exited"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 1/Button" to="UI/Unit UI/Skill 1" method="_on_Button_pressed"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 2" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 2/Button" to="UI/Unit UI/Skill 2" method="_on_Button_pressed"]
+[connection signal="pressed" from="UI/Unit UI/Retreat" to="." method="_on_Retreat_pressed"]
 [connection signal="mouse_entered" from="UI/Settings/Button" to="." method="_on_UI_mouse_entered"]
 [connection signal="mouse_exited" from="UI/Settings/Button" to="." method="_on_UI_mouse_exited"]

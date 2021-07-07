@@ -117,21 +117,23 @@ func get_skill_range():
 ###############################################################################
 
 
-enum TargetingPriority { CLOSEST, LOWEST_HP_PERCENTAGE }
+enum TargetingPriority { CLOSEST_TO_SELF, LOWEST_HP_PERCENTAGE, CLOSEST_TO_SUMMONER }
 
 
 export var base_target_count = 1
-export(TargetingPriority) var targeting_priority = TargetingPriority.CLOSEST
+export(TargetingPriority) var targeting_priority = TargetingPriority.CLOSEST_TO_SUMMONER
 
 
 func select_targets(units):
 	var ret = []
 		
 	match targeting_priority:
-		TargetingPriority.CLOSEST:
-			units.sort_custom(self, "distance_comparison") 
+		TargetingPriority.CLOSEST_TO_SELF:
+			units.sort_custom(self, "closest_to_self_comparison") 
 		TargetingPriority.LOWEST_HP_PERCENTAGE:
 			units.sort_custom(self, "lowest_hp_percentage_comparison")
+		TargetingPriority.CLOSEST_TO_SUMMONER:
+			units.sort_custom(self, "closest_to_summoner_comparison")
 	
 	for i in range(min(unit.get_stat("target_count", base_target_count), len(units))):
 		ret.append(units[i])
@@ -139,10 +141,15 @@ func select_targets(units):
 	return ret
 
 
-func distance_comparison(a, b):
+func closest_to_self_comparison(a, b):
 	return abs((a.position - unit.position).length_squared()) < abs((b.position - unit.position).length_squared())
 
 
 func lowest_hp_percentage_comparison(a, b):
 	return float(a.hp) / a.get_stat("max_hp", a.base_max_hp) <\
 		float(b.hp) / b.get_stat("max_hp", b.base_max_hp)
+
+
+func closest_to_summoner_comparison(a, b):
+	var summ = unit.stage.summoners_cache[0]
+	return abs((a.position - summ.position).length_squared()) < abs((b.position - summ.position).length_squared())

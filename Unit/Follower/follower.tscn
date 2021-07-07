@@ -20,7 +20,7 @@ func _process(_delta):
 deployable_terrain = [ ExtResource( 3 ) ]
 
 [node name="Sprite" parent="." index="0"]
-frame = 0
+frame = 4
 
 [node name="Block Range" parent="Ranges" index="1" instance=ExtResource( 2 )]
 script = SubResource( 1 )
@@ -31,6 +31,9 @@ modulate = Color( 0.576471, 1, 0.968627, 1 )
 
 [node name="Basic Attack" type="Node" parent="Skills" index="0"]
 script = ExtResource( 4 )
+description = "Once per attack count, attacks blocked enemies then enemies in range up to the target count.
+Physical damage is ATK - DEF.
+Magic damage is ATK * (1 - (RES/100))."
 activation = 1
 base_skill_cost = 0
 base_skill_initial_sp = 0

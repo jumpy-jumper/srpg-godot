@@ -17,12 +17,14 @@ mugshot_top_left = Vector2( 195, 50 )
 deployable_terrain = [ ExtResource( 5 ) ]
 base_cost = 22
 base_block_range = [  ]
+base_block_count = 0
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 6
+frame = 0
 
 [node name="Basic Attack" parent="Skills" index="0"]
+description = "Heals allies in range equal to the target count, per attack count. Outgoing healing is equal to ATK."
 base_skill_range = [ Vector2( -1, -2 ), Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 2, -2 ), Vector2( 3, -2 ), Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 3, -1 ), Vector2( 4, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 4, 1 ), Vector2( -1, 2 ), Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 2, 2 ), Vector2( 3, 2 ) ]
 targeting_priority = 1
 skill_type = 1

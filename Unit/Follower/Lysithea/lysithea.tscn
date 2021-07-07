@@ -17,10 +17,11 @@ mugshot_top_left = Vector2( 150, 80 )
 deployable_terrain = [ ExtResource( 4 ) ]
 base_cost = 15
 base_block_range = [  ]
+base_block_count = 0
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 7
+frame = 1
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 3, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ) ]
