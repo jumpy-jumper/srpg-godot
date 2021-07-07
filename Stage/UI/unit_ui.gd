@@ -10,8 +10,12 @@ export var fade_in_duration = 0.25
 var saved_unit = null
 
 
+func _ready():
+	modulate.a = 0
+
+
 func _process(_delta):
-	if (Input.is_action_just_released("ui_cancel")) and modulate.a == 1:
+	if (Input.is_action_just_pressed("ui_cancel") or Input.is_action_just_pressed("undo")) and modulate.a > 0:
 		hide()
 		emit_signal("exited")
 

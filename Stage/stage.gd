@@ -96,7 +96,13 @@ func _input(event):
 
 
 func _on_Cursor_confirm_issued(pos):
-	if get_unit_at(pos) == null:	
+	var flag = false
+	for summ in summoners_cache:
+		for unit in summ.followers:
+			if unit.waiting_for_facing:
+				flag = true
+
+	if not flag and get_unit_at(pos) == null:	
 		var summoner = summoners_cache[selected_summoner_index]	
 		var unit = summoner.followers[selected_follower_index]
 		if get_terrain_at(pos) in unit.deployable_terrain:
@@ -109,7 +115,7 @@ func _on_Cursor_confirm_issued(pos):
 						skill.initialize()
 					deselect_unit()
 					acted_this_tick = true
-					unit.deployed_this_round = true
+					unit.waiting_for_facing = true
 
 
 func _on_Cursor_cancel_issued(pos):
@@ -310,6 +316,8 @@ func load_state(state):
 	acted_this_tick = false
 	cur_tick = state["cur_tick"]
 	for unit in get_all_units():
+		for status in unit.get_node("Statuses").get_children():
+			status.queue_free()
 		unit.position = state[unit]["position"]
 		unit.alive = state[unit]["alive"]
 		unit.hp = state[unit]["hp"]
@@ -318,6 +326,8 @@ func load_state(state):
 				unit.facing = state[unit]["facing"]
 				unit.blocked = [] + state[unit]["blocked"]
 				unit.cooldown = state[unit]["cooldown"]
+				unit.waiting_for_facing = false
+				unit.waiting_for_facing_flag = false
 			unit.UnitType.SUMMONER:
 				unit.faith = state[unit]["faith"]
 			unit.UnitType.ENEMY:
@@ -328,10 +338,6 @@ func load_state(state):
 			skill.ticks_left = state[skill]["ticks_left"]
 			if skill is Lysithea_S1:
 				skill.bonus_atk = state[skill]["bonus_atk"]
-				if skill.bonus_atk_status_cache:
-					print(skill.bonus_atk_status_cache)
-					skill.bonus_atk_status_cache.queue_free()
-					skill.bonus_atk_status_cache = null
 			skill.update_statuses()
 
 

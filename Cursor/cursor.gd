@@ -16,7 +16,6 @@ const DEFAULT_CELL_SIZE = 64
 
 
 export var operatable = true
-export var decouple_mouse_and_keyboard = false
 
 
 var stage = null
@@ -24,10 +23,15 @@ var old_mouse_pos = position
 var old_keyboard_pos = position
 
 
+var mouse_inactive = 0
+
+
 func _process(_delta):
 	if not operatable:
 		visible = false
 		return
+		
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if mouse_inactive < Game.hide_mouse_after_seconds else Input.MOUSE_MODE_HIDDEN)
 
 	visible = true
 	if stage:
@@ -45,7 +49,8 @@ func _process(_delta):
 	movement.y += 1 if get_movement("ui_down") else 0
 
 	if mouse_pos == old_mouse_pos:
-		if decouple_mouse_and_keyboard and movement.length() > 0:
+		mouse_inactive += _delta
+		if Game.decouple_mouse_and_keyboard and movement.length() > 0:
 			position = old_keyboard_pos
 
 		if stage:
@@ -64,17 +69,18 @@ func _process(_delta):
 		if movement.length() > 0:
 			old_keyboard_pos = position
 	elif Game.mouse_enabled:
+		mouse_inactive = 0
 		if stage:
 			position = stage.get_clamped_position(mouse_pos)
 		else:
 			position = mouse_pos
 
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("confirm"):
 		$AnimatedSprite.play("default")
 		$AnimatedSprite.play("select")
 		emit_signal("confirm_issued", position)
 
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("cancel"):
 		emit_signal("cancel_issued", position)
 
 	if position != previous:
@@ -85,8 +91,9 @@ func _process(_delta):
 	old_mouse_pos = get_global_mouse_position()
 
 
-export var rapid_fire_wait = 20
+export var rapid_fire_wait = 6
 export var rapid_fire_interval = 3
+export var rapid_fire_hold = 30
 
 
 var timers = {
@@ -95,6 +102,9 @@ var timers = {
 	"ui_down" : 0,
 	"ui_up" : 0,
 }
+
+
+var rapid_fire_condition_history = []
 
 
 func get_movement(dir):
@@ -107,16 +117,16 @@ func get_movement(dir):
 	for t in timers:
 		if timers[t] > rapid_fire_wait:
 			rapid_fire_condition = true
+			
+	rapid_fire_condition_history.append(rapid_fire_condition)
+	if len(rapid_fire_condition_history) > rapid_fire_hold:
+		rapid_fire_condition_history.pop_front()
+	
+	for b in rapid_fire_condition_history:
+		if b:
+			rapid_fire_condition = true
 
 	if rapid_fire_condition:
 		return timers[dir] % rapid_fire_interval == 0 and Input.is_action_pressed(dir)
 	else:
 		return Input.is_action_just_pressed(dir)
-
-
-func _on_Stage_player_phase_started(cur_round):
-	operatable = true
-
-
-func _on_Stage_enemy_phase_started(cur_round):
-	operatable = false

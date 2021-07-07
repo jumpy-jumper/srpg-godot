@@ -28,7 +28,9 @@ func is_active():
 
 
 func is_available():
-	return activation == Activation.SP_MANUAL and sp == unit.get_stat("skill_cost", base_skill_cost)
+	return activation == Activation.SP_MANUAL \
+		and sp == unit.get_stat("skill_cost", base_skill_cost) \
+		and not is_active()
 
 
 func tick():

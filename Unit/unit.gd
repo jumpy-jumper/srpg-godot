@@ -40,7 +40,8 @@ func _process(_delta):
 								skill.deactivate()
 							else:
 								skill.activate()
-		
+
+
 		if (Input.is_action_just_pressed("debug_kill")):
 			if (stage.get_node("Cursor").position == position):
 				die()
@@ -155,7 +156,7 @@ func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if damage_type == DamageType.PHYSICAL:
 		amount -= get_stat("def", base_def)
 	elif damage_type == DamageType.MAGIC:
-		amount *= (1 - (get_stat("res", base_res) / 100.0))
+		amount = floor(amount * (1 - (get_stat("res", base_res) / 100.0)))
 	
 	hp -= max(amount, 0)
 	if hp <= 0:

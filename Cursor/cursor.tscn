@@ -35,6 +35,7 @@ script = ExtResource( 9 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 script = ExtResource( 10 )
 

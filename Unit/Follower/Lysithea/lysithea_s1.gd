@@ -34,5 +34,6 @@ func activate():
 func deactivate():
 	.deactivate()
 	bonus_atk = 0.0
-	bonus_atk_status_cache.queue_free()
-	bonus_atk_status_cache = null
+	if bonus_atk_status_cache:
+		bonus_atk_status_cache.queue_free()
+		bonus_atk_status_cache = null
