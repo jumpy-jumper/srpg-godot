@@ -19,10 +19,6 @@ func _ready():
 	movement = movement_array[0]
 
 
-func _process(_delta):
-	._process(_delta)
-
-
 func tick():
 	.tick()
 	if alive:

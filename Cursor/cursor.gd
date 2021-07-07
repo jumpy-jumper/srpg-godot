@@ -30,8 +30,6 @@ func _process(_delta):
 	if not operatable:
 		visible = false
 		return
-		
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if mouse_inactive < Game.hide_mouse_after_seconds else Input.MOUSE_MODE_HIDDEN)
 
 	visible = true
 	if stage:
@@ -75,7 +73,7 @@ func _process(_delta):
 		else:
 			position = mouse_pos
 
-	if Input.is_action_just_pressed("confirm"):
+	if Input.is_action_just_pressed("confirm") and not Input.is_action_just_pressed("undo"):
 		$AnimatedSprite.play("default")
 		$AnimatedSprite.play("select")
 		emit_signal("confirm_issued", position)

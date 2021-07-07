@@ -88,11 +88,15 @@ func _input(event):
 			undo()
 		elif event.is_action_pressed("restart"):
 			if Game.undoable_restart:
+				for unit in get_all_units():
+					unit.marked = false
 				load_state(states[0])
 				append_state()
 				$UI/Blackscreen.animate()
 			else:
 				get_tree().reload_current_scene()
+		elif event.is_action_pressed("unit_ui"):
+			show_unit_ui(get_unit_at($Cursor.position))
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -102,11 +106,12 @@ func _on_Cursor_confirm_issued(pos):
 			if unit.waiting_for_facing:
 				flag = true
 
-	if not flag and get_unit_at(pos) == null:	
-		var summoner = summoners_cache[selected_summoner_index]	
-		var unit = summoner.followers[selected_follower_index]
-		if get_terrain_at(pos) in unit.deployable_terrain:
-			if unit.get_stat("cost", unit.base_cost) <= summoner.faith \
+	if not flag:
+		if get_unit_at(pos) == null:	
+			var summoner = summoners_cache[selected_summoner_index]	
+			var unit = summoner.followers[selected_follower_index]
+			if get_terrain_at(pos) in unit.deployable_terrain \
+				and unit.get_stat("cost", unit.base_cost) <= summoner.faith \
 				and not unit.alive and unit.cooldown == 0:
 					unit.alive = true
 					unit.global_position = get_clamped_position(pos)
@@ -116,19 +121,22 @@ func _on_Cursor_confirm_issued(pos):
 					deselect_unit()
 					acted_this_tick = true
 					unit.waiting_for_facing = true
+			else:
+				advance_tick()
 
 
 func _on_Cursor_cancel_issued(pos):
+	show_unit_ui(get_unit_at(pos))
+
+
+func show_unit_ui(unit):
 	if not paused:
-		var u = get_unit_at(pos)
-		if u:
-			$"UI/Unit UI".update_unit(u)
+		if unit:
+			$"UI/Unit UI".update_unit(unit)
 			$"UI/Unit UI".show()
 			paused = true
 
-
 var pending_ui = 0
-
 
 func _on_UI_mouse_entered():
 	pending_ui += 1
@@ -357,10 +365,6 @@ func undo():
 
 
 func redo():
-	if acted_this_tick:
-		advance_tick()
-	elif cur_state_index < len(states) - 1 and Game.redo_enabled:
+	if cur_state_index < len(states) - 1 and Game.redo_enabled:
 		load_state(states[cur_state_index + 1])
 		cur_state_index += 1
-	else:
-		advance_tick()

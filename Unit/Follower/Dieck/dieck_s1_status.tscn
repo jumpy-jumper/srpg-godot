@@ -15,5 +15,6 @@ stat_flat_bonuses = {
 }
 stat_additive_multipliers = {
 "atk": 1.4,
-"def": 0.7
+"def": 0.7,
+"incoming_damage": -0.5
 }

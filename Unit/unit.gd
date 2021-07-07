@@ -45,7 +45,11 @@ func _process(_delta):
 		if (Input.is_action_just_pressed("debug_kill")):
 			if (stage.get_node("Cursor").position == position):
 				die()
-			
+
+
+		if (Input.is_action_just_pressed("mark")):
+			if (stage.get_node("Cursor").position == position):
+				marked = not marked
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -57,16 +61,18 @@ func _on_Cursor_cancel_issued(pos):
 
 
 func _on_Cursor_hovered(pos):
-	$Ranges.visible = position == pos
-		
-		
+	$Ranges.visible = position == pos or marked
+
+
 func _on_Cursor_moved(pos):
 	pass
 
 
 func tick():
 	if alive:
-		for skill in $Skills.get_children():
+		var skills = [] + $Skills.get_children()
+		skills.invert()
+		for skill in skills:
 			skill.tick()
 	hp = min(hp, get_stat("max_hp", base_max_hp))
 		
@@ -90,6 +96,9 @@ const NUMERICAL_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
 	"block_count", "damage_type", "incoming_damage", "incoming_healing", \
 	"skill_duration", "cooldown"]
+const INTEGER_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
+	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
+	"block_count", "skill_duration", "cooldown"]
 const ARRAY_STATS = ["movement", "skill_range", "block_range", "faith_recovery"]
 
 
@@ -123,7 +132,10 @@ func get_stat_after_statuses(stat_name, base_value):
 					additive_multiplier += status.stat_additive_multipliers[stat_name]
 				if status.stat_multiplicative_multipliers.has(stat_name):
 					multiplicative_multiplier *= status.stat_multiplicative_multipliers[stat_name]
-		return floor(ret * additive_multiplier * multiplicative_multiplier)
+		if stat_name in INTEGER_STATS:
+			return floor(ret * additive_multiplier * multiplicative_multiplier)
+		else:
+			return ret * additive_multiplier * multiplicative_multiplier
 
 	elif stat_name in ARRAY_STATS:
 		for status in $Statuses.get_children():
@@ -151,12 +163,12 @@ enum DamageType {PHYSICAL, MAGIC, TRUE}
 
 
 func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
-	amount = floor(amount * get_stat("incoming_damage", 1))
-	
 	if damage_type == DamageType.PHYSICAL:
 		amount -= get_stat("def", base_def)
 	elif damage_type == DamageType.MAGIC:
 		amount = floor(amount * (1 - (get_stat("res", base_res) / 100.0)))
+	
+	amount = floor(amount * get_stat("incoming_damage", 1))
 	
 	hp -= max(amount, 0)
 	if hp <= 0:
@@ -186,6 +198,9 @@ func die():
 ###############################################################################
 #        Range logic                                                          #
 ###############################################################################
+
+
+var marked = false
 
 
 func get_units_in_range_of_type(_range, unit_type):

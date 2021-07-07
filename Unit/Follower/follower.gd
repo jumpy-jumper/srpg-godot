@@ -24,8 +24,8 @@ func get_type_of_enemy():
 #        Main logic                                                           #
 ###############################################################################
 
+
 func _process(_delta):
-	._process(_delta)
 	if waiting_for_facing:
 		face_cursor()
 	if Input.is_action_just_released("mouse_confirm") and Game.confirm_facing_on_release:
@@ -90,7 +90,7 @@ func die():
 
 func _on_Cursor_hovered(pos):
 	._on_Cursor_hovered(pos)
-	$Ranges.visible = position == pos or waiting_for_facing
+	$Ranges.visible = $Ranges.visible or waiting_for_facing
 
 
 ###############################################################################

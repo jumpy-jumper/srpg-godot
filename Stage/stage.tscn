@@ -201,7 +201,7 @@ __meta__ = {
 position = Vector2( 32, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -248,9 +248,9 @@ texture = ExtResource( 14 )
 centered = false
 
 [node name="Name" type="Control" parent="UI/Unit UI"]
-margin_left = 160.0
+margin_left = 224.0
 margin_top = 32.0
-margin_right = 200.0
+margin_right = 264.0
 margin_bottom = 72.0
 mouse_filter = 2
 __meta__ = {

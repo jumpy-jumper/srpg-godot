@@ -15,7 +15,7 @@ func _ready():
 
 
 func _process(_delta):
-	if (Input.is_action_just_pressed("ui_cancel") or Input.is_action_just_pressed("undo")) and modulate.a > 0:
+	if (Input.is_action_just_pressed("cancel") or Input.is_action_just_pressed("unit_ui")) and modulate.a > 0.2:
 		hide()
 		emit_signal("exited")
 
@@ -73,7 +73,8 @@ func update_unit(unit):
 		var base_damage_type = unit.get_node("Skills").get_children()[0].damage_type
 		var damage_type = unit.get_stat("damage_type", base_damage_type)
 		other_stats += "Damage: " + unit.DamageType.keys()[damage_type]
-	
+
+
 	if unit.get_type_of_self() != unit.UnitType.GATE:
 		var base_target_count = unit.get_node("Skills").get_children()[0].base_target_count
 		var target_count = unit.get_stat("target_count", base_target_count)

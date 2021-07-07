@@ -9,11 +9,18 @@ onready var unit = $"../.."
 
 
 func update_range(_range, color = Color.black):
-	for c in get_children():
-		c.queue_free()
-	for pos in _range:
+	var necessary_children = max(0, len(_range) - get_child_count())
+	
+	for i in range(necessary_children):
 		var tile = range_indicator_tile.instance()
 		add_child(tile)
-		tile.position = position + (pos * unit.stage.get_cell_size()) + \
-			Vector2(unit.stage.get_cell_size() / 2, unit.stage.get_cell_size() / 2)
-		tile.modulate = color
+	
+	var children = get_children()
+	for i in range(len(children)):
+		if i >= len(_range):
+			children[i].visible = false
+		else:
+			children[i].visible = true
+			children[i].position = position + (_range[i] * unit.stage.get_cell_size()) + \
+				Vector2(unit.stage.get_cell_size() / 2, unit.stage.get_cell_size() / 2)
+			children[i].modulate = color
