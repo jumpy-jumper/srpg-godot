@@ -30,6 +30,13 @@ func _on_Button2_pressed():
 [sub_resource type="GDScript" id=3]
 script/source = "extends Button
 
+
+var level = preload(\"res://Levels/test_level_2.tscn\")
+
+
+func _on_Button3_pressed():
+	Game.level_to_load = level
+	get_tree().change_scene(\"res://Stage/stage.tscn\")
 "
 
 [sub_resource type="GDScript" id=4]
@@ -122,16 +129,16 @@ Fullscreen toggle [F11]
 Return to this screen [F12]
 
 Move Cursor [←↓↑→ / Mouse]
+Advance Turn [Space / Wheel Down]
 Summon [Z / Left Click] on summonable tile
 Retreat [C]
-Advance Turn [Z / Left Click] on non-summonable tile
 Examine Unit [LShift / X / Right Click] on unit
 Mark Unit [F / Middle Click]
 Select Previous [Q / Click on Face]
 Select Next [E / Click on Face]
 Camera [WASD] (very scuffed)
 Undo [Ctrl Z, Wheel Up]
-Redo [Ctrl X, Wheel Down]
+Redo [Ctrl X]
 Restart [R, F5]"
 autowrap = true
 __meta__ = {
@@ -153,3 +160,4 @@ __meta__ = {
 
 [connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
 [connection signal="pressed" from="Button2" to="Button2" method="_on_Button2_pressed"]
+[connection signal="pressed" from="Button3" to="Button3" method="_on_Button3_pressed"]

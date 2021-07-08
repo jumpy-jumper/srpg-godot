@@ -108,6 +108,8 @@ func _input(event):
 				show_unit_ui(summoners_cache[selected_summoner_index].followers[selected_follower_index])
 		elif event.is_action_pressed("debug_clear_pending_ui"):
 			pending_ui = 0
+		elif event.is_action_pressed("advance_round"):
+			advance_tick()
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -132,8 +134,6 @@ func _on_Cursor_confirm_issued(pos):
 					deselect_unit()
 					acted_this_tick = true
 					unit.waiting_for_facing = true
-			else:
-				advance_tick()
 
 
 func _on_Cursor_cancel_issued(pos):
@@ -174,6 +174,14 @@ func _on_Unit_acted(unit):
 
 func _on_Unit_dead(unit):
 	pass
+
+
+func _on_Retreat_pressed():
+	var unit = $"UI/Unit UI".saved_unit
+	unit.die()
+	unit.emit_signal("acted", unit)
+	paused = false
+	$"UI/Unit UI".hide()
 
 
 ###############################################################################
@@ -299,7 +307,6 @@ func connect_with_unit(unit):
 	$Cursor.connect("hovered", unit, "_on_Cursor_hovered")
 
 
-
 ###############################################################################
 #        State and undo                                                       #
 ###############################################################################
@@ -384,14 +391,10 @@ func undo():
 
 
 func redo():
-	if cur_state_index < len(states) - 1 and Game.redo_enabled:
+	if acted_this_tick:
+		advance_tick()
+	elif cur_state_index < len(states) - 1 and Game.redo_enabled:
 		load_state(states[cur_state_index + 1])
 		cur_state_index += 1
-
-
-func _on_Retreat_pressed():
-	var unit = $"UI/Unit UI".saved_unit
-	unit.die()
-	unit.emit_signal("acted", unit)
-	paused = false
-	$"UI/Unit UI".hide()
+	elif not paused:
+		advance_tick()

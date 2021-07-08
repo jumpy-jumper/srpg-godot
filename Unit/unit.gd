@@ -75,6 +75,7 @@ func tick():
 		for skill in skills:
 			skill.tick()
 	hp = min(hp, get_stat("max_hp", base_max_hp))
+	toasts_this_tick = 0
 		
 
 ###############################################################################
@@ -159,8 +160,19 @@ signal acted(unit)
 signal dead(unit)
 
 
-enum DamageType {PHYSICAL, MAGIC, TRUE}
+enum DamageType {PHYSICAL, MAGIC, TRUE, HEALING}
 
+
+var physical_color = Color.orange
+var magic_color = Color.blue
+var true_color = Color.white
+var healing_color = Color.green
+var colors = [physical_color, magic_color, true_color, healing_color]
+
+
+var damage_toast = preload("res://Unit/ damage_toast.tscn")
+
+var toasts_this_tick = 0
 
 func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if damage_type == DamageType.PHYSICAL:
@@ -170,9 +182,18 @@ func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	
 	amount = floor(amount * get_stat("incoming_damage", 1))
 	
-	hp -= max(amount, 0)
+	amount = max(amount, 0)
+	hp -= amount
 	if hp <= 0:
 		die()
+	
+	var toast = damage_toast.instance()
+	toast.amount = amount
+	toast.color = colors[damage_type]
+	toast.position += position
+	toast.position.y += toasts_this_tick * toast.y_step
+	stage.add_child(toast)
+	toasts_this_tick += 1
 
 
 func heal(amount = 1):
@@ -180,6 +201,14 @@ func heal(amount = 1):
 	
 	hp += max(amount, 0)
 	hp = min(get_stat("max_hp", base_max_hp), hp)
+	
+	var toast = damage_toast.instance()
+	toast.amount = amount
+	toast.color = colors[DamageType.HEALING]
+	toast.position += position
+	toast.position.y += toasts_this_tick * toast.y_step
+	stage.add_child(toast)
+	toasts_this_tick += 1
 
 
 func heal_to_full():

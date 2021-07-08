@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Fonts/Dynamic Fonts/damage.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Unit/damage_toast.gd" type="Script" id=2]
+
+[node name="Damage Toast" type="Node2D"]
+position = Vector2( 32, -37.5 )
+script = ExtResource( 2 )
+duration = 4.0
+travel = 100
+y_spread = 0
+y_step = -25
+
+[node name="Label" type="Label" parent="."]
+margin_left = -64.0
+margin_top = 38.0
+margin_right = 64.0
+margin_bottom = 102.0
+custom_fonts/font = ExtResource( 1 )
+text = "19981"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TweenModulate" type="Tween" parent="."]
+
+[node name="TweenPosition" type="Tween" parent="."]

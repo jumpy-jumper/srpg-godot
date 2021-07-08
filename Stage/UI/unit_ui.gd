@@ -131,7 +131,7 @@ func update_unit(unit):
 			node.region_rect.position.x = int(unit.stage.terrain_types.find(tile) * unit.stage.get_cell_size())
 
 
-	if unit.get_type_of_self() != unit.UnitType.FOLLOWER:
+	if not unit.alive or unit.get_type_of_self() != unit.UnitType.FOLLOWER:
 		$Retreat.visible = false
 	if unit.get_type_of_self() == unit.UnitType.ENEMY:
 		other_stats += "\nMovement: " + str(unit.get_stat("movement", unit.base_movement))

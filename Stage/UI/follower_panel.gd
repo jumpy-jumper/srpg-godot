@@ -25,9 +25,11 @@ func _on_Follower_Panel_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
 		match event.button_index:
 			BUTTON_LEFT:
-				var follower_index = unit.stage.summoners_cache[unit.stage.selected_summoner_index].followers.find(unit)
-				unit.stage.selected_follower_index = follower_index
+				if not unit.stage.paused:
+					var follower_index = unit.stage.summoners_cache[unit.stage.selected_summoner_index].followers.find(unit)
+					unit.stage.selected_follower_index = follower_index
 			BUTTON_RIGHT:
-				unit.stage.show_unit_ui(unit)
-				var follower_index = unit.stage.summoners_cache[unit.stage.selected_summoner_index].followers.find(unit)
-				unit.stage.selected_follower_index = follower_index
+				if not unit.stage.paused:
+					unit.stage.show_unit_ui(unit)
+					var follower_index = unit.stage.summoners_cache[unit.stage.selected_summoner_index].followers.find(unit)
+					unit.stage.selected_follower_index = follower_index

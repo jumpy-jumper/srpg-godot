@@ -78,9 +78,6 @@ modulate = Color( 1, 0.382813, 0.382813, 1 )
 
 [node name="Basic Attack" parent="Skills" index="0" instance=ExtResource( 2 )]
 script = ExtResource( 6 )
-description = "Once per attack count, attacks this unit's blocker, then enemies in range up to the target count.
-Physical damage is ATK - DEF.
-Magic damage is ATK * (1 - (RES/100))."
 activation = 1
 base_skill_cost = 0
 base_skill_initial_sp = 0
