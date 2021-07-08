@@ -18,7 +18,6 @@ func get_type_of_self():
 
 
 var stage = null
-
 var alive = true
 
 
@@ -68,15 +67,17 @@ func _on_Cursor_moved(pos):
 	pass
 
 
-func tick():
+func tick_skills():
 	if alive:
 		var skills = [] + $Skills.get_children()
 		skills.invert()
 		for skill in skills:
 			skill.tick()
-	hp = min(hp, get_stat("max_hp", base_max_hp))
+
+
+func _on_Stage_tick_ended():
 	toasts_this_tick = 0
-		
+
 
 ###############################################################################
 #        Stats logic                                                          #
@@ -163,14 +164,14 @@ signal dead(unit)
 enum DamageType {PHYSICAL, MAGIC, TRUE, HEALING}
 
 
-var physical_color = Color.orange
+var physical_color = Color.lightcoral
 var magic_color = Color.blue
 var true_color = Color.white
 var healing_color = Color.green
 var colors = [physical_color, magic_color, true_color, healing_color]
 
 
-var damage_toast = preload("res://Unit/ damage_toast.tscn")
+var damage_toast = preload("res://Unit/damage_toast.tscn")
 
 var toasts_this_tick = 0
 

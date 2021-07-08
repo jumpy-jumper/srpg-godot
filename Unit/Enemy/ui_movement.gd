@@ -11,5 +11,4 @@ func _ready():
 
 
 func _process(_delta):
-	visible = unit.blocker == null and not disabled
 	text = str(unit.movement)

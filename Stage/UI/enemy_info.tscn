@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Unit/Enemy/Hound/hound.tres" type="SpriteFrames" id=2]
+
+[node name="Enemy Info" type="Control"]
+margin_left = 32.0
+margin_top = 112.0
+margin_right = 72.0
+margin_bottom = 152.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color( 1, 1, 1, 0.568627 )
+margin_right = 176.0
+margin_bottom = 112.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 64.0
+margin_bottom = 96.0
+custom_fonts/font = ExtResource( 1 )
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 112, 32 )
+scale = Vector2( 4, 4 )
+frames = ExtResource( 2 )
+frame = 7
+playing = true

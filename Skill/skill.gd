@@ -107,10 +107,6 @@ func remove_statuses():
 export(Array) var base_skill_range = [Vector2(0, 0)]
 
 
-func get_skill_range():
-	return unit.get_stat("skill_range", base_skill_range)
-
-
 ###############################################################################
 #        Targeting logic                                                      #
 ###############################################################################

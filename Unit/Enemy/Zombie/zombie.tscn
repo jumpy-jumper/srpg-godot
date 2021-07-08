@@ -5,9 +5,9 @@
 
 [node name="Zombie" instance=ExtResource( 1 )]
 unit_name = "Zombie"
-base_max_hp = 2500
-base_atk = 550
-base_def = 300
+base_max_hp = 250
+base_atk = 55
+base_def = 30
 
 [node name="Sprite" parent="." index="1"]
 frames = ExtResource( 2 )

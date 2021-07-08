@@ -7,9 +7,9 @@
 
 [node name="Frederick" instance=ExtResource( 2 )]
 unit_name = "Frederick"
-base_max_hp = 4000
-base_atk = 1000
-base_def = 650
+base_max_hp = 400
+base_atk = 100
+base_def = 65
 base_res = 30
 portrait = ExtResource( 3 )
 mugshot_top_left = Vector2( 180, 40 )
@@ -19,7 +19,7 @@ base_block_count = 4
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 2
+frame = 1
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [  ]

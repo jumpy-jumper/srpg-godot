@@ -5,9 +5,9 @@
 
 [node name="Dummy" instance=ExtResource( 1 )]
 unit_name = "Striking Dummy"
-base_max_hp = 9999
-base_atk = 550
-base_def = 300
+base_max_hp = 999
+base_atk = 55
+base_def = 30
 base_res = 20
 base_movement = [ 0, 0, 0, 0 ]
 

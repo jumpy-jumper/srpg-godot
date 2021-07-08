@@ -8,9 +8,9 @@
 
 [node name="Tanya" instance=ExtResource( 2 )]
 unit_name = "Tanya"
-base_max_hp = 1500
-base_atk = 600
-base_def = 150
+base_max_hp = 150
+base_atk = 60
+base_def = 15
 base_res = 20
 portrait = ExtResource( 3 )
 mugshot_top_left = Vector2( 260, 60 )

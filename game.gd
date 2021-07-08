@@ -13,7 +13,8 @@ var mouse_idle = 0
 var prev_pos = Vector2.ZERO
 
 
-var level_to_load = preload("res://Levels/training.tscn")
+export var autoload = false
+var level_to_load = preload("res://Levels/nils_trial.tscn")
 
 
 func _ready():

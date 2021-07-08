@@ -1,7 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui_smaller.tres" type="DynamicFont" id=2]
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends Node
+
+func _ready():
+	if Game.autoload:
+		get_tree().change_scene(\"res://Stage/stage.tscn\")
+	
+"
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Button
@@ -56,6 +65,7 @@ func animate():
 "
 
 [node name="Title" type="Node"]
+script = SubResource( 5 )
 
 [node name="Button" type="Button" parent="."]
 anchor_left = 0.5
@@ -63,12 +73,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -608.0
-margin_top = -328.0
+margin_top = 248.0
 margin_right = -96.0
-margin_bottom = -232.0
+margin_bottom = 344.0
 custom_fonts/font = ExtResource( 1 )
 button_mask = 3
-text = "Training Room"
+text = "Free Play Room"
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -80,9 +90,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -608.0
-margin_top = -200.0
+margin_top = -328.0
 margin_right = -96.0
-margin_bottom = -104.0
+margin_bottom = -232.0
 custom_fonts/font = ExtResource( 1 )
 button_mask = 3
 text = "Test Level 1"
@@ -92,6 +102,7 @@ __meta__ = {
 }
 
 [node name="Button3" type="Button" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

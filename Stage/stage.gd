@@ -6,6 +6,7 @@ signal player_phase_started(cur_tick)
 signal enemy_phase_started(cur_tick)
 signal undo_issued()
 signal redo_issued()
+signal tick_ended()
 
 
 export(Array, Resource) var terrain_types
@@ -93,8 +94,6 @@ func _input(event):
 			redo()
 		elif event.is_action_pressed("restart"):
 			if Game.undoable_restart:
-				for unit in get_all_units():
-					unit.marked = false
 				load_state(states[0])
 				append_state()
 				$UI/Blackscreen.animate()
@@ -218,6 +217,26 @@ func get_all_units():
 	+ enemies_cache + independent_enemies_cache + gates_cache
 
 
+func get_units_of_type(type):
+	match(type):
+		Unit.UnitType.SUMMONER:
+			return summoners_cache
+		Unit.UnitType.GATE:
+			return gates_cache
+		Unit.UnitType.FOLLOWER:
+			var followers_cache = []
+			for summoner in summoners_cache:
+				for unit in summoner.followers:
+					followers_cache.append(unit)
+			return followers_cache + independent_followers_cache
+		Unit.UnitType.ENEMY:
+			var enemies_cache = []
+			for gate in gates_cache:
+				for unit in gate.enemies_cache.values():
+					enemies_cache.append(unit)
+			return enemies_cache + independent_enemies_cache
+
+
 func get_unit_at(pos):
 	for u in get_all_units():
 		if u.alive and u.position == pos:
@@ -270,12 +289,36 @@ func get_path_to_target(start, end, traversable):
 
 var cur_tick = 1
 
-
 func advance_tick():
-	for u in get_all_units():
-		u.tick()
-	cur_tick += 1
+	var followers = get_units_of_type(Unit.UnitType.FOLLOWER)
+	var enemies = get_units_of_type(Unit.UnitType.ENEMY)
+	var all_units = get_all_units()
+	
+	for u in followers:
+		if u.alive:
+			u.clear_block()
+	
+	for u in followers:
+		if u.alive:
+			u.block_enemies()
+	
+	for u in all_units:
+		if u.alive:
+			u.tick_skills()
+	
+	for u in enemies:
+		if u.alive:
+			u.move()
+	
+	for u in gates_cache:
+		if u.alive:
+			u.spawn_enemy()
+	
+	emit_signal("tick_ended")
+	
 	append_state()
+
+	cur_tick += 1
 	acted_this_tick = false
 
 
@@ -301,6 +344,7 @@ func connect_with_unit(unit):
 	unit.connect("dead", self, "_on_Unit_dead")
 	connect("player_phase_started", unit, "_on_Stage_player_phase_started")
 	connect("enemy_phase_started", unit, "_on_Stage_enemy_phase_started")
+	connect("tick_ended", unit, "_on_Stage_tick_ended")
 	$Cursor.connect("confirm_issued", unit, "_on_Cursor_confirm_issued")
 	$Cursor.connect("cancel_issued", unit, "_on_Cursor_cancel_issued")
 	$Cursor.connect("moved", unit, "_on_Cursor_moved")
@@ -328,13 +372,11 @@ func get_state():
 		match unit.get_type_of_self():
 			unit.UnitType.FOLLOWER:
 				unit_state["facing"] = unit.facing
-				unit_state["blocked"] = [] + unit.blocked
 				unit_state["cooldown"] = unit.cooldown
 			unit.UnitType.SUMMONER:
 				unit_state["faith"] = unit.faith
 			unit.UnitType.ENEMY:
 				unit_state["movement"] = unit.movement
-				unit_state["blocker"] = unit.blocker
 		ret[unit] = unit_state
 		for skill in unit.get_node("Skills").get_children():
 			var skill_state = {}
@@ -358,7 +400,6 @@ func load_state(state):
 		match unit.get_type_of_self():
 			unit.UnitType.FOLLOWER:
 				unit.facing = state[unit]["facing"]
-				unit.blocked = [] + state[unit]["blocked"]
 				unit.cooldown = state[unit]["cooldown"]
 				unit.waiting_for_facing = false
 				unit.waiting_for_facing_flag = false
@@ -366,7 +407,6 @@ func load_state(state):
 				unit.faith = state[unit]["faith"]
 			unit.UnitType.ENEMY:
 				unit.movement = state[unit]["movement"]
-				unit.blocker = state[unit]["blocker"]
 		for skill in unit.get_node("Skills").get_children():
 			skill.sp = state[skill]["sp"]
 			skill.ticks_left = state[skill]["ticks_left"]

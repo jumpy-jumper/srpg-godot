@@ -5,15 +5,18 @@
 
 [node name="Skeleton" instance=ExtResource( 2 )]
 unit_name = "Skeleton"
-base_max_hp = 2250
-base_atk = 450
-base_def = 300
+base_max_hp = 225
+base_atk = 45
+base_def = 30
 base_res = 20
 base_movement = [ 1, 1, 1, 1 ]
 
+[node name="Blocked" parent="." index="0"]
+script = null
+
 [node name="Sprite" parent="." index="1"]
 frames = ExtResource( 1 )
-frame = 6
+frame = 7
 
 [node name="Basic Attack" parent="Skills" index="0"]
-base_skill_range = [ Vector2( 0, -3 ), Vector2( -1, -2 ), Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( -2, -1 ), Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( -3, 0 ), Vector2( -2, 0 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( -2, 1 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( -1, 2 ), Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 0, 3 ) ]
+base_skill_range = [ Vector2( 0, -3 ), Vector2( -1, -2 ), Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( -2, -1 ), Vector2( -1, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( -3, 0 ), Vector2( -2, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( -2, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( -1, 2 ), Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 0, 3 ) ]

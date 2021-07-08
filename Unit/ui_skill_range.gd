@@ -12,5 +12,6 @@ func _process(_delta):
 			if skill.is_active():
 				skill_active = true
 				break
-		update_range(unit.get_node("Skills").get_children()[0].get_skill_range(), \
+		var basic_attack = unit.get_node("Skills").get_children()[0]
+		update_range(basic_attack.unit.get_stat("skill_range", basic_attack.base_skill_range), \
 			active_color if skill_active else inactive_color)

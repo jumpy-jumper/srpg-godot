@@ -65,8 +65,6 @@ func get_stat(stat_name, base_value):
 
 func tick():
 	.tick()
-	if alive:
-		update_block()
 	cooldown = max(0, cooldown - 1)
 	waiting_for_facing = false
 
@@ -130,18 +128,23 @@ export var base_block_count = 2
 var blocked = []
 
 
-func update_block():
+func block_enemies():
 	var block_range = get_stat("block_range", base_block_range)
 	var block_count = get_stat("block_count", base_block_count)
 	
 	var blockable_enemies_in_range = get_units_in_range_of_type(block_range, UnitType.ENEMY)
 	
 	for enemy in blockable_enemies_in_range:
-		if enemy in blocked or enemy.blocker != null:
+		if enemy.blocker != null:
 			blockable_enemies_in_range.erase(enemy)
-	
 	
 	while len(blocked) < block_count and len(blockable_enemies_in_range) > 0:
 		var enemy = blockable_enemies_in_range.pop_front()
 		blocked.append(enemy)
 		enemy.blocker = self
+
+
+func clear_block():
+	for enemy in blocked:
+		enemy.blocker = null
+	blocked.clear()

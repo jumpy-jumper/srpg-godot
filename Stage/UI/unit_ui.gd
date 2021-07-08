@@ -146,6 +146,21 @@ func update_unit(unit):
 	$"Skill 2".update_skill(skills[1] if len(skills) > 1 else null, unit)
 
 
+	$"Enemy Panels".visible = false
+	
+	if unit.get_type_of_self() == unit.UnitType.GATE:
+		$"Enemy Panels".visible = true
+		var panels = $"Enemy Panels".get_children()
+		for i in range(len(panels)):
+			if i >= unit.enemies_cache.size():
+				panels[i].visible = false
+			else:
+				panels[i].visible = true
+				var key = unit.enemies_cache.keys()[i]
+				panels[i].get_node("Label").text = str(key)
+				panels[i].get_node("AnimatedSprite").frames = unit.enemies_cache[key].get_node("Sprite").frames
+
+
 func show():
 	$Tween.interpolate_property(self, "modulate:a",
 		0, 1, fade_in_duration,

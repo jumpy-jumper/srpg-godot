@@ -11,7 +11,6 @@ export var wind = Wind.EAST
 
 func get_type_of_self():
 	return UnitType.SUMMONER
-	
 
 
 ###############################################################################

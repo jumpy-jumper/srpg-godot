@@ -32,6 +32,9 @@ followers = [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource(
 position = Vector2( 640, 640 )
 unit_name = "Gate of Abomination"
 base_level = 35
+base_max_hp = 2000
+base_atk = 500
+base_def = 200
 enemies = {
 1: ExtResource( 2 ),
 3: ExtResource( 2 ),
@@ -42,6 +45,9 @@ enemies = {
 position = Vector2( 960, 576 )
 unit_name = "Gate of Malice"
 base_level = 25
+base_max_hp = 2000
+base_atk = 500
+base_def = 200
 enemies = {
 2: ExtResource( 6 ),
 4: ExtResource( 6 )
@@ -51,6 +57,9 @@ enemies = {
 position = Vector2( 960, 128 )
 unit_name = "Gate of Malice"
 base_level = 25
+base_max_hp = 2000
+base_atk = 500
+base_def = 200
 enemies = {
 2: ExtResource( 6 ),
 4: ExtResource( 6 )
@@ -60,6 +69,9 @@ enemies = {
 position = Vector2( 64, 320 )
 unit_name = "Gate of Annihilation"
 base_level = 25
+base_max_hp = 2000
+base_atk = 500
+base_def = 200
 enemies = {
 2: ExtResource( 2 ),
 4: ExtResource( 6 )
@@ -69,6 +81,9 @@ enemies = {
 position = Vector2( 448, 576 )
 unit_name = "Gate of Chaos"
 base_level = 25
+base_max_hp = 2000
+base_atk = 500
+base_def = 200
 enemies = {
 2: ExtResource( 2 ),
 4: ExtResource( 6 )
@@ -78,6 +93,9 @@ enemies = {
 position = Vector2( 192, 128 )
 unit_name = "Gate of Rushdown"
 base_level = 25
+base_max_hp = 2000
+base_atk = 500
+base_def = 200
 enemies = {
 7: ExtResource( 2 )
 }

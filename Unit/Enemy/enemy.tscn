@@ -54,6 +54,9 @@ centered = false
 offset = Vector2( 32, 32 )
 script = SubResource( 3 )
 
+[node name="Sprite" parent="." index="1"]
+frame = 2
+
 [node name="Path Indicator" parent="." index="2" instance=ExtResource( 9 )]
 
 [node name="Skill Range" parent="Ranges" index="0"]
@@ -83,3 +86,5 @@ base_skill_cost = 0
 base_skill_initial_sp = 0
 base_skill_duration = 0
 targeting_priority = 0
+
+[node name="MovementTweener" type="Tween" parent="." index="8"]
