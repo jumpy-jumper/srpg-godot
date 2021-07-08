@@ -24,7 +24,7 @@ offset = Vector2( 32, 32 )
 position = Vector2( -11.9791, -7.95812 )
 scale = Vector2( 0.502618, 0.502618 )
 frames = ExtResource( 3 )
-frame = 1
+frame = 0
 
 [node name="Path Indicator" parent="." index="3" instance=ExtResource( 5 )]
 

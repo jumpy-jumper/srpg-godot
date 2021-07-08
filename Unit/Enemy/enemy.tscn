@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Skill/skill.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Skill/basic_attack.gd" type="Script" id=6]
 [ext_resource path="res://Unit/Enemy/warning.png" type="Texture" id=7]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Unit/Path/path_indicator.tscn" type="PackedScene" id=9]
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends Sprite
@@ -53,8 +54,7 @@ centered = false
 offset = Vector2( 32, 32 )
 script = SubResource( 3 )
 
-[node name="Sprite" parent="." index="1"]
-frame = 2
+[node name="Path Indicator" parent="." index="2" instance=ExtResource( 9 )]
 
 [node name="Skill Range" parent="Ranges" index="0"]
 inactive_color = Color( 0.898039, 0.521569, 0.521569, 0.501961 )
@@ -73,7 +73,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Selected" parent="." index="4"]
+[node name="Selected" parent="." index="5"]
 modulate = Color( 1, 0.382813, 0.382813, 1 )
 
 [node name="Basic Attack" parent="Skills" index="0" instance=ExtResource( 2 )]

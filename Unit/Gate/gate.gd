@@ -34,7 +34,7 @@ func tick():
 			for tick in enemies.keys():
 				if tick > stage.cur_tick:
 					return
-			die()
+			#die()
 	
 	
 func _process(_delta):

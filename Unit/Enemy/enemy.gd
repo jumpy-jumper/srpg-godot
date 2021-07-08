@@ -19,6 +19,7 @@ func _ready():
 	movement = movement_array[0]
 
 
+
 func tick():
 	.tick()
 	if alive:
