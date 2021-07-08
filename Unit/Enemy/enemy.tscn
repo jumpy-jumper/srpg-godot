@@ -55,7 +55,7 @@ offset = Vector2( 32, 32 )
 script = SubResource( 3 )
 
 [node name="Sprite" parent="." index="1"]
-frame = 2
+frame = 7
 
 [node name="Path Indicator" parent="." index="2" instance=ExtResource( 9 )]
 

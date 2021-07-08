@@ -315,10 +315,11 @@ func advance_tick():
 			u.spawn_enemy()
 	
 	emit_signal("tick_ended")
+
+	cur_tick += 1
 	
 	append_state()
 
-	cur_tick += 1
 	acted_this_tick = false
 
 

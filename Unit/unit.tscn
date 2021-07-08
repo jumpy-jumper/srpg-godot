@@ -30,7 +30,6 @@ base_def = 20
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 2 )
-frame = 1
 playing = true
 centered = false
 offset = Vector2( -8, -16 )
@@ -41,6 +40,7 @@ offset = Vector2( -8, -16 )
 script = ExtResource( 6 )
 inactive_color = Color( 0.78125, 0.512695, 0.512695, 0.501961 )
 active_color = Color( 0.72549, 0.619608, 0.458824, 0.501961 )
+marked_color = Color( 0.631373, 0.129412, 0.941176, 0.501961 )
 
 [node name="UI" type="Node2D" parent="."]
 position = Vector2( 20, 40 )

@@ -3,6 +3,7 @@ extends RangeIndicator
 
 export(Color) var inactive_color = Color.black
 export(Color) var active_color = Color.black
+export(Color) var marked_color = Color.purple
 
 
 func _process(_delta):
@@ -13,5 +14,8 @@ func _process(_delta):
 				skill_active = true
 				break
 		var basic_attack = unit.get_node("Skills").get_children()[0]
+		var color = active_color if skill_active else inactive_color
+		if unit.marked:
+			color = marked_color
 		update_range(basic_attack.unit.get_stat("skill_range", basic_attack.base_skill_range), \
-			active_color if skill_active else inactive_color)
+			color)

@@ -33,7 +33,6 @@ func activate():
 							possible_targets.push_front(unit.blocker)
 						
 			for target in select_targets(possible_targets):
-				print(unit.unit_name + " " + target.unit_name)
 				target.take_damage(unit.get_stat("atk", unit.base_atk), \
 					unit.get_stat("damage_type", damage_type))
 
