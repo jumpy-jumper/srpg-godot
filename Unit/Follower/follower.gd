@@ -175,11 +175,14 @@ func block_enemies():
 	for enemy in blockable_enemies_in_range:
 		if enemy.blocker != null:
 			blockable_enemies_in_range.erase(enemy)
+	print(blocked)
 	
 	while len(blocked) < block_count and len(blockable_enemies_in_range) > 0:
 		var enemy = blockable_enemies_in_range.pop_front()
 		blocked.append(enemy)
 		enemy.blocker = self
+		print(enemy.blocker)
+	print()
 
 
 func clear_block():

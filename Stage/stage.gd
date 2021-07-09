@@ -317,8 +317,7 @@ func advance_tick():
 			u.move()
 	
 	for u in followers:
-		if u.alive:
-			u.clear_block()
+		u.clear_block()
 	
 	for u in gates_cache:
 		if u.alive:
