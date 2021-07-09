@@ -18,8 +18,9 @@ var independent_followers_cache = []
 var independent_enemies_cache = []
 
 
-var level = null
-var terrain = null
+onready var level = get_tree().get_nodes_in_group("Level")[0]
+onready var terrain = level.get_node("Terrain")
+onready var cursor = $Cursor
 
 
 var selected_summoner_index = 0
@@ -37,9 +38,6 @@ var control_state = ControlState.FREE
 func _ready():
 	assert(Game.level_to_load != null)
 	add_child(Game.level_to_load.instance())
-	
-	level = get_tree().get_nodes_in_group("Level")[0]
-	terrain = level.get_node("Terrain")
 
 	for u in level.get_children():
 		if u is Unit:

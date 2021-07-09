@@ -22,7 +22,7 @@ func _process(_delta):
 deployable_terrain = [ ExtResource( 3 ) ]
 
 [node name="Sprite" parent="." index="0"]
-frame = 6
+frame = 2
 
 [node name="Skill Range" parent="Ranges" index="0"]
 z_index = 0

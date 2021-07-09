@@ -31,7 +31,7 @@ func _process(_delta):
 		hp = min(hp, get_stat("max_hp", base_max_hp))
 		
 		if (Input.is_action_just_pressed("debug_activate_skill")):
-			if (stage.get_node("Cursor").position == position):
+			if (stage.cursor.position == position):
 				for skill in $Skills.get_children():
 					if skill.activation != skill.Activation.NONE \
 						and skill.activation != skill.Activation.EVERY_TICK:
@@ -39,15 +39,13 @@ func _process(_delta):
 								skill.deactivate()
 							else:
 								skill.activate()
-
-
+		
 		if (Input.is_action_just_pressed("debug_kill")):
-			if (stage.get_node("Cursor").position == position):
+			if (stage.cursor.position == position):
 				die()
-
-
+		
 		if (Input.is_action_just_pressed("mark")):
-			if (stage.get_node("Cursor").position == position):
+			if (stage.cursor.position == position):
 				marked = not marked
 
 
