@@ -10,7 +10,7 @@
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=8]
 [ext_resource path="res://Unit/Path/path_indicator.tscn" type="PackedScene" id=9]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Label
 
 
@@ -59,7 +59,7 @@ margin_right = 50.346
 margin_bottom = -3.6315
 custom_fonts/font = ExtResource( 8 )
 text = "10"
-script = SubResource( 2 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -73,6 +73,6 @@ activation = 1
 base_skill_cost = 0
 base_skill_initial_sp = 0
 base_skill_duration = 0
-targeting_priority = 0
+targeting_priority = 3
 
 [node name="MovementTweener" type="Tween" parent="." index="8"]

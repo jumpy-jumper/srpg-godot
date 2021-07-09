@@ -215,6 +215,7 @@ func heal_to_full():
 func die():
 	emit_signal("dead", self)
 	alive = false
+	marked = false
 	heal_to_full()
 	for skill in $Skills.get_children():
 		skill.initialize()

@@ -24,3 +24,7 @@ func update_ui():
 			var unit = stage.summoners_cache[0].followers[i]
 			panel.update_unit(unit, i == stage.selected_follower_index)
 		i += 1
+
+
+func cost_comparison(a, b):
+	return a.get_stat("cost", a.base_cost) < b.get_stat("cost", b.base_cost)

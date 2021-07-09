@@ -26,15 +26,17 @@ func get_type_of_enemy():
 
 
 func _process(_delta):
-	visible = alive or preview
-	modulate.a = 0.5 if preview else 1
-	if waiting_for_facing and Game.mouse_enabled:
-		if Game.mouse_idle == 0:
-			face_mouse()
-		if Input.is_action_just_released("mouse_confirm") \
-			and Game.confirm_facing_on_release \
-			and stage.get_clamped_position(get_global_mouse_position()) != position:
-				confirm_facing()
+	visible = alive or previewing
+	modulate.a = 0.5 if previewing else 1
+	if waiting_for_facing \
+		and Game.mouse_enabled \
+		and stage.control_state != stage.ControlState.PAUSED:
+			if Game.mouse_idle == 0:
+				face_mouse()
+			if Input.is_action_just_released("mouse_confirm") \
+				and Game.confirm_facing_on_release \
+				and stage.get_clamped_position(get_global_mouse_position()) != position:
+					confirm_facing()
 
 
 func _input(event):
@@ -107,7 +109,7 @@ func die():
 	cooldown = get_stat("cooldown", base_cooldown)
 
 
-var preview = false
+var previewing = false
 
 func _on_Cursor_hovered(pos):
 	._on_Cursor_hovered(pos)
@@ -116,11 +118,12 @@ func _on_Cursor_hovered(pos):
 		and stage.get_selected_follower() == self \
 		and stage.get_unit_at(pos) == null \
 		and stage.get_terrain_at(pos) in deployable_terrain \
-		and summoner.faith >= get_stat("cost", base_cost):
+		and summoner.faith >= get_stat("cost", base_cost) \
+		and cooldown == 0:
 			position = pos
-			preview = true
+			previewing = true
 	else:
-		preview = false
+		previewing = false
 
 
 ###############################################################################
@@ -145,6 +148,10 @@ func face_mouse():
 
 func confirm_facing():
 	waiting_for_facing = false
+	if self in stage.summoned_order:
+		stage.summoned_order.erase(self)
+	stage.summoned_order.push_back(self)
+	stage.replace_last_state() # the last state should be right before confirming facing
 
 
 ###############################################################################

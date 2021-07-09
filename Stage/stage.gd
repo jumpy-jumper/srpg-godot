@@ -25,6 +25,7 @@ onready var cursor = $Cursor
 
 var selected_summoner_index = 0
 var selected_follower_index = 0
+var summoned_order = []
 
 
 ###############################################################################
@@ -63,8 +64,10 @@ func _ready():
 				gates_cache.append(u)
 			elif u is Enemy:
 				independent_enemies_cache.append(u)
+				summoned_order.append(u)
 			elif u is Follower:
 				independent_followers_cache.append(u)
+				summoned_order.append(u)
 
 	$Cursor.stage = self
 	
@@ -131,7 +134,7 @@ func _on_Cursor_cancel_issued(pos):
 		show_unit_ui(unit)
 	else:
 		var selected_follower = get_selected_follower()
-		if selected_follower.preview:
+		if selected_follower.previewing:
 			show_unit_ui(selected_follower)
 
 
@@ -363,6 +366,7 @@ var cur_state_index = -1
 func get_state():
 	var ret = {}
 	ret["cur_tick"] = cur_tick
+	ret["summoned_order"] = [] + summoned_order
 	for unit in get_all_units():
 		var unit_state = {}
 		unit_state["position"] = unit.position
@@ -392,6 +396,7 @@ func get_state():
 
 func load_state(state):
 	cur_tick = state["cur_tick"]
+	summoned_order = state["summoned_order"]
 	for unit in get_all_units():
 		for status in unit.get_node("Statuses").get_children():
 			status.queue_free()
@@ -415,6 +420,11 @@ func load_state(state):
 			skill.ticks_left = state[skill]["ticks_left"]
 			if skill is Lysithea_S1:
 				skill.bonus_atk = state[skill]["bonus_atk"]
+				if skill.is_active():
+					var bonus_atk_status = Status.new()
+					bonus_atk_status.stat_additive_multipliers["atk"] = skill.bonus_atk
+					skill.unit.get_node("Statuses").add_child(bonus_atk_status)
+					skill.bonus_atk_status_cache = bonus_atk_status
 			skill.update_statuses()
 
 
@@ -423,6 +433,13 @@ func append_state():
 	while len(states) > cur_state_index:
 		states.pop_back()
 	states.append(get_state())
+
+
+# Used for very bad logic where the game needs to replace what it just did
+func replace_last_state():
+	states.pop_back()
+	cur_state_index -= 1
+	append_state()
 
 
 func undo():

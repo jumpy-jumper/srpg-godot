@@ -26,6 +26,9 @@ func spawn_enemy():
 			enemy.position = path[1]
 			enemy.base_level = get_stat("level", base_level)
 			enemy.heal_to_full()
+			if enemy in stage.summoned_order:
+				stage.summoned_order.erase(enemy)
+			stage.summoned_order.push_back(enemy)
 		else:
 			$Blocked.visible = true
 				

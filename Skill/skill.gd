@@ -51,10 +51,10 @@ func tick():
 
 func activate():
 	if activation != Activation.NONE and activation != Activation.EVERY_TICK:
-		if activation == Activation.SP_MANUAL:
-			unit.stage.append_state()
 		ticks_left = unit.get_stat("skill_duration", base_skill_duration)
 		update_statuses()
+		if activation == Activation.SP_MANUAL:
+			unit.stage.append_state()
 
 
 func deactivate():
@@ -113,7 +113,7 @@ export(Array) var base_skill_range = [Vector2(0, 0)]
 ###############################################################################
 
 
-enum TargetingPriority { CLOSEST_TO_SELF, LOWEST_HP_PERCENTAGE, CLOSEST_TO_SUMMONER }
+enum TargetingPriority { CLOSEST_TO_SELF, LOWEST_HP_PERCENTAGE, CLOSEST_TO_SUMMONER, LAST_SUMMONED, FIRST_SUMMONED }
 
 
 export var base_target_count = 1
@@ -130,6 +130,10 @@ func select_targets(units):
 			units.sort_custom(self, "lowest_hp_percentage_comparison")
 		TargetingPriority.CLOSEST_TO_SUMMONER:
 			units.sort_custom(self, "closest_to_summoner_comparison")
+		TargetingPriority.LAST_SUMMONED:
+			units.sort_custom(self, "last_summoned_comparison")
+		TargetingPriority.FIRST_SUMMONED:
+			units.sort_custom(self, "first_summoned_comparison")
 	
 	for i in range(min(unit.get_stat("target_count", base_target_count), len(units))):
 		ret.append(units[i])
@@ -149,3 +153,11 @@ func lowest_hp_percentage_comparison(a, b):
 func closest_to_summoner_comparison(a, b):
 	var summ = unit.stage.summoners_cache[0]
 	return abs((a.position - summ.position).length_squared()) < abs((b.position - summ.position).length_squared())
+
+
+func last_summoned_comparison(a, b):
+	return a.stage.summoned_order.find(a) > b.stage.summoned_order.find(b)
+
+
+func first_summoned_comparison(a, b):
+	return a.stage.summoned_order.find(a) < b.stage.summoned_order.find(b)

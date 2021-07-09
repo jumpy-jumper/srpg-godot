@@ -9,6 +9,9 @@ enum Wind {EAST, SOUTH, WEST, NORTH}
 export var wind = Wind.EAST
 
 
+var summoned_order = []
+
+
 func get_type_of_self():
 	return UnitType.SUMMONER
 

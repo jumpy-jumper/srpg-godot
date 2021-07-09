@@ -8,7 +8,6 @@ export var decouple_mouse_and_keyboard = false
 export var hide_mouse_after_seconds = 2
 export var confirm_facing_on_release = true
 
-
 var mouse_idle = 0
 var prev_pos = Vector2.ZERO
 
@@ -24,6 +23,8 @@ func _ready():
 func _process(_delta):
 		
 	mouse_idle = 0 if get_viewport().get_mouse_position() != prev_pos else mouse_idle + _delta
+	if get_keyboard_input().length_squared() > 0:
+		mouse_idle = hide_mouse_after_seconds
 	prev_pos = get_viewport().get_mouse_position()
 	
 	if Input.is_action_just_pressed("fullscreen"):
@@ -41,7 +42,7 @@ func _process(_delta):
 
 export var rapid_fire_wait = 10
 export var rapid_fire_interval = 3
-export var rapid_fire_hold = 30
+export var rapid_fire_hold = 60
 
 
 var timers = {
