@@ -6,7 +6,7 @@ onready var stage = $"../.."
 
 func _process(_delta):
 	visible = true
-	var unit = stage.summoners_cache[stage.selected_summoner_index]
+	var unit = stage.get_selected_summoner()
 	if (unit.get_node("Sprite").frames != $AnimatedSprite.frames):
 		$AnimatedSprite.frames = unit.get_node("Sprite").frames
 	$Faith.text = str(unit.faith)

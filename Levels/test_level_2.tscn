@@ -1,11 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Unit/Summoner/East Wind/east_wind.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Unit/Enemy/Hound/hound.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Unit/Gate/gate.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Unit/Enemy/Skeleton/skeleton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Levels/tilemap.tres" type="TileSet" id=5]
-[ext_resource path="res://Unit/Enemy/Eye/eye.tscn" type="PackedScene" id=6]
 
 [node name="TestLevel" type="Node" groups=[
 "Level",
@@ -27,11 +24,6 @@ base_level = 35
 base_max_hp = 2000
 base_atk = 500
 base_def = 200
-enemies = {
-1: ExtResource( 2 ),
-3: ExtResource( 2 ),
-5: ExtResource( 4 )
-}
 
 [node name="Malice" parent="." instance=ExtResource( 3 )]
 position = Vector2( 960, 576 )
@@ -40,10 +32,6 @@ base_level = 25
 base_max_hp = 2000
 base_atk = 500
 base_def = 200
-enemies = {
-2: ExtResource( 6 ),
-4: ExtResource( 6 )
-}
 
 [node name="Malice2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 960, 128 )
@@ -52,10 +40,6 @@ base_level = 25
 base_max_hp = 2000
 base_atk = 500
 base_def = 200
-enemies = {
-2: ExtResource( 6 ),
-4: ExtResource( 6 )
-}
 
 [node name="Annihilation" parent="." instance=ExtResource( 3 )]
 position = Vector2( 64, 320 )
@@ -64,10 +48,6 @@ base_level = 25
 base_max_hp = 2000
 base_atk = 500
 base_def = 200
-enemies = {
-2: ExtResource( 2 ),
-4: ExtResource( 6 )
-}
 
 [node name="Chaos" parent="." instance=ExtResource( 3 )]
 position = Vector2( 448, 576 )
@@ -76,10 +56,6 @@ base_level = 25
 base_max_hp = 2000
 base_atk = 500
 base_def = 200
-enemies = {
-2: ExtResource( 2 ),
-4: ExtResource( 6 )
-}
 
 [node name="Rushdown" parent="." instance=ExtResource( 3 )]
 position = Vector2( 192, 128 )
@@ -88,6 +64,3 @@ base_level = 25
 base_max_hp = 2000
 base_atk = 500
 base_def = 200
-enemies = {
-7: ExtResource( 2 )
-}

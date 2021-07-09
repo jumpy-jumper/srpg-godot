@@ -48,14 +48,10 @@ func _ready():
 					level.add_child(f)
 					connect_with_unit(f)
 			elif u is Gate:
-				for tick in u.enemies.keys():
-					var enemy = u.enemies[tick].instance()
-					u.enemies_cache[tick] = enemy
-					level.add_child(enemy)
-					enemy.alive = false
-					enemy.gate = u
-					connect_with_unit(enemy)
 				gates_cache.append(u)
+				for e in u.enemies.values():
+					level.add_child(e)
+					connect_with_unit(e)
 			elif u is Enemy:
 				independent_enemies_cache.append(u)
 				summoned_order.append(u)
@@ -98,15 +94,15 @@ func _input(event):
 	if control_state != ControlState.PAUSED:
 		if is_alive():
 			if event.is_action_pressed("next_follower"):
-				selected_follower_index = (selected_follower_index + 1) % len(summoners_cache[0].followers)
+				selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
 			elif event.is_action_pressed("previous_follower"):
-				selected_follower_index = posmod(selected_follower_index - 1, len(summoners_cache[0].followers))
+				selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
 			elif event.is_action_pressed("unit_ui"):
 				var unit = get_unit_at($Cursor.position)
 				if unit:
 					show_unit_ui(unit)
 				else:
-					show_unit_ui(summoners_cache[selected_summoner_index].followers[selected_follower_index])
+					show_unit_ui(get_selected_summoner().followers[selected_follower_index])
 		if event.is_action_pressed("undo"):
 			undo()
 	if control_state == ControlState.FREE:
@@ -212,7 +208,7 @@ func get_all_units():
 		for unit in summoner.followers:
 			followers_cache.append(unit)
 	for gate in gates_cache:
-		for unit in gate.enemies_cache.values():
+		for unit in gate.enemies.values():
 			enemies_cache.append(unit)
 	return summoners_cache + followers_cache + independent_followers_cache \
 	+ enemies_cache + independent_enemies_cache + gates_cache
@@ -233,13 +229,17 @@ func get_units_of_type(type):
 		Unit.UnitType.ENEMY:
 			var enemies_cache = []
 			for gate in gates_cache:
-				for unit in gate.enemies_cache.values():
+				for unit in gate.enemies.values():
 					enemies_cache.append(unit)
 			return enemies_cache + independent_enemies_cache
 
 
 func get_selected_follower():
-	return summoners_cache[selected_summoner_index].followers[selected_follower_index]
+	return get_selected_summoner().followers[selected_follower_index]
+
+
+func get_selected_summoner():
+	return summoners_cache[selected_summoner_index]
 
 
 func get_unit_at(pos):

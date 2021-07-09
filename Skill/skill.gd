@@ -151,7 +151,7 @@ func lowest_hp_percentage_comparison(a, b):
 
 
 func closest_to_summoner_comparison(a, b):
-	var summ = unit.stage.summoners_cache[0]
+	var summ = unit.stage.get_selected_summoner()
 	return abs((a.position - summ.position).length_squared()) < abs((b.position - summ.position).length_squared())
 
 

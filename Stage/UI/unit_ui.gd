@@ -152,13 +152,13 @@ func update_unit(unit):
 		$"Enemy Panels".visible = true
 		var panels = $"Enemy Panels".get_children()
 		for i in range(len(panels)):
-			if i >= unit.enemies_cache.size():
+			if i >= unit.enemies.size():
 				panels[i].visible = false
 			else:
 				panels[i].visible = true
-				var key = unit.enemies_cache.keys()[i]
+				var key = unit.enemies.keys()[i]
 				panels[i].get_node("Label").text = str(key)
-				panels[i].get_node("AnimatedSprite").frames = unit.enemies_cache[key].get_node("Sprite").frames
+				panels[i].get_node("AnimatedSprite").frames = unit.enemies[key].get_node("Sprite").frames
 
 
 func show():

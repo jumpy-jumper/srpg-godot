@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Unit/Follower/Lysithea/lysithea.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Stage/Terrain/deployable_high.tres" type="Resource" id=1]
 [ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Unit/Follower/Lysithea/lysithea_portrait.png" type="Texture" id=3]
-[ext_resource path="res://Stage/Terrain/deployable_high.tres" type="Resource" id=4]
-[ext_resource path="res://Unit/Follower/Lysithea/lysithea_s1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Unit/Follower/Lysithea/lysithea.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://Unit/Follower/Lysithea/lysithea_s1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Unit/Follower/Lysithea/lysithea_portrait.png" type="Texture" id=5]
 
 [node name="Lysithea" instance=ExtResource( 2 )]
 unit_name = "Lysithea"
@@ -12,19 +12,19 @@ base_max_hp = 150
 base_atk = 80
 base_def = 10
 base_res = 40
-portrait = ExtResource( 3 )
+portrait = ExtResource( 5 )
 mugshot_top_left = Vector2( 150, 80 )
-deployable_terrain = [ ExtResource( 4 ) ]
+deployable_terrain = [ ExtResource( 1 ) ]
 base_cost = 15
 base_block_range = [  ]
 base_block_count = 0
 
 [node name="Sprite" parent="." index="0"]
-frames = ExtResource( 1 )
+frames = ExtResource( 3 )
 frame = 0
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 3, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ) ]
 damage_type = 1
 
-[node name="Impending Doom" parent="Skills" index="1" instance=ExtResource( 5 )]
+[node name="Impending Doom" parent="Skills" index="1" instance=ExtResource( 4 )]

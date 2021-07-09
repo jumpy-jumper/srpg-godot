@@ -42,10 +42,12 @@ texture = ExtResource( 7 )
 centered = false
 offset = Vector2( 32, 32 )
 
-[node name="Sprite" parent="." index="1"]
-frame = 2
+[node name="Path Indicator" parent="." index="1" instance=ExtResource( 9 )]
+points = PoolVector2Array( 241.723, 20.4983 )
+default_color = Color( 1, 1, 1, 0.501961 )
 
-[node name="Path Indicator" parent="." index="2" instance=ExtResource( 9 )]
+[node name="Sprite" parent="." index="2"]
+frame = 6
 
 [node name="Skill Range" parent="Ranges" index="0"]
 inactive_color = Color( 0.898039, 0.521569, 0.521569, 0.501961 )

@@ -19,12 +19,30 @@ func _ready():
 
 func _process(_delta):
 	visible = alive
+	if stage.cursor.position == position or marked:
+		var path = stage.get_path_to_target(position, \
+			stage.get_selected_summoner().position, traversable)
+		for i in range(len(path)):
+			path[i] += Vector2(stage.get_cell_size() / 2, stage.get_cell_size() / 2)
+		$"Path Indicator".update_path(path)
+		$"Path Indicator".visible = true
+	else:
+		$"Path Indicator".visible = marked
 
 
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	if pos == position:
 		marked = not marked
+
+onready var base_path_alpha = $"Path Indicator".default_color.a
+
+func _on_Cursor_hovered(pos):
+	._on_Cursor_hovered(pos)
+	if pos == position:
+		$"Path Indicator".default_color.a = (1 - pow(base_path_alpha, 2))
+	else:
+		$"Path Indicator".default_color.a = base_path_alpha
 
 
 ###############################################################################
@@ -47,7 +65,7 @@ func move():
 		
 	$Blocked.visible = false
 	
-	var target = stage.summoners_cache[0]
+	var target = stage.get_selected_summoner()
 	var path = stage.get_path_to_target(position, target.position, traversable)
 	
 	var leftover_movement = movement

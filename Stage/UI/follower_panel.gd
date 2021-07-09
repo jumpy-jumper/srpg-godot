@@ -26,10 +26,10 @@ func _on_Follower_Panel_gui_input(event):
 		match event.button_index:
 			BUTTON_LEFT:
 				if not unit.stage.control_state == unit.stage.ControlState.PAUSED:
-					var follower_index = unit.stage.summoners_cache[unit.stage.selected_summoner_index].followers.find(unit)
+					var follower_index = unit.stage.get_selected_summoner().followers.find(unit)
 					unit.stage.selected_follower_index = follower_index
 			BUTTON_RIGHT:
 				if not unit.stage.control_state == unit.stage.ControlState.PAUSED:
 					unit.stage.show_unit_ui(unit)
-					var follower_index = unit.stage.summoners_cache[unit.stage.selected_summoner_index].followers.find(unit)
+					var follower_index = unit.stage.get_selected_summoner().followers.find(unit)
 					unit.stage.selected_follower_index = follower_index

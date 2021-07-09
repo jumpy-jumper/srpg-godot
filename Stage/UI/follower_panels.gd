@@ -13,7 +13,7 @@ func _ready():
 func update_ui():
 	visible = true
 
-	var followers = stage.summoners_cache[0].followers
+	var followers = stage.get_selected_summoner().followers
 	
 	var i = 0
 	for panel in get_children():
@@ -21,7 +21,7 @@ func update_ui():
 			panel.visible = false
 		else:
 			panel.visible = true
-			var unit = stage.summoners_cache[0].followers[i]
+			var unit = stage.get_selected_summoner().followers[i]
 			panel.update_unit(unit, i == stage.selected_follower_index)
 		i += 1
 

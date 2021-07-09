@@ -20,13 +20,15 @@ texture = ExtResource( 4 )
 centered = false
 offset = Vector2( 32, 32 )
 
-[node name="Sprite" parent="." index="1"]
+[node name="Path Indicator" parent="." index="1" instance=ExtResource( 5 )]
+position = Vector2( 32, 32 )
+default_color = Color( 1, 1, 1, 0.501961 )
+
+[node name="Sprite" parent="." index="2"]
 position = Vector2( -11.9791, -7.95812 )
 scale = Vector2( 0.502618, 0.502618 )
 frames = ExtResource( 3 )
 frame = 1
-
-[node name="Path Indicator" parent="." index="3" instance=ExtResource( 5 )]
 
 [node name="HP" parent="UI" index="0"]
 visible = false

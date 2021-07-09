@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Unit/Enemy/Skeleton/skeleton.tres" type="SpriteFrames" id=1]
-[ext_resource path="res://Unit/Enemy/enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Enemy/enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Unit/Enemy/Skeleton/skeleton.tres" type="SpriteFrames" id=2]
 
-[node name="Skeleton" instance=ExtResource( 2 )]
+[node name="Skeleton" instance=ExtResource( 1 )]
 unit_name = "Skeleton"
 base_max_hp = 225
 base_atk = 45
@@ -12,7 +12,7 @@ base_res = 20
 base_movement = [ 1, 1, 1, 1 ]
 
 [node name="Sprite" parent="." index="1"]
-frames = ExtResource( 1 )
+frames = ExtResource( 2 )
 frame = 4
 
 [node name="Basic Attack" parent="Skills" index="0"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Unit/Summoner/East Wind/east_wind.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Unit/Enemy/Dummy/dummy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Unit/Enemy/Dummy/e_dummy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=5]
 
 [sub_resource type="TileSet" id=1]

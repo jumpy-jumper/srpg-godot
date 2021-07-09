@@ -22,7 +22,8 @@ var alive = true
 
 
 func _ready():
-	yield(get_tree(), "idle_frame")
+	if unit_name == "":
+		unit_name = ("Gate of " if get_type_of_self() == UnitType.GATE else "") + name
 
 
 func _process(_delta):
