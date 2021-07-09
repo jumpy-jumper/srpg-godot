@@ -129,6 +129,10 @@ func _on_Cursor_cancel_issued(pos):
 	var unit = get_unit_at(pos)
 	if unit:
 		show_unit_ui(unit)
+	else:
+		var selected_follower = get_selected_follower()
+		if selected_follower.preview:
+			show_unit_ui(selected_follower)
 
 
 func show_unit_ui(unit):

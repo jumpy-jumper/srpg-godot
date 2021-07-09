@@ -115,7 +115,8 @@ func _on_Cursor_hovered(pos):
 	if not alive \
 		and stage.get_selected_follower() == self \
 		and stage.get_unit_at(pos) == null \
-		and stage.get_terrain_at(pos) in deployable_terrain:
+		and stage.get_terrain_at(pos) in deployable_terrain \
+		and summoner.faith >= get_stat("cost", base_cost):
 			position = pos
 			preview = true
 	else:
