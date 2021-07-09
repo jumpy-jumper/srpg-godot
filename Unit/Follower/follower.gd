@@ -25,34 +25,48 @@ func get_type_of_enemy():
 ###############################################################################
 
 
+
 func _process(_delta):
-	if waiting_for_facing:
-		face_cursor()
-		if Input.is_action_just_released("mouse_confirm") and Game.confirm_facing_on_release:
-			waiting_for_facing = false
-			emit_signal("acted", self)
+	if waiting_for_facing and Game.mouse_enabled:
+		if Game.mouse_idle == 0:
+			face_mouse()
+		if Input.is_action_just_released("mouse_confirm") \
+			and Game.confirm_facing_on_release \
+			and stage.get_clamped_position(get_global_mouse_position()) != position:
+				confirm_facing()
 
 
-	if (Input.is_action_just_pressed("retreat")):
+func _input(event):
+	if event.is_action_pressed("retreat"):
 		if (stage.get_node("Cursor").position == position):
 			die()
-			emit_signal("acted", self)
-
-
-var waiting_for_facing_flag = false # avoids confirming facing the same frame the unit is deployed
+			stage.append_state()
+	elif waiting_for_facing:
+		var direction = Game.get_keyboard_input()
+		if direction.length_squared() > 0:
+			facing = rad2deg(atan2(direction.y, direction.x))
 
 
 func _on_Cursor_confirm_issued(pos):
-	if waiting_for_facing and not waiting_for_facing_flag:
-		waiting_for_facing_flag = true
-	elif waiting_for_facing and waiting_for_facing_flag:
-		waiting_for_facing_flag = false
-		waiting_for_facing = false
-	elif pos == position:
-		for skill in $Skills.get_children():
-			if skill.is_available():
-				skill.activate()
-			emit_signal("acted", self)
+	if not alive and not stage.is_waiting_for_facing():
+		if stage.get_selected_follower() == self and stage.get_unit_at(pos) == null:
+			if stage.get_terrain_at(pos) in deployable_terrain \
+				and get_stat("cost", base_cost) <= summoner.faith \
+				and not alive and cooldown == 0:
+					alive = true
+					global_position = stage.get_clamped_position(pos)
+					summoner.faith -= get_stat("cost", base_cost)
+					for skill in get_node("Skills").get_children():
+						skill.initialize()
+					waiting_for_facing = true
+					stage.append_state()
+	elif alive and waiting_for_facing:
+		confirm_facing()
+	elif alive:
+		if pos == position:
+			for skill in $Skills.get_children():
+				if skill.is_available():
+					skill.activate()
 
 
 func get_stat(stat_name, base_value):
@@ -65,10 +79,9 @@ func get_stat(stat_name, base_value):
 	return ret
 
 
-func tick():
-	.tick()
+func _on_Stage_tick_ended():
+	._on_Stage_tick_ended()
 	cooldown = max(0, cooldown - 1)
-	waiting_for_facing = false
 
 
 func update_range():
@@ -110,13 +123,17 @@ export(Facing) var facing = Facing.RIGHT
 var waiting_for_facing = false
 
 
-func face_cursor():
-	var cursor_pos = stage.get_node("Cursor").position
-	var relative_pos = cursor_pos - position
+func face_mouse():
+	var relative_pos = get_global_mouse_position() - position
 	var theta = fposmod(rad2deg(atan2(relative_pos.y, relative_pos.x)), 360)
 	
 	if fmod((theta - 45), 90) != 0:
 		facing = int(ceil((theta - 45) / 90) * 90)
+
+
+func confirm_facing():
+	waiting_for_facing = false
+
 
 ###############################################################################
 #        Blocking logic                                                       #

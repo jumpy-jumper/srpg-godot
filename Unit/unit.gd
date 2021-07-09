@@ -157,7 +157,6 @@ func get_stat(stat_name, base_value):
 ###############################################################################
 
 
-signal acted(unit)
 signal dead(unit)
 
 

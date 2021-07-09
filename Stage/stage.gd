@@ -30,9 +30,9 @@ var selected_follower_index = 0
 #        Main logic	                                                          #
 ###############################################################################
 
+enum ControlState { FREE, WAITING_FOR_FACING, CURSOR_HIDDEN, PAUSED}
 
-var paused = false
-
+var control_state = ControlState.FREE
 
 func _ready():
 	assert(Game.level_to_load != null)
@@ -75,22 +75,39 @@ func _ready():
 
 
 func _process(_delta):
-	$Cursor.operatable = not paused and is_alive() and pending_ui == 0
+	match(control_state):
+		ControlState.FREE:
+			if is_waiting_for_facing():
+				control_state = ControlState.WAITING_FOR_FACING
+			$Cursor.control_state = $Cursor.ControlState.FREE
+		ControlState.WAITING_FOR_FACING:
+			if not is_waiting_for_facing():
+				control_state = ControlState.FREE
+			$Cursor.control_state = $Cursor.ControlState.LOCKED
+		ControlState.CURSOR_HIDDEN:
+			$Cursor.control_state = $Cursor.ControlState.HIDDEN
 
 	$"UI/Follower Panels".update_ui()
 	$"UI/Game Over".visible = not is_alive()
 
 
 func _input(event):
-	if not paused:
+	if control_state != ControlState.PAUSED:
 		if is_alive():
 			if event.is_action_pressed("next_follower"):
 				selected_follower_index = (selected_follower_index + 1) % len(summoners_cache[0].followers)
 			elif event.is_action_pressed("previous_follower"):
 				selected_follower_index = posmod(selected_follower_index - 1, len(summoners_cache[0].followers))
+			elif event.is_action_pressed("unit_ui"):
+				var unit = get_unit_at($Cursor.position)
+				if unit:
+					show_unit_ui(unit)
+				else:
+					show_unit_ui(summoners_cache[selected_summoner_index].followers[selected_follower_index])
 		if event.is_action_pressed("undo"):
 			undo()
-		elif event.is_action_pressed("redo"):
+	if control_state == ControlState.FREE:
+		if event.is_action_pressed("redo"):
 			redo()
 		elif event.is_action_pressed("restart"):
 			if Game.undoable_restart:
@@ -99,52 +116,26 @@ func _input(event):
 				$UI/Blackscreen.animate()
 			else:
 				get_tree().reload_current_scene()
-		elif event.is_action_pressed("unit_ui"):
-			var unit = get_unit_at($Cursor.position)
-			if unit:
-				show_unit_ui(unit)
-			else:
-				show_unit_ui(summoners_cache[selected_summoner_index].followers[selected_follower_index])
-		elif event.is_action_pressed("debug_clear_pending_ui"):
-			pending_ui = 0
 		elif event.is_action_pressed("advance_round"):
 			advance_tick()
+	if event.is_action_pressed("debug_clear_pending_ui"):
+		pending_ui = 0
 
 
 func _on_Cursor_confirm_issued(pos):
-	var flag = false
-	for summ in summoners_cache:
-		for unit in summ.followers:
-			if unit.waiting_for_facing:
-				flag = true
-
-	if not flag:
-		if get_unit_at(pos) == null:	
-			var summoner = summoners_cache[selected_summoner_index]	
-			var unit = summoner.followers[selected_follower_index]
-			if get_terrain_at(pos) in unit.deployable_terrain \
-				and unit.get_stat("cost", unit.base_cost) <= summoner.faith \
-				and not unit.alive and unit.cooldown == 0:
-					unit.alive = true
-					unit.global_position = get_clamped_position(pos)
-					summoner.faith -= unit.get_stat("cost", unit.base_cost)
-					for skill in unit.get_node("Skills").get_children():
-						skill.initialize()
-					deselect_unit()
-					acted_this_tick = true
-					unit.waiting_for_facing = true
+	pass
 
 
 func _on_Cursor_cancel_issued(pos):
-	show_unit_ui(get_unit_at(pos))
+	var unit = get_unit_at(pos)
+	if unit:
+		show_unit_ui(unit)
 
 
 func show_unit_ui(unit):
-	if not paused:
-		if unit:
-			$"UI/Unit UI".update_unit(unit)
-			$"UI/Unit UI".show()
-			paused = true
+	$"UI/Unit UI".update_unit(unit)
+	$"UI/Unit UI".show()
+	control_state = ControlState.PAUSED
 
 var pending_ui = 0
 
@@ -157,7 +148,7 @@ func _on_UI_mouse_exited():
 
 
 func _on_Unit_UI_exited():
-	paused = false
+	control_state = ControlState.WAITING_FOR_FACING if is_waiting_for_facing() else ControlState.FREE
 
 
 func _on_Skill_UI_skill_activation_requested(skill):
@@ -167,10 +158,6 @@ func _on_Skill_UI_skill_activation_requested(skill):
 		$"UI/Unit UI".update_unit($"UI/Unit UI".saved_unit)
 
 
-func _on_Unit_acted(unit):
-	append_state()
-
-
 func _on_Unit_dead(unit):
 	pass
 
@@ -178,8 +165,8 @@ func _on_Unit_dead(unit):
 func _on_Retreat_pressed():
 	var unit = $"UI/Unit UI".saved_unit
 	unit.die()
-	unit.emit_signal("acted", unit)
-	paused = false
+	append_state()
+	control_state = ControlState.WAITING_FOR_FACING if is_waiting_for_facing() else ControlState.FREE
 	$"UI/Unit UI".hide()
 
 
@@ -193,6 +180,14 @@ func is_alive():
 		if not summoner.alive:
 			return false
 	return true
+
+
+func is_waiting_for_facing():
+	for summ in summoners_cache:
+		for unit in summ.followers:
+			if unit.waiting_for_facing:
+				return true
+	return false
 
 
 func get_cell_size():
@@ -235,6 +230,10 @@ func get_units_of_type(type):
 				for unit in gate.enemies_cache.values():
 					enemies_cache.append(unit)
 			return enemies_cache + independent_enemies_cache
+
+
+func get_selected_follower():
+	return summoners_cache[selected_summoner_index].followers[selected_follower_index]
 
 
 func get_unit_at(pos):
@@ -320,8 +319,6 @@ func advance_tick():
 	
 	append_state()
 
-	acted_this_tick = false
-
 
 ###############################################################################
 #        Unit logic                                                           #
@@ -341,7 +338,6 @@ func deselect_unit():
 
 func connect_with_unit(unit):
 	unit.stage = self
-	unit.connect("acted", self, "_on_Unit_acted")
 	unit.connect("dead", self, "_on_Unit_dead")
 	connect("player_phase_started", unit, "_on_Stage_player_phase_started")
 	connect("enemy_phase_started", unit, "_on_Stage_enemy_phase_started")
@@ -359,7 +355,6 @@ func connect_with_unit(unit):
 
 var states = []
 var cur_state_index = -1
-var acted_this_tick = false
 
 
 func get_state():
@@ -393,7 +388,6 @@ func get_state():
 
 
 func load_state(state):
-	acted_this_tick = false
 	cur_tick = state["cur_tick"]
 	for unit in get_all_units():
 		for status in unit.get_node("Statuses").get_children():
@@ -406,7 +400,6 @@ func load_state(state):
 				unit.facing = state[unit]["facing"]
 				unit.cooldown = state[unit]["cooldown"]
 				unit.waiting_for_facing = false
-				unit.waiting_for_facing_flag = false
 			unit.UnitType.SUMMONER:
 				unit.faith = state[unit]["faith"]
 			unit.UnitType.ENEMY:
@@ -430,18 +423,14 @@ func append_state():
 
 
 func undo():
-	if acted_this_tick:
-		load_state(states[cur_state_index])
-	elif cur_state_index > 0:
+	if cur_state_index > 0:
 		load_state(states[cur_state_index - 1])
 		cur_state_index -= 1
 
 
 func redo():
-	if acted_this_tick:
-		advance_tick()
-	elif cur_state_index < len(states) - 1 and Game.redo_enabled:
+	if cur_state_index < len(states) - 1 and Game.redo_enabled:
 		load_state(states[cur_state_index + 1])
 		cur_state_index += 1
-	elif not paused:
+	elif control_state != ControlState.PAUSED:
 		advance_tick()

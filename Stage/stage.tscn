@@ -64,7 +64,6 @@ speed = 0.0
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
 position = Vector2( 96, 160 )
 z_index = 1
-rapid_fire_wait = 7
 
 [node name="UI" type="CanvasLayer" parent="."]
 

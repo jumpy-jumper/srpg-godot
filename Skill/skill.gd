@@ -51,10 +51,10 @@ func tick():
 
 func activate():
 	if activation != Activation.NONE and activation != Activation.EVERY_TICK:
+		if activation == Activation.SP_MANUAL:
+			unit.stage.append_state()
 		ticks_left = unit.get_stat("skill_duration", base_skill_duration)
 		update_statuses()
-	if activation == Activation.SP_MANUAL:
-		unit.emit_signal("acted", unit)
 
 
 func deactivate():
