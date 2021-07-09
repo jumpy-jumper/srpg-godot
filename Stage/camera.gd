@@ -5,10 +5,10 @@ onready var stage = $".."
 onready var cursor = stage.get_node("Cursor")
 
 
-export var left_cutoff = 2
-export var right_cutoff = 18
-export var top_cutoff = 2
-export var bottom_cutoff = 10
+export var left_cutoff = 4
+export var right_cutoff = 6
+export var top_cutoff = 4
+export var bottom_cutoff = 4
 
 export var speed = 0.5
 
@@ -22,8 +22,11 @@ func _process(_delta):
 	
 	movement = Vector2(round(movement.x), round(movement.y))
 	
+	var newpos = position + movement * stage.get_cell_size()
+	
 	if movement.length_squared() > 0:
-		update_pos(position + movement * stage.get_cell_size())
+		update_pos(newpos)
+
 
 func update_pos(pos):
 	$Tween.stop_all()

@@ -25,8 +25,9 @@ func get_type_of_enemy():
 ###############################################################################
 
 
-
 func _process(_delta):
+	visible = alive or preview
+	modulate.a = 0.5 if preview else 1
 	if waiting_for_facing and Game.mouse_enabled:
 		if Game.mouse_idle == 0:
 			face_mouse()
@@ -106,9 +107,19 @@ func die():
 	cooldown = get_stat("cooldown", base_cooldown)
 
 
+var preview = false
+
 func _on_Cursor_hovered(pos):
 	._on_Cursor_hovered(pos)
 	$Ranges.visible = $Ranges.visible or waiting_for_facing
+	if not alive \
+		and stage.get_selected_follower() == self \
+		and stage.get_unit_at(pos) == null \
+		and stage.get_terrain_at(pos) in deployable_terrain:
+			position = pos
+			preview = true
+	else:
+		preview = false
 
 
 ###############################################################################

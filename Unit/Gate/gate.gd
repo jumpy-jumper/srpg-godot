@@ -37,6 +37,7 @@ func spawn_enemy():
 
 
 func _process(_delta):
+	visible = alive
 	if stage.cursor.position == position or Input.is_action_pressed("show_gate_paths"):
 		$"Path Indicator".update_path(stage.get_path_to_target(position, \
 			stage.summoners_cache[0].position, enemies_cache.values()[0].traversable))

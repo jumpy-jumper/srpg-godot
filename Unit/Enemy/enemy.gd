@@ -17,6 +17,10 @@ func _ready():
 	movement = movement_array[0]
 
 
+func _process(_delta):
+	visible = alive
+
+
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	if pos == position:

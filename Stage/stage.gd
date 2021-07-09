@@ -18,7 +18,7 @@ var independent_followers_cache = []
 var independent_enemies_cache = []
 
 
-onready var level = get_tree().get_nodes_in_group("Level")[0]
+onready var level = Game.level_to_load.instance()
 onready var terrain = level.get_node("Terrain")
 onready var cursor = $Cursor
 
@@ -36,8 +36,7 @@ enum ControlState { FREE, WAITING_FOR_FACING, CURSOR_HIDDEN, PAUSED}
 var control_state = ControlState.FREE
 
 func _ready():
-	assert(Game.level_to_load != null)
-	add_child(Game.level_to_load.instance())
+	add_child(level)
 
 	for u in level.get_children():
 		if u is Unit:
@@ -83,6 +82,8 @@ func _process(_delta):
 				control_state = ControlState.FREE
 			$Cursor.control_state = $Cursor.ControlState.LOCKED
 		ControlState.CURSOR_HIDDEN:
+			$Cursor.control_state = $Cursor.ControlState.HIDDEN
+		ControlState.PAUSED:
 			$Cursor.control_state = $Cursor.ControlState.HIDDEN
 
 	$"UI/Follower Panels".update_ui()
