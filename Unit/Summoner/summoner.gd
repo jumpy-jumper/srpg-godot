@@ -22,7 +22,6 @@ func _ready():
 			unit.alive = false
 			unit.summoner = self
 
-
 func _process(_delta):
 	visible = alive
 

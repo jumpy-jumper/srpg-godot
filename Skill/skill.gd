@@ -34,13 +34,14 @@ func is_available():
 
 
 func tick():
+	assert(activation != Activation.NONE)
 	if activation == Activation.EVERY_TICK:
 		activate()
 		deactivate()
-	elif activation == Activation.SP_MANUAL or activation == Activation.SP_AUTO:
+	else:
 		if not is_active():
 			var sp_cost = unit.get_stat("skill_cost", base_skill_cost)
-			sp = min(sp + 1, sp_cost)
+			sp = 0 if activation == Activation.DEPLOYMENT else min(sp + 1, sp_cost)
 			if activation == Activation.SP_AUTO and sp == sp_cost:
 				activate()
 		else:
@@ -66,6 +67,8 @@ func deactivate():
 func initialize():
 	sp = unit.get_stat("skill_initial_sp", base_skill_initial_sp)
 	ticks_left = 0
+	if activation == Activation.DEPLOYMENT:
+		activate()
 	update_statuses()
 
 

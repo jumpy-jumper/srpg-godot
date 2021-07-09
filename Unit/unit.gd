@@ -11,6 +11,8 @@ enum UnitType {UNDEFINED, SUMMONER, FOLLOWER, GATE, ENEMY}
 func get_type_of_self():
 	return UnitType.UNDEFINED
 
+func get_position():
+	return position
 
 ###############################################################################
 #        Main logic                                                           #
@@ -24,6 +26,8 @@ var alive = true
 func _ready():
 	if unit_name == "":
 		unit_name = ("Gate of " if get_type_of_self() == UnitType.GATE else "") + name
+	for skill in $Skills.get_children():
+		skill.initialize()
 
 
 func _process(_delta):
@@ -47,8 +51,9 @@ func _process(_delta):
 		if (Input.is_action_just_pressed("mark")):
 			if (stage.cursor.position == position):
 				marked = not marked
-
-
+	else:
+		hp = get_stat("max_hp", base_max_hp)
+		
 func _on_Cursor_confirm_issued(pos):
 	pass
 
@@ -212,6 +217,8 @@ func heal_to_full():
 	hp = get_stat("max_hp", base_max_hp)
 
 
+const DEATH_TWEEN_DURATION = 2
+
 func die():
 	emit_signal("dead", self)
 	alive = false
@@ -219,6 +226,7 @@ func die():
 	heal_to_full()
 	for skill in $Skills.get_children():
 		skill.initialize()
+
 
 
 

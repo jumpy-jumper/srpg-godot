@@ -11,9 +11,8 @@ export var skill_active_color = Color.lightsalmon
 func _process(delta):
 	var activatable_skills = []
 	for skill in unit.get_node("Skills").get_children():
-		if skill.activation == skill.Activation.SP_AUTO \
-			or skill.activation == skill.Activation.SP_MANUAL:
-				activatable_skills.append(skill)
+		if skill.activation != skill.Activation.EVERY_TICK:
+			activatable_skills.append(skill)
 	if len(activatable_skills) == 0:
 		visible = false
 	else:

@@ -24,7 +24,6 @@ func get_type_of_enemy():
 #        Main logic                                                           #
 ###############################################################################
 
-
 func _process(_delta):
 	visible = alive or previewing
 	modulate.a = 0.5 if previewing else 1

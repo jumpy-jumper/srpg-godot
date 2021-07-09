@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Unit/targeting_toast.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.2 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 0, 0, 1 )
+
+[node name="Targeting Toast" type="Line2D"]
+points = PoolVector2Array( 0, 0, 600, 0 )
+width = 4.0
+default_color = Color( 0.760784, 0.305882, 0.305882, 1 )
+gradient = SubResource( 1 )
+script = ExtResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]

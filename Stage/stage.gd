@@ -70,6 +70,8 @@ func _ready():
 
 
 func _process(_delta):
+	if tick_state == TickState.MOVEMENT:
+		control_state = ControlState.CURSOR_HIDDEN
 	match(control_state):
 		ControlState.FREE:
 			if is_waiting_for_facing():
@@ -85,7 +87,7 @@ func _process(_delta):
 				control_state = ControlState.CURSOR_HIDDEN
 		ControlState.CURSOR_HIDDEN:
 			$Cursor.control_state = $Cursor.ControlState.HIDDEN
-			if pending_ui == 0:
+			if pending_ui == 0 and tick_state == TickState.ACTION:
 				control_state = ControlState.FREE if not is_waiting_for_facing() \
 					else ControlState.WAITING_FOR_FACING
 		ControlState.PAUSED:
@@ -110,9 +112,6 @@ func _input(event):
 					show_unit_ui(get_selected_summoner().followers[selected_follower_index])
 		if event.is_action_pressed("undo"):
 			undo()
-	if control_state == ControlState.FREE:
-		if event.is_action_pressed("redo"):
-			redo()
 		elif event.is_action_pressed("restart"):
 			if Game.undoable_restart:
 				load_state(states[0])
@@ -120,8 +119,12 @@ func _input(event):
 				$UI/Blackscreen.animate()
 			else:
 				get_tree().reload_current_scene()
-		elif event.is_action_pressed("advance_round"):
-			advance_tick()
+		if control_state != ControlState.WAITING_FOR_FACING:
+			if event.is_action_pressed("advance_round"):
+				advance_tick()
+	if control_state == ControlState.FREE:
+		if event.is_action_pressed("redo"):
+			redo()
 	if event.is_action_pressed("debug_clear_pending_ui"):
 		pending_ui = 0
 
@@ -301,6 +304,8 @@ func get_path_to_target(start, end, traversable):
 
 
 var cur_tick = 1
+enum TickState { ACTION, MOVEMENT }
+var tick_state = TickState.ACTION
 
 func advance_tick():
 	var followers = []
@@ -312,30 +317,35 @@ func advance_tick():
 			enemies.append(unit)
 	var all_units = get_all_units()
 	
-	for u in followers:
-		if u.alive:
-			u.block_enemies()
-	
-	for u in all_units:
-		if u.alive:
-			u.tick_skills()
-	
-	for u in enemies:
-		if u.alive:
-			u.move()
-	
-	for u in followers:
-		u.clear_block()
-	
-	for u in gates_cache:
-		if u.alive:
-			u.spawn_enemy()
-	
-	emit_signal("tick_ended")
+	if tick_state == TickState.ACTION:
+		for u in followers:
+			if u.alive:
+				u.block_enemies()
+		
+		for u in all_units:
+			if u.alive:
+				u.tick_skills()
+		tick_state = TickState.MOVEMENT
+		append_state()
+		if Game.automatically_move_enemies:
+			advance_tick()
+	elif tick_state == TickState.MOVEMENT:
+		for u in enemies:
+			if u.alive:
+				u.move()
+		
+		for u in followers:
+			u.clear_block()
+		
+		for u in gates_cache:
+			if u.alive:
+				u.spawn_enemy()
+		
+		emit_signal("tick_ended")
 
-	cur_tick += 1
-	
-	append_state()
+		cur_tick += 1
+		replace_last_state()
+		tick_state = TickState.ACTION
 
 
 ###############################################################################
@@ -410,12 +420,14 @@ func get_state():
 func load_state(state):
 	cur_tick = state["cur_tick"]
 	summoned_order = state["summoned_order"]
+	tick_state = TickState.ACTION
 	for unit in get_all_units():
 		for status in unit.get_node("Statuses").get_children():
 			status.queue_free()
 		unit.position = state[unit]["position"]
 		unit.alive = state[unit]["alive"]
 		unit.hp = state[unit]["hp"]
+		unit.toasts_this_tick = 0
 		match unit.get_type_of_self():
 			unit.UnitType.FOLLOWER:
 				unit.facing = state[unit]["facing"]

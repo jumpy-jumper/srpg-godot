@@ -7,6 +7,8 @@ export var redo_enabled = true
 export var decouple_mouse_and_keyboard = false
 export var hide_mouse_after_seconds = 2
 export var confirm_facing_on_release = true
+export var automatically_move_enemies = true
+export var enemy_movement_wait = 0.2
 
 var mouse_idle = 0
 var prev_pos = Vector2.ZERO

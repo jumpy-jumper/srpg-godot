@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Unit/Follower/Nephenee/nephenee.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Unit/Follower/Nephenee/nephenee_portrait.png" type="Texture" id=3]
+[ext_resource path="res://Unit/Follower/Nephenee/neph_s1.tscn" type="PackedScene" id=4]
 
 [node name="Nephenee" instance=ExtResource( 2 )]
 unit_name = "Nephenee"
@@ -18,10 +19,9 @@ base_block_range = [ Vector2( 1, 0 ), Vector2( -1, 0 ) ]
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 6
-
-[node name="Skill Range" parent="Ranges" index="0"]
-active_color = Color( 0.72549, 0.619608, 0.458824, 0.501961 )
+frame = 5
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( -1, 0 ) ]
+
+[node name="Warden" parent="Skills" index="1" instance=ExtResource( 4 )]

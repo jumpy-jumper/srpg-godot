@@ -1,7 +1,7 @@
 extends Node2D
 
 
-export var duration = 0.5
+export var duration = 4
 export var travel = 200
 export var x_spread = 25
 export var y_spread = 25

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Skill/skill.gd" type="Script" id=1]
+[ext_resource path="res://Unit/Follower/Nephenee/neph_s1_status.tscn" type="PackedScene" id=2]
+
+[node name="Warden" type="Node"]
+script = ExtResource( 1 )
+description = "HP +100%. DEF +50%."
+activation = 2
+base_skill_cost = 1
+base_skill_initial_sp = 0
+base_skill_duration = 4
+statuses = [ ExtResource( 2 ) ]

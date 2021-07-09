@@ -94,12 +94,13 @@ func move():
 	var movement_array = get_stat("movement", base_movement)
 	movement = leftover_movement + movement_array[(stage.cur_tick) % len(movement_array)]
 	
+	var oldpos = position
+	position = newpos
+	
 	$MovementTweener.interpolate_property($Sprite, "global_position",
-	position, newpos, MOV_INTERP_DURATION,
+	oldpos, newpos, MOV_INTERP_DURATION,
 	Tween.TRANS_LINEAR, Tween.EASE_IN)
 	$MovementTweener.start()
-	
-	position = newpos
 
 
 ###############################################################################

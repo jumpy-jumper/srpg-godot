@@ -38,7 +38,7 @@ func update_skill(skill, unit):
 		skill.Activation.EVERY_TICK:
 			skill_label.text += "\n[EVERY ROUND]"
 		skill.Activation.DEPLOYMENT:
-			skill_label.text += "\n[ON DEPLOYMENT]"
+			skill_label.text += "\n[WHEN SUMMONED]"
 		skill.Activation.SP_MANUAL:
 			skill_label.text += "\n[MANUAL]"
 		skill.Activation.SP_AUTO:
@@ -55,7 +55,7 @@ func update_skill(skill, unit):
 			var duration = unit.get_stat("skill_duration", skill.base_skill_duration)
 			skill_label.text += " [DURATION " + (str(duration) if duration < 1982371 else "∞") + "]"
 	
-	skill_label.text += "\n" + skill.description
+	skill_label.text += ("\n" + skill.description) if skill.description != "" else ""
 
 
 signal skill_activation_requested(skill)

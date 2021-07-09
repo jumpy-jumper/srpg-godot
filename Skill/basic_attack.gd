@@ -10,6 +10,9 @@ export(Unit.DamageType) var damage_type = Unit.DamageType.PHYSICAL
 export var base_attack_count = 1
 
 
+var targeting_toast = preload("res://Unit/targeting_toast.tscn")
+
+
 func activate():
 	.activate()
 	for i in range (unit.get_stat("attack_count", base_attack_count)):
@@ -35,6 +38,13 @@ func activate():
 			for target in select_targets(possible_targets):
 				target.take_damage(unit.get_stat("atk", unit.base_atk), \
 					unit.get_stat("damage_type", damage_type))
+	
+				var toast = targeting_toast.instance()
+				toast.set_point_position(0, unit.position + Vector2(unit.stage.get_cell_size() / 2, unit.stage.get_cell_size() / 2))
+				toast.set_point_position(1, target.position + Vector2(unit.stage.get_cell_size() / 2, unit.stage.get_cell_size() / 2))
+				toast.gradient = toast.gradient.duplicate()
+				toast.gradient.set_color(1, unit.colors[damage_type])
+				unit.stage.add_child(toast)
 
 
 		elif skill_type == SkillType.HEAL: 
