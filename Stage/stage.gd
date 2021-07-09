@@ -168,7 +168,7 @@ func _on_Skill_UI_skill_activation_requested(skill):
 
 
 func _on_Unit_acted(unit):
-	acted_this_tick = true
+	append_state()
 
 
 func _on_Unit_dead(unit):
@@ -296,10 +296,6 @@ func advance_tick():
 	
 	for u in followers:
 		if u.alive:
-			u.clear_block()
-	
-	for u in followers:
-		if u.alive:
 			u.block_enemies()
 	
 	for u in all_units:
@@ -309,6 +305,10 @@ func advance_tick():
 	for u in enemies:
 		if u.alive:
 			u.move()
+	
+	for u in followers:
+		if u.alive:
+			u.clear_block()
 	
 	for u in gates_cache:
 		if u.alive:
@@ -378,6 +378,9 @@ func get_state():
 				unit_state["faith"] = unit.faith
 			unit.UnitType.ENEMY:
 				unit_state["movement"] = unit.movement
+				unit_state["blocked"] = unit.get_node("Blocked").visible
+			unit.UnitType.GATE:
+				unit_state["blocked"] = unit.get_node("Blocked").visible
 		ret[unit] = unit_state
 		for skill in unit.get_node("Skills").get_children():
 			var skill_state = {}
@@ -408,6 +411,9 @@ func load_state(state):
 				unit.faith = state[unit]["faith"]
 			unit.UnitType.ENEMY:
 				unit.movement = state[unit]["movement"]
+				unit.get_node("Blocked").visible = state[unit]["blocked"]
+			unit.UnitType.GATE:
+				unit.get_node("Blocked").visible = state[unit]["blocked"]
 		for skill in unit.get_node("Skills").get_children():
 			skill.sp = state[skill]["sp"]
 			skill.ticks_left = state[skill]["ticks_left"]

@@ -12,7 +12,6 @@ func get_type_of_self():
 	return UnitType.GATE
 
 
-
 func spawn_enemy():
 	$Blocked.visible = false
 

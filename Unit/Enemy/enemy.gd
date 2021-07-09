@@ -17,10 +17,6 @@ func _ready():
 	movement = movement_array[0]
 
 
-func _process(_delta):
-	$Blocked.visible = blocker != null
-
-
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	if pos == position:
@@ -42,8 +38,11 @@ const MOV_INTERP_DURATION = 0.125
 
 func move():
 	if blocker != null:
+		$Blocked.visible = true
 		return
 		
+	$Blocked.visible = false
+	
 	var target = stage.summoners_cache[0]
 	var path = stage.get_path_to_target(position, target.position, traversable)
 	

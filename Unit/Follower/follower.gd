@@ -28,13 +28,15 @@ func get_type_of_enemy():
 func _process(_delta):
 	if waiting_for_facing:
 		face_cursor()
-	if Input.is_action_just_released("mouse_confirm") and Game.confirm_facing_on_release:
-		waiting_for_facing = false
+		if Input.is_action_just_released("mouse_confirm") and Game.confirm_facing_on_release:
+			waiting_for_facing = false
+			emit_signal("acted", self)
 
 
 	if (Input.is_action_just_pressed("retreat")):
 		if (stage.get_node("Cursor").position == position):
 			die()
+			emit_signal("acted", self)
 
 
 var waiting_for_facing_flag = false # avoids confirming facing the same frame the unit is deployed
