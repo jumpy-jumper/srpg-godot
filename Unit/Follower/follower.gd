@@ -41,7 +41,7 @@ func _process(_delta):
 
 func _input(event):
 	if event.is_action_pressed("retreat"):
-		if (stage.cursor.position == position):
+		if alive and (stage.cursor.position == position):
 			die()
 			stage.append_state()
 	elif waiting_for_facing:

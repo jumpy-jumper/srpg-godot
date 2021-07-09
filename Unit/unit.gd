@@ -101,12 +101,11 @@ const INTEGER_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 const ARRAY_STATS = ["movement", "skill_range", "block_range", "faith_recovery"]
 
 
-const BONUS_PER_LEVEL = 0.067326582
-
+const SCALING_FACTOR = 0.047326582
 
 func get_stat_after_level(stat_name, base_value):
 	if stat_name in AFFECTED_BY_LEVEL:
-		return floor(base_value * (1 + BONUS_PER_LEVEL * get_stat_after_statuses("level", base_level)))
+		return floor(base_value * pow(1 + SCALING_FACTOR, get_stat_after_statuses("level", base_level)))
 	else:
 		return base_value
 	

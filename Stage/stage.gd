@@ -43,16 +43,10 @@ func _ready():
 		if u is Unit:
 			connect_with_unit(u)
 			if u is Summoner:
-				var followers_cache = []
-				for unit in u.followers:
-					unit = unit.instance()
-					level.add_child(unit)
-					followers_cache.append(unit)
-					unit.alive = false
-					unit.summoner = u
-					connect_with_unit(unit)
-				u.followers = followers_cache
 				summoners_cache.append(u)
+				for f in u.followers:
+					level.add_child(f)
+					connect_with_unit(f)
 			elif u is Gate:
 				for tick in u.enemies.keys():
 					var enemy = u.enemies[tick].instance()
@@ -80,12 +74,19 @@ func _process(_delta):
 			if is_waiting_for_facing():
 				control_state = ControlState.WAITING_FOR_FACING
 			$Cursor.control_state = $Cursor.ControlState.FREE
+			if pending_ui > 0:
+				control_state = ControlState.CURSOR_HIDDEN
 		ControlState.WAITING_FOR_FACING:
 			if not is_waiting_for_facing():
 				control_state = ControlState.FREE
 			$Cursor.control_state = $Cursor.ControlState.LOCKED
+			if pending_ui > 0:
+				control_state = ControlState.CURSOR_HIDDEN
 		ControlState.CURSOR_HIDDEN:
 			$Cursor.control_state = $Cursor.ControlState.HIDDEN
+			if pending_ui == 0:
+				control_state = ControlState.FREE if not is_waiting_for_facing() \
+					else ControlState.WAITING_FOR_FACING
 		ControlState.PAUSED:
 			$Cursor.control_state = $Cursor.ControlState.HIDDEN
 
@@ -147,7 +148,6 @@ var pending_ui = 0
 
 func _on_UI_mouse_entered():
 	pending_ui += 1
-
 
 func _on_UI_mouse_exited():
 	pending_ui -= 1
@@ -295,8 +295,13 @@ func get_path_to_target(start, end, traversable):
 var cur_tick = 1
 
 func advance_tick():
-	var followers = get_units_of_type(Unit.UnitType.FOLLOWER)
-	var enemies = get_units_of_type(Unit.UnitType.ENEMY)
+	var followers = []
+	var enemies = []
+	for unit in summoned_order:
+		if unit is Follower:
+			followers.append(unit)
+		if unit is Enemy:
+			enemies.append(unit)
 	var all_units = get_all_units()
 	
 	for u in followers:
@@ -362,7 +367,7 @@ func connect_with_unit(unit):
 var states = []
 var cur_state_index = -1
 
-
+#I will be moving most of this to their own classes eventually
 func get_state():
 	var ret = {}
 	ret["cur_tick"] = cur_tick

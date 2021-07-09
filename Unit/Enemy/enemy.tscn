@@ -43,7 +43,7 @@ centered = false
 offset = Vector2( 32, 32 )
 
 [node name="Sprite" parent="." index="1"]
-frame = 7
+frame = 2
 
 [node name="Path Indicator" parent="." index="2" instance=ExtResource( 9 )]
 

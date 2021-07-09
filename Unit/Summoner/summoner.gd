@@ -2,18 +2,25 @@ class_name Summoner
 extends Unit
 
 
-export(Array, Resource) var followers = []
-
-
 enum Wind {EAST, SOUTH, WEST, NORTH}
 export var wind = Wind.EAST
 
 
+var followers = []
 var summoned_order = []
 
 
 func get_type_of_self():
 	return UnitType.SUMMONER
+
+
+func _ready():
+	for unit in get_children():
+		if unit is Follower:
+			remove_child(unit)
+			followers.append(unit)
+			unit.alive = false
+			unit.summoner = self
 
 
 func _process(_delta):

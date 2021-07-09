@@ -24,7 +24,22 @@ tile_data = PoolIntArray( 131073, 2, 0, 131074, 2, 0, 131075, 2, 0, 131076, 2, 0
 [node name="The East Wind" parent="." instance=ExtResource( 1 )]
 position = Vector2( 192, 320 )
 base_max_hp = 1
-followers = [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 11 ) ]
+
+[node name="Nils" parent="The East Wind" instance=ExtResource( 7 )]
+position = Vector2( 288, -256 )
+base_level = 50
+
+[node name="Nephenee" parent="The East Wind" instance=ExtResource( 9 )]
+position = Vector2( 352, -256 )
+
+[node name="Tanya" parent="The East Wind" instance=ExtResource( 8 )]
+position = Vector2( 416, -256 )
+
+[node name="Lysithea" parent="The East Wind" instance=ExtResource( 10 )]
+position = Vector2( 480, -256 )
+
+[node name="Lon\'qu" parent="The East Wind" instance=ExtResource( 11 )]
+position = Vector2( 544, -256 )
 
 [node name="Gate" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1088, 320 )
