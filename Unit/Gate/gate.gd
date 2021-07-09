@@ -6,6 +6,8 @@ export(String, MULTILINE) var spawn_info = ""
 var spawn_ticks = []
 var enemies = {}
 
+var path = []
+
 func get_type_of_self():
 	return UnitType.GATE
 
@@ -28,16 +30,16 @@ func _ready():
 	
 	marked = true
 
+
 func _process(_delta):
 	visible = alive
 	if Input.is_action_just_pressed("show_gate_paths"):
 		marked = not marked
 	if stage.cursor.position == position or marked:
-		var path = stage.get_path_to_target(position, \
-			stage.get_selected_summoner().position, enemies.values()[0].traversable)
-		for i in range(len(path)):
-			path[i] += Vector2(stage.get_cell_size() / 2, stage.get_cell_size() / 2)
-		$"Path Indicator".update_path(path)
+		var path = []
+		for i in range(len(self.path)):
+			path.append(self.path[i]-global_position)
+		$"Path Indicator".points = PoolVector2Array(path)
 		$"Path Indicator".visible = true
 	else:
 		$"Path Indicator".visible = marked
@@ -48,9 +50,6 @@ func spawn_enemy():
 
 	if enemies.has(stage.cur_tick):
 		var enemy = enemies[stage.cur_tick]
-		
-		var path = stage.get_path_to_target(position, \
-			stage.get_selected_summoner().position, enemy.traversable)
 					
 		if stage.get_unit_at(path[1]) == null:
 			enemy.alive = true
@@ -75,7 +74,9 @@ func _on_Cursor_confirm_issued(pos):
 	if pos == position:
 		marked = not marked
 
+
 onready var base_path_alpha = $"Path Indicator".default_color.a
+
 
 func _on_Cursor_hovered(pos):
 	._on_Cursor_hovered(pos)

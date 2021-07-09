@@ -1,6 +1,7 @@
 class_name Enemy
 extends Unit
 
+
 var gate = null
 
 
@@ -20,11 +21,11 @@ func _ready():
 func _process(_delta):
 	visible = alive
 	if stage.cursor.position == position or marked:
-		var path = stage.get_path_to_target(position, \
-			stage.get_selected_summoner().position, traversable)
+		var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, stage.get_selected_summoner().position, traversable))
 		for i in range(len(path)):
 			path[i] += Vector2(stage.get_cell_size() / 2, stage.get_cell_size() / 2)
-		$"Path Indicator".update_path(path)
+			path[i] -= global_position
+		$"Path Indicator".points = PoolVector2Array(path)
 		$"Path Indicator".visible = true
 	else:
 		$"Path Indicator".visible = marked
@@ -65,8 +66,11 @@ func move():
 		
 	$Blocked.visible = false
 	
-	var target = stage.get_selected_summoner()
-	var path = stage.get_path_to_target(position, target.position, traversable)
+	var target = stage.get_selected_summoner()		
+	var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, stage.get_selected_summoner().position, traversable))
+	
+	while (path[0] != position):
+		path.pop_front()
 	
 	var leftover_movement = movement
 	

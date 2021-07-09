@@ -48,6 +48,11 @@ func _ready():
 					level.add_child(f)
 					connect_with_unit(f)
 			elif u is Gate:
+				if len(u.enemies.values()) > 0:
+					u.path = get_path_to_target(u.position, get_selected_summoner().position, \
+						u.enemies.values()[0].traversable)
+				else:
+					u.path = []
 				gates_cache.append(u)
 				for e in u.enemies.values():
 					level.add_child(e)
@@ -131,7 +136,7 @@ func _on_Cursor_cancel_issued(pos):
 		show_unit_ui(unit)
 	else:
 		var selected_follower = get_selected_follower()
-		if selected_follower.previewing:
+		if selected_follower and selected_follower.previewing:
 			show_unit_ui(selected_follower)
 
 
@@ -235,7 +240,10 @@ func get_units_of_type(type):
 
 
 func get_selected_follower():
-	return get_selected_summoner().followers[selected_follower_index]
+	if len(get_selected_summoner().followers) > 0:
+		return get_selected_summoner().followers[selected_follower_index]
+	else:
+		return null
 
 
 func get_selected_summoner():
@@ -270,8 +278,8 @@ func get_astar_graph(traversable_tiles):
 			var closest = astar.get_closest_point(astar.get_point_position(p) + a)
 			if (astar.get_point_position(closest) - astar.get_point_position(p)).length() == 1:
 				astar.connect_points(p, closest)
-
-
+	
+	
 	return astar
 
 
@@ -387,6 +395,7 @@ func get_state():
 				unit_state["blocked"] = unit.get_node("Blocked").visible
 			unit.UnitType.GATE:
 				unit_state["blocked"] = unit.get_node("Blocked").visible
+				unit_state["path"] = unit.path + []
 		ret[unit] = unit_state
 		for skill in unit.get_node("Skills").get_children():
 			var skill_state = {}
@@ -419,6 +428,7 @@ func load_state(state):
 				unit.get_node("Blocked").visible = state[unit]["blocked"]
 			unit.UnitType.GATE:
 				unit.get_node("Blocked").visible = state[unit]["blocked"]
+				unit.path = state[unit]["path"]
 		for skill in unit.get_node("Skills").get_children():
 			skill.sp = state[skill]["sp"]
 			skill.ticks_left = state[skill]["ticks_left"]
