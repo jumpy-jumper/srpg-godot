@@ -1,13 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Skill/skill.gd" type="Script" id=1]
-[ext_resource path="res://Unit/Follower/Nephenee/neph_s1_status.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Follower/Nephenee/neph_s1.gd" type="Script" id=1]
 
 [node name="Warden" type="Node"]
 script = ExtResource( 1 )
-description = "HP +100%. DEF +50%."
+description = "Gain a shield for 160% of this unit's Max HP. Every round, take 40% of this unit's Max HP as shield damage."
 activation = 2
 base_skill_cost = 1
-base_skill_initial_sp = 0
+base_skill_initial_sp = 1
 base_skill_duration = 4
-statuses = [ ExtResource( 2 ) ]

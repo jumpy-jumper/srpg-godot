@@ -67,8 +67,6 @@ func deactivate():
 func initialize():
 	sp = unit.get_stat("skill_initial_sp", base_skill_initial_sp)
 	ticks_left = 0
-	if activation == Activation.DEPLOYMENT:
-		activate()
 	update_statuses()
 
 

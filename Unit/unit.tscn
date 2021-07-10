@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Unit/ui_hp.gd" type="Script" id=1]
 [ext_resource path="res://Unit/Follower/Dieck/dieck.tres" type="SpriteFrames" id=2]
@@ -7,15 +7,29 @@
 [ext_resource path="res://Unit/Range/range_indicator.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Unit/ui_skill_range.gd" type="Script" id=6]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.890196, 0.705882, 0.384314, 1 )
+
+[sub_resource type="GDScript" id=9]
+script/source = "extends ProgressBar
+
+
+onready var hp_ui = $\"../HP\"
+
+
+func _process(_delta):
+	visible = hp_ui.visible
+"
+
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.603922, 1, 0.270588, 1 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="StreamTexture" id=4]
+[sub_resource type="StreamTexture" id=5]
 load_path = "res://.import/cursor_default0.png-8adba084a8cf7015ba3f2250c4fff637.stex"
 
 [node name="Unit" type="Node2D"]
@@ -47,6 +61,23 @@ marked_color = Color( 0.631373, 0.129412, 0.941176, 0.501961 )
 position = Vector2( 20, 40 )
 z_index = 1
 
+[node name="Shield" type="ProgressBar" parent="UI"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = 16.0
+margin_right = 45.0
+margin_bottom = 20.0
+custom_styles/fg = SubResource( 8 )
+value = 100.0
+percent_visible = false
+script = SubResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HP" type="ProgressBar" parent="UI"]
 anchor_left = 0.5
 anchor_top = 1.0
@@ -56,7 +87,7 @@ margin_left = -20.0
 margin_top = 16.0
 margin_right = 45.0
 margin_bottom = 20.0
-custom_styles/fg = SubResource( 1 )
+custom_styles/fg = SubResource( 7 )
 custom_styles/bg = SubResource( 2 )
 value = 100.0
 percent_visible = false
@@ -74,7 +105,7 @@ margin_left = -20.0
 margin_top = 20.0
 margin_right = 45.0
 margin_bottom = 24.0
-custom_styles/fg = SubResource( 3 )
+custom_styles/fg = SubResource( 4 )
 custom_styles/bg = SubResource( 2 )
 percent_visible = false
 script = ExtResource( 4 )
@@ -87,7 +118,7 @@ visible = false
 modulate = Color( 0.662745, 1, 0.615686, 1 )
 position = Vector2( 32, 32 )
 scale = Vector2( 5, 5 )
-texture = SubResource( 4 )
+texture = SubResource( 5 )
 
 [node name="Skills" type="Node" parent="."]
 

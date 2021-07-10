@@ -26,15 +26,15 @@
 [ext_resource path="res://Unit/Follower/facing.png" type="Texture" id=24]
 [ext_resource path="res://Stage/camera_mover.gd" type="Script" id=25]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 42
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 200
 font_data = ExtResource( 7 )
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Panel
 
 export var fade_in_duration = 1.0
@@ -93,7 +93,7 @@ margin_left = 32.0
 margin_top = 40.0
 margin_right = 320.0
 margin_bottom = 128.0
-custom_fonts/normal_font = SubResource( 2 )
+custom_fonts/normal_font = SubResource( 1 )
 bbcode_enabled = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -113,7 +113,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="UI/Game Over"]
 margin_right = 1280.0
 margin_bottom = 768.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "YOU LOSE :("
 align = 1
 valign = 1
@@ -217,7 +217,7 @@ __meta__ = {
 position = Vector2( -90.6307, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 3
+frame = 7
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -623,7 +623,7 @@ modulate = Color( 0, 0, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 4 )
+script = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -70,6 +70,8 @@ func _ready():
 
 
 func _process(_delta):
+	if not is_alive():
+		control_state = ControlState.CURSOR_HIDDEN
 	if tick_state == TickState.MOVEMENT:
 		control_state = ControlState.CURSOR_HIDDEN
 	match(control_state):
@@ -87,7 +89,7 @@ func _process(_delta):
 				control_state = ControlState.CURSOR_HIDDEN
 		ControlState.CURSOR_HIDDEN:
 			$Cursor.control_state = $Cursor.ControlState.HIDDEN
-			if pending_ui == 0 and tick_state == TickState.ACTION:
+			if pending_ui == 0 and tick_state == TickState.ACTION and is_alive():
 				control_state = ControlState.FREE if not is_waiting_for_facing() \
 					else ControlState.WAITING_FOR_FACING
 		ControlState.PAUSED:
@@ -394,6 +396,7 @@ func get_state():
 		unit_state["position"] = unit.position
 		unit_state["alive"] = unit.alive
 		unit_state["hp"] = unit.hp
+		unit_state["shield"] = unit.shield
 		match unit.get_type_of_self():
 			unit.UnitType.FOLLOWER:
 				unit_state["facing"] = unit.facing
@@ -427,6 +430,7 @@ func load_state(state):
 		unit.position = state[unit]["position"]
 		unit.alive = state[unit]["alive"]
 		unit.hp = state[unit]["hp"]
+		unit.shield = state[unit]["shield"]
 		unit.toasts_this_tick = 0
 		match unit.get_type_of_self():
 			unit.UnitType.FOLLOWER:

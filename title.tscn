@@ -68,6 +68,7 @@ func animate():
 script = SubResource( 1 )
 
 [node name="Button" type="Button" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -102,6 +103,7 @@ __meta__ = {
 }
 
 [node name="Button3" type="Button" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -149,7 +151,9 @@ Select Next [E / Click on Face]
 Camera [WASD] (very scuffed)
 Undo [Ctrl Z, Wheel Up]
 Redo [Ctrl X]
-Restart [R, F5]"
+Restart [R, F5]
+
+If a unit dies or is retreated, you regain half their cost."
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false

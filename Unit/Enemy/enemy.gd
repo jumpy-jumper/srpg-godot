@@ -81,7 +81,7 @@ func move():
 			var unit = stage.get_unit_at(path[i])
 			if unit:
 				if unit.get_type_of_self() == UnitType.SUMMONER:
-					unit.take_damage()
+					unit.apply_damage()
 					die()
 					break
 				elif unit.get_type_of_self() == UnitType.FOLLOWER:

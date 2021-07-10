@@ -60,6 +60,8 @@ func _on_Cursor_confirm_issued(pos):
 					summoner.faith -= get_stat("cost", base_cost)
 					for skill in get_node("Skills").get_children():
 						skill.initialize()
+						if skill.activation == skill.Activation.DEPLOYMENT:
+							skill.activate()
 					waiting_for_facing = true
 					stage.append_state()
 	elif alive and waiting_for_facing:

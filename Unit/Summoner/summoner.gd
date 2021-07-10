@@ -41,7 +41,7 @@ export var faith = 20
 ###############################################################################
 
 
-func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
+func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	hp -= 1
 	if hp <= 0:
 		die()

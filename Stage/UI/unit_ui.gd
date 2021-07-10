@@ -15,7 +15,7 @@ func _ready():
 
 
 func _process(_delta):
-	if (Input.is_action_just_pressed("cancel") or Input.is_action_just_pressed("unit_ui")) and modulate.a > 0.2:
+	if (Input.is_action_just_pressed("cancel") or Input.is_action_just_pressed("unit_ui")) and modulate.a == 1:
 		hide()
 		emit_signal("exited")
 
@@ -45,7 +45,10 @@ func update_unit(unit):
 		or unit.get_type_of_self() == unit.UnitType.ENEMY:
 			var max_hp = unit.get_stat("max_hp", unit.base_max_hp)
 			var base_max_hp = unit.get_stat_after_level("max_hp", unit.base_max_hp)
-			basic_stats += "\nHP: " + str(unit.hp) + " / " + str(max_hp)
+			basic_stats += "\nHP: " + str(unit.hp)
+			if unit.shield > 0:
+				basic_stats += " (+" + str(unit.shield) + ")"
+			basic_stats += " / " + str(max_hp)
 			if base_max_hp != max_hp:
 				basic_stats += " (+" if base_max_hp < max_hp else " (-"
 				basic_stats += str(abs(base_max_hp - max_hp)) + ")"

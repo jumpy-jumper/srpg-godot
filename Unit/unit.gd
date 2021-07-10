@@ -54,6 +54,7 @@ func _process(_delta):
 	else:
 		hp = get_stat("max_hp", base_max_hp)
 		
+
 func _on_Cursor_confirm_issued(pos):
 	pass
 
@@ -94,13 +95,14 @@ export var base_def = 200
 export var base_res = 0
 
 onready var hp = get_stat("max_hp", base_max_hp)
+var shield = 0
 
 
 const AFFECTED_BY_LEVEL = ["max_hp", "atk", "def"]
 const NUMERICAL_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
 	"block_count", "damage_type", "incoming_damage", "incoming_healing", \
-	"skill_duration", "cooldown"]
+	"skill_duration", "cooldown", "incoming_shield"]
 const INTEGER_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
 	"block_count", "skill_duration", "cooldown"]
@@ -162,59 +164,74 @@ func get_stat(stat_name, base_value):
 signal dead(unit)
 
 
-enum DamageType {PHYSICAL, MAGIC, TRUE, HEALING}
+enum DamageType {PHYSICAL, MAGIC, TRUE, HEALING, SHIELD, SHIELD_DAMAGE}
 
 
 var physical_color = Color.lightcoral
 var magic_color = Color.blue
 var true_color = Color.white
+var shield_damage_color = Color.goldenrod
 var healing_color = Color.green
-var colors = [physical_color, magic_color, true_color, healing_color]
-
+var shield_color = Color.goldenrod
+var colors = [physical_color, magic_color, true_color, healing_color, shield_color, shield_damage_color]
 
 var damage_toast = preload("res://Unit/damage_toast.tscn")
 
 var toasts_this_tick = 0
 
-func take_damage(amount = 1, damage_type = DamageType.PHYSICAL):
+
+func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if damage_type == DamageType.PHYSICAL:
 		amount -= get_stat("def", base_def)
 	elif damage_type == DamageType.MAGIC:
 		amount = floor(amount * (1 - (get_stat("res", base_res) / 100.0)))
-	
+	elif damage_type == DamageType.SHIELD_DAMAGE:
+		amount = min(shield, amount)
+
 	amount = floor(amount * get_stat("incoming_damage", 1))
 	
-	amount = max(amount, 0)
-	hp -= amount
-	if hp <= 0:
-		die()
+	var shield_damage = min(shield, amount)
+	if shield_damage > 0:
+		amount -= shield_damage
+		shield -= shield_damage
+		display_damage_toast(-shield_damage, colors[DamageType.SHIELD_DAMAGE])
 	
-	var toast = damage_toast.instance()
-	toast.amount = amount
-	toast.color = colors[damage_type]
-	toast.position += position
-	toast.position.y += toasts_this_tick * toast.y_step
-	stage.add_child(toast)
-	toasts_this_tick += 1
+	if amount > 0:
+		hp -= amount
+		if hp <= 0:
+			die()
+		hp = min(get_stat("max_hp", base_max_hp), hp)
+	
+	if damage_type != DamageType.SHIELD_DAMAGE and (amount > 0 or shield == 0):
+		display_damage_toast(max(amount, 0), colors[damage_type])
 
 
-func heal(amount = 1):
+func apply_healing(amount = 1):
 	amount *= get_stat("incoming_healing", 1)
-	
 	hp += max(amount, 0)
-	hp = min(get_stat("max_hp", base_max_hp), hp)
-	
-	var toast = damage_toast.instance()
-	toast.amount = amount
-	toast.color = colors[DamageType.HEALING]
-	toast.position += position
-	toast.position.y += toasts_this_tick * toast.y_step
-	stage.add_child(toast)
-	toasts_this_tick += 1
+	display_damage_toast(amount, colors[DamageType.HEALING])
 
 
 func heal_to_full():
-	hp = get_stat("max_hp", base_max_hp)
+	var max_hp = get_stat("max_hp", base_max_hp)
+	if max_hp - hp > 0:
+		hp = max_hp
+
+
+func apply_shield(amount):
+	amount *= get_stat("incoming_shield", 1)
+	shield += max(amount, 0)
+	display_damage_toast(amount, colors[DamageType.SHIELD])
+
+
+func display_damage_toast(amount, color):
+	var toast = damage_toast.instance()
+	toast.amount = amount
+	toast.color = color
+	toast.position += position
+	toast.position.y += toasts_this_tick * toast.y_step
+	stage.add_child(toast)
+	toasts_this_tick += 1
 
 
 const DEATH_TWEEN_DURATION = 2
@@ -226,6 +243,7 @@ func die():
 	heal_to_full()
 	for skill in $Skills.get_children():
 		skill.initialize()
+	shield = 0
 
 
 

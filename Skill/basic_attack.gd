@@ -36,7 +36,7 @@ func activate():
 							possible_targets.push_front(unit.blocker)
 						
 			for target in select_targets(possible_targets):
-				target.take_damage(unit.get_stat("atk", unit.base_atk), \
+				target.apply_damage(unit.get_stat("atk", unit.base_atk), \
 					unit.get_stat("damage_type", damage_type))
 	
 				var toast = targeting_toast.instance()
@@ -51,4 +51,4 @@ func activate():
 			var possible_targets = []
 			possible_targets += unit.get_units_in_range_of_type(skill_range, unit.get_type_of_self())
 			for target in select_targets(possible_targets):
-				target.heal(unit.get_stat("atk", unit.base_atk))
+				target.apply_healing(unit.get_stat("atk", unit.base_atk))
