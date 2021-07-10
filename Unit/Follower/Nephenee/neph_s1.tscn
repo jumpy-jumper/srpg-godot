@@ -4,7 +4,7 @@
 
 [node name="Warden" type="Node"]
 script = ExtResource( 1 )
-description = "Gain a shield for 160% of this unit's Max HP. Every round, take 40% of this unit's Max HP as shield damage."
+description = "Upon being summoned, gain a shield for 160% of this unit's Max HP. Every round, take 40% of this unit's Max HP as shield damage."
 activation = 2
 base_skill_cost = 1
 base_skill_initial_sp = 1

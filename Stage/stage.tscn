@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/camera.gd" type="Script" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://Stage/UI/enemy_info.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Unit/Follower/facing.png" type="Texture" id=24]
 [ext_resource path="res://Stage/camera_mover.gd" type="Script" id=25]
+[ext_resource path="res://Stage/camera_controller.gd" type="Script" id=26]
 
 [sub_resource type="DynamicFont" id=1]
 size = 42
@@ -55,8 +56,7 @@ script = ExtResource( 1 )
 terrain_types = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 21 ), ExtResource( 13 ) ]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 0, 64 )
-anchor_mode = 0
+position = Vector2( 640, 368 )
 current = true
 script = ExtResource( 2 )
 speed = 0.0
@@ -136,37 +136,37 @@ focus_mode = 0
 
 [node name="2" parent="UI/Follower Panels" instance=ExtResource( 19 )]
 margin_left = 1400.0
-margin_top = -450.0
+margin_top = -452.5
 margin_right = 1528.0
-margin_bottom = -322.0
+margin_bottom = -324.5
 focus_mode = 0
 
 [node name="3" parent="UI/Follower Panels" instance=ExtResource( 19 )]
 margin_left = 1400.0
-margin_top = -321.25
+margin_top = -325.0
 margin_right = 1528.0
-margin_bottom = -193.25
+margin_bottom = -197.0
 focus_mode = 0
 
 [node name="4" parent="UI/Follower Panels" instance=ExtResource( 19 )]
 margin_left = 1400.0
-margin_top = -192.5
+margin_top = -197.5
 margin_right = 1528.0
-margin_bottom = -64.5001
+margin_bottom = -69.5001
 focus_mode = 0
 
 [node name="5" parent="UI/Follower Panels" instance=ExtResource( 19 )]
 margin_left = 1400.0
-margin_top = -63.7501
+margin_top = -70.0001
 margin_right = 1528.0
-margin_bottom = 64.2499
+margin_bottom = 57.9999
 focus_mode = 0
 
 [node name="6" parent="UI/Follower Panels" instance=ExtResource( 19 )]
 margin_left = 1400.0
-margin_top = 64.9999
+margin_top = 58.7499
 margin_right = 1528.0
-margin_bottom = 193.0
+margin_bottom = 186.75
 focus_mode = 0
 
 [node name="7" parent="UI/Follower Panels" instance=ExtResource( 19 )]
@@ -178,23 +178,23 @@ focus_mode = 0
 
 [node name="8" parent="UI/Follower Panels" instance=ExtResource( 19 )]
 margin_left = 1271.25
-margin_top = -450.0
+margin_top = -452.5
 margin_right = 1399.25
-margin_bottom = -322.0
+margin_bottom = -324.5
 focus_mode = 0
 
 [node name="9" parent="UI/Follower Panels" instance=ExtResource( 19 )]
 margin_left = 1271.25
-margin_top = -321.25
+margin_top = -325.0
 margin_right = 1399.25
-margin_bottom = -193.25
+margin_bottom = -197.0
 focus_mode = 0
 
 [node name="10" parent="UI/Follower Panels" instance=ExtResource( 19 )]
 margin_left = 1271.25
-margin_top = -192.5
+margin_top = -197.5
 margin_right = 1399.25
-margin_bottom = -64.5
+margin_bottom = -69.5
 focus_mode = 0
 
 [node name="Summoner UI" type="Node2D" parent="UI"]
@@ -217,7 +217,7 @@ __meta__ = {
 position = Vector2( -90.6307, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 7
+frame = 1
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -233,7 +233,6 @@ __meta__ = {
 }
 
 [node name="Unit UI" type="Control" parent="UI"]
-visible = false
 margin_right = 1280.0
 margin_bottom = 768.0
 mouse_filter = 2
@@ -259,7 +258,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="UI/Unit UI"]
-position = Vector2( -32, 96 )
+position = Vector2( 40, 99.2 )
 texture = ExtResource( 14 )
 centered = false
 
@@ -754,6 +753,9 @@ position = Vector2( 64, 64 )
 rotation = 4.71239
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 24 )
+
+[node name="CameraController" type="Node2D" parent="."]
+script = ExtResource( 26 )
 
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]

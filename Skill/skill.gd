@@ -142,23 +142,50 @@ func select_targets(units):
 	return ret
 
 
+func is_blocking_or_blocked(u):
+	if unit.get_type_of_self() == unit.UnitType.FOLLOWER:
+		return u in unit.blocked
+	else:
+		return unit.blocker == u
+
+
 func closest_to_self_comparison(a, b):
+	if is_blocking_or_blocked(a) and not is_blocking_or_blocked(b):
+		return true
+	elif is_blocking_or_blocked(b) and not is_blocking_or_blocked(a):
+		return false
 	return abs((a.position - unit.position).length_squared()) < abs((b.position - unit.position).length_squared())
 
 
 func lowest_hp_percentage_comparison(a, b):
+	if is_blocking_or_blocked(a) and not is_blocking_or_blocked(b):
+		return true
+	elif is_blocking_or_blocked(b) and not is_blocking_or_blocked(a):
+		return false
 	return float(a.hp) / a.get_stat("max_hp", a.base_max_hp) <\
 		float(b.hp) / b.get_stat("max_hp", b.base_max_hp)
 
 
 func closest_to_summoner_comparison(a, b):
+	if is_blocking_or_blocked(a) and not is_blocking_or_blocked(b):
+		return true
+	elif is_blocking_or_blocked(b) and not is_blocking_or_blocked(a):
+		return false
 	var summ = unit.stage.get_selected_summoner()
 	return abs((a.position - summ.position).length_squared()) < abs((b.position - summ.position).length_squared())
 
 
 func last_summoned_comparison(a, b):
+	if is_blocking_or_blocked(a) and not is_blocking_or_blocked(b):
+		return true
+	elif is_blocking_or_blocked(b) and not is_blocking_or_blocked(a):
+		return false
 	return a.stage.summoned_order.find(a) > b.stage.summoned_order.find(b)
 
 
 func first_summoned_comparison(a, b):
+	if is_blocking_or_blocked(a) and not is_blocking_or_blocked(b):
+		return true
+	elif is_blocking_or_blocked(b) and not is_blocking_or_blocked(a):
+		return false
 	return a.stage.summoned_order.find(a) < b.stage.summoned_order.find(b)

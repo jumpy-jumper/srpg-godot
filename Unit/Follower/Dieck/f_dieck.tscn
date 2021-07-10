@@ -5,7 +5,7 @@
 
 [node name="Dieck" instance=ExtResource( 2 )]
 unit_name = "Dieck"
-base_max_hp = 2500
+base_max_hp = 250
 base_atk = 75
 base_def = 40
 base_res = 20

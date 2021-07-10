@@ -16,7 +16,7 @@ func _ready():
 script/source = "extends Button
 
 
-var level = preload(\"res://Levels/training.tscn\")
+var level = preload(\"res://Levels/l_training.tscn\")
 
 
 func _on_Button_pressed():
@@ -28,7 +28,7 @@ func _on_Button_pressed():
 script/source = "extends Button
 
 
-var level = preload(\"res://Levels/test_level.tscn\")
+var level = preload(\"res://Levels/l_test1.tscn\")
 
 
 func _on_Button2_pressed():
@@ -40,7 +40,7 @@ func _on_Button2_pressed():
 script/source = "extends Button
 
 
-var level = preload(\"res://Levels/test_level_2.tscn\")
+var level = preload(\"res://Levels/l_test2.tscn\")
 
 
 func _on_Button3_pressed():
@@ -68,7 +68,6 @@ func animate():
 script = SubResource( 1 )
 
 [node name="Button" type="Button" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -103,7 +102,6 @@ __meta__ = {
 }
 
 [node name="Button3" type="Button" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/idle2.png-18bc5bc89b2aa2f9721b4b3df97d24ff.stex"
+path="res://.import/norne_portrait2.png-f5f6fa4a397b852893b5b78168459c8e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Unit/Follower/Tanya/idle2.png"
-dest_files=[ "res://.import/idle2.png-18bc5bc89b2aa2f9721b4b3df97d24ff.stex" ]
+source_file="res://Unit/Follower/Norne/norne_portrait2.png"
+dest_files=[ "res://.import/norne_portrait2.png-f5f6fa4a397b852893b5b78168459c8e.stex" ]
 
 [params]
 

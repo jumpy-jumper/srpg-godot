@@ -27,9 +27,7 @@ func get_type_of_enemy():
 func _process(_delta):
 	visible = alive or previewing
 	modulate.a = 0.5 if previewing else 1
-	if waiting_for_facing \
-		and Game.mouse_enabled \
-		and stage.control_state != stage.ControlState.PAUSED:
+	if waiting_for_facing and Game.mouse_enabled and stage.can_update_facing():
 			if Game.mouse_idle == 0:
 				face_mouse()
 			if Input.is_action_just_released("mouse_confirm") \
@@ -44,9 +42,16 @@ func _input(event):
 			die()
 			stage.append_state()
 	elif waiting_for_facing:
-		var direction = Game.get_keyboard_input()
+		var direction = Game.get_keyboard_input(true)
 		if direction.length_squared() > 0:
-			facing = rad2deg(atan2(direction.y, direction.x))
+			if direction == Vector2.RIGHT:
+				facing = Facing.RIGHT
+			elif direction == Vector2.DOWN:
+				facing = Facing.DOWN
+			elif direction == Vector2.LEFT:
+				facing = Facing.LEFT
+			elif direction == Vector2.UP:
+				facing = Facing.UP
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -140,7 +145,7 @@ var waiting_for_facing = false
 
 
 func face_mouse():
-	var relative_pos = get_global_mouse_position() - position
+	var relative_pos = get_global_mouse_position() - position - Vector2(stage.get_cell_size(), stage.get_cell_size()) / 2
 	var theta = fposmod(rad2deg(atan2(relative_pos.y, relative_pos.x)), 360)
 	
 	if fmod((theta - 45), 90) != 0:

@@ -32,10 +32,6 @@ var summoned_order = []
 #        Main logic	                                                          #
 ###############################################################################
 
-enum ControlState { FREE, WAITING_FOR_FACING, CURSOR_HIDDEN, PAUSED}
-
-var control_state = ControlState.FREE
-
 func _ready():
 	add_child(level)
 
@@ -68,52 +64,126 @@ func _ready():
 	
 	append_state()
 
+# Control state:
+var pending_ui = 0 # UI that is being hovered over
+# $"UI/Unit UI".visible
+# is_alive()
+# is_waiting_for_facing()
+# $CameraController.operatable
+
+func is_alive():
+	for summoner in summoners_cache:
+		if not summoner.alive:
+			return false
+	return true
+
+
+func is_waiting_for_facing():
+	for summ in summoners_cache:
+		for unit in summ.followers:
+			if unit.waiting_for_facing:
+				return true
+	return false
+
+
+func is_any_follower_previewing():
+	for summ in summoners_cache:
+		for unit in summ.followers:
+			if unit.previewing:
+				return true
+	return false
+
+
+func is_waiting_for_ui():
+	return not (not $"UI/Unit UI".visible or $"UI/Unit UI".visible and $"UI/Unit UI".modulate.a == 0)
+
+
+func can_select_follower_ui():
+	return not is_waiting_for_ui() and is_alive()
+
+
+func can_show_unit_ui():
+	return not is_waiting_for_ui() and not $CameraController.operatable and is_alive()
+
+
+func can_update_facing():
+	return not is_waiting_for_ui() and is_alive()
+
+
+func can_undo_or_redo():
+	return not is_waiting_for_ui() \
+		and not $CameraController.operatable
+
+
+func can_move_cursor():
+	return pending_ui == 0 \
+		and is_alive() \
+		and not is_waiting_for_ui() \
+		and not is_waiting_for_facing() \
+		and not $CameraController.operatable
+
+
+func can_show_cursor():
+	return pending_ui == 0 \
+		and is_alive() \
+		and not is_waiting_for_ui() \
+		and not $CameraController.operatable
+
+
+func can_change_selected_follower():
+	return pending_ui == 0 \
+		and is_alive() \
+		and not is_waiting_for_ui() \
+		and not $CameraController.operatable
+
+
+func can_move_camera():
+	return is_alive() \
+		and not is_waiting_for_ui() \
+
+
+func can_move_camera_with_cancel():
+	return Game.move_camera_with_cancel \
+		and can_move_camera() \
+		and not get_unit_at(cursor.position) \
+		and not is_any_follower_previewing()
+
 
 func _process(_delta):
-	if not is_alive():
-		control_state = ControlState.CURSOR_HIDDEN
-	if tick_state == TickState.MOVEMENT:
-		control_state = ControlState.CURSOR_HIDDEN
-	match(control_state):
-		ControlState.FREE:
-			if is_waiting_for_facing():
-				control_state = ControlState.WAITING_FOR_FACING
-			$Cursor.control_state = $Cursor.ControlState.FREE
-			if pending_ui > 0:
-				control_state = ControlState.CURSOR_HIDDEN
-		ControlState.WAITING_FOR_FACING:
-			if not is_waiting_for_facing():
-				control_state = ControlState.FREE
-			$Cursor.control_state = $Cursor.ControlState.LOCKED
-			if pending_ui > 0:
-				control_state = ControlState.CURSOR_HIDDEN
-		ControlState.CURSOR_HIDDEN:
-			$Cursor.control_state = $Cursor.ControlState.HIDDEN
-			if pending_ui == 0 and tick_state == TickState.ACTION and is_alive():
-				control_state = ControlState.FREE if not is_waiting_for_facing() \
-					else ControlState.WAITING_FOR_FACING
-		ControlState.PAUSED:
-			$Cursor.control_state = $Cursor.ControlState.HIDDEN
+	if can_show_cursor():
+		if can_move_cursor():
+			cursor.control_state = cursor.ControlState.FREE
+		else:
+			cursor.control_state = cursor.ControlState.LOCKED
+	else:
+		cursor.control_state = cursor.ControlState.HIDDEN
 
 	$"UI/Follower Panels".update_ui()
 	$"UI/Game Over".visible = not is_alive()
 
 
 func _input(event):
-	if control_state != ControlState.PAUSED:
-		if is_alive():
-			if event.is_action_pressed("next_follower"):
-				selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
-			elif event.is_action_pressed("previous_follower"):
-				selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
-			elif event.is_action_pressed("unit_ui"):
-				var unit = get_unit_at($Cursor.position)
-				if unit:
-					show_unit_ui(unit)
-				else:
-					show_unit_ui(get_selected_summoner().followers[selected_follower_index])
+	if can_change_selected_follower():
+		if event.is_action_pressed("next_follower"):
+			selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
+		elif event.is_action_pressed("previous_follower"):
+			selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
+	
+	if can_show_unit_ui():
+		if event.is_action_pressed("unit_ui"):
+			var unit = get_unit_at($Cursor.position)
+			if unit:
+				show_unit_ui(unit)
+			else:
+				show_unit_ui(get_selected_summoner().followers[selected_follower_index])
+		
+	if can_undo_or_redo():
 		if event.is_action_pressed("undo"):
 			undo()
+		elif event.is_action_pressed("redo"):
+			redo()
+		elif event.is_action_pressed("advance_round"):
+			advance_tick()
 		elif event.is_action_pressed("restart"):
 			if Game.undoable_restart:
 				load_state(states[0])
@@ -121,12 +191,7 @@ func _input(event):
 				$UI/Blackscreen.animate()
 			else:
 				get_tree().reload_current_scene()
-		if control_state != ControlState.WAITING_FOR_FACING:
-			if event.is_action_pressed("advance_round"):
-				advance_tick()
-	if control_state == ControlState.FREE:
-		if event.is_action_pressed("redo"):
-			redo()
+			
 	if event.is_action_pressed("debug_clear_pending_ui"):
 		pending_ui = 0
 
@@ -148,19 +213,12 @@ func _on_Cursor_cancel_issued(pos):
 func show_unit_ui(unit):
 	$"UI/Unit UI".update_unit(unit)
 	$"UI/Unit UI".show()
-	control_state = ControlState.PAUSED
-
-var pending_ui = 0
 
 func _on_UI_mouse_entered():
 	pending_ui += 1
 
 func _on_UI_mouse_exited():
 	pending_ui -= 1
-
-
-func _on_Unit_UI_exited():
-	control_state = ControlState.WAITING_FOR_FACING if is_waiting_for_facing() else ControlState.FREE
 
 
 func _on_Skill_UI_skill_activation_requested(skill):
@@ -178,28 +236,16 @@ func _on_Retreat_pressed():
 	var unit = $"UI/Unit UI".saved_unit
 	unit.die()
 	append_state()
-	control_state = ControlState.WAITING_FOR_FACING if is_waiting_for_facing() else ControlState.FREE
 	$"UI/Unit UI".hide()
+
+
+func _on_Unit_UI_exited():
+	pass
 
 
 ###############################################################################
 #        Getters                                                              #
 ###############################################################################
-
-
-func is_alive():
-	for summoner in summoners_cache:
-		if not summoner.alive:
-			return false
-	return true
-
-
-func is_waiting_for_facing():
-	for summ in summoners_cache:
-		for unit in summ.followers:
-			if unit.waiting_for_facing:
-				return true
-	return false
 
 
 func get_cell_size():
@@ -482,5 +528,5 @@ func redo():
 	if cur_state_index < len(states) - 1 and Game.redo_enabled:
 		load_state(states[cur_state_index + 1])
 		cur_state_index += 1
-	elif control_state != ControlState.PAUSED:
+	else:
 		advance_tick()

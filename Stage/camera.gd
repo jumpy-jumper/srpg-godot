@@ -12,21 +12,42 @@ export var bottom_cutoff = 4
 
 export var speed = 0.5
 
+var zoom_out = 1.5
+var zoom_in = 1
+const ZOOM_SPEED = 0.125
+
 
 func _process(_delta):
-	var movement = Vector2(0, 0)
-	movement.x += 1 if get_movement("camera_right") else 0
-	movement.x += -1 if get_movement("camera_left") else 0
-	movement.y += -1 if get_movement("camera_up") else 0
-	movement.y += 1 if get_movement("camera_down") else 0
-	
-	movement = Vector2(round(movement.x), round(movement.y))
-	
-	var newpos = position + movement * stage.get_cell_size()
-	
-	if movement.length_squared() > 0:
-		update_pos(newpos)
+	if stage.can_move_camera():
+		var movement = Vector2(0, 0)
+		movement.x += 1 if get_movement("camera_right") else 0
+		movement.x += -1 if get_movement("camera_left") else 0
+		movement.y += -1 if get_movement("camera_up") else 0
+		movement.y += 1 if get_movement("camera_down") else 0
+		
+		movement = Vector2(round(movement.x), round(movement.y))
+		
+		var newpos = position + movement * stage.get_cell_size()
+		
+		if movement.length_squared() > 0:
+			update_pos(newpos)
 
+		var new_zoom
+		if Input.is_action_just_pressed("zoom"):
+			if zoom.x == zoom_out:
+				new_zoom = Vector2(zoom_in, zoom_in)		
+				$Tween.interpolate_property(self, "zoom", 
+				zoom, new_zoom, ZOOM_SPEED,
+				Tween.TRANS_LINEAR, Tween.EASE_OUT)
+				$Tween.start()
+			else:
+				new_zoom = Vector2(zoom_out, zoom_out)		
+				$Tween.interpolate_property(self, "zoom", 
+				zoom, new_zoom, ZOOM_SPEED,
+				Tween.TRANS_LINEAR, Tween.EASE_OUT)
+				$Tween.start()
+
+	
 
 func update_pos(pos):
 	$Tween.stop_all()

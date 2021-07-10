@@ -9,13 +9,16 @@ export var hide_mouse_after_seconds = 2
 export var confirm_facing_on_release = true
 export var automatically_move_enemies = true
 export var enemy_movement_wait = 0.2
+export var zoom_sensitivity = 1.3
+export var mouse_drag_camera_sensitivity = 3
+export var move_camera_with_cancel = true
 
 var mouse_idle = 0
 var prev_pos = Vector2.ZERO
 
 
 export var autoload = false
-var level_to_load = preload("res://Levels/nils_trial.tscn")
+var level_to_load = preload("res://Levels/l_nils.tscn")
 
 
 func _ready():
@@ -34,6 +37,7 @@ func _process(_delta):
 
 	elif Input.is_action_just_pressed("restart_game"):
 		get_tree().change_scene("res://title.tscn")
+	
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE \
 		if mouse_idle < Game.hide_mouse_after_seconds \
@@ -59,6 +63,8 @@ var rapid_fire_condition_history = []
 
 
 func get_movement(dir):
+		
+		
 	if Input.is_action_just_released(dir) or not Input.is_action_pressed(dir):
 		timers[dir] = 0
 	timers[dir] += 1
@@ -82,7 +88,13 @@ func get_movement(dir):
 	else:
 		return Input.is_action_just_pressed(dir)
 
-func get_keyboard_input():
+func get_keyboard_input(simple = false):
+	if simple:
+		return Vector2((1 if Input.is_action_pressed("ui_right") else 0) \
+		- (1 if Input.is_action_pressed("ui_left") else 0), \
+		(1 if Input.is_action_pressed("ui_down") else 0) \
+		- (1 if Input.is_action_pressed("ui_up") else 0))
+		
 	var movement = Vector2(0, 0)
 	movement.x += 1 if get_movement("ui_right") else 0
 	movement.x += -1 if get_movement("ui_left") else 0
