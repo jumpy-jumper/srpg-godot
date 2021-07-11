@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/camera.gd" type="Script" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://Unit/Follower/facing.png" type="Texture" id=24]
 [ext_resource path="res://Stage/camera_mover.gd" type="Script" id=25]
 [ext_resource path="res://Stage/camera_controller.gd" type="Script" id=26]
+[ext_resource path="res://Stage/deployable_tiles_indicator.gd" type="Script" id=27]
 
 [sub_resource type="DynamicFont" id=1]
 size = 42
@@ -217,7 +218,7 @@ __meta__ = {
 position = Vector2( -90.6307, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 3
+frame = 4
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -757,6 +758,10 @@ texture = ExtResource( 24 )
 
 [node name="CameraController" type="Node2D" parent="."]
 script = ExtResource( 26 )
+
+[node name="Deployable" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource( 27 )
 
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]

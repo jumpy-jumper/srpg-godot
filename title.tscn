@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui_smaller.tres" type="DynamicFont" id=2]
@@ -62,6 +62,18 @@ func animate():
 		1, 0, fade_in_duration,
 		Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	$Tween.start()
+"
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Node
+
+
+export(PackedScene) var level = null
+
+func _ready():
+	if level:
+		Game.level_to_load = level
+		get_tree().change_scene(\"res://Stage/stage.tscn\")
 "
 
 [node name="Title" type="Node"]
@@ -174,6 +186,9 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="Blackscreen"]
+
+[node name="Level Autoloader" type="Node" parent="."]
+script = SubResource( 6 )
 
 [connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
 [connection signal="pressed" from="Button2" to="Button2" method="_on_Button2_pressed"]

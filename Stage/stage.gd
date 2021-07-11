@@ -165,6 +165,12 @@ func _process(_delta):
 
 	$"UI/Follower Panels".update_ui()
 	$"UI/Game Over".visible = not is_alive()
+	
+	var selected_follower = get_selected_follower()
+	$Deployable.visible = selected_follower.can_be_deployed()
+	if $Deployable.visible:
+		$Deployable.update_tiles(get_selected_follower().deployable_terrain)
+		# Big performance bottleneck, but fine for now
 
 
 func _input(event):

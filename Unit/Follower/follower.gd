@@ -54,12 +54,16 @@ func _input(event):
 				facing = Facing.UP
 
 
+func can_be_deployed():
+	return get_stat("cost", base_cost) <= summoner.faith \
+		and not alive and cooldown == 0
+
+
 func _on_Cursor_confirm_issued(pos):
 	if not alive and not stage.is_waiting_for_facing():
 		if stage.get_selected_follower() == self and stage.get_unit_at(pos) == null:
 			if stage.get_terrain_at(pos) in deployable_terrain \
-				and get_stat("cost", base_cost) <= summoner.faith \
-				and not alive and cooldown == 0:
+				and can_be_deployed():
 					alive = true
 					global_position = stage.get_clamped_position(pos)
 					summoner.faith -= get_stat("cost", base_cost)
