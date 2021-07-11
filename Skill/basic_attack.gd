@@ -44,7 +44,7 @@ func activate():
 				toast.attackee = target
 				toast.gradient = toast.gradient.duplicate()
 				toast.gradient.set_color(1, unit.colors[damage_type])
-				unit.toasts.append(toast)
+				unit.targeting_toasts.append(toast)
 
 
 		elif skill_type == SkillType.HEAL: 

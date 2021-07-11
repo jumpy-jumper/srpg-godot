@@ -31,6 +31,7 @@ func _ready():
 
 
 func _process(_delta):
+	$UI.visible = alive
 	if alive:
 		hp = min(hp, get_stat("max_hp", base_max_hp))
 		
@@ -177,8 +178,8 @@ var colors = [physical_color, magic_color, true_color, healing_color, shield_col
 
 var damage_toast = preload("res://Unit/damage_toast.tscn")
 
-var toasts = []
-
+var damage_toasts = []
+var targeting_toasts = []
 
 func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if damage_type == DamageType.PHYSICAL:
@@ -194,7 +195,7 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if shield_damage > 0:
 		amount -= shield_damage
 		shield -= shield_damage
-		toasts.append(get_damage_toast(-shield_damage, colors[DamageType.SHIELD_DAMAGE]))
+		damage_toasts.append(get_damage_toast(-shield_damage, colors[DamageType.SHIELD_DAMAGE]))
 	
 	if amount > 0:
 		hp -= amount
@@ -203,13 +204,13 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 		hp = min(get_stat("max_hp", base_max_hp), hp)
 	
 	if damage_type != DamageType.SHIELD_DAMAGE and (amount > 0 or shield == 0):
-		toasts.append(get_damage_toast(max(amount, 0), colors[damage_type]))
+		damage_toasts.append(get_damage_toast(max(amount, 0), colors[damage_type]))
 
 
 func apply_healing(amount = 1):
 	amount *= get_stat("incoming_healing", 1)
 	hp += max(amount, 0)
-	toasts.append(get_damage_toast(amount, colors[DamageType.HEALING]))
+	damage_toasts.append(get_damage_toast(amount, colors[DamageType.HEALING]))
 
 
 func heal_to_full():
@@ -221,7 +222,7 @@ func heal_to_full():
 func apply_shield(amount):
 	amount *= get_stat("incoming_shield", 1)
 	shield += max(amount, 0)
-	toasts.append(get_damage_toast(amount, colors[DamageType.SHIELD]))
+	damage_toasts.append(get_damage_toast(amount, colors[DamageType.SHIELD]))
 
 
 func get_damage_toast(amount, color):
@@ -232,11 +233,15 @@ func get_damage_toast(amount, color):
 
 
 func display_toasts():
-	for i in range(len(toasts)):
-		toasts[i].position += position
-		toasts[i].position.y += i * toasts[i].y_step
-		stage.add_child(toasts[i])
-	toasts.clear()
+	for i in range(len(damage_toasts)):
+		damage_toasts[i].position += position
+		damage_toasts[i].position.y += i * damage_toasts[i].y_step
+		stage.add_child(damage_toasts[i])
+	for toast in targeting_toasts:
+		toast.position += position
+		stage.add_child(toast)
+	damage_toasts.clear()
+	targeting_toasts.clear()
 	
 
 const DEATH_TWEEN_DURATION = 0.5
