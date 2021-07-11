@@ -25,8 +25,12 @@ func get_type_of_enemy():
 ###############################################################################
 
 func _process(_delta):
-	visible = alive or previewing
-	modulate.a = 0.5 if previewing else 1.0
+	if not $DeathTweener.is_active():
+		modulate.a = 0.5 if previewing else (1.0 if alive else 0)
+	elif alive:
+		$DeathTweener.stop_all()
+		modulate.a = 1.0
+	
 	if waiting_for_facing and Game.mouse_enabled and stage.can_update_facing():
 			if Game.mouse_idle == 0:
 				face_mouse()
@@ -71,6 +75,7 @@ func _on_Cursor_confirm_issued(pos):
 						skill.initialize()
 						if skill.activation == skill.Activation.DEPLOYMENT:
 							skill.activate()
+					facing = Facing.RIGHT
 					waiting_for_facing = true
 					stage.append_state()
 	elif alive and waiting_for_facing:
@@ -103,7 +108,6 @@ var cooldown = 0
 
 func die():
 	.die()
-	facing = Facing.RIGHT
 	waiting_for_facing = false
 	for skill in $Skills.get_children():
 		skill.initialize()

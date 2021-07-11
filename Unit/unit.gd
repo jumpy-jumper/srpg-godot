@@ -239,7 +239,8 @@ func display_toasts():
 	toasts.clear()
 	
 
-const DEATH_TWEEN_DURATION = 2
+const DEATH_TWEEN_DURATION = 0.5
+
 
 func die():
 	emit_signal("dead", self)
@@ -249,6 +250,11 @@ func die():
 	for skill in $Skills.get_children():
 		skill.initialize()
 	shield = 0
+	
+	$DeathTweener.interpolate_property(self, "modulate:a",
+	0.75, 0, DEATH_TWEEN_DURATION,
+	Tween.TRANS_LINEAR, Tween.EASE_IN)
+	$DeathTweener.start()
 
 
 ###############################################################################

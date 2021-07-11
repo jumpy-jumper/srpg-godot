@@ -23,7 +23,11 @@ func _ready():
 			unit.summoner = self
 
 func _process(_delta):
-	visible = alive
+	if not $DeathTweener.is_active():
+		modulate.a = 1.0 if alive else 0
+	elif alive:
+		$DeathTweener.stop_all()
+		modulate.a = 1.0
 
 
 ###############################################################################

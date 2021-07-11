@@ -19,7 +19,12 @@ func _ready():
 
 
 func _process(_delta):
-	visible = alive
+	if not $DeathTweener.is_active():
+		modulate.a = 1.0 if alive else 0
+	elif alive:
+		$DeathTweener.stop_all()
+		modulate.a = 1.0
+	
 	if stage.cursor.position == position or marked:
 		var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, stage.get_selected_summoner().position, traversable))
 		for i in range(len(path)):
