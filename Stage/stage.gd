@@ -103,7 +103,14 @@ func can_select_follower_ui():
 
 
 func can_show_unit_ui():
-	return not is_waiting_for_ui() and not $CameraController.operatable and is_alive()
+	return not is_waiting_for_ui() and is_alive()
+
+
+var camera_position_after_cancel_pressed = Vector2.ZERO
+func can_show_unit_ui_with_cancel():
+	return can_show_unit_ui() \
+		and (get_unit_at(cursor.position) or is_any_follower_previewing()) \
+		and camera_position_after_cancel_pressed == $Camera2D.position
 
 
 func can_update_facing():
@@ -144,9 +151,7 @@ func can_move_camera():
 
 func can_move_camera_with_cancel():
 	return Game.move_camera_with_cancel \
-		and can_move_camera() \
-		and not get_unit_at(cursor.position) \
-		and not is_any_follower_previewing()
+		and can_move_camera()
 
 
 func _process(_delta):
@@ -168,9 +173,12 @@ func _input(event):
 			selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
 		elif event.is_action_pressed("previous_follower"):
 			selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
-	
+			
+	if event.is_action_pressed("cancel"):
+		camera_position_after_cancel_pressed = $Camera2D.position
 	if can_show_unit_ui():
-		if event.is_action_pressed("unit_ui"):
+		var show_unit_ui_with_cancel_condition = can_show_unit_ui_with_cancel() and event.is_action_released("cancel")
+		if event.is_action_pressed("unit_ui") or show_unit_ui_with_cancel_condition:
 			var unit = get_unit_at($Cursor.position)
 			if unit:
 				show_unit_ui(unit)
@@ -201,13 +209,7 @@ func _on_Cursor_confirm_issued(pos):
 
 
 func _on_Cursor_cancel_issued(pos):
-	var unit = get_unit_at(pos)
-	if unit:
-		show_unit_ui(unit)
-	else:
-		var selected_follower = get_selected_follower()
-		if selected_follower and selected_follower.previewing:
-			show_unit_ui(selected_follower)
+	pass
 
 
 func show_unit_ui(unit):

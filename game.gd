@@ -9,7 +9,7 @@ export var hide_mouse_after_seconds = 2
 export var confirm_facing_on_release = true
 export var automatically_move_enemies = true
 export var enemy_movement_wait = 0.2
-export var zoom_sensitivity = 1.3
+export var zoom_sensitivity = 1.15
 export var mouse_drag_camera_sensitivity = 3
 export var move_camera_with_cancel = true
 

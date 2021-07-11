@@ -138,20 +138,25 @@ text = "Controls:
 Fullscreen toggle [F11]
 Return to this screen [F12]
 
+Camera [WASD] [Hold right click + move mouse]
+Reset Camera [Hold right click + press middle click]
+
 Move Cursor [←↓↑→ / Mouse]
-Advance Turn [Space / Wheel Down]
+
 Summon [Z / Left Click] on summonable tile
 Retreat [C]
-Examine Unit [LShift / X / Right Click] on unit
-Mark Unit [F / Middle Click]
-Select Previous [Q / Click on Face]
-Select Next [E / Click on Face]
-Camera [WASD] (very scuffed)
+Examine Unit [LShift / X / Right Click on Unit or on Face] 
+Mark Unit [F / Left Click]
+Activate Skill [Left Click on Unit]
+
+Select Unit [Left Click on Face]
+Select Previous [Q]
+Select Next [E]
+
+Advance Turn [Space / Wheel Down]
 Undo [Ctrl Z, Wheel Up]
 Redo [Ctrl X]
-Restart [R, F5]
-
-If a unit dies or is retreated, you regain half their cost."
+Restart [R, F5]"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
