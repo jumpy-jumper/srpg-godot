@@ -40,11 +40,11 @@ func activate():
 					unit.get_stat("damage_type", damage_type))
 	
 				var toast = targeting_toast.instance()
-				toast.set_point_position(0, unit.position + Vector2(unit.stage.get_cell_size() / 2, unit.stage.get_cell_size() / 2))
-				toast.set_point_position(1, target.position + Vector2(unit.stage.get_cell_size() / 2, unit.stage.get_cell_size() / 2))
+				toast.attacker = unit
+				toast.attackee = target
 				toast.gradient = toast.gradient.duplicate()
 				toast.gradient.set_color(1, unit.colors[damage_type])
-				unit.stage.add_child(toast)
+				unit.toasts.append(toast)
 
 
 		elif skill_type == SkillType.HEAL: 

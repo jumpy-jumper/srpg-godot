@@ -26,7 +26,7 @@ func get_type_of_enemy():
 
 func _process(_delta):
 	visible = alive or previewing
-	modulate.a = 0.5 if previewing else 1
+	modulate.a = 0.5 if previewing else 1.0
 	if waiting_for_facing and Game.mouse_enabled and stage.can_update_facing():
 			if Game.mouse_idle == 0:
 				face_mouse()
@@ -95,11 +95,6 @@ func get_stat(stat_name, base_value):
 func _on_Stage_tick_ended():
 	._on_Stage_tick_ended()
 	cooldown = max(0, cooldown - 1)
-
-
-func update_range():
-	.update_range()
-	var block_range = get_stat("block_range", base_block_range)
 
 
 export var base_cooldown = 32

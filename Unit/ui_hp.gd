@@ -8,7 +8,7 @@ onready var base_left = margin_left
 onready var width = margin_right - margin_left
 
 
-func _process(delta):
+func _process(_delta):
 	value = float(unit.hp) / unit.get_stat("max_hp", unit.base_max_hp) * 100
 	
 	var percentage = float(unit.hp) / (unit.hp + unit.shield)

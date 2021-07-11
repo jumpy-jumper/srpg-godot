@@ -360,8 +360,6 @@ func get_path_to_target(start, end, traversable):
 
 
 var cur_tick = 1
-enum TickState { ACTION, MOVEMENT }
-var tick_state = TickState.ACTION
 
 func advance_tick():
 	var followers = []
@@ -373,35 +371,32 @@ func advance_tick():
 			enemies.append(unit)
 	var all_units = get_all_units()
 	
-	if tick_state == TickState.ACTION:
-		for u in followers:
-			if u.alive:
-				u.block_enemies()
-		
-		for u in all_units:
-			if u.alive:
-				u.tick_skills()
-		tick_state = TickState.MOVEMENT
-		append_state()
-		if Game.automatically_move_enemies:
-			advance_tick()
-	elif tick_state == TickState.MOVEMENT:
-		for u in enemies:
-			if u.alive:
-				u.move()
-		
-		for u in followers:
-			u.clear_block()
-		
-		for u in gates_cache:
-			if u.alive:
-				u.spawn_enemy()
-		
-		emit_signal("tick_ended")
+	for u in followers:
+		if u.alive:
+			u.block_enemies()
+	
+	for u in all_units:
+		if u.alive:
+			u.tick_skills()
+	
+	for u in enemies:
+		if u.alive:
+			u.move()
+	
+	for u in followers:
+		u.clear_block()
+	
+	for u in all_units:
+		u.display_toasts()
+	
+	for u in gates_cache:
+		if u.alive:
+			u.spawn_enemy()
+	
+	emit_signal("tick_ended")
 
-		cur_tick += 1
-		replace_last_state()
-		tick_state = TickState.ACTION
+	cur_tick += 1
+	append_state()
 
 
 ###############################################################################
@@ -477,7 +472,6 @@ func get_state():
 func load_state(state):
 	cur_tick = state["cur_tick"]
 	summoned_order = state["summoned_order"]
-	tick_state = TickState.ACTION
 	for unit in get_all_units():
 		for status in unit.get_node("Statuses").get_children():
 			status.queue_free()
@@ -485,7 +479,6 @@ func load_state(state):
 		unit.alive = state[unit]["alive"]
 		unit.hp = state[unit]["hp"]
 		unit.shield = state[unit]["shield"]
-		unit.toasts_this_tick = 0
 		match unit.get_type_of_self():
 			unit.UnitType.FOLLOWER:
 				unit.facing = state[unit]["facing"]

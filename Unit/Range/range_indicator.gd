@@ -11,7 +11,7 @@ onready var unit = $"../.."
 func update_range(_range, color = Color.black):
 	var necessary_children = max(0, len(_range) - get_child_count())
 	
-	for i in range(necessary_children):
+	for _i in range(necessary_children):
 		var tile = range_indicator_tile.instance()
 		add_child(tile)
 	

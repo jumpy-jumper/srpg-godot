@@ -80,7 +80,7 @@ func tick_skills():
 
 
 func _on_Stage_tick_ended():
-	toasts_this_tick = 0
+	pass
 
 
 ###############################################################################
@@ -177,7 +177,7 @@ var colors = [physical_color, magic_color, true_color, healing_color, shield_col
 
 var damage_toast = preload("res://Unit/damage_toast.tscn")
 
-var toasts_this_tick = 0
+var toasts = []
 
 
 func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
@@ -194,7 +194,7 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if shield_damage > 0:
 		amount -= shield_damage
 		shield -= shield_damage
-		display_damage_toast(-shield_damage, colors[DamageType.SHIELD_DAMAGE])
+		toasts.append(get_damage_toast(-shield_damage, colors[DamageType.SHIELD_DAMAGE]))
 	
 	if amount > 0:
 		hp -= amount
@@ -203,13 +203,13 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 		hp = min(get_stat("max_hp", base_max_hp), hp)
 	
 	if damage_type != DamageType.SHIELD_DAMAGE and (amount > 0 or shield == 0):
-		display_damage_toast(max(amount, 0), colors[damage_type])
+		toasts.append(get_damage_toast(max(amount, 0), colors[damage_type]))
 
 
 func apply_healing(amount = 1):
 	amount *= get_stat("incoming_healing", 1)
 	hp += max(amount, 0)
-	display_damage_toast(amount, colors[DamageType.HEALING])
+	toasts.append(get_damage_toast(amount, colors[DamageType.HEALING]))
 
 
 func heal_to_full():
@@ -221,18 +221,23 @@ func heal_to_full():
 func apply_shield(amount):
 	amount *= get_stat("incoming_shield", 1)
 	shield += max(amount, 0)
-	display_damage_toast(amount, colors[DamageType.SHIELD])
+	toasts.append(get_damage_toast(amount, colors[DamageType.SHIELD]))
 
 
-func display_damage_toast(amount, color):
+func get_damage_toast(amount, color):
 	var toast = damage_toast.instance()
 	toast.amount = amount
 	toast.color = color
-	toast.position += position
-	toast.position.y += toasts_this_tick * toast.y_step
-	stage.add_child(toast)
-	toasts_this_tick += 1
+	return toast
 
+
+func display_toasts():
+	for i in range(len(toasts)):
+		toasts[i].position += position
+		toasts[i].position.y += i * toasts[i].y_step
+		stage.add_child(toasts[i])
+	toasts.clear()
+	
 
 const DEATH_TWEEN_DURATION = 2
 
@@ -244,8 +249,6 @@ func die():
 	for skill in $Skills.get_children():
 		skill.initialize()
 	shield = 0
-
-
 
 
 ###############################################################################

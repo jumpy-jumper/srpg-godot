@@ -8,7 +8,7 @@ export var skill_inactive_color = Color.cyan
 export var skill_active_color = Color.lightsalmon
 
 
-func _process(delta):
+func _process(_delta):
 	var activatable_skills = []
 	for skill in unit.get_node("Skills").get_children():
 		if skill.activation != skill.Activation.EVERY_TICK:
