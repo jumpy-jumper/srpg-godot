@@ -15,9 +15,12 @@ func _ready():
 
 
 func _process(_delta):
-	if (Input.is_action_just_pressed("cancel") or Input.is_action_just_pressed("unit_ui")) and modulate.a == 1:
-		hide()
-		emit_signal("exited")
+	if ((Input.is_action_just_pressed("cancel") or Input.is_action_just_pressed("unit_ui"))) \
+		and not started_this_frame \
+		and modulate.a > 0:
+			hide()
+			emit_signal("exited")
+	started_this_frame = false
 
 
 onready var base_sprite_pos = $Sprite.position
@@ -163,7 +166,7 @@ func update_unit(unit):
 				panels[i].get_node("Label").text = str(key)
 				panels[i].get_node("AnimatedSprite").frames = unit.enemies[key].get_node("Sprite").frames
 
-
+var started_this_frame = false
 func show():
 	$Tween.interpolate_property(self, "modulate:a",
 		0, 1, fade_in_duration,
@@ -172,6 +175,7 @@ func show():
 	yield(get_tree(), "idle_frame")
 	visible = true
 	$Retreat.disabled = false
+	started_this_frame = true
 
 
 func hide():

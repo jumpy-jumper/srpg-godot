@@ -25,6 +25,7 @@ func get_type_of_enemy():
 ###############################################################################
 
 func _process(_delta):
+	$"Sprite/UI".visible = alive
 	if not $DeathTweener.is_active():
 		modulate.a = 0.5 if previewing else (1.0 if alive else 0)
 	elif alive:
@@ -63,21 +64,26 @@ func can_be_deployed():
 		and not alive and cooldown == 0
 
 
+func deploy_self(pos):
+		alive = true
+		global_position = stage.get_clamped_position(pos)
+		summoner.faith -= get_stat("cost", base_cost)
+		for skill in get_node("Skills").get_children():
+			skill.initialize()
+			if skill.activation == skill.Activation.DEPLOYMENT:
+				skill.activate()
+		display_toasts()
+		facing = Facing.RIGHT
+		waiting_for_facing = true
+		stage.append_state()
+
+
 func _on_Cursor_confirm_issued(pos):
 	if not alive and not stage.is_waiting_for_facing():
 		if stage.get_selected_follower() == self and stage.get_unit_at(pos) == null:
 			if stage.get_terrain_at(pos) in deployable_terrain \
 				and can_be_deployed():
-					alive = true
-					global_position = stage.get_clamped_position(pos)
-					summoner.faith -= get_stat("cost", base_cost)
-					for skill in get_node("Skills").get_children():
-						skill.initialize()
-						if skill.activation == skill.Activation.DEPLOYMENT:
-							skill.activate()
-					facing = Facing.RIGHT
-					waiting_for_facing = true
-					stage.append_state()
+					deploy_self(pos)
 	elif alive and waiting_for_facing:
 		confirm_facing()
 	elif alive:

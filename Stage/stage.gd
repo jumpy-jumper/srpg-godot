@@ -107,10 +107,12 @@ func can_show_unit_ui():
 
 
 var camera_position_after_cancel_pressed = Vector2.ZERO
+var camera_zoom_after_cancel_pressed = Vector2.ZERO
 func can_show_unit_ui_with_cancel():
 	return can_show_unit_ui() \
 		and (get_unit_at(cursor.position) or is_any_follower_previewing()) \
-		and camera_position_after_cancel_pressed == $Camera2D.position
+		and abs((camera_position_after_cancel_pressed - $Camera2D.position).length()) < Game.unit_ui_with_cancel_leeway \
+		and camera_zoom_after_cancel_pressed == $Camera2D.zoom
 
 
 func can_update_facing():
@@ -182,6 +184,7 @@ func _input(event):
 			
 	if event.is_action_pressed("cancel"):
 		camera_position_after_cancel_pressed = $Camera2D.position
+		camera_zoom_after_cancel_pressed = $Camera2D.zoom
 	if can_show_unit_ui():
 		var show_unit_ui_with_cancel_condition = can_show_unit_ui_with_cancel() and event.is_action_released("cancel")
 		if event.is_action_pressed("unit_ui") or show_unit_ui_with_cancel_condition:
@@ -322,36 +325,45 @@ func get_terrain_at(pos):
 	return terrain_types[cell] if cell >= 0 else null
 
 
-func get_astar_graph(traversable_tiles):
-	var astar = AStar2D.new()
+func get_graph(traversable):
+	var ret = []
 	
 	var all_tiles = terrain.get_used_cells()
 	
 	for pos in all_tiles:
-		if terrain_types[terrain.get_cellv(pos)] in traversable_tiles:
-			astar.add_point(astar.get_available_point_id(), pos)
+		if terrain_types[terrain.get_cellv(pos)] in traversable:
+			ret.append(terrain.map_to_world(pos))
 	
-	var adjacent = [Vector2(0, 1), Vector2(1, 0)]
-	for p in astar.get_points():
-		for a in adjacent:
-			var closest = astar.get_closest_point(astar.get_point_position(p) + a)
-			if (astar.get_point_position(closest) - astar.get_point_position(p)).length() == 1:
-				astar.connect_points(p, closest)
-	
-	
-	return astar
+	return ret
 
 
 func get_path_to_target(start, end, traversable):
-	var astar = get_astar_graph(traversable)
+	var points = get_graph(traversable)
 	
-	var path = astar.get_point_path(astar.get_closest_point(terrain.world_to_map(start)), 
-		astar.get_closest_point(terrain.world_to_map(end)))
-
-	var ret = []
-	for v in path:
-		ret.append(v * get_cell_size())
-	return ret
+	var visited = []
+	var paths = [[start]]
+	
+	if start == end:
+		return []
+	
+	while len(paths) > 0:
+		var path = paths.pop_front()
+		var node = path[len(path) - 1]
+		if not node in visited:
+			var adjacent = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
+			for i in range(len(adjacent)):
+				adjacent[i] *= get_cell_size()
+				adjacent[i] += node
+			for pos in adjacent:
+				if pos in points:
+					var new_path = [] + path
+					new_path.append(pos)
+					if pos == end:
+						return new_path
+					paths.append(new_path)
+			visited.append(node)
+	
+	return []
 
 
 ###############################################################################
@@ -369,13 +381,12 @@ func advance_tick():
 			followers.append(unit)
 		if unit is Enemy:
 			enemies.append(unit)
-	var all_units = get_all_units()
 	
 	for u in followers:
 		if u.alive:
 			u.block_enemies()
 	
-	for u in all_units:
+	for u in summoners_cache + followers + enemies + gates_cache:
 		if u.alive:
 			u.tick_skills()
 	
@@ -386,7 +397,7 @@ func advance_tick():
 	for u in followers:
 		u.clear_block()
 	
-	for u in all_units:
+	for u in summoners_cache + followers + enemies + gates_cache:
 		u.display_toasts()
 	
 	for u in gates_cache:

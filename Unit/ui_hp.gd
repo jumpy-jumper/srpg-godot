@@ -1,7 +1,7 @@
 extends ProgressBar
 
 
-onready var unit = get_parent().get_parent()
+onready var unit = $"../../.."
 
 
 onready var base_left = margin_left

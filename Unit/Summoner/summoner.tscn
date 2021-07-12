@@ -1,8 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Unit/Summoner/ui_faith.gd" type="Script" id=2]
-[ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Skill/Summoner/summoner_tick.gd" type="Script" id=4]
 [ext_resource path="res://Unit/Summoner/summoner.gd" type="Script" id=6]
 
@@ -12,37 +10,10 @@ base_atk = 0
 base_def = 0
 base_max_faith = 999
 
-[node name="Sprite" parent="." index="0"]
-frame = 0
-
-[node name="Shield" parent="UI" index="0"]
+[node name="UI" parent="Sprite" index="0"]
 visible = false
 
-[node name="HP" parent="UI" index="1"]
-visible = false
-
-[node name="SP2" type="Label" parent="UI" index="2"]
-visible = false
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -20.0
-margin_right = 44.0
-margin_bottom = 59.0
-custom_fonts/font = ExtResource( 3 )
-text = "100
-"
-align = 1
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SP" parent="UI" index="3"]
-visible = false
-
-[node name="Selected" parent="." index="3"]
+[node name="Selected" parent="." index="2"]
 modulate = Color( 0.12549, 1, 0, 1 )
 
 [node name="Faith Recovery" type="Node" parent="Skills" index="0"]

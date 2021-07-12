@@ -12,6 +12,7 @@ export var enemy_movement_wait = 0.2
 export var zoom_sensitivity = 1.15
 export var mouse_drag_camera_sensitivity = 3
 export var move_camera_with_cancel = true
+export var unit_ui_with_cancel_leeway = 100
 
 var mouse_idle = 0
 var prev_pos = Vector2.ZERO

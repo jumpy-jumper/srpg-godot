@@ -43,6 +43,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Level" type="Label" parent="."]
+margin_left = 8.0
+margin_top = 96.0
+margin_right = 124.0
+margin_bottom = 132.0
+rect_scale = Vector2( 0.8, 0.8 )
+custom_fonts/font = ExtResource( 1 )
+text = "L50"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Border" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 64, 64 )

@@ -1,7 +1,7 @@
 extends ProgressBar
 
 
-onready var unit = get_parent().get_parent()
+onready var unit = $"../../.."
 
 
 export var skill_inactive_color = Color.cyan

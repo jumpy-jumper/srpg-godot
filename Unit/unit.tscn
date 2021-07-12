@@ -44,24 +44,17 @@ base_def = 20
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 2 )
-frame = 6
+frame = 1
 playing = true
 centered = false
 offset = Vector2( -8, -16 )
 
-[node name="Ranges" type="Node2D" parent="."]
-
-[node name="Skill Range" parent="Ranges" instance=ExtResource( 5 )]
-script = ExtResource( 6 )
-inactive_color = Color( 0.78125, 0.512695, 0.512695, 0.501961 )
-active_color = Color( 0.72549, 0.619608, 0.458824, 0.501961 )
-marked_color = Color( 0.631373, 0.129412, 0.941176, 0.501961 )
-
-[node name="UI" type="Node2D" parent="."]
-position = Vector2( 20, 40 )
+[node name="UI" type="Node2D" parent="Sprite"]
+position = Vector2( 5, 10 )
+scale = Vector2( 0.25, 0.25 )
 z_index = 1
 
-[node name="Shield" type="ProgressBar" parent="UI"]
+[node name="Shield" type="ProgressBar" parent="Sprite/UI"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -78,7 +71,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HP" type="ProgressBar" parent="UI"]
+[node name="HP" type="ProgressBar" parent="Sprite/UI"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -96,7 +89,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SP" type="ProgressBar" parent="UI"]
+[node name="SP" type="ProgressBar" parent="Sprite/UI"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -112,6 +105,14 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Ranges" type="Node2D" parent="."]
+
+[node name="Skill Range" parent="Ranges" instance=ExtResource( 5 )]
+script = ExtResource( 6 )
+inactive_color = Color( 0.78125, 0.512695, 0.512695, 0.501961 )
+active_color = Color( 0.72549, 0.619608, 0.458824, 0.501961 )
+marked_color = Color( 0.631373, 0.129412, 0.941176, 0.501961 )
 
 [node name="Selected" type="Sprite" parent="."]
 visible = false

@@ -15,7 +15,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ 0.1, 0.35, 0.1 ]
+"values": [ 0.2, 0.4, 0.2 ]
 }
 
 [sub_resource type="GDScript" id=2]
@@ -27,7 +27,7 @@ func _ready():
 "
 
 [node name="Deployable" type="Sprite"]
-modulate = Color( 0.780392, 0.560784, 0.219608, 0.206491 )
+modulate = Color( 0.780392, 0.560784, 0.219608, 0.1 )
 scale = Vector2( 0.9, 0.9 )
 texture = ExtResource( 1 )
 

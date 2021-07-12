@@ -31,7 +31,6 @@ func _ready():
 
 
 func _process(_delta):
-	$UI.visible = alive
 	if alive:
 		hp = min(hp, get_stat("max_hp", base_max_hp))
 		

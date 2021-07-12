@@ -7,18 +7,34 @@ export(Color) var deselected_color = Color.black
 
 var unit = null
 
+onready var base_alpha = $CooldownPanel.modulate.a
 
 func update_unit(unit, selected):
 	self.unit = unit
 	$Mugshot.texture = unit.portrait
 	$Mugshot.region_rect.position = unit.mugshot_top_left
+	$Level.text = "L" + str(unit.get_stat("level", unit.base_level))
 	$Cost.text = str(unit.get_stat("cost", unit.base_cost))
 	$Cost.modulate = Color.lightpink if unit.summoner.faith < unit.get_stat("cost", unit.base_cost) else Color.white
 	$Border.modulate = selected_color if selected else deselected_color
-	$Cost.visible = not unit.alive
-	$CooldownPanel.visible = unit.alive or unit.cooldown > 0
-	$CooldownPanel/Cooldown.text = "OUT" if unit.cooldown == 0 else str(unit.cooldown)
-	$CooldownPanel/Cooldown.modulate = Color.lightpink if unit.cooldown > 0 else Color.white
+	
+	if unit.alive:
+		$CooldownPanel.visible = true
+		$CooldownPanel.modulate.a = base_alpha
+		$CooldownPanel/Cooldown.text = "OUT"
+	else:
+		if unit.cooldown > 0:
+			$CooldownPanel.visible = true
+			$CooldownPanel.modulate.a = base_alpha
+			$CooldownPanel/Cooldown.text = str(unit.cooldown)
+		elif unit.get_stat("cost", unit.base_cost) <= unit.summoner.faith:
+			$CooldownPanel.visible = false
+			$CooldownPanel/Cooldown.text = ""
+		else:
+			$CooldownPanel.visible = true
+			$CooldownPanel.modulate.a = base_alpha * 0.5
+			$CooldownPanel/Cooldown.text = ""
+				
 
 
 func _on_Follower_Panel_gui_input(event):
