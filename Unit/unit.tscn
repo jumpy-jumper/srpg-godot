@@ -112,7 +112,7 @@ __meta__ = {
 script = ExtResource( 6 )
 inactive_color = Color( 0.78125, 0.512695, 0.512695, 0.501961 )
 active_color = Color( 0.72549, 0.619608, 0.458824, 0.501961 )
-marked_color = Color( 0.631373, 0.129412, 0.941176, 0.501961 )
+marked_color = Color( 0.768627, 0.462745, 0.956863, 0.501961 )
 
 [node name="Selected" type="Sprite" parent="."]
 visible = false

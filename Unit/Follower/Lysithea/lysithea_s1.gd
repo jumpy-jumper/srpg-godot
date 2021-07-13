@@ -7,9 +7,6 @@ export var bonus_atk_max = 6.2
 var bonus_atk = 0.0
 
 
-var bonus_atk_status_cache = null
-
-
 onready var base_description = description
 
 
@@ -27,13 +24,34 @@ func activate():
 	.activate()
 	var bonus_atk_status = Status.new()
 	bonus_atk_status.stat_additive_multipliers["atk"] = bonus_atk
+	bonus_atk_status.issuer_unit = unit
+	bonus_atk_status.issuer_name = name
 	unit.get_node("Statuses").add_child(bonus_atk_status)
-	bonus_atk_status_cache = bonus_atk_status
+	unit.stage.replace_last_state()
 
 
 func deactivate():
 	.deactivate()
 	bonus_atk = 0.0
-	if bonus_atk_status_cache:
-		bonus_atk_status_cache.queue_free()
-		bonus_atk_status_cache = null
+
+
+###############################################################################
+#        State                                                                #
+###############################################################################
+
+
+func get_state():
+	var ret = .get_state()
+	ret["bonus_atk_step"] = bonus_atk_step
+	ret["bonus_atk_max"] = bonus_atk_max
+	ret["bonus_atk"] = bonus_atk
+	ret["base_description"] = base_description
+	return ret
+
+
+func load_state(state):
+	.load_state(state)
+	bonus_atk_step = state["bonus_atk_step"]
+	bonus_atk_max = state["bonus_atk_max"]
+	bonus_atk = state["bonus_atk"]
+	base_description = state["base_description"]

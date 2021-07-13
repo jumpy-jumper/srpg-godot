@@ -29,6 +29,8 @@ func _ready():
 			enemy.gate = self
 	
 	marked = true
+	
+	$"Path Indicator".modulate = modulate
 
 
 func _process(_delta):
@@ -62,17 +64,19 @@ func spawn_enemy():
 			enemy.position = path[1]
 			enemy.base_level = get_stat("level", base_level)
 			enemy.heal_to_full()
+			var movement_array = enemy.get_stat("movement", enemy.base_movement)
+			enemy.movement = movement_array[(stage.cur_tick) % len(movement_array)]
 			if enemy in stage.summoned_order:
 				stage.summoned_order.erase(enemy)
 			stage.summoned_order.push_back(enemy)
 		else:
 			$Blocked.visible = true
-				
+		
 		# Die if there are no more enemies to spawn
 		for tick in enemies.keys():
 			if tick > stage.cur_tick:
 				return
-		#die()
+		die()
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -90,3 +94,21 @@ func _on_Cursor_hovered(pos):
 		$"Path Indicator".default_color.a = (1 - pow(base_path_alpha, 2))
 	else:
 		$"Path Indicator".default_color.a = base_path_alpha
+
+
+###############################################################################
+#        State                                                                #
+###############################################################################
+
+
+func get_state():
+	var ret = .get_state()
+	ret["blocked"] = get_node("Blocked").visible
+	ret["path"] = path + []
+	return ret
+
+
+func load_state(state):
+	.load_state(state)
+	get_node("Blocked").visible = state["blocked"]
+	path = state["path"]

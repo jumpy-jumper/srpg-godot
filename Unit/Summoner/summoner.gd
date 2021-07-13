@@ -53,3 +53,19 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 
 func recover_faith(amount = 1):
 	faith = min(faith + amount, get_stat("max_faith", base_max_faith))
+
+
+###############################################################################
+#        State                                                                #
+###############################################################################
+
+
+func get_state():
+	var ret = .get_state()
+	ret["faith"] = faith
+	return ret
+
+
+func load_state(state):
+	.load_state(state)
+	faith = state["faith"]

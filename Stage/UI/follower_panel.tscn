@@ -44,6 +44,7 @@ __meta__ = {
 }
 
 [node name="Level" type="Label" parent="."]
+visible = false
 margin_left = 8.0
 margin_top = 96.0
 margin_right = 124.0

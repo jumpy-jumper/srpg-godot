@@ -201,3 +201,21 @@ func clear_block():
 	for enemy in blocked:
 		enemy.blocker = null
 	blocked.clear()
+
+
+###############################################################################
+#        State                                                                #
+###############################################################################
+
+
+func get_state():
+	var ret = .get_state()
+	ret["facing"] = facing
+	ret["cooldown"] = cooldown
+	return ret
+
+
+func load_state(state):
+	.load_state(state)
+	facing = state["facing"]
+	cooldown = state["cooldown"]

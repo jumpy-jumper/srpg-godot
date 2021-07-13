@@ -52,3 +52,23 @@ func activate():
 			possible_targets += unit.get_units_in_range_of_type(skill_range, unit.get_type_of_self())
 			for target in select_targets(possible_targets):
 				target.apply_healing(unit.get_stat("atk", unit.base_atk))
+
+
+###############################################################################
+#        State                                                                #
+###############################################################################
+
+
+func get_state():
+	var ret = .get_state()
+	ret["skill_type"] = skill_type
+	ret["damage_type"] = damage_type
+	ret["base_attack_count"] = base_attack_count
+	return ret
+
+
+func load_state(state):
+	.load_state(state)
+	skill_type = state["skill_type"]
+	damage_type = state["damage_type"]
+	base_attack_count = state["base_attack_count"]

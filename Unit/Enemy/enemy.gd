@@ -114,3 +114,21 @@ func move():
 ###############################################################################
 
 var blocker = null
+
+
+###############################################################################
+#        State                                                                #
+###############################################################################
+
+
+func get_state():
+	var ret = .get_state()	
+	ret["movement"] = movement
+	ret["blocked"] = get_node("Blocked").visible
+	return ret
+
+
+func load_state(state):
+	.load_state(state)
+	get_node("Blocked").visible = state["blocked"]
+	movement = state["movement"]

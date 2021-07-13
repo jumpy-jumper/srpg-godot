@@ -43,7 +43,7 @@ func update_skill(skill, unit):
 			skill_label.text += "\n[MANUAL]"
 		skill.Activation.SP_AUTO:
 			skill_label.text += "\n[AUTO]"
-		skill.Activation.NONE:
+		skill.Activation.PASSIVE:
 			skill_label.text += "\n[PASSIVE]"
 	if skill.activation == skill.Activation.SP_MANUAL \
 		or skill.activation == skill.Activation.SP_AUTO:

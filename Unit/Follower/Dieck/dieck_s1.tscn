@@ -5,9 +5,9 @@
 
 [node name="Unchained" type="Node"]
 script = ExtResource( 1 )
-description = "Block range expands. Block count + 1. Attack range expands. Target count + 3. ATK +140%, DEF +70%, RES +30. Incoming damage -50%."
+description = "Block range expands. Block count +1. Attack range expands. Target count +3. ATK +140%, DEF +70%, RES +30."
 activation = 4
 base_skill_cost = 48
 base_skill_initial_sp = 0
 base_skill_duration = 2147483647
-statuses = [ ExtResource( 2 ) ]
+statuses_self = [ ExtResource( 2 ) ]

@@ -12,8 +12,8 @@ export(String, MULTILINE) var description = ""
 ###############################################################################
 
 
-enum Activation { NONE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO }
-export(Activation) var activation = Activation.NONE
+enum Activation { PASSIVE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO }
+export(Activation) var activation = Activation.PASSIVE
 export var base_skill_cost = 15
 export var base_skill_initial_sp = 10
 export var base_skill_duration = 30
@@ -34,7 +34,6 @@ func is_available():
 
 
 func tick():
-	assert(activation != Activation.NONE)
 	if activation == Activation.EVERY_TICK:
 		activate()
 		deactivate()
@@ -51,9 +50,9 @@ func tick():
 
 
 func activate():
-	if activation != Activation.NONE and activation != Activation.EVERY_TICK:
+	if activation != Activation.PASSIVE and activation != Activation.EVERY_TICK:
 		ticks_left = unit.get_stat("skill_duration", base_skill_duration)
-		update_statuses()
+		add_statuses()
 		if activation == Activation.SP_MANUAL:
 			unit.stage.append_state()
 
@@ -61,13 +60,12 @@ func activate():
 func deactivate():
 	sp = 0
 	ticks_left = 0
-	update_statuses()
+	remove_statuses()
 
 
 func initialize():
 	sp = unit.get_stat("skill_initial_sp", base_skill_initial_sp)
 	ticks_left = 0
-	update_statuses()
 
 
 ###############################################################################
@@ -75,30 +73,31 @@ func initialize():
 ###############################################################################
 
 
-export(Array, PackedScene) var statuses = []
-
-
-var status_cache = []
-
-
-func update_statuses():
-	remove_statuses()
-	if is_active():
-		add_statuses()
+export(Array, PackedScene) var statuses_self = []
+export(Array, PackedScene) var statuses_allies_in_attack_range = []
 
 
 func add_statuses():
-	for status in statuses:
-		status = status.instance()
-		unit.get_node("Statuses").add_child(status)
-		status_cache.append(status)
+	for status in statuses_self:
+		var this_status = status.instance()
+		this_status.issuer_unit = unit
+		this_status.issuer_name = name
+		unit.get_node("Statuses").add_child(this_status)
+	for status in statuses_allies_in_attack_range:
+		var targets = unit.get_units_in_range_of_type(unit.get_attack_range(), unit.get_type_of_self())
+		for target in targets:
+			var this_status = status.instance()
+			this_status.issuer_unit = unit
+			this_status.issuer_name = name
+			target.get_node("Statuses").add_child(this_status)
 
 
+# Yikes
+# Might wanna figure out a different way to do this later on
 func remove_statuses():
-	for status in unit.get_node("Statuses").get_children():
-		if status in status_cache:
+	for status in unit.stage.get_all_statuses():
+		if status.issuer_unit == unit and status.issuer_name == name:
 			status.queue_free()
-			status_cache.erase(status)
 
 
 ###############################################################################
@@ -189,3 +188,44 @@ func first_summoned_comparison(a, b):
 	elif is_blocking_or_blocked(b) and not is_blocking_or_blocked(a):
 		return false
 	return a.stage.summoned_order.find(a) < b.stage.summoned_order.find(b)
+
+
+
+###############################################################################
+#        State                                                                #
+###############################################################################
+
+
+func get_state():
+	var ret = {}
+	ret["script"] = get_script().get_path()
+	ret["name"] = name
+	ret["description"] = description
+	ret["activation"] = activation
+	ret["base_skill_cost"] = base_skill_cost
+	ret["base_skill_initial_sp"] = base_skill_initial_sp
+	ret["base_skill_duration"] = base_skill_duration
+	ret["sp"] = sp
+	ret["ticks_left"] = ticks_left
+	ret["statuses_self"] = var2str(statuses_self)
+	ret["statuses_allies_in_attack_range"] = var2str(statuses_allies_in_attack_range)
+	ret["base_skill_range"] = base_skill_range
+	ret["base_target_count"] = base_target_count
+	ret["targeting_priority"] = targeting_priority	
+	return ret
+
+
+func load_state(state):
+	name = state["name"]
+	description = state["description"]
+	activation = state["activation"]
+	base_skill_cost = state["base_skill_cost"]
+	base_skill_initial_sp = state["base_skill_initial_sp"]
+	base_skill_duration = state["base_skill_duration"]
+	sp = state["sp"]
+	ticks_left = state["ticks_left"]
+	statuses_self = str2var(state["statuses_self"])
+	statuses_allies_in_attack_range = str2var(state["statuses_allies_in_attack_range"])
+	base_skill_range = state["base_skill_range"]
+	base_target_count = state["base_target_count"]
+	targeting_priority = state["targeting_priority"]

@@ -37,7 +37,7 @@ func _process(_delta):
 		if (Input.is_action_just_pressed("debug_activate_skill")):
 			if (stage.cursor.position == position):
 				for skill in $Skills.get_children():
-					if skill.activation != skill.Activation.NONE \
+					if skill.activation != skill.Activation.PASSIVE \
 						and skill.activation != skill.Activation.EVERY_TICK:
 							if skill.is_active():
 								skill.deactivate()
@@ -149,7 +149,14 @@ func get_stat_after_statuses(stat_name, base_value):
 				for i in range(len(ret)):
 					ret[i] += status.stat_flat_bonuses[stat_name][i]
 		return ret
-	
+
+
+func get_basic_attack():
+	return $Skills.get_children()[0]
+
+
+func get_attack_range():
+	return get_stat("skill_range", get_basic_attack().base_skill_range)
 
 
 func get_stat(stat_name, base_value):
@@ -249,7 +256,6 @@ const DEATH_TWEEN_DURATION = 0.5
 func die():
 	emit_signal("dead", self)
 	alive = false
-	marked = false
 	heal_to_full()
 	for skill in $Skills.get_children():
 		skill.initialize()
@@ -276,3 +282,54 @@ func get_units_in_range_of_type(_range, unit_type):
 		if u and u.get_type_of_self() == unit_type:
 			ret.append(u)
 	return ret
+
+
+
+###############################################################################
+#        State                                                                #
+###############################################################################
+
+
+func get_state():
+	var ret = {}		
+	ret["position"] = position
+	ret["alive"] = alive
+	ret["hp"] = hp
+	ret["shield"] = shield
+	
+	ret["skills"] = []
+	for skill in $Skills.get_children():
+		ret["skills"].append(skill.get_state())
+	
+	
+	ret["statuses"] = []
+	for status in $Statuses.get_children():
+		ret["statuses"].append(status.get_state())
+	
+	return ret
+
+
+func load_state(state):
+	position = state["position"]
+	alive = state["alive"]
+	hp = state["hp"]
+	shield = state["shield"]
+	
+	for skill in $Skills.get_children():
+		skill.free()
+	
+	for skill_state in state["skills"]:
+		var new_skill = Node.new()
+		new_skill.script = load(skill_state["script"])
+		$Skills.add_child(new_skill)
+		new_skill.load_state(skill_state)
+	
+	for status in $Statuses.get_children():
+		status.name = ""
+		status.free()
+	
+	for status_state in state["statuses"]:
+		var new_status = Node.new()
+		new_status.script = load(status_state["script"])
+		$Statuses.add_child(new_status)
+		new_status.load_state(status_state)

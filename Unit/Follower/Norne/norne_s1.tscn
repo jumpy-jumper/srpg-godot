@@ -10,4 +10,4 @@ activation = 4
 base_skill_cost = 12
 base_skill_initial_sp = 12
 base_skill_duration = 12
-statuses = [ ExtResource( 2 ) ]
+statuses_self = [ ExtResource( 2 ) ]

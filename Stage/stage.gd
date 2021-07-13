@@ -281,6 +281,14 @@ func get_all_units():
 	+ enemies_cache + independent_enemies_cache + gates_cache
 
 
+func get_all_statuses():
+	var ret = []
+	for unit in get_all_units():
+		for status in unit.get_node("Statuses").get_children():
+			ret.append(status)
+	return ret
+
+
 func get_units_of_type(type):
 	match(type):
 		Unit.UnitType.SUMMONER:
@@ -446,37 +454,13 @@ func connect_with_unit(unit):
 var states = []
 var cur_state_index = -1
 
-#I will be moving most of this to their own classes eventually
+
 func get_state():
 	var ret = {}
 	ret["cur_tick"] = cur_tick
 	ret["summoned_order"] = [] + summoned_order
 	for unit in get_all_units():
-		var unit_state = {}
-		unit_state["position"] = unit.position
-		unit_state["alive"] = unit.alive
-		unit_state["hp"] = unit.hp
-		unit_state["shield"] = unit.shield
-		match unit.get_type_of_self():
-			unit.UnitType.FOLLOWER:
-				unit_state["facing"] = unit.facing
-				unit_state["cooldown"] = unit.cooldown
-			unit.UnitType.SUMMONER:
-				unit_state["faith"] = unit.faith
-			unit.UnitType.ENEMY:
-				unit_state["movement"] = unit.movement
-				unit_state["blocked"] = unit.get_node("Blocked").visible
-			unit.UnitType.GATE:
-				unit_state["blocked"] = unit.get_node("Blocked").visible
-				unit_state["path"] = unit.path + []
-		ret[unit] = unit_state
-		for skill in unit.get_node("Skills").get_children():
-			var skill_state = {}
-			skill_state["sp"] = skill.sp
-			skill_state["ticks_left"] = skill.ticks_left
-			if skill is Lysithea_S1:
-				skill_state["bonus_atk"] = skill.bonus_atk
-			ret[skill] = skill_state
+		ret[unit] = unit.get_state()
 	return ret
 
 
@@ -484,36 +468,7 @@ func load_state(state):
 	cur_tick = state["cur_tick"]
 	summoned_order = state["summoned_order"]
 	for unit in get_all_units():
-		for status in unit.get_node("Statuses").get_children():
-			status.queue_free()
-		unit.position = state[unit]["position"]
-		unit.alive = state[unit]["alive"]
-		unit.hp = state[unit]["hp"]
-		unit.shield = state[unit]["shield"]
-		match unit.get_type_of_self():
-			unit.UnitType.FOLLOWER:
-				unit.facing = state[unit]["facing"]
-				unit.cooldown = state[unit]["cooldown"]
-				unit.waiting_for_facing = false
-			unit.UnitType.SUMMONER:
-				unit.faith = state[unit]["faith"]
-			unit.UnitType.ENEMY:
-				unit.movement = state[unit]["movement"]
-				unit.get_node("Blocked").visible = state[unit]["blocked"]
-			unit.UnitType.GATE:
-				unit.get_node("Blocked").visible = state[unit]["blocked"]
-				unit.path = state[unit]["path"]
-		for skill in unit.get_node("Skills").get_children():
-			skill.sp = state[skill]["sp"]
-			skill.ticks_left = state[skill]["ticks_left"]
-			if skill is Lysithea_S1:
-				skill.bonus_atk = state[skill]["bonus_atk"]
-				if skill.is_active():
-					var bonus_atk_status = Status.new()
-					bonus_atk_status.stat_additive_multipliers["atk"] = skill.bonus_atk
-					skill.unit.get_node("Statuses").add_child(bonus_atk_status)
-					skill.bonus_atk_status_cache = bonus_atk_status
-			skill.update_statuses()
+		unit.load_state(state[unit])
 
 
 func append_state():
