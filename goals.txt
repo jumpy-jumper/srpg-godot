@@ -1,0 +1,29 @@
+Content
+	Lon'qu / Lysithea / Norne tutorial map
+Implementation
+	Urgent
+		Summoner win skill
+		Clicking on units inside gates displays their contents
+		Gate unit preview displays their skills
+	Bugs
+		Unit UI shows up even if camera was fiddled with but zoom didn't change
+		Follower doesn't preview if you restart after dying
+		Enemy tweener can break with fast undo/advance
+		Cursor rapid fire on keyboard doesn't work at high FPS
+	Game Logic
+		Should skills deactivate after everything has acted?
+		Resolve ties in ally targeting / enemy action
+	QoL
+		Zooming camera anchors to the clicked position and not the middle
+		Q/E during unit UI moves to the next follower
+		Hide clutter in skill description
+		Make unit UI more appropriate to each unit
+			Don't show terrain on enemies, other stats on nomn-combat units
+		Implement camera follows cursor on keyboard
+		Implement intents
+	Refactors for performance / code cleanness
+		Have mugshot regions somewhere central instead of a unit property
+		Consolidate healing and attacking code
+		Skill descriptions - use parameters instead of hard values and have a get_description() function
+		Implement predictive round logic
+		Implement delta state saving

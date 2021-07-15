@@ -281,6 +281,7 @@ func get_units_in_range_of_type(_range, unit_type):
 		var u = stage.get_unit_at(position + pos * stage.get_cell_size())
 		if u and u.get_type_of_self() == unit_type:
 			ret.append(u)
+	ret.sort_custom(get_basic_attack(), "closest_to_summoner_comparison")
 	return ret
 
 
