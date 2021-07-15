@@ -86,7 +86,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Dream in Tiles (SRPG)"
+config/name="Dream in Tiles"
 run/main_scene="res://title.tscn"
 config/icon="res://Unit/Follower/Eirika/idle0.png"
 

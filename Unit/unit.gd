@@ -325,7 +325,6 @@ func load_state(state):
 		new_skill.load_state(skill_state)
 	
 	for status in $Statuses.get_children():
-		status.name = ""
 		status.free()
 	
 	for status_state in state["statuses"]:

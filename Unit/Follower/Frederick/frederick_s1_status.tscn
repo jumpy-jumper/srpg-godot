@@ -5,7 +5,7 @@
 [node name="frederick_s1_status" type="Node"]
 script = ExtResource( 1 )
 stat_overwrites = {
-"incoming_damage": 0.0
+"target_count": 192837198723
 }
 stat_additive_multipliers = {
 "atk": 1.2

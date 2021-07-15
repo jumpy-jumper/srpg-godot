@@ -75,6 +75,7 @@ func initialize():
 
 export(Array, PackedScene) var statuses_self = []
 export(Array, PackedScene) var statuses_allies_in_attack_range = []
+export(Array, PackedScene) var statuses_all_allies = []
 
 
 func add_statuses():
@@ -90,6 +91,13 @@ func add_statuses():
 			this_status.issuer_unit = unit
 			this_status.issuer_name = name
 			target.get_node("Statuses").add_child(this_status)
+	for status in statuses_all_allies:
+		var targets = unit.stage.get_units_of_type(unit.get_type_of_self())
+		for target in targets:
+			var this_status = status.instance()
+			this_status.issuer_unit = unit
+			this_status.issuer_name = name
+			target.get_node("Statuses").add_child(this_status)
 
 
 # Yikes
@@ -97,7 +105,7 @@ func add_statuses():
 func remove_statuses():
 	for status in unit.stage.get_all_statuses():
 		if status.issuer_unit == unit and status.issuer_name == name:
-			status.queue_free()
+			status.free()
 
 
 ###############################################################################
@@ -209,6 +217,7 @@ func get_state():
 	ret["ticks_left"] = ticks_left
 	ret["statuses_self"] = var2str(statuses_self)
 	ret["statuses_allies_in_attack_range"] = var2str(statuses_allies_in_attack_range)
+	ret["statuses_all_allies"] = var2str(statuses_all_allies)
 	ret["base_skill_range"] = base_skill_range
 	ret["base_target_count"] = base_target_count
 	ret["targeting_priority"] = targeting_priority	
@@ -226,6 +235,7 @@ func load_state(state):
 	ticks_left = state["ticks_left"]
 	statuses_self = str2var(state["statuses_self"])
 	statuses_allies_in_attack_range = str2var(state["statuses_allies_in_attack_range"])
+	statuses_all_allies = str2var(state["statuses_all_allies"])
 	base_skill_range = state["base_skill_range"]
 	base_target_count = state["base_target_count"]
 	targeting_priority = state["targeting_priority"]

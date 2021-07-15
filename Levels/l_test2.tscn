@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Unit/Follower/Frederick/f_frederick.tscn" type="PackedScene" id=2]
@@ -15,10 +15,12 @@
 [ext_resource path="res://Unit/Enemy/Eye/e_eye.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Unit/Follower/Nephenee/f_nephenee.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Unit/Enemy/Cyclops/e_cyclops.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Levels/level.gd" type="Script" id=16]
 
 [node name="TestLevel" type="Node" groups=[
 "Level",
 ]]
+script = ExtResource( 16 )
 
 [node name="Terrain" type="TileMap" parent="."]
 tile_set = ExtResource( 7 )

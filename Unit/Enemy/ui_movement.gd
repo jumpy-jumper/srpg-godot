@@ -1,7 +1,7 @@
 extends Label
 
 
-onready var unit = $"../.."
+onready var unit = $"../../.."
 
 var disabled = false
 

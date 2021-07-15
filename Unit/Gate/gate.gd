@@ -33,6 +33,8 @@ func _ready():
 	$"Path Indicator".modulate = modulate
 
 
+var prev_pos = Vector2.ZERO
+
 func _process(_delta):
 	$"Sprite/UI".visible = alive
 	if not $DeathTweener.is_active():
@@ -51,15 +53,30 @@ func _process(_delta):
 		$"Path Indicator".visible = true
 	else:
 		$"Path Indicator".visible = marked
+	
+	if position != prev_pos:
+		initialize_path()
+	prev_pos = position
+	
+	# Do it anyways for debugging
+	initialize_path()
 
+
+func initialize_path():
+	if len(enemies.values()) > 0:
+		path = stage.get_path_to_target(position, stage.get_selected_summoner().position, \
+			enemies.values()[0].traversable)
+	else:
+		path = []
+	
 
 func spawn_enemy():
 	$Blocked.visible = false
 
 	if enemies.has(stage.cur_tick):
 		var enemy = enemies[stage.cur_tick]
-					
-		if stage.get_unit_at(path[1]) == null:
+		
+		if len(path) > 0 and stage.get_unit_at(path[1]) == null:
 			enemy.alive = true
 			enemy.position = path[1]
 			enemy.base_level = get_stat("level", base_level)
@@ -94,6 +111,11 @@ func _on_Cursor_hovered(pos):
 		$"Path Indicator".default_color.a = (1 - pow(base_path_alpha, 2))
 	else:
 		$"Path Indicator".default_color.a = base_path_alpha
+
+
+func on_Terrain_settings_changed():
+	initialize_path()
+
 
 
 ###############################################################################

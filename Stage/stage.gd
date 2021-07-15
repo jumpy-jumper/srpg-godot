@@ -44,12 +44,9 @@ func _ready():
 					level.add_child(f)
 					connect_with_unit(f)
 			elif u is Gate:
-				if len(u.enemies.values()) > 0:
-					u.path = get_path_to_target(u.position, get_selected_summoner().position, \
-						u.enemies.values()[0].traversable)
-				else:
-					u.path = []
+				u.initialize_path()
 				gates_cache.append(u)
+				terrain.connect("settings_changed", u, "_on_Terrain_settings_changed")
 				for e in u.enemies.values():
 					level.add_child(e)
 					connect_with_unit(e)

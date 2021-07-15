@@ -1,7 +1,6 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
-[ext_resource path="res://Stage/camera.gd" type="Script" id=2]
 [ext_resource path="res://Cursor/cursor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Stage/round_panel.gd" type="Script" id=4]
 [ext_resource path="res://Stage/Terrain/low.tres" type="Resource" id=5]
@@ -23,8 +22,6 @@
 [ext_resource path="res://Stage/Terrain/high.tres" type="Resource" id=21]
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=22]
 [ext_resource path="res://Stage/UI/enemy_info.tscn" type="PackedScene" id=23]
-[ext_resource path="res://Unit/Follower/facing.png" type="Texture" id=24]
-[ext_resource path="res://Stage/camera_mover.gd" type="Script" id=25]
 [ext_resource path="res://Stage/camera_controller.gd" type="Script" id=26]
 [ext_resource path="res://Stage/deployable_tiles_indicator.gd" type="Script" id=27]
 
@@ -59,8 +56,6 @@ terrain_types = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 21 ), ExtReso
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 640, 368 )
 current = true
-script = ExtResource( 2 )
-speed = 0.0
 
 [node name="Tween" type="Tween" parent="Camera2D"]
 
@@ -218,6 +213,7 @@ __meta__ = {
 position = Vector2( -90.6307, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
+frame = 6
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -712,48 +708,6 @@ text = "Enable Redo"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Camera Controls" type="Control" parent="UI"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -58.0
-margin_top = -54.0
-margin_right = 96.0
-margin_bottom = 120.0
-script = ExtResource( 25 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Right" type="Sprite" parent="UI/Camera Controls"]
-modulate = Color( 1, 1, 1, 0.584314 )
-position = Vector2( 64, 64 )
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 24 )
-
-[node name="Down" type="Sprite" parent="UI/Camera Controls"]
-modulate = Color( 1, 1, 1, 0.584314 )
-position = Vector2( 64, 64 )
-rotation = 1.5708
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 24 )
-
-[node name="Left" type="Sprite" parent="UI/Camera Controls"]
-modulate = Color( 1, 1, 1, 0.584314 )
-position = Vector2( 64, 64 )
-rotation = 3.14159
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 24 )
-
-[node name="Up" type="Sprite" parent="UI/Camera Controls"]
-modulate = Color( 1, 1, 1, 0.584314 )
-position = Vector2( 64, 64 )
-rotation = 4.71239
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 24 )
 
 [node name="CameraController" type="Node2D" parent="."]
 script = ExtResource( 26 )

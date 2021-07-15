@@ -219,3 +219,4 @@ func load_state(state):
 	.load_state(state)
 	facing = state["facing"]
 	cooldown = state["cooldown"]
+	waiting_for_facing = false

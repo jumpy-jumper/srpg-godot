@@ -5,7 +5,7 @@
 [ext_resource path="res://Unit/Follower/Nephenee/nephenee_portrait.png" type="Texture" id=3]
 [ext_resource path="res://Unit/Follower/Nephenee/neph_s1.tscn" type="PackedScene" id=4]
 
-[sub_resource type="StreamTexture" id=4]
+[sub_resource type="StreamTexture" id=1]
 load_path = "res://.import/cursor_default0.png-8adba084a8cf7015ba3f2250c4fff637.stex"
 
 [node name="Nephenee" instance=ExtResource( 2 )]
@@ -17,22 +17,15 @@ base_res = 20
 portrait = ExtResource( 3 )
 mugshot_top_left = Vector2( 290, 80 )
 base_cost = 7
-base_cooldown = 8
+base_cooldown = 4
 base_block_range = [ Vector2( 1, 0 ), Vector2( -1, 0 ) ]
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 0
-
-[node name="SP" parent="UI" index="1"]
-modulate = Color( 1, 1, 1, 1 )
+frame = 2
 
 [node name="Selected" parent="." index="3"]
-visible = false
-position = Vector2( 32, 32 )
-scale = Vector2( 5, 5 )
-texture = SubResource( 4 )
-script = null
+texture = SubResource( 1 )
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( -1, 0 ) ]

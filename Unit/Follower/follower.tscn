@@ -20,6 +20,10 @@ func _process(_delta):
 
 [node name="Follower" instance=ExtResource( 1 )]
 deployable_terrain = [ ExtResource( 3 ) ]
+base_cooldown = 16
+
+[node name="Sprite" parent="." index="0"]
+frame = 5
 
 [node name="Skill Range" parent="Ranges" index="0"]
 z_index = 0
@@ -60,10 +64,7 @@ rotation = 4.71239
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 5 )
 
-[node name="UI" parent="." index="3"]
-z_index = 0
-
-[node name="Selected" parent="." index="4"]
+[node name="Selected" parent="." index="3"]
 modulate = Color( 0.576471, 1, 0.968627, 1 )
 
 [node name="Basic Attack" type="Node" parent="Skills" index="0"]

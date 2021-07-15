@@ -19,7 +19,7 @@ var prev_pos = Vector2.ZERO
 
 
 export var autoload = false
-var level_to_load = preload("res://Levels/l_nils.tscn")
+var level_to_load = preload("res://Levels/l_east02.tscn")
 
 
 func _ready():

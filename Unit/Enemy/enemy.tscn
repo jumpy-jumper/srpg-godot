@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Unit/unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Skill/skill.tscn" type="PackedScene" id=2]
@@ -7,26 +7,7 @@
 [ext_resource path="res://Stage/Terrain/deployable_low.tres" type="Resource" id=5]
 [ext_resource path="res://Skill/basic_attack.gd" type="Script" id=6]
 [ext_resource path="res://Unit/Enemy/warning.png" type="Texture" id=7]
-[ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=8]
 [ext_resource path="res://Unit/Path/path_indicator.tscn" type="PackedScene" id=9]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Label
-
-
-onready var unit = $\"../..\"
-
-var disabled = false
-
-
-func _ready():
-	disabled = not visible
-
-
-func _process(_delta):
-	visible = unit.blocker == null and not disabled
-	text = str(unit.movement)
-"
 
 [node name="Enemy" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
@@ -46,27 +27,11 @@ offset = Vector2( 32, 32 )
 points = PoolVector2Array( 241.723, 20.4983 )
 default_color = Color( 1, 1, 1, 0.501961 )
 
-[node name="Sprite" parent="." index="2"]
-frame = 7
-
 [node name="Skill Range" parent="Ranges" index="0"]
 inactive_color = Color( 0.898039, 0.521569, 0.521569, 0.501961 )
 active_color = Color( 0.898039, 0.521569, 0.521569, 0.501961 )
 
-[node name="Movement" type="Label" parent="UI" index="2"]
-visible = false
-margin_left = -19.654
-margin_top = -39.6315
-margin_right = 50.346
-margin_bottom = -3.6315
-custom_fonts/font = ExtResource( 8 )
-text = "10"
-script = SubResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Selected" parent="." index="5"]
+[node name="Selected" parent="." index="4"]
 modulate = Color( 1, 0.382813, 0.382813, 1 )
 
 [node name="Basic Attack" parent="Skills" index="0" instance=ExtResource( 2 )]
