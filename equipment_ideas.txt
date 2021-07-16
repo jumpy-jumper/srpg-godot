@@ -1,0 +1,28 @@
+Weapons
+	[R] [Norne] When facing [left], if this unit would deal [0 damage], deal [magic damage] instead.
+		M1 left or up
+		M2 25% of ATK or less
+		M3 true damage
+	[U] [Norne] [While this unit's skill is inactive, ][Attack Count +3].
+		M1 
+		M2 Attack Count +7
+	[U] [Norne] [Crit rate +50%] and [crit damage +100%] to all allies within attack range
+		M1 crit rate +100%
+		M2 crit damage +200%
+	
+	
+Accesories
+	[R] Double the positive effects of this unit's statuses.
+	
+	[U] Transform the tile under this unit into a dream tile. Both grounded and ranged units may be summoned on dream tiles.
+	[U] This unit may not lose any of their initial range.
+	
+	[C]	Immediately gain 25% of skill cost as SP when summoned.
+	
+	[B] ATK +20%
+	[B] DEF +20%
+	[B] RES +10%
+	[B] Hit Rate +10%
+	[B] Dodge Rate +10%
+	[B] Crit Rate +15%
+	[B] Crit Damage +30%

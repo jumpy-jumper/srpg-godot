@@ -116,8 +116,14 @@ func can_update_facing():
 	return not is_waiting_for_ui() and is_alive()
 
 
-func can_undo_or_redo():
+func can_undo():
 	return not is_waiting_for_ui() \
+		and not $CameraController.operatable
+
+
+func can_redo_or_advance_round():
+	return not is_waiting_for_ui() \
+		and not is_waiting_for_facing() \
 		and not $CameraController.operatable
 
 
@@ -191,13 +197,9 @@ func _input(event):
 			else:
 				show_unit_ui(get_selected_summoner().followers[selected_follower_index])
 		
-	if can_undo_or_redo():
+	if can_undo():
 		if event.is_action_pressed("undo"):
 			undo()
-		elif event.is_action_pressed("redo"):
-			redo()
-		elif event.is_action_pressed("advance_round"):
-			advance_tick()
 		elif event.is_action_pressed("restart"):
 			if Game.undoable_restart:
 				load_state(states[0])
@@ -205,6 +207,11 @@ func _input(event):
 				$UI/Blackscreen.animate()
 			else:
 				get_tree().reload_current_scene()
+	if can_redo_or_advance_round():
+		if event.is_action_pressed("advance_round"):
+			advance_tick()
+		elif event.is_action_pressed("redo"):
+			redo()
 			
 	if event.is_action_pressed("debug_clear_pending_ui"):
 		pending_ui = 0
@@ -342,6 +349,7 @@ func get_graph(traversable):
 	return ret
 
 
+# Breadth-first search
 func get_path_to_target(start, end, traversable):
 	var points = get_graph(traversable)
 	

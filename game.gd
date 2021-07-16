@@ -47,7 +47,7 @@ func _process(_delta):
 
 ## Input Stuff
 
-export var rapid_fire_wait = 10
+export var rapid_fire_wait = 20
 export var rapid_fire_interval = 3
 export var rapid_fire_hold = 60
 

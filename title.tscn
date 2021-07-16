@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui_smaller.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Levels/l_east02.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
@@ -25,11 +24,23 @@ func _on_Button_pressed():
 	get_tree().change_scene(\"res://Stage/stage.tscn\")
 "
 
+[sub_resource type="GDScript" id=7]
+script/source = "extends Button
+
+
+var level = preload(\"res://Levels/l_east01.tscn\")
+
+
+func _on_Button2_pressed():
+	Game.level_to_load = level
+	get_tree().change_scene(\"res://Stage/stage.tscn\")
+"
+
 [sub_resource type="GDScript" id=3]
 script/source = "extends Button
 
 
-var level = preload(\"res://Levels/l_test1.tscn\")
+var level = preload(\"res://Levels/l_east02.tscn\")
 
 
 func _on_Button2_pressed():
@@ -41,7 +52,19 @@ func _on_Button2_pressed():
 script/source = "extends Button
 
 
-var level = preload(\"res://Levels/l_test2.tscn\")
+var level = preload(\"res://Levels/l_east03.tscn\")
+
+
+func _on_Button3_pressed():
+	Game.level_to_load = level
+	get_tree().change_scene(\"res://Stage/stage.tscn\")
+"
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Button
+
+
+var level = preload(\"res://Levels/l_east04.tscn\")
 
 
 func _on_Button3_pressed():
@@ -65,18 +88,6 @@ func animate():
 	$Tween.start()
 "
 
-[sub_resource type="GDScript" id=6]
-script/source = "extends Node
-
-
-export(PackedScene) var level = null
-
-func _ready():
-	if level:
-		Game.level_to_load = level
-		get_tree().change_scene(\"res://Stage/stage.tscn\")
-"
-
 [node name="Title" type="Node"]
 script = SubResource( 1 )
 
@@ -97,7 +108,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button2" type="Button" parent="."]
+[node name="Button1" type="Button" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -108,7 +119,24 @@ margin_right = -96.0
 margin_bottom = -232.0
 custom_fonts/font = ExtResource( 1 )
 button_mask = 3
-text = "Test Level 1"
+text = "East-01"
+script = SubResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -608.0
+margin_top = -199.0
+margin_right = -96.0
+margin_bottom = -103.0
+custom_fonts/font = ExtResource( 1 )
+button_mask = 3
+text = "East-02"
 script = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -120,13 +148,30 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -608.0
-margin_top = -200.0
+margin_top = -71.0
 margin_right = -96.0
-margin_bottom = -104.0
+margin_bottom = 25.0
 custom_fonts/font = ExtResource( 1 )
 button_mask = 3
-text = "Test Level 2"
+text = "East-03"
 script = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button4" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -608.0
+margin_top = 65.0
+margin_right = -96.0
+margin_bottom = 161.0
+custom_fonts/font = ExtResource( 1 )
+button_mask = 3
+text = "East-04"
+script = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -141,10 +186,10 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Panel"]
-margin_left = 32.0
-margin_top = 32.0
-margin_right = 608.0
-margin_bottom = 650.0
+margin_left = 28.0
+margin_top = 11.0
+margin_right = 604.0
+margin_bottom = 656.0
 custom_fonts/font = ExtResource( 2 )
 text = "Controls:
 
@@ -188,10 +233,8 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="Blackscreen"]
 
-[node name="Level Autoloader" type="Node" parent="."]
-script = SubResource( 6 )
-level = ExtResource( 3 )
-
 [connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
+[connection signal="pressed" from="Button1" to="Button1" method="_on_Button2_pressed"]
 [connection signal="pressed" from="Button2" to="Button2" method="_on_Button2_pressed"]
 [connection signal="pressed" from="Button3" to="Button3" method="_on_Button3_pressed"]
+[connection signal="pressed" from="Button4" to="Button4" method="_on_Button3_pressed"]

@@ -11,7 +11,7 @@ onready var base_description = description
 
 
 func _process(_delta):
-	description = base_description + " (Current: +" + str(round(bonus_atk*100)) + "%)" if bonus_atk > 0 else base_description
+	description = base_description + " (Current: +" + str(round(bonus_atk*100) + 70.0) + "%)" if bonus_atk > 0 else base_description
 
 
 func tick():

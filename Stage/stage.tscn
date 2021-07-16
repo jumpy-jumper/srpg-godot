@@ -1,6 +1,7 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
+[ext_resource path="res://Stage/camera.gd" type="Script" id=2]
 [ext_resource path="res://Cursor/cursor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Stage/round_panel.gd" type="Script" id=4]
 [ext_resource path="res://Stage/Terrain/low.tres" type="Resource" id=5]
@@ -56,6 +57,8 @@ terrain_types = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 21 ), ExtReso
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 640, 368 )
 current = true
+script = ExtResource( 2 )
+speed = 0.0
 
 [node name="Tween" type="Tween" parent="Camera2D"]
 
@@ -118,7 +121,6 @@ __meta__ = {
 }
 
 [node name="Follower Panels" type="Node2D" parent="UI"]
-visible = false
 position = Vector2( 32, 528 )
 scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 8 )
@@ -213,7 +215,7 @@ __meta__ = {
 position = Vector2( -90.6307, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 6
+frame = 1
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -719,8 +721,8 @@ script = ExtResource( 27 )
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
 [connection signal="exited" from="UI/Unit UI" to="." method="_on_Unit_UI_exited"]
-[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
+[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 1/Button" to="UI/Unit UI/Skill 1" method="_on_Button_pressed"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 2" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 2/Button" to="UI/Unit UI/Skill 2" method="_on_Button_pressed"]

@@ -60,7 +60,6 @@ func activate():
 func deactivate():
 	sp = 0
 	ticks_left = 0
-	remove_statuses()
 
 
 func initialize():

@@ -53,7 +53,7 @@ func update_pos(pos):
 	$Tween.stop_all()
 	$Tween.interpolate_property(self, "position", 
 	position, pos, speed,
-	Tween.TRANS_BACK, Tween.EASE_OUT)
+	Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	$Tween.start()
 
 

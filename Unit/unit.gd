@@ -80,7 +80,9 @@ func tick_skills():
 
 
 func _on_Stage_tick_ended():
-	pass
+	for skill in $Skills.get_children():
+		if not skill.is_active():
+			skill.remove_statuses()
 
 
 ###############################################################################
@@ -215,7 +217,7 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 
 func apply_healing(amount = 1):
 	amount *= get_stat("incoming_healing", 1)
-	hp += max(amount, 0)
+	hp = min(hp + max(amount, 0), get_stat("max_hp", base_max_hp))
 	damage_toasts.append(get_damage_toast(amount, colors[DamageType.HEALING]))
 
 
