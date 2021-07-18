@@ -1,16 +1,22 @@
 Weapons
-	[R] [Norne] When facing [left], if this unit would deal [0 damage], deal [magic damage] instead.
-		M1 left or up
-		M2 25% of ATK or less
-		M3 true damage
+	[R] [Norne] If this unit would deal [0 damage], deal [magic damage] instead.
+		M1 25% of ATK or less
+		M2 true damage
+	[R] [Dieck] This unit's skill's first activation lasts for [12] rounds. The second activation grants [twice] the bonuses.
+		M1 24
+		M2 three times
+	[R] [Lon'qu'] After receiving [damage equal to this unit's Max HP], this unit survives for [4] rounds before retreating.
+		M1 lethal damage
+		M2 8
+		
 	[U] [Norne] [While this unit's skill is inactive, ][Attack Count +3].
 		M1 
 		M2 Attack Count +7
 	[U] [Norne] [Crit rate +50%] and [crit damage +100%] to all allies within attack range
 		M1 crit rate +100%
 		M2 crit damage +200%
-	
-	
+		
+		
 Accesories
 	[R] Double the positive effects of this unit's statuses.
 	

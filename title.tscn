@@ -12,16 +12,20 @@ func _ready():
 	
 "
 
-[sub_resource type="GDScript" id=2]
-script/source = "extends Button
+[sub_resource type="GDScript" id=5]
+script/source = "extends Panel
 
+export var fade_in_duration = 1.0
 
-var level = preload(\"res://Levels/l_training.tscn\")
+func _ready():
+	visible = true
+	animate()
 
-
-func _on_Button_pressed():
-	Game.level_to_load = level
-	get_tree().change_scene(\"res://Stage/stage.tscn\")
+func animate():
+	$Tween.interpolate_property(self, \"modulate:a\",
+		1, 0, fade_in_duration,
+		Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	$Tween.start()
 "
 
 [sub_resource type="GDScript" id=7]
@@ -72,109 +76,20 @@ func _on_Button3_pressed():
 	get_tree().change_scene(\"res://Stage/stage.tscn\")
 "
 
-[sub_resource type="GDScript" id=5]
-script/source = "extends Panel
+[sub_resource type="GDScript" id=2]
+script/source = "extends Button
 
-export var fade_in_duration = 1.0
 
-func _ready():
-	visible = true
-	animate()
+var level = preload(\"res://Levels/l_training.tscn\")
 
-func animate():
-	$Tween.interpolate_property(self, \"modulate:a\",
-		1, 0, fade_in_duration,
-		Tween.TRANS_LINEAR, Tween.EASE_OUT)
-	$Tween.start()
+
+func _on_Button_pressed():
+	Game.level_to_load = level
+	get_tree().change_scene(\"res://Stage/stage.tscn\")
 "
 
 [node name="Title" type="Node"]
 script = SubResource( 1 )
-
-[node name="Button" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -608.0
-margin_top = 248.0
-margin_right = -96.0
-margin_bottom = 344.0
-custom_fonts/font = ExtResource( 1 )
-button_mask = 3
-text = "Free Play Room"
-script = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button1" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -608.0
-margin_top = -328.0
-margin_right = -96.0
-margin_bottom = -232.0
-custom_fonts/font = ExtResource( 1 )
-button_mask = 3
-text = "East-01"
-script = SubResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button2" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -608.0
-margin_top = -199.0
-margin_right = -96.0
-margin_bottom = -103.0
-custom_fonts/font = ExtResource( 1 )
-button_mask = 3
-text = "East-02"
-script = SubResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button3" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -608.0
-margin_top = -71.0
-margin_right = -96.0
-margin_bottom = 25.0
-custom_fonts/font = ExtResource( 1 )
-button_mask = 3
-text = "East-03"
-script = SubResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button4" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -608.0
-margin_top = 65.0
-margin_right = -96.0
-margin_bottom = 161.0
-custom_fonts/font = ExtResource( 1 )
-button_mask = 3
-text = "East-04"
-script = SubResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Panel" type="Panel" parent="."]
 margin_left = 608.0
@@ -233,8 +148,93 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="Blackscreen"]
 
-[connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
-[connection signal="pressed" from="Button1" to="Button1" method="_on_Button2_pressed"]
-[connection signal="pressed" from="Button2" to="Button2" method="_on_Button2_pressed"]
-[connection signal="pressed" from="Button3" to="Button3" method="_on_Button3_pressed"]
-[connection signal="pressed" from="Button4" to="Button4" method="_on_Button3_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 256.0
+margin_bottom = 258.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button1" type="Button" parent="VBoxContainer"]
+margin_right = 224.0
+margin_bottom = 42.0
+focus_neighbour_top = NodePath("../Button4")
+focus_neighbour_bottom = NodePath("../Button2")
+custom_fonts/font = ExtResource( 1 )
+button_mask = 3
+text = "East-01"
+script = SubResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+margin_top = 46.0
+margin_right = 224.0
+margin_bottom = 88.0
+focus_neighbour_top = NodePath("../Button1")
+focus_neighbour_bottom = NodePath("../Button3")
+custom_fonts/font = ExtResource( 1 )
+button_mask = 3
+text = "East-02"
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="VBoxContainer"]
+margin_top = 92.0
+margin_right = 224.0
+margin_bottom = 134.0
+focus_neighbour_top = NodePath("../Button2")
+focus_neighbour_bottom = NodePath("../Button4")
+custom_fonts/font = ExtResource( 1 )
+button_mask = 3
+text = "East-03"
+script = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button4" type="Button" parent="VBoxContainer"]
+margin_top = 138.0
+margin_right = 224.0
+margin_bottom = 180.0
+focus_neighbour_top = NodePath("../Button3")
+focus_neighbour_bottom = NodePath("../Button1")
+custom_fonts/font = ExtResource( 1 )
+button_mask = 3
+text = "East-04"
+script = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FreePlay" type="Button" parent="VBoxContainer"]
+margin_top = 184.0
+margin_right = 224.0
+margin_bottom = 226.0
+custom_fonts/font = ExtResource( 1 )
+button_mask = 3
+text = "Free Play"
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+margin_left = 320.0
+margin_top = 32.0
+margin_right = 561.0
+margin_bottom = 704.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="VBoxContainer/Button1" to="VBoxContainer/Button1" method="_on_Button2_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="VBoxContainer/Button2" method="_on_Button2_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button3" to="VBoxContainer/Button3" method="_on_Button3_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button4" to="VBoxContainer/Button4" method="_on_Button3_pressed"]
+[connection signal="pressed" from="VBoxContainer/FreePlay" to="VBoxContainer/FreePlay" method="_on_Button_pressed"]

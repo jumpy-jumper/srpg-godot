@@ -196,7 +196,6 @@ margin_bottom = -69.5
 focus_mode = 0
 
 [node name="Summoner UI" type="Node2D" parent="UI"]
-visible = false
 position = Vector2( 1152, 16 )
 scale = Vector2( 0.706163, 0.695323 )
 script = ExtResource( 12 )
@@ -721,8 +720,8 @@ script = ExtResource( 27 )
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
 [connection signal="exited" from="UI/Unit UI" to="." method="_on_Unit_UI_exited"]
-[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
+[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 1/Button" to="UI/Unit UI/Skill 1" method="_on_Button_pressed"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 2" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 2/Button" to="UI/Unit UI/Skill 2" method="_on_Button_pressed"]

@@ -57,6 +57,9 @@ func _process(_delta):
 	if position != prev_pos:
 		initialize_path()
 	prev_pos = position
+	
+	if OS.is_debug_build():
+		initialize_path()
 
 
 func initialize_path():

@@ -52,6 +52,13 @@ func activate():
 			possible_targets += unit.get_units_in_range_of_type(skill_range, unit.get_type_of_self())
 			for target in select_targets(possible_targets):
 				target.apply_healing(unit.get_stat("atk", unit.base_atk))
+				
+				var toast = targeting_toast.instance()
+				toast.attacker = unit
+				toast.attackee = target
+				toast.gradient = toast.gradient.duplicate()
+				toast.gradient.set_color(1, unit.colors[damage_type])
+				unit.targeting_toasts.append(toast)
 
 
 ###############################################################################

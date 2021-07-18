@@ -82,14 +82,14 @@ func update_unit(unit):
 	var other_stats = ""
 	
 	if unit.get_type_of_self() == unit.UnitType.FOLLOWER or unit.get_type_of_self() == unit.UnitType.ENEMY:
-		var base_damage_type = unit.get_node("Skills").get_children()[0].damage_type
+		var base_damage_type = unit.get_basic_attack().damage_type
 		var damage_type = unit.get_stat("damage_type", base_damage_type)
 		other_stats += "Damage: " + unit.DamageType.keys()[damage_type]
 
 
 	if unit.get_type_of_self() == unit.UnitType.FOLLOWER \
 		or unit.get_type_of_self() == unit.UnitType.ENEMY:
-			var base_target_count = unit.get_node("Skills").get_children()[0].base_target_count
+			var base_target_count = unit.get_basic_attack().base_target_count
 			var target_count = unit.get_stat("target_count", base_target_count)
 			if target_count > 129873:
 				other_stats += "\nTarget Count: ∞"
@@ -99,8 +99,8 @@ func update_unit(unit):
 					other_stats += " (" + "+" if base_target_count < target_count else " (-"
 					other_stats += str(abs(base_target_count - target_count)) + ")"
 		
-			var base_attack_count = unit.get_node("Skills").get_children()[0].base_attack_count
-			var attack_count = unit.get_stat("attack_count", unit.get_node("Skills").get_children()[0].base_attack_count)
+			var base_attack_count = unit.get_basic_attack().base_attack_count
+			var attack_count = unit.get_stat("attack_count", unit.get_basic_attack().base_attack_count)
 			if attack_count > 129873:
 				other_stats += "\nAttack Count: ∞"
 			else:

@@ -5,7 +5,6 @@ Implementation
 		Zooming camera anchors to the clicked position and not the middle
 		Keyboard rapid fire on undo and advance turn
 		Settings menu
-		Debug flag to gates recalculating paths every frame
 		Summoner win skill
 		Clicking on units inside gates displays their contents
 		Gate unit preview displays their skills
@@ -18,6 +17,7 @@ Implementation
 		Should skills deactivate after everything has acted?
 		Resolve ties in ally targeting / enemy action
 	QoL
+		SP Manual activations indicator when ready
 		Default camera position and zoom
 		Hovering cursor away from terrain should update cursor, have keyboard jump to nearest available
 		Q/E during unit UI moves to the next follower
@@ -32,16 +32,29 @@ Implementation
 		Skill descriptions - use parameters instead of hard values and have a get_description() function
 		Implement predictive round logic
 		Implement delta state saving
+	Tutorials
+		You can face your units
+		Your units can block enemy spawns
+		Block range vs attack range
 
 Testing observations:
-	Advancing turn without confirming facing lets you change facing after placing unit
 	Introduce the attack priority of player units somehow
 	East-02
 		Easier wave of eyes before the hard wave?
 		Make it so you can win even if you activate Natasha's skill early?
 		Unclear when Dieck activates his skill, do not understand why he survives
+		Managed to clear without consciously baiting out attacks with Natasha
 	East-03
 		Remove the tiles two columns left of summoner? It allows Fredrick to be deployed later
 		Spawn more zombies towards the end to make it so you can't clear with Fredrick?
 	East-04
 		
+	Don't know when a skill is activated
+	Turn count information
+	Fast forward option for advancing turn
+	Consider making it so enemies can only bank +1 movement
+	
+	Consider letting the player play these maps non-linearly
+	
+	Consider having the enemies' pathing stays even after the gate dies
+	

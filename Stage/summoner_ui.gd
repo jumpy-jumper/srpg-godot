@@ -10,3 +10,4 @@ func _process(_delta):
 	if (unit.get_node("Sprite").frames != $AnimatedSprite.frames):
 		$AnimatedSprite.frames = unit.get_node("Sprite").frames
 	$Faith.text = str(unit.faith)
+	$Faith.text += " | Round " + str(stage.cur_tick)

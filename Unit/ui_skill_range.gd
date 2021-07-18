@@ -13,7 +13,7 @@ func _process(_delta):
 			if skill.is_active():
 				skill_active = true
 				break
-		var basic_attack = unit.get_node("Skills").get_children()[0]
+		var basic_attack = unit.get_basic_attack()
 		var color = active_color if skill_active else inactive_color
 		if unit.marked:
 			color = marked_color
