@@ -50,6 +50,9 @@ func activate():
 		elif skill_type == SkillType.HEAL: 
 			var possible_targets = []
 			possible_targets += unit.get_units_in_range_of_type(skill_range, unit.get_type_of_self())
+			for target in possible_targets + []:
+				if target.is_full_hp():
+					possible_targets.erase(target)
 			for target in select_targets(possible_targets):
 				target.apply_healing(unit.get_stat("atk", unit.base_atk))
 				

@@ -13,11 +13,6 @@ func get_type_of_enemy():
 	return UnitType.FOLLOWER
 
 
-func _ready():
-	var movement_array = get_stat("movement", base_movement)
-	movement = movement_array[0]
-
-
 func _process(_delta):
 	$"Sprite/UI".visible = alive
 	if not $DeathTweener.is_active():
@@ -98,7 +93,12 @@ func move():
 			leftover_movement = movement - i
 
 	var movement_array = get_stat("movement", base_movement)
-	movement = leftover_movement + movement_array[(stage.cur_tick) % len(movement_array)]
+	var this_tick_movement = movement_array[(stage.cur_tick) % len(movement_array)]
+	
+	if movement >= this_tick_movement:
+		movement = leftover_movement + min(this_tick_movement, 1)
+	else:
+		movement = leftover_movement + this_tick_movement
 	
 	var oldpos = position
 	position = newpos

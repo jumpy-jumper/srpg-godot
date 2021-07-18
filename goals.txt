@@ -4,20 +4,33 @@ Implementation
 	Urgent
 		Zooming camera anchors to the clicked position and not the middle
 		Keyboard rapid fire on undo and advance turn
-		Settings menu
-		Summoner win skill
 		Clicking on units inside gates displays their contents
-		Gate unit preview displays their skills
+		Rapid fire on advance turn / undo (+ fix rapid fire implementation)	
+		Consider making it so enemies can only bank +1 movement
+		Having the enemies' pathing stays even after the gate dies
+		SP Manual activation indicator when ready
+		Summoner win skill
+		Tutorial bubbles
+			You can face your units
+			How to win the game
+			Your units can block enemy spawns
+			Enemy banked movement
+			Block range vs attack range
+			Right click / shift on units to bring up information
+			Player unit targeting priority
+			Enemy targeting priority
+			Turn order
+		Settings menu
+			All the static variables in the game class, + resolution options
 	Bugs
 		Unit UI shows up even if camera was fiddled with but zoom didn't change
 		Follower doesn't preview if you restart after dying
 		Enemy tweener can break with fast undo/advance
 		Cursor rapid fire on keyboard doesn't work at high FPS
 	Game Logic
-		Should skills deactivate after everything has acted?
 		Resolve ties in ally targeting / enemy action
 	QoL
-		SP Manual activations indicator when ready
+		Gate unit preview displays their skills
 		Default camera position and zoom
 		Hovering cursor away from terrain should update cursor, have keyboard jump to nearest available
 		Q/E during unit UI moves to the next follower
@@ -32,10 +45,7 @@ Implementation
 		Skill descriptions - use parameters instead of hard values and have a get_description() function
 		Implement predictive round logic
 		Implement delta state saving
-	Tutorials
-		You can face your units
-		Your units can block enemy spawns
-		Block range vs attack range
+
 
 Testing observations:
 	Introduce the attack priority of player units somehow
@@ -50,11 +60,6 @@ Testing observations:
 	East-04
 		
 	Don't know when a skill is activated
-	Turn count information
-	Fast forward option for advancing turn
-	Consider making it so enemies can only bank +1 movement
 	
-	Consider letting the player play these maps non-linearly
 	
-	Consider having the enemies' pathing stays even after the gate dies
 	

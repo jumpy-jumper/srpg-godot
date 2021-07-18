@@ -165,6 +165,10 @@ func get_stat(stat_name, base_value):
 	return get_stat_after_statuses(stat_name, get_stat_after_level(stat_name, base_value))
 
 
+func is_full_hp():
+	return hp >= get_stat("max_hp", base_max_hp)
+
+
 ###############################################################################
 #        Combat logic                                                         #
 ###############################################################################

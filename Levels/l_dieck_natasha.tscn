@@ -45,30 +45,24 @@ spawn_info = "7 12 15 18 24 27 31 36"
 
 [node name="Hound" parent="Rushdown" instance=ExtResource( 6 )]
 position = Vector2( 64, 0 )
-base_atk = 50
 
 [node name="Hound3" parent="Rushdown" instance=ExtResource( 6 )]
 position = Vector2( 64, 0 )
-base_atk = 50
 
 [node name="Centaur" parent="Rushdown" instance=ExtResource( 8 )]
 position = Vector2( 64, 0 )
 
 [node name="Hound5" parent="Rushdown" instance=ExtResource( 6 )]
 position = Vector2( 64, 0 )
-base_atk = 50
 
 [node name="Hound6" parent="Rushdown" instance=ExtResource( 6 )]
 position = Vector2( 64, 0 )
-base_atk = 50
 
 [node name="Hound7" parent="Rushdown" instance=ExtResource( 6 )]
 position = Vector2( 64, 0 )
-base_atk = 50
 
 [node name="Hound8" parent="Rushdown" instance=ExtResource( 6 )]
 position = Vector2( 64, 0 )
-base_atk = 50
 
 [node name="Centaur2" parent="Rushdown" instance=ExtResource( 8 )]
 position = Vector2( 64, 0 )
