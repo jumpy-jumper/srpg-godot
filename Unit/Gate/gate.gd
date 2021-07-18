@@ -12,7 +12,7 @@ func get_type_of_self():
 	return UnitType.GATE
 
 
-func _ready():		
+func _ready():
 	# Parse the spawn ticks	
 	var regex = RegEx.new()
 	regex.compile("[0-9]+") # splits by numbers
@@ -36,12 +36,11 @@ func _ready():
 var prev_pos = Vector2.ZERO
 
 func _process(_delta):
-	$"Sprite/UI".visible = alive
 	if not $DeathTweener.is_active():
-		modulate.a = 1.0 if alive else 0
+		$Sprite.modulate.a = 1.0 if alive else 0
 	elif alive:
 		$DeathTweener.stop_all()
-		modulate.a = 1.0
+		$Sprite.modulate.a = 1.0
 	
 	if Input.is_action_just_pressed("show_gate_paths"):
 		marked = not marked
@@ -54,12 +53,32 @@ func _process(_delta):
 	else:
 		$"Path Indicator".visible = marked
 	
+	if $"Path Indicator".visible and not alive:
+		$"Path Indicator".visible = false
+		for enemy in enemies.values():
+			if enemy.alive:
+				$"Path Indicator".visible = true
+	
 	if position != prev_pos:
 		initialize_path()
 	prev_pos = position
 	
 	if OS.is_debug_build():
 		initialize_path()
+
+
+func die():
+	emit_signal("dead", self)
+	alive = false
+	heal_to_full()
+	for skill in $Skills.get_children():
+		skill.initialize()
+	shield = 0
+	
+	$DeathTweener.interpolate_property($Sprite, "modulate:a",
+	0.75, 0, DEATH_TWEEN_DURATION,
+	Tween.TRANS_LINEAR, Tween.EASE_IN)
+	$DeathTweener.start()
 
 
 func initialize_path():
@@ -71,7 +90,7 @@ func initialize_path():
 	
 
 func spawn_enemy():
-	$Blocked.visible = false
+	$Sprite/Blocked.visible = false
 
 	if enemies.has(stage.cur_tick):
 		var enemy = enemies[stage.cur_tick]
@@ -87,7 +106,7 @@ func spawn_enemy():
 				stage.summoned_order.erase(enemy)
 			stage.summoned_order.push_back(enemy)
 		else:
-			$Blocked.visible = true
+			$Sprite/Blocked.visible = true
 		
 		# Die if there are no more enemies to spawn
 		for tick in enemies.keys():
@@ -125,12 +144,12 @@ func on_Terrain_settings_changed():
 
 func get_state():
 	var ret = .get_state()
-	ret["blocked"] = get_node("Blocked").visible
+	ret["blocked"] = get_node("Sprite/Blocked").visible
 	ret["path"] = path + []
 	return ret
 
 
 func load_state(state):
 	.load_state(state)
-	get_node("Blocked").visible = state["blocked"]
+	get_node("Sprite/Blocked").visible = state["blocked"]
 	path = state["path"]

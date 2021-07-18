@@ -4,9 +4,7 @@ Implementation
 	Urgent
 		Zooming camera anchors to the clicked position and not the middle
 		Keyboard rapid fire on undo and advance turn
-		Clicking on units inside gates displays their contents
 		Rapid fire on advance turn / undo (+ fix rapid fire implementation)	
-		Consider making it so enemies can only bank +1 movement
 		Having the enemies' pathing stays even after the gate dies
 		SP Manual activation indicator when ready
 		Summoner win skill
@@ -30,6 +28,7 @@ Implementation
 	Game Logic
 		Resolve ties in ally targeting / enemy action
 	QoL
+		Clicking on units inside gates displays their contents
 		Gate unit preview displays their skills
 		Default camera position and zoom
 		Hovering cursor away from terrain should update cursor, have keyboard jump to nearest available

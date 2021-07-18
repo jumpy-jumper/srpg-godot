@@ -26,6 +26,14 @@ func get_type_of_enemy():
 
 func _process(_delta):
 	$"Sprite/UI".visible = alive
+	
+	var activatable_skill = null
+	for skill in $Skills.get_children():
+		if skill.activation == skill.Activation.SP_MANUAL:
+			activatable_skill = skill
+			break
+	$Sprite/Ready.visible = activatable_skill.is_available() if activatable_skill else false
+	
 	if not $DeathTweener.is_active():
 		modulate.a = 0.5 if previewing else (1.0 if alive else 0)
 	elif alive:
