@@ -73,6 +73,10 @@ func _process(_delta):
 		or Input.is_action_just_released("drag_camera") \
 		and operatable:
 			operatable = false
+	
+	if Input.is_action_just_pressed("debug_get_camera_position_and_zoom"):
+		print(position + offset)
+		print(zoom)
 
 
 

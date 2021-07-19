@@ -6,7 +6,6 @@ Content
 	East-08: Lyon
 Implementation
 	Urgent
-		Default camera position and zoom
 		Rearrange stage UI and UI waiting state
 		Rearrange Unit UI
 		Skills that activate on the next basic attack

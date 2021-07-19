@@ -62,7 +62,7 @@ speed = 0.0
 [node name="Tween" type="Tween" parent="Camera2D"]
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
-position = Vector2( 640, 370.4 )
+position = Vector2( 256, 256 )
 z_index = 1
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -225,7 +225,7 @@ __meta__ = {
 position = Vector2( -113.288, 4.31454 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
-frame = 3
+frame = 2
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]

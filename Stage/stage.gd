@@ -58,7 +58,9 @@ func _ready():
 				independent_followers_cache.append(u)
 				summoned_order.append(u)
 
-	$Cursor.stage = self
+	cursor.stage = self
+	camera.position = level.default_camera_position
+	camera.zoom = level.default_camera_zoom
 	
 	append_state()
 

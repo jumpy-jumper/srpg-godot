@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Unit/Follower/Dieck/dieck.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Unit/Follower/Natasha/natasha.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=4]
 [ext_resource path="res://Unit/Gate/gate.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Unit/Enemy/Hound/e_hound.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Levels/tilemap.tres" type="TileSet" id=7]
@@ -32,11 +31,9 @@ faith = 32
 
 [node name="Natasha" parent="The East Wind" instance=ExtResource( 3 )]
 position = Vector2( -128, 0.0837708 )
-script = ExtResource( 4 )
 
 [node name="Dieck" parent="The East Wind" instance=ExtResource( 2 )]
 position = Vector2( -64, 0 )
-script = ExtResource( 4 )
 
 [node name="Rushdown" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1024, 320 )

@@ -22,6 +22,8 @@ __meta__ = {
 # Teach the player to place units back when needed
 # Teach the player enemy targeting, as Dieck dies to the eyes if Natasha isn't tanking them"
 }
+default_camera_position = Vector2( 680, 358 )
+default_camera_zoom = Vector2( 1.15, 1.15 )
 
 [node name="BG" type="CanvasLayer" parent="."]
 layer = -1

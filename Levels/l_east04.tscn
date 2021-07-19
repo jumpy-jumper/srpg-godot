@@ -21,6 +21,8 @@ script = ExtResource( 9 )
 __meta__ = {
 "_editor_description_": ""
 }
+default_camera_position = Vector2( 790, 320 )
+default_camera_zoom = Vector2( 1.15, 1.15 )
 
 [node name="BG" type="CanvasLayer" parent="."]
 layer = -1

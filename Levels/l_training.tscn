@@ -80,6 +80,8 @@
 "Level",
 ]]
 script = ExtResource( 2 )
+default_camera_position = Vector2( 794, 407 )
+default_camera_zoom = Vector2( 1.322, 1.322 )
 
 [node name="BG" type="CanvasLayer" parent="."]
 layer = -1
