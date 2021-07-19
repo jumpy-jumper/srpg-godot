@@ -19,6 +19,7 @@ Weapons
 		
 Accesories
 	[R] Double the positive effects of this unit's statuses.
+	[R] This unit's Resummon Cooldown becomes 0.
 	
 	[U] Transform the tile under this unit into a dream tile. Both grounded and ranged units may be summoned on dream tiles.
 	[U] This unit may not lose any of their initial range.

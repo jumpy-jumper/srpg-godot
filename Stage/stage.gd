@@ -395,6 +395,7 @@ func advance_tick():
 		if unit is Enemy:
 			enemies.append(unit)
 	
+	
 	for u in followers:
 		if u.alive:
 			u.block_enemies()

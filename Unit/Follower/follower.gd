@@ -78,8 +78,9 @@ func deploy_self(pos):
 		summoner.faith -= get_stat("cost", base_cost)
 		for skill in get_node("Skills").get_children():
 			skill.initialize()
-			if skill.activation == skill.Activation.DEPLOYMENT:
-				skill.activate()
+			if skill.activation == skill.Activation.DEPLOYMENT \
+				or skill.activation == skill.Activation.SP_AUTO and skill.is_available():
+					skill.activate()
 		display_toasts()
 		facing = Facing.RIGHT
 		waiting_for_facing = true

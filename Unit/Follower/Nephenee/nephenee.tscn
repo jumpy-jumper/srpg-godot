@@ -1,20 +1,20 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Unit/Follower/Nephenee/nephenee.tres" type="SpriteFrames" id=1]
-[ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Unit/Follower/Nephenee/nephenee_portrait.png" type="Texture" id=3]
-[ext_resource path="res://Unit/Follower/Nephenee/neph_s1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Unit/Follower/Nephenee/nephenee_portrait.png" type="Texture" id=2]
+[ext_resource path="res://Unit/Follower/Nephenee/neph_s1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=4]
 
 [sub_resource type="StreamTexture" id=1]
 load_path = "res://.import/cursor_default0.png-8adba084a8cf7015ba3f2250c4fff637.stex"
 
-[node name="Nephenee" instance=ExtResource( 2 )]
+[node name="Nephenee" instance=ExtResource( 4 )]
 unit_name = "Nephenee"
 base_max_hp = 210
 base_atk = 65
 base_def = 35
 base_res = 20
-portrait = ExtResource( 3 )
+portrait = ExtResource( 2 )
 mugshot_top_left = Vector2( 290, 80 )
 base_cost = 7
 base_cooldown = 4
@@ -30,4 +30,4 @@ texture = SubResource( 1 )
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( -1, 0 ) ]
 
-[node name="Warden" parent="Skills" index="1" instance=ExtResource( 4 )]
+[node name="Warden" parent="Skills" index="1" instance=ExtResource( 3 )]

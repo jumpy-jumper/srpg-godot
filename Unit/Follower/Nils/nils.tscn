@@ -1,17 +1,17 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Unit/Follower/Nils/nils.tres" type="SpriteFrames" id=1]
-[ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Follower/Nils/nils_portrait.png" type="Texture" id=2]
 [ext_resource path="res://Unit/Follower/Nils/nils_s1.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Unit/Follower/Nils/nils_portrait.png" type="Texture" id=4]
+[ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=4]
 
-[node name="Nils" instance=ExtResource( 2 )]
+[node name="Nils" instance=ExtResource( 4 )]
 unit_name = "Nils"
 base_max_hp = 125
 base_atk = 45
 base_def = 30
 base_res = 30
-portrait = ExtResource( 4 )
+portrait = ExtResource( 2 )
 mugshot_top_left = Vector2( 305, 90 )
 base_cost = 6
 base_block_range = [ Vector2( -1, 0 ) ]

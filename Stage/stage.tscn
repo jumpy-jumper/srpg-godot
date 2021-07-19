@@ -195,6 +195,18 @@ margin_right = 1399.25
 margin_bottom = -69.5
 focus_mode = 0
 
+[node name="11" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 1271.25
+margin_top = -70.0001
+margin_right = 1399.25
+margin_bottom = 57.9999
+
+[node name="12" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 1271.25
+margin_top = 58.7499
+margin_right = 1399.25
+margin_bottom = 186.75
+
 [node name="Summoner UI" type="Node2D" parent="UI"]
 position = Vector2( 1152, 16 )
 scale = Vector2( 0.706163, 0.695323 )
@@ -214,7 +226,7 @@ __meta__ = {
 position = Vector2( -90.6307, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 1
+frame = 5
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -720,8 +732,8 @@ script = ExtResource( 27 )
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
 [connection signal="exited" from="UI/Unit UI" to="." method="_on_Unit_UI_exited"]
-[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
+[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 1/Button" to="UI/Unit UI/Skill 1" method="_on_Button_pressed"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 2" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 2/Button" to="UI/Unit UI/Skill 2" method="_on_Button_pressed"]

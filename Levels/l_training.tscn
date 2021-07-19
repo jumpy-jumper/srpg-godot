@@ -1,18 +1,22 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/level.gd" type="Script" id=2]
-[ext_resource path="res://Unit/Follower/Frederick/f_frederick.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Unit/Follower/Nils/f_nils.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Unit/Follower/Frederick/frederick.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Unit/Follower/Nils/nils.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=5]
-[ext_resource path="res://Unit/Follower/Natasha/f_natasha.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Unit/Follower/Lon'qu/f_lon'qu.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Unit/Follower/Norne/f_norne.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Unit/Follower/Lysithea/f_lysithea.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Unit/Follower/Dieck/f_dieck.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Unit/Follower/Nephenee/f_nephenee.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Unit/Follower/Natasha/natasha.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Unit/Follower/Lon'qu/lon'qu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Unit/Follower/Norne/norne.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Unit/Follower/Lysithea/lysithea.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Unit/Follower/Dieck/dieck.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Unit/Follower/Nephenee/nephenee.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Unit/Enemy/Dummy/e_dummy.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Levels/blue_level.jpg" type="Texture" id=13]
+[ext_resource path="res://Unit/Follower/Ninian/ninian.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Unit/Follower/Lyon/lyon.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Unit/Follower/Niles/niles.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Unit/Follower/Eldigan/eldigan.tscn" type="PackedScene" id=17]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap.png 0"
@@ -100,15 +104,23 @@ faith = 200
 
 [node name="Nephenee" parent="The East Wind" instance=ExtResource( 11 )]
 
-[node name="Tanya" parent="The East Wind" instance=ExtResource( 8 )]
+[node name="Ninian" parent="The East Wind" instance=ExtResource( 14 )]
+
+[node name="Norne" parent="The East Wind" instance=ExtResource( 8 )]
 
 [node name="Lysithea" parent="The East Wind" instance=ExtResource( 9 )]
 
 [node name="Lon\'qu" parent="The East Wind" instance=ExtResource( 7 )]
 
+[node name="Niles" parent="The East Wind" instance=ExtResource( 16 )]
+
 [node name="Natasha" parent="The East Wind" instance=ExtResource( 6 )]
 
 [node name="Dieck" parent="The East Wind" instance=ExtResource( 10 )]
+
+[node name="Lyon" parent="The East Wind" instance=ExtResource( 15 )]
+
+[node name="Eldigan" parent="The East Wind" instance=ExtResource( 17 )]
 
 [node name="Frederick" parent="The East Wind" instance=ExtResource( 3 )]
 

@@ -30,18 +30,28 @@ func _process(_delta):
 		and operatable:
 			operatable = false
 
-
+const ZOOM_POSITION_CORRECTION = 0.15
 func _input(event):
 	if operatable:
 		if event.is_action_pressed("zoom_in"):
 			tween.interpolate_property(camera, "zoom",
 			camera.zoom, camera.zoom * Game.zoom_sensitivity, 0.0625,
 			Tween.TRANS_LINEAR, Tween.EASE_IN)
+			
+			tween.interpolate_property(camera, "offset",
+			camera.offset, camera.offset - (get_global_mouse_position() - (camera.position + camera.offset)) * ZOOM_POSITION_CORRECTION, 0.0625,
+			Tween.TRANS_LINEAR, Tween.EASE_IN)
+			
 			tween.start()
 		elif event.is_action_pressed("zoom_out"):
 			tween.interpolate_property(camera, "zoom",
 			camera.zoom, camera.zoom / Game.zoom_sensitivity, 0.0625,
 			Tween.TRANS_LINEAR, Tween.EASE_IN)
+			
+			tween.interpolate_property(camera, "offset",
+			camera.offset, camera.offset + (get_global_mouse_position() - (camera.position + camera.offset)) * ZOOM_POSITION_CORRECTION, 0.0625,
+			Tween.TRANS_LINEAR, Tween.EASE_IN)
+			
 			tween.start()
 		elif event.is_action_pressed("zoom_reset"):
 			tween.interpolate_property(camera, "zoom",

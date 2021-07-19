@@ -1,25 +1,20 @@
 Content
 	World map
+	East-05: Eldigan
+	East-06: Ninian
+	East-07: Niles
+	East-08: Lyon
 Implementation
 	Urgent
 		Zooming camera anchors to the clicked position and not the middle
-		Keyboard rapid fire on undo and advance turn
-		Rapid fire on advance turn / undo (+ fix rapid fire implementation)	
-		Having the enemies' pathing stays even after the gate dies
-		SP Manual activation indicator when ready
+		Rearrange stage UI and UI waiting state
+		Rearrange Unit UI
+		Skills that activate on the next basic attack
 		Summoner win skill
-		Tutorial bubbles
-			You can face your units
-			How to win the game
-			Your units can block enemy spawns
-			Enemy banked movement
-			Block range vs attack range
-			Right click / shift on units to bring up information
-			Player unit targeting priority
-			Enemy targeting priority
-			Turn order
 		Settings menu
 			All the static variables in the game class, + resolution options
+		Rapid fire on advance turn / undo (+ fix rapid fire implementation)	
+		"Slow" game speed, with an option to change it to fast
 	Bugs
 		Unit UI shows up even if camera was fiddled with but zoom didn't change
 		Follower doesn't preview if you restart after dying
@@ -28,6 +23,7 @@ Implementation
 	Game Logic
 		Resolve ties in ally targeting / enemy action
 	QoL
+		Reimplement unit UI
 		Clicking on units inside gates displays their contents
 		Gate unit preview displays their skills
 		Default camera position and zoom
@@ -43,7 +39,19 @@ Implementation
 		Consolidate healing and attacking code
 		Skill descriptions - use parameters instead of hard values and have a get_description() function
 		Implement predictive round logic
-		Implement delta state saving
+		Implement delta state saving		
+	Tutorial bubbles
+		Select unit to be summoned
+		You can face your units
+		Camera movement
+		How to win the game
+		Your units can block enemy spawns
+		Enemy banked movement
+		Block range vs attack range
+		Right click / shift on units to bring up information
+		Player unit targeting priority
+		Enemy targeting priority
+		Turn order
 
 
 Testing observations:

@@ -24,10 +24,11 @@ deployable_terrain = [ ExtResource( 3 ) ]
 base_cooldown = 16
 
 [node name="Sprite" parent="." index="0"]
-frame = 6
+frame = 3
 
 [node name="Ready" type="Sprite" parent="Sprite" index="1"]
-position = Vector2( 8, 11 )
+visible = false
+position = Vector2( 8, 0 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 7 )
 
