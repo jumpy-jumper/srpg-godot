@@ -44,6 +44,8 @@ func _ready():
 				for f in u.followers:
 					level.add_child(f)
 					connect_with_unit(f)
+				if len(level.advance) > 0:
+					u.get_level_advancing_skill().base_skill_cost = level.advance[0]
 			elif u is Gate:
 				u.initialize_path()
 				gates_cache.append(u)
@@ -64,18 +66,17 @@ func _ready():
 	
 	append_state()
 
-# Control state:
-var pending_ui = 0 # UI that is being hovered over
-# $"UI/Unit UI".visible
-# is_alive()
-# is_waiting_for_facing()
-# camera.operatable
+var pending_ui = 0
 
 func is_alive():
 	for summoner in summoners_cache:
 		if not summoner.alive:
 			return false
 	return true
+
+
+func is_won():
+	return cur_level_index >= len(level.advance)
 
 
 func is_waiting_for_facing():
@@ -99,11 +100,15 @@ func is_waiting_for_ui():
 
 
 func can_select_follower_ui():
-	return not is_waiting_for_ui() and is_alive()
+	return not is_waiting_for_ui() \
+		and is_alive() \
+		and not is_won()
 
 
 func can_show_unit_ui():
-	return not is_waiting_for_ui() and is_alive()
+	return not is_waiting_for_ui() \
+		and is_alive() \
+		and not is_won()
 
 
 var camera_position_after_cancel_pressed = Vector2.ZERO
@@ -126,6 +131,7 @@ func can_undo_or_redo():
 
 func can_advance_round():
 	return not is_waiting_for_ui() \
+		and not is_won() \
 		and not is_waiting_for_facing() \
 		and not camera.operatable
 
@@ -133,6 +139,7 @@ func can_advance_round():
 func can_move_cursor():
 	return pending_ui == 0 \
 		and is_alive() \
+		and not is_won() \
 		and not is_waiting_for_ui() \
 		and not is_waiting_for_facing() \
 		and not camera.operatable
@@ -141,6 +148,7 @@ func can_move_cursor():
 func can_show_cursor():
 	return pending_ui == 0 \
 		and is_alive() \
+		and not is_won() \
 		and not is_waiting_for_ui() \
 		and not camera.operatable
 
@@ -148,12 +156,14 @@ func can_show_cursor():
 func can_change_selected_follower():
 	return pending_ui == 0 \
 		and is_alive() \
+		and not is_won() \
 		and not is_waiting_for_ui() \
 		and not camera.operatable
 
 
 func can_move_camera():
 	return is_alive() \
+		and not is_won() \
 		and not is_waiting_for_ui() \
 
 
@@ -211,7 +221,12 @@ func _process(_delta):
 		cursor.control_state = cursor.ControlState.HIDDEN
 
 	$"UI/Follower Panels".update_ui()
-	$"UI/Game Over".visible = not is_alive()
+	if cur_level_index < len(level.advance):
+		$"UI/Game Over".visible = not is_alive()
+		$"UI/Game Over/Label".text = "YOU LOSE :("
+	else:
+		$"UI/Game Over".visible = true
+		$"UI/Game Over/Label".text = "YOU WIN :D"
 	
 	var selected_follower = get_selected_follower()
 	$Deployable.visible = selected_follower.can_be_deployed()
@@ -434,6 +449,15 @@ func advance_tick():
 	append_state()
 
 
+var cur_level_index = 0
+
+func advance_level():
+	cur_level_index += 1
+	if not (cur_level_index >= len(level.advance)):
+		for summoner in summoners_cache:
+			summoner.get_level_advancing_skill().base_skill_cost = level.advance[cur_level_index]
+
+
 ###############################################################################
 #        Unit logic                                                           #
 ###############################################################################
@@ -474,6 +498,7 @@ var cur_state_index = -1
 func get_state():
 	var ret = {}
 	ret["cur_tick"] = cur_tick
+	ret["cur_level_index"] = cur_level_index
 	ret["summoned_order"] = [] + summoned_order
 	for unit in get_all_units():
 		ret[unit] = unit.get_state()
@@ -482,6 +507,7 @@ func get_state():
 
 func load_state(state):
 	cur_tick = state["cur_tick"]
+	cur_level_index = state["cur_level_index"]
 	summoned_order = state["summoned_order"]
 	for unit in get_all_units():
 		unit.load_state(state[unit])

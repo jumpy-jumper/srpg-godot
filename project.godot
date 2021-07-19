@@ -99,8 +99,8 @@ _global_script_class_icons={
 [application]
 
 config/name="Dream in Tiles"
-run/main_scene="res://title.tscn"
-config/icon="res://Ton.png"
+run/main_scene="res://Title/title.tscn"
+config/icon="res://ton.png"
 config/windows_native_icon="res://Ton.ico"
 
 [autoload]

@@ -44,7 +44,6 @@ base_def = 20
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = ExtResource( 2 )
-frame = 1
 playing = true
 centered = false
 offset = Vector2( -8, -16 )

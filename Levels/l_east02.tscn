@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Levels/tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Unit/Enemy/Centaur/e_centaur.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Levels/level.gd" type="Script" id=9]
 [ext_resource path="res://Levels/blue_level.jpg" type="Texture" id=10]
+[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=11]
 
 [node name="Level" type="Node" groups=[
 "Level",
@@ -23,6 +24,7 @@ __meta__ = {
 }
 default_camera_position = Vector2( 640, 330 )
 default_camera_zoom = Vector2( 1.15, 1.15 )
+advance = [ 80 ]
 
 [node name="BG" type="CanvasLayer" parent="."]
 layer = -1
@@ -45,9 +47,11 @@ faith = 32
 
 [node name="Natasha" parent="The East Wind" instance=ExtResource( 6 )]
 position = Vector2( -128, 0.0837708 )
+script = ExtResource( 11 )
 
 [node name="Dieck" parent="The East Wind" instance=ExtResource( 7 )]
 position = Vector2( -64, 0 )
+script = ExtResource( 11 )
 
 [node name="Rushdown" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1024, 320 )

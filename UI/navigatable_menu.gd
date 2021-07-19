@@ -13,6 +13,7 @@ export(NodePath) var initial = null
 onready var tween = $Tween
 onready var cursor = $Cursor
 
+export var cursor_padding = Vector2(8, 8)
 
 func _ready():
 	if selected_node:
@@ -32,12 +33,12 @@ func _process(_delta):
 				if movement.length_squared() > 0:
 					selected_node = get_next_node(movement)
 			
-			if Input.is_action_just_pressed("confirm"):
+			if Input.is_action_just_released("confirm"):
 				selected_node.on_pressed()
 			
 			cursor.visible = true
-			cursor.rect_position = selected_node.rect_position
-			cursor.rect_size = selected_node.rect_size
+			cursor.rect_position = selected_node.rect_position - cursor_padding / 2
+			cursor.rect_size = selected_node.rect_size + cursor_padding
 		else:
 			if movement.length_squared() > 0 and initial:
 				selected_node = get_node(initial)
@@ -52,8 +53,8 @@ func get_next_node(direction):
 			nodes.erase(child)
 	
 	var closest = selected_node
-	var farthest = selected_node
 	var closest_distance = 12987361297836
+	var farthest = selected_node
 	var farthest_distance = 12987361297836
 	
 	for node in nodes:
@@ -67,24 +68,3 @@ func get_next_node(direction):
 			farthest = node
 	
 	return closest if closest != selected_node else farthest
-
-
-const FADE_IN_DURATION = 0.25
-
-
-func show():
-	$Tween.interpolate_property(self, "modulate:a",
-		0, 1, FADE_IN_DURATION,
-		Tween.TRANS_LINEAR, Tween.EASE_OUT)
-	$Tween.start()
-	yield(get_tree(), "idle_frame")
-	visible = true
-	operatable = true
-
-
-func hide():
-	$Tween.interpolate_property(self, "modulate:a",
-		1, 0, FADE_IN_DURATION,
-		Tween.TRANS_LINEAR, Tween.EASE_OUT)
-	$Tween.start()
-	operatable = false

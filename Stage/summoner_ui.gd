@@ -10,4 +10,5 @@ func _process(_delta):
 	if (unit.get_node("Sprite").frames != $AnimatedSprite.frames):
 		$AnimatedSprite.frames = unit.get_node("Sprite").frames
 	$Faith.text = str(unit.faith)
-	$Faith.text += " | Rnd " + str(stage.cur_tick)
+	if not stage.is_won():
+		$Faith.text += " / " + str(stage.level.advance[stage.cur_level_index])

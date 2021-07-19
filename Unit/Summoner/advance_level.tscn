@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Unit/Summoner/advance_level.gd" type="Script" id=1]
+
+[node name="Awaken" type="Node"]
+script = ExtResource( 1 )
+description = "Advance to this level's next checkpoint. If there are no more checkpoints, win."
+activation = 4
+base_skill_cost = 1
+base_skill_initial_sp = 0
+base_skill_duration = 0

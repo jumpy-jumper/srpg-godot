@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/level.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Unit/Follower/Lyon/lyon.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Unit/Follower/Niles/niles.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Unit/Follower/Eldigan/eldigan.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=18]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap.png 0"
@@ -82,6 +83,7 @@
 script = ExtResource( 2 )
 default_camera_position = Vector2( 794, 407 )
 default_camera_zoom = Vector2( 1.322, 1.322 )
+advance = [ 99999 ]
 
 [node name="BG" type="CanvasLayer" parent="."]
 layer = -1
@@ -103,28 +105,41 @@ base_max_hp = 1
 faith = 200
 
 [node name="Nils" parent="The East Wind" instance=ExtResource( 4 )]
+script = ExtResource( 18 )
 
 [node name="Nephenee" parent="The East Wind" instance=ExtResource( 11 )]
+script = ExtResource( 18 )
 
 [node name="Ninian" parent="The East Wind" instance=ExtResource( 14 )]
+script = ExtResource( 18 )
 
 [node name="Norne" parent="The East Wind" instance=ExtResource( 8 )]
+script = ExtResource( 18 )
 
 [node name="Lysithea" parent="The East Wind" instance=ExtResource( 9 )]
+script = ExtResource( 18 )
 
 [node name="Lon\'qu" parent="The East Wind" instance=ExtResource( 7 )]
+script = ExtResource( 18 )
 
 [node name="Niles" parent="The East Wind" instance=ExtResource( 16 )]
+script = ExtResource( 18 )
+base_max_hp = 200
 
 [node name="Natasha" parent="The East Wind" instance=ExtResource( 6 )]
+script = ExtResource( 18 )
 
 [node name="Dieck" parent="The East Wind" instance=ExtResource( 10 )]
+script = ExtResource( 18 )
 
 [node name="Lyon" parent="The East Wind" instance=ExtResource( 15 )]
+script = ExtResource( 18 )
 
 [node name="Eldigan" parent="The East Wind" instance=ExtResource( 17 )]
+script = ExtResource( 18 )
 
 [node name="Frederick" parent="The East Wind" instance=ExtResource( 3 )]
+script = ExtResource( 18 )
 
 [node name="Dummy" parent="." instance=ExtResource( 12 )]
 position = Vector2( 128, 192 )

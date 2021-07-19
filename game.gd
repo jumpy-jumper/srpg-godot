@@ -43,7 +43,7 @@ func _process(_delta):
 		OS.window_fullscreen = not OS.window_fullscreen
 
 	elif Input.is_action_just_pressed("restart_game"):
-		get_tree().change_scene("res://title.tscn")
+		get_tree().change_scene("res://Title/title.tscn")
 	
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE \

@@ -154,11 +154,26 @@ func get_stat_after_statuses(stat_name, base_value):
 
 
 func get_basic_attack():
-	return $Skills.get_children()[0]
+	for skill in $Skills.get_children():
+		if skill.is_basic_attack():
+			return skill
+	return null
+
+
+func get_first_activatable_skill():
+	for skill in $Skills.get_children():
+		if skill.activation == skill.Activation.SP_MANUAL \
+			or skill.activation == skill.Activation.SP_AUTO \
+			or skill.activation == skill.Activation.DEPLOYMENT:
+				return skill
+	return null
 
 
 func get_attack_range():
-	return get_stat("skill_range", get_basic_attack().base_skill_range)
+	var basic_attack = get_basic_attack()
+	if basic_attack:
+		return get_stat("skill_range", get_basic_attack().base_skill_range)
+	return []
 
 
 func get_stat(stat_name, base_value):

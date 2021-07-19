@@ -36,3 +36,8 @@ func get_next_node(direction):
 
 func _on_Node_mouse_entered():
 	on_hovered()
+
+
+func _on_Node_mouse_exited():
+	if menu.selected_node == self:
+		menu.selected_node = null

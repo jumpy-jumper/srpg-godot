@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Levels/tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Levels/level.gd" type="Script" id=9]
 [ext_resource path="res://Levels/blue_level.jpg" type="Texture" id=10]
 [ext_resource path="res://Unit/Enemy/Zombie/e_zombie.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=12]
 
 [node name="Level" type="Node" groups=[
 "Level",
@@ -24,6 +25,7 @@ __meta__ = {
 }
 default_camera_position = Vector2( 680, 358 )
 default_camera_zoom = Vector2( 1.15, 1.15 )
+advance = [ 55 ]
 
 [node name="BG" type="CanvasLayer" parent="."]
 layer = -1
@@ -47,12 +49,15 @@ faith = 12
 
 [node name="Nils" parent="The East Wind" instance=ExtResource( 4 )]
 position = Vector2( 64, 0 )
+script = ExtResource( 12 )
 
 [node name="Nephenee" parent="The East Wind" instance=ExtResource( 7 )]
 position = Vector2( 64, 0 )
+script = ExtResource( 12 )
 
 [node name="Frederick" parent="The East Wind" instance=ExtResource( 6 )]
 position = Vector2( 64, 0 )
+script = ExtResource( 12 )
 
 [node name="Degeneracy" parent="." instance=ExtResource( 3 )]
 position = Vector2( 448, 64 )

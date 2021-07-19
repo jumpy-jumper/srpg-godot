@@ -12,6 +12,8 @@ export var base_attack_count = 1
 
 var targeting_toast = preload("res://Unit/targeting_toast.tscn")
 
+func is_basic_attack():
+	return true
 
 func activate():
 	.activate()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/camera.gd" type="Script" id=2]
@@ -32,6 +32,15 @@ font_data = ExtResource( 7 )
 [sub_resource type="DynamicFont" id=2]
 size = 200
 font_data = ExtResource( 7 )
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends Node2D
+
+onready var stage = $\"../..\"
+
+func _process(_delta):
+	$Round.text = \"Round \" + str(stage.cur_tick)
+"
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends Panel
@@ -120,7 +129,7 @@ __meta__ = {
 }
 
 [node name="Follower Panels" type="Node2D" parent="UI"]
-position = Vector2( 32, 528 )
+position = Vector2( 32, 564 )
 scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 8 )
 
@@ -207,7 +216,7 @@ margin_right = 1399.25
 margin_bottom = 186.75
 
 [node name="Summoner UI" type="Node2D" parent="UI"]
-position = Vector2( 1152, 16 )
+position = Vector2( 1152, 52 )
 scale = Vector2( 0.706163, 0.695323 )
 script = ExtResource( 12 )
 
@@ -222,18 +231,46 @@ __meta__ = {
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="UI/Summoner UI"]
-position = Vector2( -113.288, 4.31454 )
+position = Vector2( -67.973, -1.14441e-05 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
-frame = 2
+frame = 3
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
-margin_left = -79.3018
-margin_right = 165.698
+margin_left = -79.0
+margin_right = 136.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 10 )
 text = "200"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Round UI" type="Node2D" parent="UI"]
+position = Vector2( 1152, 13 )
+scale = Vector2( 0.706163, 0.695323 )
+script = SubResource( 4 )
+
+[node name="Panel" type="Panel" parent="UI/Round UI"]
+modulate = Color( 1, 1, 1, 0.501961 )
+margin_left = -143.0
+margin_top = 12.0
+margin_right = 147.0
+margin_bottom = 69.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Round" type="Label" parent="UI/Round UI"]
+margin_left = -136.0
+margin_right = 136.0
+margin_bottom = 82.0
+custom_fonts/font = ExtResource( 10 )
+text = "200"
+align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -727,8 +764,8 @@ script = ExtResource( 27 )
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
 [connection signal="exited" from="UI/Unit UI" to="." method="_on_Unit_UI_exited"]
-[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
+[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 1/Button" to="UI/Unit UI/Skill 1" method="_on_Button_pressed"]
 [connection signal="skill_activation_requested" from="UI/Unit UI/Skill 2" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="UI/Unit UI/Skill 2/Button" to="UI/Unit UI/Skill 2" method="_on_Button_pressed"]

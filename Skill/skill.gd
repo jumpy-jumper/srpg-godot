@@ -6,6 +6,8 @@ onready var unit = $"../.."
 
 export(String, MULTILINE) var description = ""
 
+func is_basic_attack():
+	return false
 
 ###############################################################################
 #        Activation logic                                                     #
@@ -29,7 +31,7 @@ func is_active():
 
 func is_available():
 	return (activation == Activation.SP_MANUAL or activation == Activation.SP_AUTO) \
-		and sp == unit.get_stat("skill_cost", base_skill_cost) \
+		and sp >= unit.get_stat("skill_cost", base_skill_cost) \
 		and not is_active()
 
 

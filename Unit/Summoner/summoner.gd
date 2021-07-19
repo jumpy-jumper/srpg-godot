@@ -13,6 +13,8 @@ var summoned_order = []
 func get_type_of_self():
 	return UnitType.SUMMONER
 
+func get_level_advancing_skill():
+	return $"Skills/Awaken"
 
 func _ready():
 	for unit in get_children():
@@ -22,13 +24,28 @@ func _ready():
 			unit.alive = false
 			unit.summoner = self
 
+
 func _process(_delta):
 	if not $DeathTweener.is_active():
 		modulate.a = 1.0 if alive else 0
 	elif alive:
 		$DeathTweener.stop_all()
 		modulate.a = 1.0
+	var skills = $Skills.get_children()
+	for skill in skills:
+		skill.sp = faith
+		if skill.is_available():
+			skill.activate()
 
+
+
+func _on_Cursor_confirm_issued(pos):
+	._on_Cursor_confirm_issued(pos)
+	if alive:
+		if pos == position:
+			for skill in $Skills.get_children():
+				if skill.is_available():
+					skill.activate()
 
 ###############################################################################
 #        Stats logic                                                          #
