@@ -41,7 +41,7 @@ func _process(_delta):
 	if control_state == ControlState.FREE:
 		var previous = position
 
-		var movement = Game.get_keyboard_input()
+		var movement = InputWatcher.get_keyboard_input()
 
 		if get_viewport().get_mouse_position() == old_mouse_pos:
 			mouse_inactive += _delta
@@ -84,7 +84,7 @@ func _process(_delta):
 		$AnimatedSprite.play("select")
 		emit_signal("confirm_issued", position)
 
-	if Input.is_action_just_pressed("cancel") and not Input.is_action_just_pressed("redo"):
+	if Input.is_action_just_pressed("cancel"):
 		emit_signal("cancel_issued", position)
 		
 	emit_signal("hovered", position)

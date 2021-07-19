@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/camera.gd" type="Script" id=2]
@@ -23,7 +23,6 @@
 [ext_resource path="res://Stage/Terrain/high.tres" type="Resource" id=21]
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=22]
 [ext_resource path="res://Stage/UI/enemy_info.tscn" type="PackedScene" id=23]
-[ext_resource path="res://Stage/camera_controller.gd" type="Script" id=26]
 [ext_resource path="res://Stage/deployable_tiles_indicator.gd" type="Script" id=27]
 
 [sub_resource type="DynamicFont" id=1]
@@ -226,7 +225,6 @@ __meta__ = {
 position = Vector2( -90.6307, 0 )
 scale = Vector2( 3.5, 3.5 )
 frames = ExtResource( 11 )
-frame = 5
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -721,9 +719,6 @@ text = "Enable Redo"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="CameraController" type="Node2D" parent="."]
-script = ExtResource( 26 )
 
 [node name="Deployable" type="Node2D" parent="."]
 z_index = 1

@@ -21,6 +21,7 @@ var independent_enemies_cache = []
 onready var level = Game.level_to_load.instance()
 onready var terrain = level.get_node("Terrain")
 onready var cursor = $Cursor
+onready var camera = $Camera2D
 
 
 var selected_summoner_index = 0
@@ -66,7 +67,7 @@ var pending_ui = 0 # UI that is being hovered over
 # $"UI/Unit UI".visible
 # is_alive()
 # is_waiting_for_facing()
-# $CameraController.operatable
+# camera.operatable
 
 func is_alive():
 	for summoner in summoners_cache:
@@ -118,13 +119,13 @@ func can_update_facing():
 
 func can_undo():
 	return not is_waiting_for_ui() \
-		and not $CameraController.operatable
+		and not camera.operatable
 
 
 func can_redo_or_advance_round():
 	return not is_waiting_for_ui() \
 		and not is_waiting_for_facing() \
-		and not $CameraController.operatable
+		and not camera.operatable
 
 
 func can_move_cursor():
@@ -132,21 +133,21 @@ func can_move_cursor():
 		and is_alive() \
 		and not is_waiting_for_ui() \
 		and not is_waiting_for_facing() \
-		and not $CameraController.operatable
+		and not camera.operatable
 
 
 func can_show_cursor():
 	return pending_ui == 0 \
 		and is_alive() \
 		and not is_waiting_for_ui() \
-		and not $CameraController.operatable
+		and not camera.operatable
 
 
 func can_change_selected_follower():
 	return pending_ui == 0 \
 		and is_alive() \
 		and not is_waiting_for_ui() \
-		and not $CameraController.operatable
+		and not camera.operatable
 
 
 func can_move_camera():
@@ -159,7 +160,44 @@ func can_move_camera_with_cancel():
 		and can_move_camera()
 
 
-func _process(_delta):
+func _process(_delta):	
+	if Input.is_action_just_pressed("cancel"):
+		camera_position_after_cancel_pressed = $Camera2D.position
+		camera_zoom_after_cancel_pressed = $Camera2D.zoom
+	if can_show_unit_ui():
+		var show_unit_ui_with_cancel_condition = can_show_unit_ui_with_cancel() and Input.is_action_just_released("cancel")
+		if Input.is_action_just_pressed("unit_ui") or show_unit_ui_with_cancel_condition:
+			var unit = get_unit_at($Cursor.position)
+			if unit:
+				show_unit_ui(unit)
+			else:
+				show_unit_ui(get_selected_summoner().followers[selected_follower_index])
+			
+	if Input.is_action_just_pressed("debug_clear_pending_ui"):
+		pending_ui = 0
+	
+	if can_change_selected_follower():
+		if InputWatcher.is_action_pressed_with_rapid_fire("next_follower"):
+			selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
+		elif InputWatcher.is_action_pressed_with_rapid_fire("previous_follower"):
+			selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
+			
+	if can_undo():
+		if InputWatcher.is_action_pressed_with_rapid_fire("undo"):
+			undo()
+		elif InputWatcher.is_action_pressed_with_rapid_fire("restart"):
+			if Game.undoable_restart:
+				load_state(states[0])
+				append_state()
+				$UI/Blackscreen.animate()
+			else:
+				get_tree().reload_current_scene()
+	if can_redo_or_advance_round():
+		if InputWatcher.is_action_pressed_with_rapid_fire("advance_round"):
+			advance_tick()
+		elif InputWatcher.is_action_pressed_with_rapid_fire("redo"):
+			redo()
+	
 	if can_show_cursor():
 		if can_move_cursor():
 			cursor.control_state = cursor.ControlState.FREE
@@ -179,42 +217,10 @@ func _process(_delta):
 
 
 func _input(event):
-	if can_change_selected_follower():
-		if event.is_action_pressed("next_follower"):
-			selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
-		elif event.is_action_pressed("previous_follower"):
-			selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
-			
-	if event.is_action_pressed("cancel"):
-		camera_position_after_cancel_pressed = $Camera2D.position
-		camera_zoom_after_cancel_pressed = $Camera2D.zoom
-	if can_show_unit_ui():
-		var show_unit_ui_with_cancel_condition = can_show_unit_ui_with_cancel() and event.is_action_released("cancel")
-		if event.is_action_pressed("unit_ui") or show_unit_ui_with_cancel_condition:
-			var unit = get_unit_at($Cursor.position)
-			if unit:
-				show_unit_ui(unit)
-			else:
-				show_unit_ui(get_selected_summoner().followers[selected_follower_index])
-		
-	if can_undo():
-		if event.is_action_pressed("undo"):
-			undo()
-		elif event.is_action_pressed("restart"):
-			if Game.undoable_restart:
-				load_state(states[0])
-				append_state()
-				$UI/Blackscreen.animate()
-			else:
-				get_tree().reload_current_scene()
-	if can_redo_or_advance_round():
-		if event.is_action_pressed("advance_round"):
-			advance_tick()
-		elif event.is_action_pressed("redo"):
-			redo()
-			
-	if event.is_action_pressed("debug_clear_pending_ui"):
-		pending_ui = 0
+	if can_undo() and event.is_action_pressed("undo_wheel"):
+		undo()
+	elif can_redo_or_advance_round() and event.is_action_pressed("advance_round_wheel"):
+		advance_tick()
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -501,5 +507,3 @@ func redo():
 	if cur_state_index < len(states) - 1 and Game.redo_enabled:
 		load_state(states[cur_state_index + 1])
 		cur_state_index += 1
-	else:
-		advance_tick()

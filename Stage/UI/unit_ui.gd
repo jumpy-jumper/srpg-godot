@@ -15,7 +15,7 @@ func _ready():
 
 
 func _process(_delta):
-	if ((Input.is_action_just_pressed("cancel") or Input.is_action_just_pressed("unit_ui"))) \
+	if (Input.is_action_just_pressed("cancel") or Input.is_action_just_pressed("unit_ui")) \
 		and not started_this_frame \
 		and modulate.a > 0:
 			hide()

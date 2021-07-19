@@ -6,14 +6,14 @@ Content
 	East-08: Lyon
 Implementation
 	Urgent
-		Zooming camera anchors to the clicked position and not the middle
+		Rapid fire on advance turn / undo (+ fix rapid fire implementation)	
+		Default camera position and zoom
 		Rearrange stage UI and UI waiting state
 		Rearrange Unit UI
 		Skills that activate on the next basic attack
 		Summoner win skill
 		Settings menu
 			All the static variables in the game class, + resolution options
-		Rapid fire on advance turn / undo (+ fix rapid fire implementation)	
 		"Slow" game speed, with an option to change it to fast
 	Bugs
 		Unit UI shows up even if camera was fiddled with but zoom didn't change
@@ -26,7 +26,6 @@ Implementation
 		Reimplement unit UI
 		Clicking on units inside gates displays their contents
 		Gate unit preview displays their skills
-		Default camera position and zoom
 		Hovering cursor away from terrain should update cursor, have keyboard jump to nearest available
 		Q/E during unit UI moves to the next follower
 		Hide clutter in skill description

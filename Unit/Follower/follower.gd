@@ -55,7 +55,7 @@ func _input(event):
 			die()
 			stage.append_state()
 	elif waiting_for_facing:
-		var direction = Game.get_keyboard_input(true)
+		var direction = InputWatcher.get_keyboard_input(true)
 		if direction.length_squared() > 0:
 			if direction == Vector2.RIGHT:
 				facing = Facing.RIGHT
