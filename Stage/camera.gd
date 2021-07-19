@@ -106,6 +106,11 @@ func _input(event):
 			tween.start()
 		elif event.is_action_pressed("zoom_reset"):
 			tween.interpolate_property(self, "zoom",
-			zoom, Vector2(1, 1), 0.25,
+			zoom, stage.level.default_camera_zoom, 0.25,
+			Tween.TRANS_LINEAR, Tween.EASE_IN)
+			tween.start()
+			
+			tween.interpolate_property(self, "position",
+			position, stage.level.default_camera_position - offset, 0.25,
 			Tween.TRANS_LINEAR, Tween.EASE_IN)
 			tween.start()

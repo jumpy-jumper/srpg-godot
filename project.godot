@@ -34,6 +34,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Unit/Follower/Lysithea/lysithea_s1.gd"
 }, {
+"base": "Control",
+"class": "MenuNode",
+"language": "GDScript",
+"path": "res://UI/menu_node.gd"
+}, {
+"base": "Control",
+"class": "NavigatableMenu",
+"language": "GDScript",
+"path": "res://UI/navigatable_menu.gd"
+}, {
 "base": "Node2D",
 "class": "RangeIndicator",
 "language": "GDScript",
@@ -75,6 +85,8 @@ _global_script_class_icons={
 "Follower": "",
 "Gate": "",
 "Lysithea_S1": "",
+"MenuNode": "",
+"NavigatableMenu": "",
 "RangeIndicator": "",
 "Skill": "",
 "Stage": "",
