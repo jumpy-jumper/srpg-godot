@@ -79,12 +79,12 @@ func _process(_delta):
 		old_mouse_pos = get_viewport().get_mouse_position()
 			
 
-	if Input.is_action_just_pressed("confirm") and not Input.is_action_just_pressed("undo"):
+	if Input.is_action_just_pressed("confirm") and not Input.is_action_pressed("control"):
 		$AnimatedSprite.play("default")
 		$AnimatedSprite.play("select")
 		emit_signal("confirm_issued", position)
 
-	if Input.is_action_just_pressed("cancel"):
+	if Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control"):
 		emit_signal("cancel_issued", position)
 		
 	emit_signal("hovered", position)

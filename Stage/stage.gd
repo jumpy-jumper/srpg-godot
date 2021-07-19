@@ -117,12 +117,12 @@ func can_update_facing():
 	return not is_waiting_for_ui() and is_alive()
 
 
-func can_undo():
+func can_undo_or_redo():
 	return not is_waiting_for_ui() \
 		and not camera.operatable
 
 
-func can_redo_or_advance_round():
+func can_advance_round():
 	return not is_waiting_for_ui() \
 		and not is_waiting_for_facing() \
 		and not camera.operatable
@@ -161,11 +161,12 @@ func can_move_camera_with_cancel():
 
 
 func _process(_delta):	
-	if Input.is_action_just_pressed("cancel"):
+	if Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control"):
 		camera_position_after_cancel_pressed = $Camera2D.position
 		camera_zoom_after_cancel_pressed = $Camera2D.zoom
 	if can_show_unit_ui():
-		var show_unit_ui_with_cancel_condition = can_show_unit_ui_with_cancel() and Input.is_action_just_released("cancel")
+		var show_unit_ui_with_cancel_condition = can_show_unit_ui_with_cancel() \
+			and Input.is_action_just_released("cancel") and not Input.is_action_pressed("control")
 		if Input.is_action_just_pressed("unit_ui") or show_unit_ui_with_cancel_condition:
 			var unit = get_unit_at($Cursor.position)
 			if unit:
@@ -182,9 +183,11 @@ func _process(_delta):
 		elif InputWatcher.is_action_pressed_with_rapid_fire("previous_follower"):
 			selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
 			
-	if can_undo():
+	if can_undo_or_redo():
 		if InputWatcher.is_action_pressed_with_rapid_fire("undo"):
 			undo()
+		elif InputWatcher.is_action_pressed_with_rapid_fire("redo"):
+			redo()
 		elif InputWatcher.is_action_pressed_with_rapid_fire("restart"):
 			if Game.undoable_restart:
 				load_state(states[0])
@@ -192,11 +195,10 @@ func _process(_delta):
 				$UI/Blackscreen.animate()
 			else:
 				get_tree().reload_current_scene()
-	if can_redo_or_advance_round():
+	
+	if can_advance_round():
 		if InputWatcher.is_action_pressed_with_rapid_fire("advance_round"):
 			advance_tick()
-		elif InputWatcher.is_action_pressed_with_rapid_fire("redo"):
-			redo()
 	
 	if can_show_cursor():
 		if can_move_cursor():
@@ -217,9 +219,9 @@ func _process(_delta):
 
 
 func _input(event):
-	if can_undo() and event.is_action_pressed("undo_wheel"):
+	if can_undo_or_redo() and event.is_action_pressed("undo_wheel"):
 		undo()
-	elif can_redo_or_advance_round() and event.is_action_pressed("advance_round_wheel"):
+	elif can_advance_round() and event.is_action_pressed("advance_round_wheel"):
 		advance_tick()
 
 

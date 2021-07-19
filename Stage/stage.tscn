@@ -222,18 +222,18 @@ __meta__ = {
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="UI/Summoner UI"]
-position = Vector2( -90.6307, 0 )
-scale = Vector2( 3.5, 3.5 )
+position = Vector2( -113.288, 4.31454 )
+scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
+frame = 3
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
-margin_left = -68.0
-margin_right = 132.0
+margin_left = -79.3018
+margin_right = 165.698
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 10 )
 text = "200"
-align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false

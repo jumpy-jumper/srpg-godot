@@ -27,9 +27,9 @@ const RAPID_FIRE_INTERVAL = { # How long to wait before allowing the action to f
 	"camera_down" : 0,
 	"camera_left" : 0,
 	"camera_up" : 0,
-	"advance_round" : 0.01,
-	"undo" : 0.01,
-	"redo" : 0.01,
+	"advance_round" : 0.04,
+	"undo" : 0.04,
+	"redo" : 0.04,
 	"restart" : 0.2,
 	"previous_follower" : 0.05,
 	"next_follower" : 0.05
@@ -43,7 +43,7 @@ const RAPID_FIRE_HOLD = { # How long to wait until rapid fire must be reinitiali
 	"follower_selection" : 0.1
 }
 
-const HOLD_GROUP = {
+const RAPID_FIRE_GROUP = {
 	"ui_right" : "ui_movement",
 	"ui_down" : "ui_movement",
 	"ui_left" : "ui_movement",
@@ -68,17 +68,17 @@ var time_since_released = RAPID_FIRE_HOLD.duplicate()
 func _process(delta):
 	for action in time_held:
 		if Input.is_action_pressed(action):
-			if time_since_released[HOLD_GROUP[action]] <= RAPID_FIRE_HOLD[HOLD_GROUP[action]]:
+			if time_since_released[RAPID_FIRE_GROUP[action]] <= RAPID_FIRE_HOLD[RAPID_FIRE_GROUP[action]]:
 				time_held[action] = RAPID_FIRE_WAIT[action]
-			time_since_released[HOLD_GROUP[action]] = RAPID_FIRE_HOLD[HOLD_GROUP[action]]
+			time_since_released[RAPID_FIRE_GROUP[action]] = RAPID_FIRE_HOLD[RAPID_FIRE_GROUP[action]]
 			time_held[action] += delta
 			time_since_fired[action] += delta
 		elif Input.is_action_just_released(action):
 			if (time_held[action] > RAPID_FIRE_WAIT[action]):
-				time_since_released[HOLD_GROUP[action]] = 0 
+				time_since_released[RAPID_FIRE_GROUP[action]] = 0 
 			time_held[action] = 0
 		else:
-			time_since_released[HOLD_GROUP[action]] += delta
+			time_since_released[RAPID_FIRE_GROUP[action]] += delta
 
 
 func is_action_pressed_with_rapid_fire(action):

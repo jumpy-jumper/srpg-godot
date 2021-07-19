@@ -103,6 +103,8 @@ func move():
 	var oldpos = position
 	position = newpos
 	
+	return
+	
 	$MovementTweener.interpolate_property($Sprite, "global_position",
 	oldpos, newpos, MOV_INTERP_DURATION,
 	Tween.TRANS_LINEAR, Tween.EASE_IN)
