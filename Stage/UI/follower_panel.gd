@@ -45,7 +45,7 @@ func _on_Follower_Panel_gui_input(event):
 					var follower_index = unit.stage.get_selected_summoner().followers.find(unit)
 					unit.stage.selected_follower_index = follower_index
 			BUTTON_RIGHT:
-				if unit.stage.can_select_follower_ui() and unit.stage.can_show_unit_ui():
+				if unit.stage.can_select_follower_ui() and unit.stage.can_show_ui():
 					unit.stage.show_unit_ui(unit)
 					var follower_index = unit.stage.get_selected_summoner().followers.find(unit)
 					unit.stage.selected_follower_index = follower_index

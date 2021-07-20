@@ -1,9 +1,9 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/camera.gd" type="Script" id=2]
 [ext_resource path="res://Cursor/cursor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Stage/round_panel.gd" type="Script" id=4]
+[ext_resource path="res://Stage/UI/stage_ui.gd" type="Script" id=4]
 [ext_resource path="res://Stage/Terrain/low.tres" type="Resource" id=5]
 [ext_resource path="res://Stage/Terrain/deployable_low.tres" type="Resource" id=6]
 [ext_resource path="res://Fonts/calibri.ttf" type="DynamicFontData" id=7]
@@ -25,16 +25,8 @@
 [ext_resource path="res://Stage/UI/enemy_info.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Stage/deployable_tiles_indicator.gd" type="Script" id=27]
 
-[sub_resource type="DynamicFont" id=1]
-size = 42
-font_data = ExtResource( 7 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 200
-font_data = ExtResource( 7 )
-
-[sub_resource type="GDScript" id=4]
-script/source = "extends Node2D
+[sub_resource type="GDScript" id=2]
+script/source = "extends Control
 
 onready var stage = $\"../..\"
 
@@ -58,6 +50,10 @@ func animate():
 	$Tween.start()
 "
 
+[sub_resource type="DynamicFont" id=1]
+size = 200
+font_data = ExtResource( 7 )
+
 [node name="Stage" type="Node"]
 script = ExtResource( 1 )
 terrain_types = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 21 ), ExtResource( 13 ) ]
@@ -74,64 +70,22 @@ speed = 0.0
 position = Vector2( 256, 256 )
 z_index = 1
 
+[node name="Deployable" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource( 27 )
+
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Round Panel" type="Control" parent="UI"]
-visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="UI/Round Panel"]
-modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 32.0
-margin_top = 32.0
-margin_right = 320.0
-margin_bottom = 128.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Round Panel"]
-margin_left = 32.0
-margin_top = 40.0
-margin_right = 320.0
-margin_bottom = 128.0
-custom_fonts/normal_font = SubResource( 1 )
-bbcode_enabled = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Game Over" type="Node2D" parent="UI"]
-visible = false
-
-[node name="Panel" type="Panel" parent="UI/Game Over"]
-modulate = Color( 1, 1, 1, 0.647059 )
-margin_right = 1280.0
-margin_bottom = 768.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="UI/Game Over"]
-margin_right = 1280.0
-margin_bottom = 768.0
-custom_fonts/font = SubResource( 2 )
-text = "YOU LOSE :("
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Follower Panels" type="Node2D" parent="UI"]
-position = Vector2( 32, 564 )
-scale = Vector2( 0.8, 0.8 )
+[node name="Follower Panels" type="Control" parent="UI"]
+margin_left = 106.0
+margin_top = 560.0
+margin_right = 106.0
+margin_bottom = 560.0
+rect_scale = Vector2( 0.75, 0.75 )
 script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="1" parent="UI/Follower Panels" instance=ExtResource( 19 )]
 margin_left = 1400.0
@@ -215,10 +169,16 @@ margin_top = 58.7499
 margin_right = 1399.25
 margin_bottom = 186.75
 
-[node name="Summoner UI" type="Node2D" parent="UI"]
-position = Vector2( 1152, 52 )
-scale = Vector2( 0.706163, 0.695323 )
+[node name="Summoner UI" type="Control" parent="UI"]
+margin_left = 1154.0
+margin_top = 59.0
+margin_right = 1154.0
+margin_bottom = 59.0
+rect_scale = Vector2( 0.75, 0.75 )
 script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="UI/Summoner UI"]
 modulate = Color( 1, 1, 1, 0.501961 )
@@ -234,7 +194,6 @@ __meta__ = {
 position = Vector2( -67.973, -1.14441e-05 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
-frame = 3
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -249,24 +208,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Round UI" type="Node2D" parent="UI"]
-position = Vector2( 1152, 13 )
-scale = Vector2( 0.706163, 0.695323 )
-script = SubResource( 4 )
+[node name="Round UI" type="Control" parent="UI"]
+margin_left = 1154.0
+margin_top = 16.0
+margin_right = 1154.0
+margin_bottom = 16.0
+rect_scale = Vector2( 0.75, 0.75 )
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="UI/Round UI"]
 modulate = Color( 1, 1, 1, 0.501961 )
 margin_left = -143.0
 margin_top = 12.0
-margin_right = 147.0
+margin_right = 61.0
 margin_bottom = 69.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Round" type="Label" parent="UI/Round UI"]
-margin_left = -136.0
-margin_right = 136.0
+margin_left = -143.0
+margin_right = 61.0
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 10 )
 text = "200"
@@ -276,7 +241,81 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Unit UI" type="Control" parent="UI"]
+[node name="Blackscreen" type="Panel" parent="UI"]
+visible = false
+modulate = Color( 0, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+fade_in_duration = 0.25
+
+[node name="Tween" type="Tween" parent="UI/Blackscreen"]
+
+[node name="Game Over" type="Control" parent="UI"]
+visible = false
+
+[node name="Panel" type="Panel" parent="UI/Game Over"]
+modulate = Color( 1, 1, 1, 0.647059 )
+margin_right = 1280.0
+margin_bottom = 768.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/Game Over"]
+margin_right = 1280.0
+margin_bottom = 768.0
+custom_fonts/font = SubResource( 1 )
+text = "YOU LOSE :("
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings Button" type="Button" parent="UI"]
+margin_left = 1218.0
+margin_top = 29.0
+margin_right = 1250.0
+margin_bottom = 61.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="UI/Settings Button"]
+position = Vector2( 16, 16 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 20 )
+
+[node name="Foreground UI" type="CanvasLayer" parent="."]
+
+[node name="Settings" type="Control" parent="Foreground UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Foreground UI/Settings"]
+modulate = Color( 1, 1, 1, 0.501961 )
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 1216.0
+margin_bottom = 672.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Foreground UI/Settings"]
+
+[node name="Unit UI" type="Control" parent="Foreground UI"]
 visible = false
 margin_right = 1280.0
 margin_bottom = 768.0
@@ -285,11 +324,10 @@ script = ExtResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-fade_in_duration = 0.125
 
-[node name="Tween" type="Tween" parent="UI/Unit UI"]
+[node name="Tween" type="Tween" parent="Foreground UI/Unit UI"]
 
-[node name="Blur" type="TextureRect" parent="UI/Unit UI"]
+[node name="Blur" type="TextureRect" parent="Foreground UI/Unit UI"]
 material = ExtResource( 16 )
 margin_right = 1280.0
 margin_bottom = 768.0
@@ -302,12 +340,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="UI/Unit UI"]
+[node name="Sprite" type="Sprite" parent="Foreground UI/Unit UI"]
 position = Vector2( 40, 99.2 )
 texture = ExtResource( 14 )
 centered = false
 
-[node name="Name" type="Control" parent="UI/Unit UI"]
+[node name="Name" type="Control" parent="Foreground UI/Unit UI"]
 margin_left = 224.0
 margin_top = 32.0
 margin_right = 264.0
@@ -317,7 +355,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Name Panel" type="Panel" parent="UI/Unit UI/Name"]
+[node name="Name Panel" type="Panel" parent="Foreground UI/Unit UI/Name"]
 modulate = Color( 1, 1, 1, 0.572549 )
 margin_left = -192.0
 margin_right = 384.0
@@ -327,7 +365,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Name Label" type="Label" parent="UI/Unit UI/Name"]
+[node name="Name Label" type="Label" parent="Foreground UI/Unit UI/Name"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -192.0
@@ -343,7 +381,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Basic Stats" type="Control" parent="UI/Unit UI"]
+[node name="Basic Stats" type="Control" parent="Foreground UI/Unit UI"]
 margin_left = 640.0
 margin_top = 32.0
 margin_right = 680.0
@@ -353,7 +391,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Stats Panel" type="Panel" parent="UI/Unit UI/Basic Stats"]
+[node name="Stats Panel" type="Panel" parent="Foreground UI/Unit UI/Basic Stats"]
 modulate = Color( 1, 1, 1, 0.572549 )
 margin_right = 256.0
 margin_bottom = 160.0
@@ -362,7 +400,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Stats Label" type="Label" parent="UI/Unit UI/Basic Stats"]
+[node name="Stats Label" type="Label" parent="Foreground UI/Unit UI/Basic Stats"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 216.0
@@ -379,7 +417,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Other Stats" type="Control" parent="UI/Unit UI"]
+[node name="Other Stats" type="Control" parent="Foreground UI/Unit UI"]
 margin_left = 992.0
 margin_top = 32.0
 margin_right = 1032.0
@@ -389,7 +427,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Stats Panel" type="Panel" parent="UI/Unit UI/Other Stats"]
+[node name="Stats Panel" type="Panel" parent="Foreground UI/Unit UI/Other Stats"]
 modulate = Color( 1, 1, 1, 0.572549 )
 margin_left = 32.0
 margin_right = 256.0
@@ -399,7 +437,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Stats Label" type="Label" parent="UI/Unit UI/Other Stats"]
+[node name="Stats Label" type="Label" parent="Foreground UI/Unit UI/Other Stats"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 32.0
@@ -414,7 +452,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Skill 1" type="Control" parent="UI/Unit UI"]
+[node name="Skill 1" type="Control" parent="Foreground UI/Unit UI"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 18 )
@@ -422,7 +460,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Description Panel" type="Panel" parent="UI/Unit UI/Skill 1"]
+[node name="Description Panel" type="Panel" parent="Foreground UI/Unit UI/Skill 1"]
 modulate = Color( 1, 1, 1, 0.572549 )
 margin_left = 640.0
 margin_top = 224.0
@@ -433,7 +471,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Description Label" type="Label" parent="UI/Unit UI/Skill 1"]
+[node name="Description Label" type="Label" parent="Foreground UI/Unit UI/Skill 1"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 672.0
@@ -451,14 +489,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="UI/Unit UI/Skill 1"]
+[node name="Button" type="Button" parent="Foreground UI/Unit UI/Skill 1"]
 margin_left = 480.0
 margin_top = 256.0
 margin_right = 608.0
 margin_bottom = 384.0
 disabled = true
 
-[node name="Label" type="Label" parent="UI/Unit UI/Skill 1/Button"]
+[node name="Label" type="Label" parent="Foreground UI/Unit UI/Skill 1/Button"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 9 )
@@ -473,7 +511,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Skill 2" type="Control" parent="UI/Unit UI"]
+[node name="Skill 2" type="Control" parent="Foreground UI/Unit UI"]
 margin_top = 224.0
 margin_right = 40.0
 margin_bottom = 264.0
@@ -482,7 +520,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Description Panel" type="Panel" parent="UI/Unit UI/Skill 2"]
+[node name="Description Panel" type="Panel" parent="Foreground UI/Unit UI/Skill 2"]
 modulate = Color( 1, 1, 1, 0.572549 )
 margin_left = 640.0
 margin_top = 224.0
@@ -493,7 +531,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Description Label" type="Label" parent="UI/Unit UI/Skill 2"]
+[node name="Description Label" type="Label" parent="Foreground UI/Unit UI/Skill 2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 672.0
@@ -511,14 +549,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="UI/Unit UI/Skill 2"]
+[node name="Button" type="Button" parent="Foreground UI/Unit UI/Skill 2"]
 margin_left = 480.0
 margin_top = 256.0
 margin_right = 608.0
 margin_bottom = 384.0
 disabled = true
 
-[node name="Label" type="Label" parent="UI/Unit UI/Skill 2/Button"]
+[node name="Label" type="Label" parent="Foreground UI/Unit UI/Skill 2/Button"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 9 )
@@ -533,7 +571,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Retreat" type="Button" parent="UI/Unit UI"]
+[node name="Retreat" type="Button" parent="Foreground UI/Unit UI"]
 margin_left = 480.0
 margin_top = 128.0
 margin_right = 608.0
@@ -542,7 +580,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="UI/Unit UI/Retreat"]
+[node name="Label" type="Label" parent="Foreground UI/Unit UI/Retreat"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 9 )
@@ -555,7 +593,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="UI/Unit UI"]
+[node name="Panel" type="Panel" parent="Foreground UI/Unit UI"]
 modulate = Color( 1, 1, 1, 0.572549 )
 margin_left = 912.0
 margin_top = 64.0
@@ -566,20 +604,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Terrain 1" type="Sprite" parent="UI/Unit UI"]
+[node name="Terrain 1" type="Sprite" parent="Foreground UI/Unit UI"]
 position = Vector2( 960, 112 )
 texture = ExtResource( 22 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
 
-[node name="Terrain 2" type="Sprite" parent="UI/Unit UI"]
+[node name="Terrain 2" type="Sprite" parent="Foreground UI/Unit UI"]
 visible = false
 position = Vector2( 960, 176 )
 texture = ExtResource( 22 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
 
-[node name="Enemy Panels" type="Control" parent="UI/Unit UI"]
+[node name="Enemy Panels" type="Control" parent="Foreground UI/Unit UI"]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
@@ -587,188 +625,88 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="1" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="1" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 
-[node name="2" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="2" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 232.0
 margin_right = 272.0
 
-[node name="3" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="3" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 432.0
 margin_right = 472.0
 
-[node name="4" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="4" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_top = 240.0
 margin_bottom = 280.0
 
-[node name="5" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="5" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 232.0
 margin_top = 240.0
 margin_right = 272.0
 margin_bottom = 280.0
 
-[node name="6" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="6" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 432.0
 margin_top = 240.0
 margin_right = 472.0
 margin_bottom = 280.0
 
-[node name="7" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="7" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_top = 368.0
 margin_bottom = 408.0
 
-[node name="8" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="8" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 232.0
 margin_top = 368.0
 margin_right = 272.0
 margin_bottom = 408.0
 
-[node name="9" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="9" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 432.0
 margin_top = 368.0
 margin_right = 472.0
 margin_bottom = 408.0
 
-[node name="10" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="10" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_top = 496.0
 margin_bottom = 536.0
 
-[node name="11" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="11" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 232.0
 margin_top = 496.0
 margin_right = 272.0
 margin_bottom = 536.0
 
-[node name="12" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="12" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 432.0
 margin_top = 496.0
 margin_right = 472.0
 margin_bottom = 536.0
 
-[node name="13" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="13" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_top = 624.0
 margin_bottom = 664.0
 
-[node name="14" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="14" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 232.0
 margin_top = 624.0
 margin_right = 272.0
 margin_bottom = 664.0
 
-[node name="15" parent="UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
+[node name="15" parent="Foreground UI/Unit UI/Enemy Panels" instance=ExtResource( 23 )]
 margin_left = 432.0
 margin_top = 624.0
 margin_right = 472.0
 margin_bottom = 664.0
-
-[node name="Blackscreen" type="Panel" parent="UI"]
-visible = false
-modulate = Color( 0, 0, 0, 1 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-script = SubResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-fade_in_duration = 0.25
-
-[node name="Tween" type="Tween" parent="UI/Blackscreen"]
-
-[node name="Settings" type="Control" parent="UI"]
-visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="UI/Settings"]
-margin_left = 1184.0
-margin_top = 640.0
-margin_right = 1248.0
-margin_bottom = 704.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="UI/Settings/Button"]
-position = Vector2( 32, 32 )
-scale = Vector2( 0.0625, 0.0625 )
-texture = ExtResource( 20 )
-
-[node name="Blur2" type="TextureRect" parent="UI/Settings"]
-material = ExtResource( 16 )
-margin_right = 1280.0
-margin_bottom = 768.0
-mouse_filter = 2
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 15 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="UI/Settings"]
-modulate = Color( 1, 1, 1, 0.501961 )
-margin_right = 1280.0
-margin_bottom = 736.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Mouse" type="CheckBox" parent="UI/Settings"]
-margin_left = 32.0
-margin_top = 32.0
-margin_right = 896.0
-margin_bottom = 56.0
-rect_scale = Vector2( 4, 4 )
-pressed = true
-text = "Enable Mouse Controls"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Undoable Restart" type="CheckBox" parent="UI/Settings"]
-margin_left = 32.0
-margin_top = 128.0
-margin_right = 896.0
-margin_bottom = 152.0
-rect_scale = Vector2( 4, 4 )
-pressed = true
-text = "Can Undo Restart"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Redo" type="CheckBox" parent="UI/Settings"]
-margin_left = 32.0
-margin_top = 224.0
-margin_right = 896.0
-margin_bottom = 248.0
-rect_scale = Vector2( 4, 4 )
-pressed = true
-text = "Enable Redo"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Deployable" type="Node2D" parent="."]
-z_index = 1
-script = ExtResource( 27 )
 
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
-[connection signal="exited" from="UI/Unit UI" to="." method="_on_Unit_UI_exited"]
-[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
-[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
-[connection signal="pressed" from="UI/Unit UI/Skill 1/Button" to="UI/Unit UI/Skill 1" method="_on_Button_pressed"]
-[connection signal="skill_activation_requested" from="UI/Unit UI/Skill 2" to="." method="_on_Skill_UI_skill_activation_requested"]
-[connection signal="pressed" from="UI/Unit UI/Skill 2/Button" to="UI/Unit UI/Skill 2" method="_on_Button_pressed"]
-[connection signal="pressed" from="UI/Unit UI/Retreat" to="." method="_on_Retreat_pressed"]
-[connection signal="mouse_entered" from="UI/Settings/Button" to="." method="_on_UI_mouse_entered"]
-[connection signal="mouse_exited" from="UI/Settings/Button" to="." method="_on_UI_mouse_exited"]
+[connection signal="mouse_entered" from="UI/Settings Button" to="." method="_on_UI_mouse_entered"]
+[connection signal="mouse_exited" from="UI/Settings Button" to="." method="_on_UI_mouse_exited"]
+[connection signal="pressed" from="UI/Settings Button" to="." method="_on_Settings_Button_pressed"]
+[connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
+[connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
+[connection signal="pressed" from="Foreground UI/Unit UI/Skill 1/Button" to="Foreground UI/Unit UI/Skill 1" method="_on_Button_pressed"]
+[connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 2" to="." method="_on_Skill_UI_skill_activation_requested"]
+[connection signal="pressed" from="Foreground UI/Unit UI/Skill 2/Button" to="Foreground UI/Unit UI/Skill 2" method="_on_Button_pressed"]
+[connection signal="pressed" from="Foreground UI/Unit UI/Retreat" to="." method="_on_Retreat_pressed"]

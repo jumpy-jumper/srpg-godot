@@ -6,7 +6,6 @@ Content
 	East-08: Lyon
 Implementation
 	Urgent
-		Cursor rapid fires on diagonal press
 		Rearrange stage UI and UI waiting state
 		Rearrange Unit UI
 		Skills that activate on the next basic attack

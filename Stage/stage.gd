@@ -30,41 +30,8 @@ var summoned_order = []
 
 
 ###############################################################################
-#        Main logic	                                                          #
+#        Control state                                                        #
 ###############################################################################
-
-func _ready():
-	add_child(level)
-
-	for u in level.get_children():
-		if u is Unit:
-			connect_with_unit(u)
-			if u is Summoner:
-				summoners_cache.append(u)
-				for f in u.followers:
-					level.add_child(f)
-					connect_with_unit(f)
-				if len(level.advance) > 0:
-					u.get_level_advancing_skill().base_skill_cost = level.advance[0]
-			elif u is Gate:
-				u.initialize_path()
-				gates_cache.append(u)
-				terrain.connect("settings_changed", u, "_on_Terrain_settings_changed")
-				for e in u.enemies.values():
-					level.add_child(e)
-					connect_with_unit(e)
-			elif u is Enemy:
-				independent_enemies_cache.append(u)
-				summoned_order.append(u)
-			elif u is Follower:
-				independent_followers_cache.append(u)
-				summoned_order.append(u)
-
-	cursor.stage = self
-	camera.position = level.default_camera_position
-	camera.zoom = level.default_camera_zoom
-	
-	append_state()
 
 var pending_ui = 0
 
@@ -96,7 +63,10 @@ func is_any_follower_previewing():
 
 
 func is_waiting_for_ui():
-	return not (not $"UI/Unit UI".visible or $"UI/Unit UI".visible and $"UI/Unit UI".modulate.a == 0)
+	for ui in $"Foreground UI".get_children():
+		if ui.modulate.a > 0:
+			return true
+	return false
 
 
 func can_select_follower_ui():
@@ -105,7 +75,7 @@ func can_select_follower_ui():
 		and not is_won()
 
 
-func can_show_unit_ui():
+func can_show_ui():
 	return not is_waiting_for_ui() \
 		and is_alive() \
 		and not is_won()
@@ -114,7 +84,7 @@ func can_show_unit_ui():
 var camera_position_after_cancel_pressed = Vector2.ZERO
 var camera_zoom_after_cancel_pressed = Vector2.ZERO
 func can_show_unit_ui_with_cancel():
-	return can_show_unit_ui() \
+	return can_show_ui() \
 		and (get_unit_at(cursor.position) or is_any_follower_previewing()) \
 		and abs((camera_position_after_cancel_pressed - $Camera2D.position).length()) < Game.unit_ui_with_cancel_leeway \
 		and camera_zoom_after_cancel_pressed == $Camera2D.zoom
@@ -172,45 +142,48 @@ func can_move_camera_with_cancel():
 		and can_move_camera()
 
 
-func _process(_delta):	
-	if Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control"):
-		camera_position_after_cancel_pressed = $Camera2D.position
-		camera_zoom_after_cancel_pressed = $Camera2D.zoom
-	if can_show_unit_ui():
-		var show_unit_ui_with_cancel_condition = can_show_unit_ui_with_cancel() \
-			and Input.is_action_just_released("cancel") and not Input.is_action_pressed("control")
-		if Input.is_action_just_pressed("unit_ui") or show_unit_ui_with_cancel_condition:
-			var unit = get_unit_at($Cursor.position)
-			if unit:
-				show_unit_ui(unit)
-			else:
-				show_unit_ui(get_selected_summoner().followers[selected_follower_index])
-			
-	if Input.is_action_just_pressed("debug_clear_pending_ui"):
-		pending_ui = 0
+###############################################################################
+#        Main logic	                                                          #
+###############################################################################
+
+func _ready():
+	add_child(level)
+
+	# Why not do this inside the appropriate classes?!
+	# Well, you see, the stage initializes after all of its children.
+	for u in level.get_children():
+		if u is Unit:
+			connect_with_unit(u)
+			if u is Summoner:
+				summoners_cache.append(u)
+				for f in u.followers:
+					level.add_child(f)
+					connect_with_unit(f)
+				if len(level.advance) > 0:
+					u.get_level_advancing_skill().base_skill_cost = level.advance[0]
+			elif u is Gate:
+				u.initialize_path()
+				gates_cache.append(u)
+				terrain.connect("settings_changed", u, "_on_Terrain_settings_changed")
+				for e in u.enemies.values():
+					level.add_child(e)
+					connect_with_unit(e)
+			elif u is Enemy:
+				independent_enemies_cache.append(u)
+				summoned_order.append(u)
+			elif u is Follower:
+				independent_followers_cache.append(u)
+				summoned_order.append(u)
+
+	cursor.stage = self
+	camera.position = level.default_camera_position
+	camera.zoom = level.default_camera_zoom
 	
-	if can_change_selected_follower():
-		if InputWatcher.is_action_pressed_with_rapid_fire("next_follower"):
-			selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
-		elif InputWatcher.is_action_pressed_with_rapid_fire("previous_follower"):
-			selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
-			
-	if can_undo_or_redo():
-		if InputWatcher.is_action_pressed_with_rapid_fire("undo"):
-			undo()
-		elif InputWatcher.is_action_pressed_with_rapid_fire("redo"):
-			redo()
-		elif InputWatcher.is_action_pressed_with_rapid_fire("restart"):
-			if Game.undoable_restart:
-				load_state(states[0])
-				append_state()
-				$UI/Blackscreen.animate()
-			else:
-				get_tree().reload_current_scene()
-	
-	if can_advance_round():
-		if InputWatcher.is_action_pressed_with_rapid_fire("advance_round"):
-			advance_tick()
+	append_state()
+
+
+func _process(_delta):
+	process_input()
 	
 	if can_show_cursor():
 		if can_move_cursor():
@@ -219,8 +192,11 @@ func _process(_delta):
 			cursor.control_state = cursor.ControlState.LOCKED
 	else:
 		cursor.control_state = cursor.ControlState.HIDDEN
-
+	
+	
 	$"UI/Follower Panels".update_ui()
+	
+	
 	if cur_level_index < len(level.advance):
 		$"UI/Game Over".visible = not is_alive()
 		$"UI/Game Over/Label".text = "YOU LOSE :("
@@ -234,6 +210,57 @@ func _process(_delta):
 		$Deployable.update_tiles(get_selected_follower().deployable_terrain)
 		# Big performance bottleneck, but fine for now
 
+
+func process_input():
+	if Input.is_action_just_released("cancel") and not Input.is_action_pressed("control") and can_show_unit_ui_with_cancel() \
+		or Input.is_action_just_pressed("unit_ui") and can_show_ui():
+			var unit = get_unit_at($Cursor.position)
+			if unit:
+				show_unit_ui(unit)
+			else:
+				show_unit_ui(get_selected_summoner().followers[selected_follower_index])
+		
+	elif Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control") and is_waiting_for_ui():
+		for ui in $"Foreground UI".get_children():
+			if ui.modulate.a == 1:
+				ui.hide()
+				
+	elif Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control"):
+		camera_position_after_cancel_pressed = $Camera2D.position
+		camera_zoom_after_cancel_pressed = $Camera2D.zoom
+	
+	elif Input.is_action_just_pressed("unit_ui") and $"Foreground UI/Unit UI".modulate.a > 0:
+		$"Foreground UI/Unit UI".hide()
+			
+	elif Input.is_action_just_pressed("debug_clear_pending_ui"):
+		pending_ui = 0
+	
+	elif InputWatcher.is_action_pressed_with_rapid_fire("next_follower") and can_change_selected_follower():
+		selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
+	elif InputWatcher.is_action_pressed_with_rapid_fire("previous_follower") and can_change_selected_follower():
+		selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
+			
+	elif InputWatcher.is_action_pressed_with_rapid_fire("undo") and can_undo_or_redo():
+		undo()
+		
+	elif InputWatcher.is_action_pressed_with_rapid_fire("redo") and can_undo_or_redo():
+		redo()
+		
+	elif InputWatcher.is_action_pressed_with_rapid_fire("restart") and can_undo_or_redo():
+		if Game.undoable_restart:
+			load_state(states[0])
+			append_state()
+			$UI/Blackscreen.animate()
+		else:
+			get_tree().reload_current_scene()
+	
+	elif InputWatcher.is_action_pressed_with_rapid_fire("advance_round") and can_advance_round():
+		advance_tick()
+	elif Input.is_action_just_pressed("settings"):
+		if can_show_ui() and not $"Foreground UI/Settings".modulate.a > 0:
+			$"Foreground UI/Settings".show()
+		elif $"Foreground UI/Settings".modulate.a > 0:
+			$"Foreground UI/Settings".hide()
 
 func _input(event):
 	if can_undo_or_redo() and event.is_action_pressed("undo_wheel"):
@@ -250,33 +277,40 @@ func _on_Cursor_cancel_issued(pos):
 	pass
 
 
+func _on_Unit_dead(unit):
+	pass
+
+
 func show_unit_ui(unit):
-	$"UI/Unit UI".update_unit(unit)
-	$"UI/Unit UI".show()
+	$"Foreground UI/Unit UI".update_unit(unit)
+	$"Foreground UI/Unit UI".show()
+
 
 func _on_UI_mouse_entered():
 	pending_ui += 1
 
+
 func _on_UI_mouse_exited():
 	pending_ui -= 1
+
+
+func _on_Settings_Button_pressed():
+	if can_show_ui() and not $"Foreground UI/Settings".modulate.a > 0:
+		$"Foreground UI/Settings".show()
 
 
 func _on_Skill_UI_skill_activation_requested(skill):
 	if skill.is_available():
 		skill.activate()
 		yield(get_tree(), "idle_frame")
-		$"UI/Unit UI".update_unit($"UI/Unit UI".saved_unit)
-
-
-func _on_Unit_dead(unit):
-	pass
+		$"Foreground UI/Unit UI".update_unit($"Foreground UI/Unit UI".saved_unit)
 
 
 func _on_Retreat_pressed():
-	var unit = $"UI/Unit UI".saved_unit
+	var unit = $"Foreground UI/Unit UI".saved_unit
 	unit.die()
 	append_state()
-	$"UI/Unit UI".hide()
+	$"Foreground UI/Unit UI".hide()
 
 
 func _on_Unit_UI_exited():
