@@ -10,11 +10,11 @@ export(NodePath) var up_node = null
 
 
 func on_pressed():
-	print("Pressed: " + name)
+	pass
 
 
 func on_hovered():
-	menu.selected_node = self
+	pass
 
 
 func get_next_node(direction):
@@ -35,7 +35,7 @@ func get_next_node(direction):
 
 
 func _on_Node_mouse_entered():
-	on_hovered()
+	menu.selected_node = self
 
 
 func _on_Node_mouse_exited():

@@ -53,18 +53,20 @@ func _ready():
 
 func _process(delta):
 	for action in time_held:
+		var group = RAPID_FIRE_GROUP[action]
 		if Input.is_action_pressed(action):
-			if time_since_released[RAPID_FIRE_GROUP[action]] <= RAPID_FIRE_HOLD[RAPID_FIRE_GROUP[action]]:
-				time_held[action] = RAPID_FIRE_WAIT[RAPID_FIRE_GROUP[action]]
-			time_since_released[RAPID_FIRE_GROUP[action]] = RAPID_FIRE_HOLD[RAPID_FIRE_GROUP[action]]
+			if time_since_released[group] <= RAPID_FIRE_HOLD[group]:
+				time_held[action] = RAPID_FIRE_WAIT[group]
+			if time_held[action] > RAPID_FIRE_WAIT[group]:
+				time_since_released[group] = RAPID_FIRE_HOLD[group]
 			time_held[action] += delta
 			time_since_fired[action] += delta
 		elif Input.is_action_just_released(action):
-			if (time_held[action] > RAPID_FIRE_WAIT[RAPID_FIRE_GROUP[action]]):
-				time_since_released[RAPID_FIRE_GROUP[action]] = 0 
+			if (time_held[action] > RAPID_FIRE_WAIT[group]):
+				time_since_released[group] = 0 
 			time_held[action] = 0
 		else:
-			time_since_released[RAPID_FIRE_GROUP[action]] += delta
+			time_since_released[group] += delta
 
 
 func is_action_pressed_with_rapid_fire(action):
