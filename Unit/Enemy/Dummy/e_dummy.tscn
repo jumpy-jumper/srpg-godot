@@ -11,12 +11,8 @@ base_def = 30
 base_res = 20
 base_movement = [ 0, 0, 0, 0 ]
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="View" index="1"]
 scale = Vector2( 2, 2 )
 frames = ExtResource( 2 )
 frame = 0
 offset = Vector2( 0, 0 )
-
-[node name="UI" parent="Sprite" index="0"]
-position = Vector2( 10, 20 )
-scale = Vector2( 0.5, 0.5 )

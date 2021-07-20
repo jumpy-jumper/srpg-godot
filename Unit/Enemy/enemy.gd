@@ -3,6 +3,7 @@ extends Unit
 
 
 var gate = null
+var path = []
 
 
 func get_type_of_self():
@@ -14,37 +15,13 @@ func get_type_of_enemy():
 
 
 func _process(_delta):
-	$"Sprite/UI".visible = alive
-	if not $DeathTweener.is_active():
-		modulate.a = 1.0 if alive else 0
-	elif alive:
-		$DeathTweener.stop_all()
-		modulate.a = 1.0
-	
-	if stage.cursor.position == position or marked:
-		var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, stage.get_selected_summoner().position, traversable))
-		for i in range(len(path)):
-			path[i] += Vector2(stage.get_cell_size() / 2, stage.get_cell_size() / 2)
-			path[i] -= global_position
-		$"Path Indicator".points = PoolVector2Array(path)
-		$"Path Indicator".visible = true
-	else:
-		$"Path Indicator".visible = marked
+	var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, stage.get_selected_summoner().position, traversable))
 
 
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)
 	if pos == position:
 		marked = not marked
-
-onready var base_path_alpha = $"Path Indicator".default_color.a
-
-func _on_Cursor_hovered(pos):
-	._on_Cursor_hovered(pos)
-	if pos == position:
-		$"Path Indicator".default_color.a = (1 - pow(base_path_alpha, 2))
-	else:
-		$"Path Indicator".default_color.a = base_path_alpha
 
 
 ###############################################################################
@@ -57,16 +34,9 @@ export(Array, Resource) var traversable = []
 
 
 var movement = 0
-const MOV_INTERP_DURATION = 0.125
 
 
-func move():
-	if blocker != null:
-		$Blocked.visible = true
-		return
-		
-	$Blocked.visible = false
-	
+func move():	
 	var target = stage.get_selected_summoner()		
 	var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, stage.get_selected_summoner().position, traversable))
 	
@@ -102,18 +72,12 @@ func move():
 	
 	var oldpos = position
 	position = newpos
-	
-	return
-	
-	$MovementTweener.interpolate_property($Sprite, "global_position",
-	oldpos, newpos, MOV_INTERP_DURATION,
-	Tween.TRANS_LINEAR, Tween.EASE_IN)
-	$MovementTweener.start()
 
 
 ###############################################################################
 #        Block logic                                                          #
 ###############################################################################
+
 
 var blocker = null
 
@@ -126,11 +90,9 @@ var blocker = null
 func get_state():
 	var ret = .get_state()	
 	ret["movement"] = movement
-	ret["blocked"] = get_node("Blocked").visible
 	return ret
 
 
 func load_state(state):
 	.load_state(state)
-	get_node("Blocked").visible = state["blocked"]
 	movement = state["movement"]

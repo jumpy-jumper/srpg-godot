@@ -18,9 +18,9 @@ base_cost = 28
 base_block_range = [  ]
 base_block_count = 0
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="View" index="0"]
 frames = ExtResource( 3 )
-frame = 4
+frame = 6
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, -3 ), Vector2( -1, -2 ), Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( -2, -1 ), Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( -3, 0 ), Vector2( -2, 0 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( -2, 1 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( -1, 2 ), Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 0, 3 ) ]

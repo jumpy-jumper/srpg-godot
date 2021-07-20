@@ -43,7 +43,7 @@ func is_alive():
 
 
 func is_won():
-	return cur_level_index >= len(level.advance)
+	return cur_level_index >= len(level.checkpoints)
 
 
 func is_waiting_for_facing():
@@ -159,8 +159,8 @@ func _ready():
 				for f in u.followers:
 					level.add_child(f)
 					connect_with_unit(f)
-				if len(level.advance) > 0:
-					u.get_level_advancing_skill().base_skill_cost = level.advance[0]
+				if len(level.checkpoints) > 0:
+					u.get_level_advancing_skill().base_skill_cost = level.checkpoints[0]
 			elif u is Gate:
 				u.initialize_path()
 				gates_cache.append(u)
@@ -197,12 +197,12 @@ func _process(_delta):
 	$"UI/Follower Panels".update_ui()
 	
 	
-	if cur_level_index < len(level.advance):
-		$"UI/Game Over".visible = not is_alive()
-		$"UI/Game Over/Label".text = "YOU LOSE :("
-	else:
-		$"UI/Game Over".visible = true
+	if is_won():
 		$"UI/Game Over/Label".text = "YOU WIN :D"
+		$"UI/Game Over".visible = true
+	else:
+		$"UI/Game Over/Label".text = "YOU LOSE :("
+		$"UI/Game Over".visible = not is_alive()
 	
 	var selected_follower = get_selected_follower()
 	$Deployable.visible = selected_follower.can_be_deployed()
@@ -231,16 +231,13 @@ func process_input():
 	
 	elif Input.is_action_just_pressed("unit_ui") and $"Foreground UI/Unit UI".modulate.a > 0:
 		$"Foreground UI/Unit UI".hide()
-			
-	elif Input.is_action_just_pressed("debug_clear_pending_ui"):
-		pending_ui = 0
 	
-	elif InputWatcher.is_action_pressed_with_rapid_fire("next_follower") and can_change_selected_follower():
+	if InputWatcher.is_action_pressed_with_rapid_fire("next_follower") and can_change_selected_follower():
 		selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
 	elif InputWatcher.is_action_pressed_with_rapid_fire("previous_follower") and can_change_selected_follower():
 		selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
 			
-	elif InputWatcher.is_action_pressed_with_rapid_fire("undo") and can_undo_or_redo():
+	if InputWatcher.is_action_pressed_with_rapid_fire("undo") and can_undo_or_redo():
 		undo()
 		
 	elif InputWatcher.is_action_pressed_with_rapid_fire("redo") and can_undo_or_redo():
@@ -261,6 +258,10 @@ func process_input():
 			$"Foreground UI/Settings".show()
 		elif $"Foreground UI/Settings".modulate.a > 0:
 			$"Foreground UI/Settings".hide()
+	
+	if Input.is_action_just_pressed("debug_clear_pending_ui"):
+		pending_ui = 0
+
 
 func _input(event):
 	if can_undo_or_redo() and event.is_action_pressed("undo_wheel"):
@@ -275,11 +276,6 @@ func _on_Cursor_confirm_issued(pos):
 
 func _on_Cursor_cancel_issued(pos):
 	pass
-
-
-func _on_Unit_dead(unit):
-	pass
-
 
 func show_unit_ui(unit):
 	$"Foreground UI/Unit UI".update_unit(unit)
@@ -307,10 +303,11 @@ func _on_Skill_UI_skill_activation_requested(skill):
 
 
 func _on_Retreat_pressed():
-	var unit = $"Foreground UI/Unit UI".saved_unit
-	unit.die()
-	append_state()
-	$"Foreground UI/Unit UI".hide()
+	if $"Foreground UI/Unit UI".modulate.a == 1:
+		var unit = $"Foreground UI/Unit UI".saved_unit
+		unit.die()
+		append_state()
+		$"Foreground UI/Unit UI".hide()
 
 
 func _on_Unit_UI_exited():
@@ -470,9 +467,6 @@ func advance_tick():
 	for u in followers:
 		u.clear_block()
 	
-	for u in summoners_cache + followers + enemies + gates_cache:
-		u.display_toasts()
-	
 	for u in gates_cache:
 		if u.alive:
 			u.spawn_enemy()
@@ -487,9 +481,9 @@ var cur_level_index = 0
 
 func advance_level():
 	cur_level_index += 1
-	if not (cur_level_index >= len(level.advance)):
+	if not (cur_level_index >= len(level.checkpoints)):
 		for summoner in summoners_cache:
-			summoner.get_level_advancing_skill().base_skill_cost = level.advance[cur_level_index]
+			summoner.get_level_advancing_skill().base_skill_cost = level.checkpoints[cur_level_index]
 
 
 ###############################################################################
@@ -510,7 +504,6 @@ func deselect_unit():
 
 func connect_with_unit(unit):
 	unit.stage = self
-	unit.connect("dead", self, "_on_Unit_dead")
 	connect("player_phase_started", unit, "_on_Stage_player_phase_started")
 	connect("enemy_phase_started", unit, "_on_Stage_enemy_phase_started")
 	connect("tick_ended", unit, "_on_Stage_tick_ended")

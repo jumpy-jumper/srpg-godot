@@ -5,7 +5,7 @@ class_name RangeIndicator
 var range_indicator_tile = preload("res://Unit/Range/range_indicator_tile.tscn")
 
 
-onready var unit = $"../.."
+onready var unit = $"../../.."
 
 
 func update_range(_range, color = Color.black):

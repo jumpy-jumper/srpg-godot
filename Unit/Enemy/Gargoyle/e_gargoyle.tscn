@@ -16,6 +16,5 @@ base_res = 30
 base_movement = [ 1, 1, 1, 2 ]
 traversable = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ) ]
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="View" index="1"]
 frames = ExtResource( 1 )
-frame = 3

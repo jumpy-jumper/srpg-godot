@@ -9,6 +9,7 @@ var unit = null
 
 onready var base_alpha = $CooldownPanel.modulate.a
 
+
 func update_unit(unit, selected):
 	self.unit = unit
 	$Mugshot.texture = unit.portrait

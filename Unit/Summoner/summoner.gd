@@ -26,11 +26,6 @@ func _ready():
 
 
 func _process(_delta):
-	if not $DeathTweener.is_active():
-		modulate.a = 1.0 if alive else 0
-	elif alive:
-		$DeathTweener.stop_all()
-		modulate.a = 1.0
 	var skills = $Skills.get_children()
 	for skill in skills:
 		skill.sp = faith

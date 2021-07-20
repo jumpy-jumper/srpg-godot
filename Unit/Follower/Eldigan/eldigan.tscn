@@ -16,7 +16,7 @@ base_cost = 34
 base_block_range = [ Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ) ]
 base_block_count = 4
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="View" index="0"]
 frames = ExtResource( 3 )
 frame = 6
 

@@ -11,13 +11,10 @@ enum UnitType {UNDEFINED, SUMMONER, FOLLOWER, GATE, ENEMY}
 func get_type_of_self():
 	return UnitType.UNDEFINED
 
-func get_position():
-	return position
 
 ###############################################################################
 #        Main logic                                                           #
 ###############################################################################
-
 
 var stage = null
 var alive = true
@@ -63,8 +60,14 @@ func _on_Cursor_cancel_issued(pos):
 	pass
 
 
+signal hovered()
+signal unhovered()
+
 func _on_Cursor_hovered(pos):
-	$Ranges.visible = position == pos or marked
+	if pos == position:
+		emit_signal("hovered")
+	else:
+		emit_signal("unhovered")
 
 
 func _on_Cursor_moved(pos):
@@ -189,24 +192,12 @@ func is_full_hp():
 ###############################################################################
 
 
-signal dead(unit)
+signal dead()
+signal damage_taken(amount, type)
+signal damage_dealt(target, type)
 
 
 enum DamageType {PHYSICAL, MAGIC, TRUE, HEALING, SHIELD, SHIELD_DAMAGE}
-
-
-var physical_color = Color.lightcoral
-var magic_color = Color.blue
-var true_color = Color.white
-var shield_damage_color = Color.goldenrod
-var healing_color = Color.green
-var shield_color = Color.goldenrod
-var colors = [physical_color, magic_color, true_color, healing_color, shield_color, shield_damage_color]
-
-var damage_toast = preload("res://Unit/damage_toast.tscn")
-
-var damage_toasts = []
-var targeting_toasts = []
 
 func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if damage_type == DamageType.PHYSICAL:
@@ -222,7 +213,7 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if shield_damage > 0:
 		amount -= shield_damage
 		shield -= shield_damage
-		damage_toasts.append(get_damage_toast(-shield_damage, colors[DamageType.SHIELD_DAMAGE]))
+		emit_signal("damage_taken", -shield_damage, DamageType.SHIELD_DAMAGE)
 	
 	if amount > 0:
 		hp -= amount
@@ -231,13 +222,13 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 		hp = min(get_stat("max_hp", base_max_hp), hp)
 	
 	if damage_type != DamageType.SHIELD_DAMAGE and (amount > 0 or shield == 0):
-		damage_toasts.append(get_damage_toast(max(amount, 0), colors[damage_type]))
+		emit_signal("damage_taken", max(amount, 0), damage_type)
 
 
 func apply_healing(amount = 1):
 	amount *= get_stat("incoming_healing", 1)
 	hp = min(hp + max(amount, 0), get_stat("max_hp", base_max_hp))
-	damage_toasts.append(get_damage_toast(amount, colors[DamageType.HEALING]))
+	emit_signal("damage_taken", amount, DamageType.HEALING)	
 
 
 func heal_to_full():
@@ -248,44 +239,17 @@ func heal_to_full():
 
 func apply_shield(amount):
 	amount *= get_stat("incoming_shield", 1)
-	shield += max(amount, 0)
-	damage_toasts.append(get_damage_toast(amount, colors[DamageType.SHIELD]))
-
-
-func get_damage_toast(amount, color):
-	var toast = damage_toast.instance()
-	toast.amount = amount
-	toast.color = color
-	return toast
-
-
-func display_toasts():
-	for i in range(len(damage_toasts)):
-		damage_toasts[i].position += position
-		damage_toasts[i].position.y += i * damage_toasts[i].y_step
-		stage.add_child(damage_toasts[i])
-	for toast in targeting_toasts:
-		toast.position += position
-		stage.add_child(toast)
-	damage_toasts.clear()
-	targeting_toasts.clear()
-	
-
-const DEATH_TWEEN_DURATION = 0.5
+	shield += max(amount, 0)	
+	emit_signal("damage_taken", amount, DamageType.SHIELD)	
 
 
 func die():
-	emit_signal("dead", self)
 	alive = false
 	heal_to_full()
 	for skill in $Skills.get_children():
 		skill.initialize()
 	shield = 0
-	
-	$DeathTweener.interpolate_property(self, "modulate:a",
-	0.75, 0, DEATH_TWEEN_DURATION,
-	Tween.TRANS_LINEAR, Tween.EASE_IN)
-	$DeathTweener.start()
+	emit_signal("dead")
 
 
 ###############################################################################

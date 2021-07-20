@@ -29,35 +29,13 @@ func _ready():
 			enemy.gate = self
 	
 	marked = true
-	
-	$"Path Indicator".modulate = modulate
 
 
 var prev_pos = Vector2.ZERO
 
 func _process(_delta):
-	if not $DeathTweener.is_active():
-		$Sprite.modulate.a = 1.0 if alive else 0
-	elif alive:
-		$DeathTweener.stop_all()
-		$Sprite.modulate.a = 1.0
-	
 	if Input.is_action_just_pressed("show_gate_paths"):
 		marked = not marked
-	if stage.cursor.position == position or marked:
-		var path = []
-		for i in range(len(self.path)):
-			path.append(self.path[i]-global_position)
-		$"Path Indicator".points = PoolVector2Array(path)
-		$"Path Indicator".visible = true
-	else:
-		$"Path Indicator".visible = marked
-	
-	if $"Path Indicator".visible and not alive:
-		$"Path Indicator".visible = false
-		for enemy in enemies.values():
-			if enemy.alive:
-				$"Path Indicator".visible = true
 	
 	if position != prev_pos:
 		initialize_path()
@@ -65,20 +43,6 @@ func _process(_delta):
 	
 	if OS.is_debug_build():
 		initialize_path()
-
-
-func die():
-	emit_signal("dead", self)
-	alive = false
-	heal_to_full()
-	for skill in $Skills.get_children():
-		skill.initialize()
-	shield = 0
-	
-	$DeathTweener.interpolate_property($Sprite, "modulate:a",
-	0.75, 0, DEATH_TWEEN_DURATION,
-	Tween.TRANS_LINEAR, Tween.EASE_IN)
-	$DeathTweener.start()
 
 
 func initialize_path():
@@ -89,8 +53,11 @@ func initialize_path():
 		path = []
 	
 
+var blocked = false
+
+
 func spawn_enemy():
-	$Sprite/Blocked.visible = false
+	blocked = false
 
 	if enemies.has(stage.cur_tick):
 		var enemy = enemies[stage.cur_tick]
@@ -106,7 +73,7 @@ func spawn_enemy():
 				stage.summoned_order.erase(enemy)
 			stage.summoned_order.push_back(enemy)
 		else:
-			$Sprite/Blocked.visible = true
+			blocked = true
 		
 		# Die if there are no more enemies to spawn
 		for tick in enemies.keys():
@@ -121,17 +88,6 @@ func _on_Cursor_confirm_issued(pos):
 		marked = not marked
 
 
-onready var base_path_alpha = $"Path Indicator".default_color.a
-
-
-func _on_Cursor_hovered(pos):
-	._on_Cursor_hovered(pos)
-	if pos == position:
-		$"Path Indicator".default_color.a = (1 - pow(base_path_alpha, 2))
-	else:
-		$"Path Indicator".default_color.a = base_path_alpha
-
-
 func on_Terrain_settings_changed():
 	initialize_path()
 
@@ -144,12 +100,12 @@ func on_Terrain_settings_changed():
 
 func get_state():
 	var ret = .get_state()
-	ret["blocked"] = get_node("Sprite/Blocked").visible
+	ret["blocked"] = blocked
 	ret["path"] = path + []
 	return ret
 
 
 func load_state(state):
 	.load_state(state)
-	get_node("Sprite/Blocked").visible = state["blocked"]
+	blocked = state["blocked"]
 	path = state["path"]

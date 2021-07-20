@@ -9,6 +9,6 @@ base_max_hp = 250
 base_atk = 55
 base_def = 30
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="View" index="1"]
 frames = ExtResource( 2 )
-frame = 2
+frame = 0

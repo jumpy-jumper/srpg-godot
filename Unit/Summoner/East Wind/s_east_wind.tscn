@@ -6,6 +6,6 @@
 [node name="The East Wind" instance=ExtResource( 2 )]
 unit_name = "The East Wind"
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="View" index="0"]
 frames = ExtResource( 1 )
-frame = 2
+frame = 6

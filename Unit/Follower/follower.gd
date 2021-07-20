@@ -24,18 +24,7 @@ func get_type_of_enemy():
 #        Main logic                                                           #
 ###############################################################################
 
-func _process(_delta):
-	$"Sprite/UI".visible = alive
-	
-	var activatable_skill = get_first_activatable_skill()
-	$Sprite/Ready.visible = alive and (activatable_skill.is_available() if activatable_skill else false)
-	
-	if not $DeathTweener.is_active():
-		modulate.a = 0.5 if previewing else (1.0 if alive else 0)
-	elif alive:
-		$DeathTweener.stop_all()
-		modulate.a = 1.0
-	
+func _process(_delta):	
 	if waiting_for_facing and Game.mouse_enabled and stage.can_update_facing():
 			if Game.mouse_idle == 0:
 				face_mouse()
@@ -77,7 +66,6 @@ func deploy_self(pos):
 			if skill.activation == skill.Activation.DEPLOYMENT \
 				or skill.activation == skill.Activation.SP_AUTO and skill.is_available():
 					skill.activate()
-		display_toasts()
 		facing = Facing.RIGHT
 		waiting_for_facing = true
 		stage.append_state()
@@ -131,9 +119,9 @@ func die():
 
 var previewing = false
 
+
 func _on_Cursor_hovered(pos):
 	._on_Cursor_hovered(pos)
-	$Ranges.visible = $Ranges.visible or waiting_for_facing
 	if not alive \
 		and stage.get_selected_follower() == self \
 		and stage.get_unit_at(pos) == null \

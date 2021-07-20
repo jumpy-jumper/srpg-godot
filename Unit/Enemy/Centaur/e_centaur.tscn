@@ -11,6 +11,6 @@ base_def = 40
 base_res = 20
 base_movement = [ 1, 2, 1, 2 ]
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="View" index="1"]
 frames = ExtResource( 1 )
-frame = 5
+frame = 3

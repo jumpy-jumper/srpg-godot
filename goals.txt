@@ -7,6 +7,7 @@ Content
 Implementation
 	Urgent
 		Rearrange stage UI and UI waiting state
+		Display different skill ranges while waiting for facing
 		Rearrange Unit UI
 		Skills that activate on the next basic attack
 		Summoner win skill
@@ -21,6 +22,7 @@ Implementation
 	Game Logic
 		Resolve ties in ally targeting / enemy action
 	QoL
+		Make it so you can click out of unit UI before it finishes animating
 		Reimplement unit UI
 		Clicking on units inside gates displays their contents
 		Gate unit preview displays their skills

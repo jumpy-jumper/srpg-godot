@@ -16,8 +16,9 @@ base_res = 50
 base_movement = [ 0, 1, 1, 1 ]
 traversable = [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 6 ) ]
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="View" index="1"]
 frames = ExtResource( 1 )
+frame = 3
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, -3 ), Vector2( -1, -2 ), Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( -2, -1 ), Vector2( -1, -1 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( -3, 0 ), Vector2( -2, 0 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( -2, 1 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( -1, 2 ), Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 0, 3 ) ]

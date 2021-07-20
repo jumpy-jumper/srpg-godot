@@ -40,13 +40,7 @@ func activate():
 			for target in select_targets(possible_targets):
 				target.apply_damage(unit.get_stat("atk", unit.base_atk), \
 					unit.get_stat("damage_type", damage_type))
-	
-				var toast = targeting_toast.instance()
-				toast.attacker = unit
-				toast.attackee = target
-				toast.gradient = toast.gradient.duplicate()
-				toast.gradient.set_color(1, unit.colors[damage_type])
-				unit.targeting_toasts.append(toast)
+				unit.emit_signal("damage_dealt", target, damage_type)
 
 
 		elif skill_type == SkillType.HEAL: 
@@ -57,13 +51,7 @@ func activate():
 					possible_targets.erase(target)
 			for target in select_targets(possible_targets):
 				target.apply_healing(unit.get_stat("atk", unit.base_atk))
-				
-				var toast = targeting_toast.instance()
-				toast.attacker = unit
-				toast.attackee = target
-				toast.gradient = toast.gradient.duplicate()
-				toast.gradient.set_color(1, unit.colors[damage_type])
-				unit.targeting_toasts.append(toast)
+				unit.emit_signal("damage_dealt", target, damage_type)
 
 
 ###############################################################################

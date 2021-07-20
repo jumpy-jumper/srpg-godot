@@ -144,12 +144,4 @@ func update_unit(unit):
 				panels[i].visible = true
 				var key = unit.enemies.keys()[i]
 				panels[i].get_node("Label").text = str(key)
-				panels[i].get_node("AnimatedSprite").frames = unit.enemies[key].get_node("Sprite").frames
-
-func show():
-	.show()
-	$Retreat.disabled = false
-
-func hide():
-	.hide()
-	$Retreat.disabled = true
+				panels[i].get_node("AnimatedSprite").frames = unit.enemies[key].get_node("View/Sprite").frames

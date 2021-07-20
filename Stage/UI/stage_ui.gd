@@ -9,8 +9,11 @@ var operatable = false
 
 
 func _ready():
-	visible = true
 	modulate.a = 0
+
+
+func _process(delta):
+	visible = modulate.a > 0
 
 
 func show():
