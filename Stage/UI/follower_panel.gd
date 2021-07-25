@@ -34,7 +34,6 @@ func update_unit(unit, selected):
 			$CooldownPanel.visible = true
 			$CooldownPanel.modulate.a = base_alpha * 0.5
 			$CooldownPanel/Cooldown.text = ""
-				
 
 
 func _on_Follower_Panel_gui_input(event):

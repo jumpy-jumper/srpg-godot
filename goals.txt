@@ -6,6 +6,7 @@ Content
 	East-08: Lyon
 Implementation
 	Urgent
+		Make automatic skills not last for more than one turn
 		Rearrange stage UI and UI waiting state
 		Rearrange Unit UI
 		Skills that activate on the next basic attack

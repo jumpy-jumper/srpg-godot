@@ -1,17 +1,16 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Levels/tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Unit/Gate/gate.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Unit/Follower/Nils/nils.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Unit/Enemy/Hound/e_hound.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Unit/Follower/Frederick/frederick.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Unit/Follower/Edelgard/edelgard.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Unit/Follower/Nephenee/nephenee.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Unit/Enemy/Gargoyle/e_gargoyle.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Levels/level.gd" type="Script" id=9]
 [ext_resource path="res://Levels/blue_level.jpg" type="Texture" id=10]
 [ext_resource path="res://Unit/Enemy/Zombie/e_zombie.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=12]
 
 [node name="Level" type="Node" groups=[
 "Level",
@@ -49,15 +48,11 @@ faith = 12
 
 [node name="Nils" parent="The East Wind" instance=ExtResource( 4 )]
 position = Vector2( 64, 0 )
-script = ExtResource( 12 )
 
 [node name="Nephenee" parent="The East Wind" instance=ExtResource( 7 )]
 position = Vector2( 64, 0 )
-script = ExtResource( 12 )
 
-[node name="Frederick" parent="The East Wind" instance=ExtResource( 6 )]
-position = Vector2( 64, 0 )
-script = ExtResource( 12 )
+[node name="Edelgard" parent="The East Wind" instance=ExtResource( 6 )]
 
 [node name="Degeneracy" parent="." instance=ExtResource( 3 )]
 position = Vector2( 448, 64 )

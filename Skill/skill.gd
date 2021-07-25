@@ -43,8 +43,6 @@ func tick():
 		if not is_active():
 			var sp_cost = unit.get_stat("skill_cost", base_skill_cost)
 			sp = 0 if activation == Activation.DEPLOYMENT else min(sp + 1, sp_cost)
-			if activation == Activation.SP_AUTO and sp == sp_cost:
-				activate()
 		else:
 			ticks_left = max(0, ticks_left - 1)
 			if ticks_left == 0:

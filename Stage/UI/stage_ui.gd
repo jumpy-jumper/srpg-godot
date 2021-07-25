@@ -2,7 +2,7 @@ extends Control
 class_name StageUI
 
 
-const FADE_IN_DURATION = 0.25
+const FADE_IN_DURATION = 0.125
 
 
 var operatable = false

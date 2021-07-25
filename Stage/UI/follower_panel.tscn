@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Unit/Follower/Eldigan/eldigan_portrait.png" type="Texture" id=2]
+[ext_resource path="res://Unit/Follower/Olivia/olivia_portrait.png" type="Texture" id=2]
 [ext_resource path="res://Stage/UI/follower_panel.gd" type="Script" id=3]
 [ext_resource path="res://Stage/UI/follower_panel_border.png" type="Texture" id=4]
 
@@ -16,6 +16,7 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="."]
+modulate = Color( 1, 1, 1, 0.447059 )
 margin_right = 128.0
 margin_bottom = 128.0
 mouse_filter = 2
@@ -27,7 +28,7 @@ __meta__ = {
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 535, 90, 128, 128 )
+region_rect = Rect2( 385, 105, 128, 128 )
 
 [node name="Cost" type="Label" parent="."]
 anchor_left = 1.0

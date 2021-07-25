@@ -139,6 +139,7 @@ func can_move_camera():
 	return is_alive() \
 		and not is_won() \
 		and not is_waiting_for_ui() \
+		and pending_ui == 0
 
 
 func can_move_camera_with_cancel():

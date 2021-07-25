@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/level.gd" type="Script" id=2]
@@ -13,11 +13,10 @@
 [ext_resource path="res://Unit/Follower/Nephenee/nephenee.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Unit/Enemy/Dummy/e_dummy.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Levels/blue_level.jpg" type="Texture" id=13]
-[ext_resource path="res://Unit/Follower/Ninian/ninian.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Unit/Follower/Lyon/lyon.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Unit/Follower/Olivia/olivia.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Unit/Follower/Robin/robin.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Unit/Follower/Niles/niles.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Unit/Follower/Eldigan/eldigan.tscn" type="PackedScene" id=17]
-[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=18]
+[ext_resource path="res://Unit/Follower/Edelgard/edelgard.tscn" type="PackedScene" id=17]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap.png 0"
@@ -105,41 +104,28 @@ base_max_hp = 1
 faith = 200
 
 [node name="Nils" parent="The East Wind" instance=ExtResource( 4 )]
-script = ExtResource( 18 )
 
 [node name="Nephenee" parent="The East Wind" instance=ExtResource( 11 )]
-script = ExtResource( 18 )
 
 [node name="Ninian" parent="The East Wind" instance=ExtResource( 14 )]
-script = ExtResource( 18 )
 
 [node name="Norne" parent="The East Wind" instance=ExtResource( 8 )]
-script = ExtResource( 18 )
 
 [node name="Lysithea" parent="The East Wind" instance=ExtResource( 9 )]
-script = ExtResource( 18 )
 
 [node name="Lon\'qu" parent="The East Wind" instance=ExtResource( 7 )]
-script = ExtResource( 18 )
 
 [node name="Niles" parent="The East Wind" instance=ExtResource( 16 )]
-script = ExtResource( 18 )
-base_max_hp = 200
 
 [node name="Natasha" parent="The East Wind" instance=ExtResource( 6 )]
-script = ExtResource( 18 )
 
 [node name="Dieck" parent="The East Wind" instance=ExtResource( 10 )]
-script = ExtResource( 18 )
 
 [node name="Lyon" parent="The East Wind" instance=ExtResource( 15 )]
-script = ExtResource( 18 )
-
-[node name="Eldigan" parent="The East Wind" instance=ExtResource( 17 )]
-script = ExtResource( 18 )
 
 [node name="Frederick" parent="The East Wind" instance=ExtResource( 3 )]
-script = ExtResource( 18 )
+
+[node name="Edelgard" parent="The East Wind" instance=ExtResource( 17 )]
 
 [node name="Dummy" parent="." instance=ExtResource( 12 )]
 position = Vector2( 128, 192 )

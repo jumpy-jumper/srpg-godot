@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Unit/Follower/Edelgard/edelgard_portrait.png" type="Texture" id=1]
+[ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Follower/Edelgard/edelgard.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://Unit/Follower/Edelgard/edelgard_s1.tscn" type="PackedScene" id=4]
+
+[node name="Edelgard" instance=ExtResource( 2 )]
+unit_name = "Edelgard"
+base_max_hp = 400
+base_atk = 100
+base_def = 70
+base_res = 20
+portrait = ExtResource( 1 )
+mugshot_top_left = Vector2( 450, 100 )
+base_cost = 36
+base_block_range = [ Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( -1, -1 ), Vector2( -1, 1 ) ]
+base_block_count = 4
+
+[node name="Sprite" parent="." index="0"]
+frames = ExtResource( 3 )
+frame = 0
+
+[node name="Basic Attack" parent="Skills" index="0"]
+base_skill_range = [ Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( -1, -1 ) ]
+
+[node name="Unwavering Will" parent="Skills" index="1" instance=ExtResource( 4 )]
