@@ -38,7 +38,7 @@ func update_unit(unit, selected):
 
 
 func _on_Follower_Panel_gui_input(event):
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and not event.pressed:
 		match event.button_index:
 			BUTTON_LEFT:
 				if unit.stage.can_select_follower_ui():
@@ -46,6 +46,9 @@ func _on_Follower_Panel_gui_input(event):
 					unit.stage.selected_follower_index = follower_index
 			BUTTON_RIGHT:
 				if unit.stage.can_select_follower_ui() and unit.stage.can_show_ui():
+					yield(get_tree(), "idle_frame")
+					yield(get_tree(), "idle_frame")
+					# Why? Why do I need to idle for 2 frames? I don't know.
 					unit.stage.show_unit_ui(unit)
 					var follower_index = unit.stage.get_selected_summoner().followers.find(unit)
 					unit.stage.selected_follower_index = follower_index

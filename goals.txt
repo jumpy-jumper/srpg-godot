@@ -28,7 +28,7 @@ Implementation
 		Q/E during unit UI moves to the next follower
 		Hide clutter in skill description
 		Make unit UI more appropriate to each unit
-			Don't show terrain on enemies, other stats on nomn-combat units
+			Don't show terrain on enemies, other stats on non-combat units
 		Implement camera follows cursor on keyboard
 		Implement intents
 	Refactors for performance / code cleanness
@@ -37,7 +37,8 @@ Implementation
 		Skill descriptions - use parameters instead of hard values and have a get_description() function
 		Implement predictive round logic
 		Implement delta state saving		
-	Tutorial bubbles
+	Tutorial bubble
+		Make skills and statuses reload by instancing a packed scene instead of an empty scene
 		Select unit to be summoned
 		You can face your units
 		Camera movement

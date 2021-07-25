@@ -64,7 +64,7 @@ func is_any_follower_previewing():
 
 func is_waiting_for_ui():
 	for ui in $"Foreground UI".get_children():
-		if ui.modulate.a > 0:
+		if ui.operatable:
 			return true
 	return false
 
@@ -78,7 +78,11 @@ func can_select_follower_ui():
 func can_show_ui():
 	return not is_waiting_for_ui() \
 		and is_alive() \
-		and not is_won()
+		and not is_won() \
+
+
+func can_hide_ui():
+	return is_waiting_for_ui() \
 
 
 var camera_position_after_cancel_pressed = Vector2.ZERO
@@ -181,8 +185,9 @@ func _ready():
 	
 	append_state()
 
-
+var act_time = 0
 func _process(_delta):
+	act_time += 1
 	process_input()
 	
 	if can_show_cursor():
@@ -212,24 +217,24 @@ func _process(_delta):
 
 
 func process_input():
-	if Input.is_action_just_released("cancel") and not Input.is_action_pressed("control") and can_show_unit_ui_with_cancel() \
+	if Input.is_action_just_released("cancel") and not Input.is_action_pressed("control") and can_hide_ui():
+		for ui in $"Foreground UI".get_children():
+			if ui.operatable:
+				ui.hide()
+				
+	elif Input.is_action_just_released("cancel") and not Input.is_action_pressed("control") and can_show_unit_ui_with_cancel() \
 		or Input.is_action_just_pressed("unit_ui") and can_show_ui():
 			var unit = get_unit_at($Cursor.position)
 			if unit:
 				show_unit_ui(unit)
 			else:
 				show_unit_ui(get_selected_summoner().followers[selected_follower_index])
-		
-	elif Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control") and is_waiting_for_ui():
-		for ui in $"Foreground UI".get_children():
-			if ui.modulate.a == 1:
-				ui.hide()
 				
 	elif Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control"):
 		camera_position_after_cancel_pressed = $Camera2D.position
 		camera_zoom_after_cancel_pressed = $Camera2D.zoom
 	
-	elif Input.is_action_just_pressed("unit_ui") and $"Foreground UI/Unit UI".modulate.a > 0:
+	elif Input.is_action_just_pressed("unit_ui") and $"Foreground UI/Unit UI".operatable:
 		$"Foreground UI/Unit UI".hide()
 			
 	elif Input.is_action_just_pressed("debug_clear_pending_ui"):
@@ -257,9 +262,9 @@ func process_input():
 	elif InputWatcher.is_action_pressed_with_rapid_fire("advance_round") and can_advance_round():
 		advance_tick()
 	elif Input.is_action_just_pressed("settings"):
-		if can_show_ui() and not $"Foreground UI/Settings".modulate.a > 0:
+		if can_show_ui() and not $"Foreground UI/Settings".operatable:
 			$"Foreground UI/Settings".show()
-		elif $"Foreground UI/Settings".modulate.a > 0:
+		elif $"Foreground UI/Settings".operatable:
 			$"Foreground UI/Settings".hide()
 
 func _input(event):
@@ -283,7 +288,7 @@ func _on_Unit_dead(unit):
 
 func show_unit_ui(unit):
 	$"Foreground UI/Unit UI".update_unit(unit)
-	$"Foreground UI/Unit UI".show()
+	$"Foreground UI/Unit UI".show()	
 
 
 func _on_UI_mouse_entered():
@@ -295,7 +300,7 @@ func _on_UI_mouse_exited():
 
 
 func _on_Settings_Button_pressed():
-	if can_show_ui() and not $"Foreground UI/Settings".modulate.a > 0:
+	if can_show_ui() and not $"Foreground UI/Settings".operatable:
 		$"Foreground UI/Settings".show()
 
 
