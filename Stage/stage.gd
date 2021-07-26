@@ -200,7 +200,8 @@ func _process(_delta):
 		cursor.control_state = cursor.ControlState.HIDDEN
 	
 	
-	$"UI/Follower Panels".update_ui()
+	$"UI/Follower Panels (Right)".update_ui()
+	$"UI/Follower Panels (Down)".update_ui()
 	
 	
 	if cur_level_index < len(level.advance):

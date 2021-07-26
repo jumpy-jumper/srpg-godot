@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Unit/Follower/Tethys/tethys_portrait.png" type="Texture" id=1]
+[ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Follower/Tethys/tethys.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://Stage/Terrain/deployable_high.tres" type="Resource" id=5]
+
+[node name="Tethys" instance=ExtResource( 2 )]
+unit_name = "Tethys"
+base_max_hp = 125
+base_atk = 60
+base_def = 10
+base_res = 30
+portrait = ExtResource( 1 )
+mugshot_top_left = Vector2( 420, 115 )
+deployable_terrain = [ ExtResource( 5 ) ]
+base_cost = 10
+base_block_range = [  ]
+base_block_count = 0
+
+[node name="Sprite" parent="." index="0"]
+frames = ExtResource( 3 )
+frame = 2

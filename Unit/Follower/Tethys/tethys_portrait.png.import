@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/idle1.png-e6e97181ace2e58e66fe9d6978503ad2.stex"
+path="res://.import/tethys_portrait.png-6b1f29eaf43015b8e5eadde8ec9b2f32.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Unit/Follower/Olivia/idle1.png"
-dest_files=[ "res://.import/idle1.png-e6e97181ace2e58e66fe9d6978503ad2.stex" ]
+source_file="res://Unit/Follower/Tethys/tethys_portrait.png"
+dest_files=[ "res://.import/tethys_portrait.png-6b1f29eaf43015b8e5eadde8ec9b2f32.stex" ]
 
 [params]
 
@@ -20,9 +20,9 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
-flags/mipmaps=false
-flags/anisotropic=false
+flags/filter=true
+flags/mipmaps=true
+flags/anisotropic=true
 flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false

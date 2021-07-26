@@ -25,7 +25,7 @@
 [ext_resource path="res://Stage/UI/enemy_info.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Stage/deployable_tiles_indicator.gd" type="Script" id=27]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
 onready var stage = $\"../..\"
@@ -34,7 +34,7 @@ func _process(_delta):
 	$Round.text = \"Round \" + str(stage.cur_tick)
 "
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=2]
 script/source = "extends Panel
 
 export var fade_in_duration = 1.0
@@ -50,7 +50,7 @@ func animate():
 	$Tween.start()
 "
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=3]
 size = 200
 font_data = ExtResource( 7 )
 
@@ -76,7 +76,8 @@ script = ExtResource( 27 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Follower Panels" type="Control" parent="UI"]
+[node name="Follower Panels (Right)" type="Control" parent="UI"]
+visible = false
 margin_left = 106.0
 margin_top = 560.0
 margin_right = 106.0
@@ -87,87 +88,170 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="1" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="1" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1400.0
 margin_top = -580.0
 margin_right = 1528.0
 margin_bottom = -452.0
 focus_mode = 0
 
-[node name="2" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="2" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1400.0
 margin_top = -452.5
 margin_right = 1528.0
 margin_bottom = -324.5
 focus_mode = 0
 
-[node name="3" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="3" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1400.0
 margin_top = -325.0
 margin_right = 1528.0
 margin_bottom = -197.0
 focus_mode = 0
 
-[node name="4" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="4" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1400.0
 margin_top = -197.5
 margin_right = 1528.0
 margin_bottom = -69.5001
 focus_mode = 0
 
-[node name="5" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="5" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1400.0
 margin_top = -70.0001
 margin_right = 1528.0
 margin_bottom = 57.9999
 focus_mode = 0
 
-[node name="6" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="6" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1400.0
 margin_top = 58.7499
 margin_right = 1528.0
 margin_bottom = 186.75
 focus_mode = 0
 
-[node name="7" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="7" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1271.25
 margin_top = -580.0
 margin_right = 1399.25
 margin_bottom = -452.0
 focus_mode = 0
 
-[node name="8" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="8" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1271.25
 margin_top = -452.5
 margin_right = 1399.25
 margin_bottom = -324.5
 focus_mode = 0
 
-[node name="9" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="9" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1271.25
 margin_top = -325.0
 margin_right = 1399.25
 margin_bottom = -197.0
 focus_mode = 0
 
-[node name="10" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="10" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1271.25
 margin_top = -197.5
 margin_right = 1399.25
 margin_bottom = -69.5
 focus_mode = 0
 
-[node name="11" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="11" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1271.25
 margin_top = -70.0001
 margin_right = 1399.25
 margin_bottom = 57.9999
 
-[node name="12" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+[node name="12" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
 margin_left = 1271.25
 margin_top = 58.7499
 margin_right = 1399.25
 margin_bottom = 186.75
+
+[node name="Follower Panels (Down)" type="Control" parent="UI"]
+margin_left = 106.0
+margin_top = 560.0
+margin_right = 106.0
+margin_bottom = 560.0
+rect_scale = Vector2( 0.75, 0.75 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = -61.3333
+margin_top = 64.0
+margin_right = 66.6667
+margin_bottom = 192.0
+
+[node name="2" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 66.6667
+margin_top = 64.0
+margin_right = 194.667
+margin_bottom = 192.0
+
+[node name="3" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 194.667
+margin_top = 64.0
+margin_right = 322.667
+margin_bottom = 192.0
+
+[node name="4" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 322.667
+margin_top = 64.0
+margin_right = 450.667
+margin_bottom = 192.0
+
+[node name="5" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 450.667
+margin_top = 64.0
+margin_right = 578.667
+margin_bottom = 192.0
+
+[node name="6" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 578.667
+margin_top = 64.0
+margin_right = 706.667
+margin_bottom = 192.0
+
+[node name="7" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 706.667
+margin_top = 64.0
+margin_right = 834.667
+margin_bottom = 192.0
+
+[node name="8" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 834.667
+margin_top = 64.0
+margin_right = 962.667
+margin_bottom = 192.0
+
+[node name="9" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 962.666
+margin_top = 64.0
+margin_right = 1090.67
+margin_bottom = 192.0
+
+[node name="10" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 1090.67
+margin_top = 64.0
+margin_right = 1218.67
+margin_bottom = 192.0
+
+[node name="11" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 1218.67
+margin_top = 64.0
+margin_right = 1346.67
+margin_bottom = 192.0
+
+[node name="12" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+margin_left = 1346.67
+margin_top = 64.0
+margin_right = 1474.67
+margin_bottom = 192.0
 
 [node name="Summoner UI" type="Control" parent="UI"]
 margin_left = 1154.0
@@ -194,6 +278,7 @@ __meta__ = {
 position = Vector2( -67.973, -1.14441e-05 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
+frame = 5
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -214,7 +299,7 @@ margin_top = 16.0
 margin_right = 1154.0
 margin_bottom = 16.0
 rect_scale = Vector2( 0.75, 0.75 )
-script = SubResource( 2 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -247,7 +332,7 @@ modulate = Color( 0, 0, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 3 )
+script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -269,7 +354,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="UI/Game Over"]
 margin_right = 1280.0
 margin_bottom = 768.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "YOU LOSE :("
 align = 1
 valign = 1
@@ -704,8 +789,8 @@ margin_bottom = 664.0
 [connection signal="mouse_entered" from="UI/Settings Button" to="." method="_on_UI_mouse_entered"]
 [connection signal="mouse_exited" from="UI/Settings Button" to="." method="_on_UI_mouse_exited"]
 [connection signal="pressed" from="UI/Settings Button" to="." method="_on_Settings_Button_pressed"]
-[connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
 [connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
+[connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
 [connection signal="pressed" from="Foreground UI/Unit UI/Skill 1/Button" to="Foreground UI/Unit UI/Skill 1" method="_on_Button_pressed"]
 [connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 2" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="Foreground UI/Unit UI/Skill 2/Button" to="Foreground UI/Unit UI/Skill 2" method="_on_Button_pressed"]

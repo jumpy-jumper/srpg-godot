@@ -29,11 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Unit/Gate/gate.gd"
 }, {
-"base": "Skill",
-"class": "Lysithea_S1",
-"language": "GDScript",
-"path": "res://Unit/Follower/Lysithea/lysithea_s1.gd"
-}, {
 "base": "Control",
 "class": "MenuNode",
 "language": "GDScript",
@@ -89,7 +84,6 @@ _global_script_class_icons={
 "Enemy": "",
 "Follower": "",
 "Gate": "",
-"Lysithea_S1": "",
 "MenuNode": "",
 "NavigatableMenu": "",
 "RangeIndicator": "",

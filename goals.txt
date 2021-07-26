@@ -7,7 +7,7 @@ Content
 Implementation
 	Urgent
 		Make automatic skills not last for more than one turn
-		Rearrange stage UI and UI waiting state
+		Portraits are blurry, scale better
 		Rearrange Unit UI
 		Skills that activate on the next basic attack
 		Summoner win skill

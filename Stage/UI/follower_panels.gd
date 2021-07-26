@@ -11,8 +11,6 @@ func _ready():
 
 
 func update_ui():
-	visible = true
-
 	var followers = stage.get_selected_summoner().followers
 	
 	var i = 0

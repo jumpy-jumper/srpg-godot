@@ -1,5 +1,4 @@
 extends Skill
-class_name Lysithea_S1
 
 
 export var bonus_atk_step = 0.4

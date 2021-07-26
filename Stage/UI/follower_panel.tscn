@@ -1,11 +1,12 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Unit/Follower/Olivia/olivia_portrait.png" type="Texture" id=2]
+[ext_resource path="res://Unit/Follower/Tethys/tethys_portrait.png" type="Texture" id=2]
 [ext_resource path="res://Stage/UI/follower_panel.gd" type="Script" id=3]
 [ext_resource path="res://Stage/UI/follower_panel_border.png" type="Texture" id=4]
 
 [node name="Follower Panel" type="Button"]
+self_modulate = Color( 1, 1, 1, 0 )
 margin_right = 128.0
 margin_bottom = 128.0
 action_mode = 0
@@ -28,7 +29,7 @@ __meta__ = {
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 385, 105, 128, 128 )
+region_rect = Rect2( 420, 115, 128, 128 )
 
 [node name="Cost" type="Label" parent="."]
 anchor_left = 1.0
@@ -57,11 +58,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Border" type="Sprite" parent="."]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 64, 64 )
-texture = ExtResource( 4 )
-
 [node name="CooldownPanel" type="Panel" parent="."]
 modulate = Color( 1, 1, 1, 0.784314 )
 margin_right = 128.0
@@ -81,5 +77,10 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Border" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 64, 64 )
+texture = ExtResource( 4 )
 
 [connection signal="gui_input" from="." to="." method="_on_Follower_Panel_gui_input"]

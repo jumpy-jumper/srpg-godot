@@ -1,8 +1,8 @@
 [gd_resource type="SpriteFrames" load_steps=4 format=2]
 
-[ext_resource path="res://Unit/Follower/Olivia/idle2.png" type="Texture" id=1]
-[ext_resource path="res://Unit/Follower/Olivia/idle1.png" type="Texture" id=2]
-[ext_resource path="res://Unit/Follower/Olivia/idle0.png" type="Texture" id=3]
+[ext_resource path="res://Unit/Follower/Tethys/idle2.png" type="Texture" id=1]
+[ext_resource path="res://Unit/Follower/Tethys/idle1.png" type="Texture" id=2]
+[ext_resource path="res://Unit/Follower/Tethys/idle0.png" type="Texture" id=3]
 
 [resource]
 animations = [ {
