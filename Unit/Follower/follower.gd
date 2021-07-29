@@ -78,7 +78,6 @@ func deploy_self(pos):
 				or skill.activation == skill.Activation.SP_AUTO and skill.is_available():
 					skill.activate()
 		display_toasts()
-		facing = Facing.RIGHT
 		waiting_for_facing = true
 		stage.append_state()
 

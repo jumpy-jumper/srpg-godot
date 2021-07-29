@@ -35,9 +35,9 @@ func get_next_node(direction):
 
 
 func _on_Node_mouse_entered():
-	menu.selected_node = self
+	menu.mouse_focus = self
 
 
 func _on_Node_mouse_exited():
-	if menu.selected_node == self:
-		menu.selected_node = null
+	if menu.mouse_focus == self:
+		menu.mouse_focus = null

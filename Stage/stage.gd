@@ -76,9 +76,7 @@ func can_select_follower_ui():
 
 
 func can_show_ui():
-	return not is_waiting_for_ui() \
-		and is_alive() \
-		and not is_won() \
+	return not is_waiting_for_ui()
 
 
 func can_hide_ui():
@@ -186,9 +184,7 @@ func _ready():
 	
 	append_state()
 
-var act_time = 0
 func _process(_delta):
-	act_time += 1
 	process_input()
 	
 	if can_show_cursor():
@@ -199,6 +195,7 @@ func _process(_delta):
 	else:
 		cursor.control_state = cursor.ControlState.HIDDEN
 	
+	$UI.scale = Vector2.ZERO if is_waiting_for_ui() else Vector2.ONE
 	
 	$"UI/Follower Panels (Right)".update_ui()
 	$"UI/Follower Panels (Down)".update_ui()
@@ -300,12 +297,6 @@ func _on_UI_mouse_entered():
 func _on_UI_mouse_exited():
 	pending_ui -= 1
 
-
-func _on_Settings_Button_pressed():
-	if can_show_ui() and not $"Foreground UI/Settings".operatable:
-		$"Foreground UI/Settings".show()
-
-
 func _on_Skill_UI_skill_activation_requested(skill):
 	if skill.is_available():
 		skill.activate()
@@ -322,6 +313,11 @@ func _on_Retreat_pressed():
 
 func _on_Unit_UI_exited():
 	pass
+
+
+func _on_Settings_Button_gui_input(event):
+	if event is InputEventMouseButton and not event.pressed and can_show_ui() and not $"Foreground UI/Settings".operatable:
+		$"Foreground UI/Settings".show()
 
 
 ###############################################################################

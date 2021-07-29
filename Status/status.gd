@@ -4,6 +4,7 @@ class_name Status
 
 var issuer_unit = null
 var issuer_name = ""
+export var persists_through_death = false
 export(Dictionary) var stat_overwrites = {}
 export(Dictionary) var stat_flat_bonuses = {}
 export(Dictionary) var stat_additive_multipliers = {}

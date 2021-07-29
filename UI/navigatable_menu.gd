@@ -2,11 +2,12 @@ extends Control
 class_name NavigatableMenu
 
 
+export var operatable = true
 enum Navigation { EXPLICIT, IMPLICIT }
 export(Navigation) var navigation = Navigation.IMPLICIT
 
-var operatable = true
-var selected_node = null
+export(NodePath) var selected_node = null
+var mouse_focus = null
 export(NodePath) var initial = null
 
 
@@ -21,6 +22,13 @@ func _ready():
 
 
 func _process(_delta):
+	if mouse_focus and mouse_focus != selected_node:
+		$MouseFocus.visible = true
+		$MouseFocus.rect_position = mouse_focus.rect_position - cursor_padding / 2
+		$MouseFocus.rect_size = mouse_focus.rect_size + cursor_padding
+	else:
+		$MouseFocus.visible = false	
+	
 	var movement = InputWatcher.get_keyboard_input()
 	if operatable:
 		if selected_node:
@@ -34,7 +42,11 @@ func _process(_delta):
 					selected_node = get_next_node(movement)
 			
 			if Input.is_action_just_released("confirm"):
-				selected_node.on_pressed()
+				if mouse_focus != null:
+					mouse_focus.on_pressed()
+					selected_node = mouse_focus
+				else:
+					selected_node.on_pressed()
 			
 			cursor.visible = true
 			cursor.rect_position = selected_node.rect_position - cursor_padding / 2

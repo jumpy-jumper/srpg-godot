@@ -39,14 +39,14 @@ func _process(_delta):
 
 		var new_zoom
 		if Input.is_action_just_pressed("zoom"):
-			if zoom.x == zoom_out:
-				new_zoom = Vector2(zoom_in, zoom_in)		
+			if zoom == zoom_out * stage.level.default_camera_zoom:
+				new_zoom = zoom_in * stage.level.default_camera_zoom	
 				$Tween.interpolate_property(self, "zoom", 
 				zoom, new_zoom, ZOOM_SPEED,
 				Tween.TRANS_LINEAR, Tween.EASE_OUT)
 				$Tween.start()
 			else:
-				new_zoom = Vector2(zoom_out, zoom_out)		
+				new_zoom = zoom_out * stage.level.default_camera_zoom
 				$Tween.interpolate_property(self, "zoom", 
 				zoom, new_zoom, ZOOM_SPEED,
 				Tween.TRANS_LINEAR, Tween.EASE_OUT)

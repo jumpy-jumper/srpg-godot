@@ -1,13 +1,16 @@
 Content
 	World map
-	East-05: Eldigan
-	East-06: Ninian
-	East-07: Niles
-	East-08: Lyon
+	East-05: Frederick + Tethys
+	East-06: Niles
+	East-07: Robin
 Implementation
+	Controls
+		Separate keyboard, mouse, and controller controls
+		Analog vs digital controls for cursor / camera
 	Urgent
-		Make automatic skills not last for more than one turn
 		Portraits are blurry, scale better
+		Cancel while waiting for facing performs an undo
+		Skill icons
 		Rearrange Unit UI
 		Skills that activate on the next basic attack
 		Summoner win skill
@@ -22,7 +25,9 @@ Implementation
 	Game Logic
 		Resolve ties in ally targeting / enemy action
 	QoL
-		Reimplement unit UI
+		Menu navigation
+			Clear mouse focus when keyboard input happens
+			Mouse input should not activate keyboard focus and viceversa
 		Clicking on units inside gates displays their contents
 		Gate unit preview displays their skills
 		Hovering cursor away from terrain should update cursor, have keyboard jump to nearest available
@@ -55,16 +60,6 @@ Implementation
 
 Testing observations:
 	Introduce the attack priority of player units somehow
-	East-02
-		Easier wave of eyes before the hard wave?
-		Make it so you can win even if you activate Natasha's skill early?
-		Unclear when Dieck activates his skill, do not understand why he survives
-		Managed to clear without consciously baiting out attacks with Natasha
-	East-03
-		Remove the tiles two columns left of summoner? It allows Fredrick to be deployed later
-		Spawn more zombies towards the end to make it so you can't clear with Fredrick?
-	East-04
-		
 	Don't know when a skill is activated
 	
 	

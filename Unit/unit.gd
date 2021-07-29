@@ -284,6 +284,9 @@ func die():
 	for skill in $Skills.get_children():
 		skill.initialize()
 	shield = 0
+	for status in $Statuses.get_children():
+		if not status.persists_through_death:
+			status.free()
 	
 	$DeathTweener.interpolate_property(self, "modulate:a",
 	0.75, 0, DEATH_TWEEN_DURATION,

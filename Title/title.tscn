@@ -102,6 +102,7 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="Blackscreen"]
 
 [node name="Navigatable Menu" parent="." instance=ExtResource( 4 )]
+selected_node = NodePath("l_east01")
 initial = NodePath("l_east01")
 
 [node name="l_east01" parent="Navigatable Menu" instance=ExtResource( 3 )]
@@ -177,9 +178,9 @@ __meta__ = {
 }
 
 [node name="l_training" parent="Navigatable Menu" instance=ExtResource( 3 )]
-margin_left = 576.0
+margin_left = 64.0
 margin_top = 640.0
-margin_right = 736.0
+margin_right = 1216.0
 margin_bottom = 680.0
 script = ExtResource( 5 )
 

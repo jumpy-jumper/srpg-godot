@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/camera.gd" type="Script" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://Stage/Terrain/high.tres" type="Resource" id=21]
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=22]
 [ext_resource path="res://Stage/UI/enemy_info.tscn" type="PackedScene" id=23]
+[ext_resource path="res://UI/Settings/settings_ui.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Stage/deployable_tiles_indicator.gd" type="Script" id=27]
 
 [sub_resource type="GDScript" id=1]
@@ -377,28 +378,6 @@ scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 20 )
 
 [node name="Foreground UI" type="CanvasLayer" parent="."]
-
-[node name="Settings" type="Control" parent="Foreground UI"]
-margin_right = 40.0
-margin_bottom = 40.0
-mouse_filter = 2
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="Foreground UI/Settings"]
-modulate = Color( 1, 1, 1, 0.501961 )
-margin_left = 64.0
-margin_top = 64.0
-margin_right = 1216.0
-margin_bottom = 672.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tween" type="Tween" parent="Foreground UI/Settings"]
 
 [node name="Unit UI" type="Control" parent="Foreground UI"]
 visible = false
@@ -784,11 +763,15 @@ margin_top = 624.0
 margin_right = 472.0
 margin_bottom = 664.0
 
+[node name="Settings" parent="Foreground UI" instance=ExtResource( 24 )]
+visible = false
+script = ExtResource( 4 )
+
 [connection signal="cancel_issued" from="Cursor" to="." method="_on_Cursor_cancel_issued"]
 [connection signal="confirm_issued" from="Cursor" to="." method="_on_Cursor_confirm_issued"]
+[connection signal="gui_input" from="UI/Settings Button" to="." method="_on_Settings_Button_gui_input"]
 [connection signal="mouse_entered" from="UI/Settings Button" to="." method="_on_UI_mouse_entered"]
 [connection signal="mouse_exited" from="UI/Settings Button" to="." method="_on_UI_mouse_exited"]
-[connection signal="pressed" from="UI/Settings Button" to="." method="_on_Settings_Button_pressed"]
 [connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
 [connection signal="pressed" from="Foreground UI/Unit UI/Skill 1/Button" to="Foreground UI/Unit UI/Skill 1" method="_on_Button_pressed"]

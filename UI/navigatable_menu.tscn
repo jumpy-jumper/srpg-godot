@@ -12,3 +12,6 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Cursor" parent="." instance=ExtResource( 2 )]
+
+[node name="MouseFocus" parent="." instance=ExtResource( 2 )]
+modulate = Color( 1, 1, 1, 0.439216 )

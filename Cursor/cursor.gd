@@ -26,6 +26,11 @@ var mouse_inactive = 0
 enum ControlState { FREE, LOCKED, HIDDEN }
 var control_state = ControlState.FREE
 
+enum ControlType { DIGITAL, ANALOG }
+var control_type = ControlType.DIGITAL
+
+var analog_pos = position
+const ANALOG_SPEED = 400
 
 func _process(_delta):
 	if control_state == ControlState.HIDDEN:
