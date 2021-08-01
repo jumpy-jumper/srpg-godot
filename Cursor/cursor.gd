@@ -54,7 +54,7 @@ func _process(_delta):
 				position = old_keyboard_pos
 			if stage:
 				position += stage.get_clamped_position(stage.get_cell_size() * movement)
-		elif Game.mouse_enabled:
+		elif Game.settings["cursor_mouse_controls"]:
 			mouse_inactive = 0
 			if stage:
 				var newpos = stage.get_clamped_position(get_global_mouse_position())

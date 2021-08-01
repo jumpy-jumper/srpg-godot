@@ -36,7 +36,7 @@ func _process(_delta):
 		$DeathTweener.stop_all()
 		modulate.a = 1.0
 	
-	if waiting_for_user and Game.mouse_enabled and stage.can_update_facing():
+	if waiting_for_user and stage.can_update_facing():
 			if Game.mouse_idle == 0:
 				face_mouse()
 			if Input.is_action_just_released("mouse_confirm") \
