@@ -259,7 +259,7 @@ func process_input():
 		redo()
 		
 	elif InputWatcher.is_action_pressed_with_rapid_fire("restart") and can_undo_or_redo():
-		if Game.undoable_restart:
+		if Game.settings["undoable_restart"]:
 			load_state(states[0])
 			append_state()
 			$"Foreground UI/Blackscreen".animate()

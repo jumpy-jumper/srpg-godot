@@ -275,7 +275,6 @@ __meta__ = {
 position = Vector2( -67.973, -1.14441e-05 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
-frame = 5
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]

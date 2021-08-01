@@ -1,7 +1,6 @@
 extends Node2D
 
 
-export var undoable_restart = true
 export var redo_enabled = true
 export var decouple_mouse_and_keyboard = false
 export var hide_mouse_after_seconds = 2
@@ -29,6 +28,7 @@ export var settings = {
 	"cursor_mouse_controls" : true,
 	"inverted_keyboard_camera" : false,
 	"inverted_mouse_camera" : false,
+	"undoable_restart" : true,
 }
 
 func _ready():
