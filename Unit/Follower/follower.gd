@@ -46,10 +46,12 @@ func _process(_delta):
 
 
 func _input(event):
-	if event.is_action_pressed("retreat") or (event.is_action_pressed("cancel") and Input.is_action_pressed("confirm")):
-		if alive and (stage.cursor.position == position):
-			die()
-			stage.append_state()
+	if event.is_action_pressed("retreat") \
+		or (event.is_action_pressed("mouse_cancel") \
+		and Input.is_action_pressed("mouse_confirm")):
+			if alive and (stage.cursor.position == position):
+				die()
+				stage.append_state()
 	elif waiting_for_user:
 		var direction = InputWatcher.get_keyboard_input(true)
 		if direction.length_squared() > 0:
@@ -84,6 +86,7 @@ func deploy_self(pos):
 
 
 func _on_Cursor_confirm_issued(pos):
+	._on_Cursor_confirm_issued(pos)
 	if not alive and not stage.is_waiting_for_user():
 		if stage.get_selected_follower() == self and stage.get_unit_at(pos) == null:
 			if stage.get_terrain_at(pos) in deployable_terrain \
@@ -96,6 +99,12 @@ func _on_Cursor_confirm_issued(pos):
 			for skill in $Skills.get_children():
 				if skill.is_available():
 					skill.activate()
+
+
+func _on_Cursor_cancel_issued(pos):
+	._on_Cursor_cancel_issued(pos)
+	if alive and waiting_for_user:
+		stage.undo()
 
 
 func get_stat(stat_name, base_value):

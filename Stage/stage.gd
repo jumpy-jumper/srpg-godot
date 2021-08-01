@@ -224,60 +224,71 @@ func process_input():
 	elif Input.is_action_just_pressed("debug_load"):
 		load_file()
 
-	if Input.is_action_just_released("cancel") and not Input.is_action_pressed("control") and can_hide_ui():
-		for ui in $"Foreground UI".get_children():
-			if ui.operatable:
-				ui.hide()
-				
-	elif Input.is_action_just_released("cancel") and not Input.is_action_pressed("control") and can_show_unit_ui_with_cancel() \
-		or Input.is_action_just_pressed("unit_ui") and can_show_ui():
+	if (Input.is_action_just_pressed("keyboard_cancel") \
+		and not Input.is_action_pressed("control") \
+		or Input.is_action_just_released("mouse_cancel")) \
+		and can_hide_ui():
+			for ui in $"Foreground UI".get_children():
+				if ui.operatable:
+					ui.hide()
+	
+	elif (Input.is_action_just_released("mouse_cancel") \
+		and Game.settings["cursor_mouse_controls"] \
+		and can_show_unit_ui_with_cancel() \
+		or Input.is_action_just_pressed("keyboard_examine")) \
+		and can_show_ui():
 			var unit = get_unit_at($Cursor.position)
 			if unit:
 				show_unit_ui(unit)
 			else:
 				show_unit_ui(get_selected_summoner().followers[selected_follower_index])
 				
-	elif Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control"):
+	elif Input.is_action_just_pressed("mouse_cancel"):
 		camera_position_after_cancel_pressed = $Camera2D.position
 		camera_zoom_after_cancel_pressed = $Camera2D.zoom
 	
-	elif Input.is_action_just_pressed("unit_ui") and $"Foreground UI/Unit UI".operatable:
+	elif Input.is_action_just_pressed("keyboard_examine") and $"Foreground UI/Unit UI".operatable:
 		$"Foreground UI/Unit UI".hide()
 			
 	elif Input.is_action_just_pressed("debug_clear_pending_ui"):
 		pending_ui = 0
 	
-	elif InputWatcher.is_action_pressed_with_rapid_fire("next_follower") and can_change_selected_follower():
+	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_next") and can_change_selected_follower():
 		selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
-	elif InputWatcher.is_action_pressed_with_rapid_fire("previous_follower") and can_change_selected_follower():
+	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_previous") and can_change_selected_follower():
 		selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
 			
-	elif InputWatcher.is_action_pressed_with_rapid_fire("undo") and can_undo_or_redo():
+	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_undo") and can_undo_or_redo():
 		undo()
 		
-	elif InputWatcher.is_action_pressed_with_rapid_fire("redo") and can_undo_or_redo():
+	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_redo") and can_undo_or_redo():
 		redo()
 		
-	elif InputWatcher.is_action_pressed_with_rapid_fire("restart") and can_undo_or_redo():
-		if Game.settings["undoable_restart"]:
-			load_state(states[0])
-			append_state()
-			$"Foreground UI/Blackscreen".animate()
-		else:
-			get_tree().reload_current_scene()
+	elif (InputWatcher.is_action_pressed_with_rapid_fire("keyboard_restart") \
+		or (InputWatcher.is_action_pressed_with_rapid_fire("mouse_restart"))) \
+		and can_undo_or_redo():
+			if Game.settings["undoable_restart"]:
+				load_state(states[0])
+				append_state()
+				$"Foreground UI/Blackscreen".animate()
+			else:
+				get_tree().reload_current_scene()
 	
-	elif InputWatcher.is_action_pressed_with_rapid_fire("advance_round") and can_advance_round():
+	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_advance") and can_advance_round():
 		advance_tick()
-	elif Input.is_action_just_pressed("settings"):
+	
+	elif Input.is_action_just_pressed("keyboard_escape"):
 		if can_show_ui() and not $"Foreground UI/Settings".operatable:
 			$"Foreground UI/Settings".show()
 		elif $"Foreground UI/Settings".operatable:
 			$"Foreground UI/Settings".hide()
 
 func _input(event):
-	if can_undo_or_redo() and event.is_action_pressed("undo_wheel"):
+	if can_undo_or_redo() and event.is_action_pressed("mouse_undo"):
 		undo()
-	elif can_advance_round() and event.is_action_pressed("advance_round_wheel"):
+	elif can_undo_or_redo() and event.is_action_pressed("mouse_redo"):
+		redo()
+	elif can_advance_round() and event.is_action_pressed("mouse_advance"):
 		advance_tick()
 
 

@@ -26,6 +26,7 @@ export var settings = {
 	"resolution" : Vector2(1280, 720),
 	"fullscreen" : false,
 	"cursor_mouse_controls" : true,
+	"camera_mouse_controls" : true,
 	"inverted_keyboard_camera" : false,
 	"inverted_mouse_camera" : false,
 	"undoable_restart" : true,

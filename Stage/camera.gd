@@ -47,28 +47,27 @@ func _process(_delta):
 				zoom, new_zoom, ZOOM_SPEED,
 				Tween.TRANS_LINEAR, Tween.EASE_OUT)
 				$Tween.start()
-				
-	if Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control") and stage.can_move_camera_with_cancel() \
-		or Input.is_action_just_pressed("drag_camera"):
-			#position = get_global_mouse_position()
-			base_mouse_position = get_viewport().get_mouse_position()
-			base_camera_position = position
-			operatable = true
-		
-	if operatable \
-		and (Input.is_action_pressed("cancel") \
-		and not Input.is_action_pressed("control") \
-		and stage.can_move_camera_with_cancel()) \
-		or Input.is_action_pressed("drag_camera"):
-			var offset = (base_mouse_position - get_viewport().get_mouse_position()) * zoom
-			if Game.settings["inverted_mouse_camera"]:
-				offset = -offset
-			position = base_camera_position + offset
 	
-	if Input.is_action_just_released("cancel") \
-		or Input.is_action_just_released("drag_camera") \
-		and operatable:
-			operatable = false
+	if Game.settings["camera_mouse_controls"]:
+		if Input.is_action_just_pressed("mouse_cancel") \
+			and stage.can_move_camera_with_cancel():
+				#position = get_global_mouse_position()
+				base_mouse_position = get_viewport().get_mouse_position()
+				base_camera_position = position
+				operatable = true
+			
+		if operatable \
+			and (Input.is_action_pressed("mouse_cancel") \
+			and stage.can_move_camera_with_cancel()):
+				var offset = (base_mouse_position - get_viewport().get_mouse_position()) * zoom
+				if Game.settings["inverted_mouse_camera"]:
+					offset = -offset
+				position = base_camera_position + offset
+		
+		if Input.is_action_just_released("mouse_cancel") and operatable:
+				operatable = false
+	else:
+		operatable = false
 	
 	if Input.is_action_just_pressed("debug_get_camera_position_and_zoom"):
 		print(position + offset)

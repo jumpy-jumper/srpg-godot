@@ -80,12 +80,13 @@ func tick_skills():
 
 
 func _on_Stage_tick_ended():
-	for skill in $Skills.get_children():
-		if not skill.is_active():
-			skill.remove_statuses()
-			var sp_cost = get_stat("skill_cost", skill.base_skill_cost)
-			if skill.activation == skill.Activation.SP_AUTO and skill.sp == sp_cost:
-				skill.activate()
+	if alive:
+		for skill in $Skills.get_children():
+			if not skill.is_active():
+				skill.remove_statuses()
+				var sp_cost = get_stat("skill_cost", skill.base_skill_cost)
+				if skill.activation == skill.Activation.SP_AUTO and skill.sp == sp_cost:
+					skill.activate()
 
 
 ###############################################################################

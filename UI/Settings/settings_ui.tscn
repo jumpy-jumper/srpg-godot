@@ -190,9 +190,9 @@ __meta__ = {
 
 [node name="Return" type="Control" parent="Menu"]
 margin_left = 32.0
-margin_top = 240.0
+margin_top = 288.0
 margin_right = 1120.0
-margin_bottom = 272.0
+margin_bottom = 320.0
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -244,11 +244,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="KB Camera" parent="Menu" instance=ExtResource( 8 )]
+[node name="CursorControls2" parent="Menu" instance=ExtResource( 8 )]
 margin_left = 32.0
 margin_top = 96.0
 margin_right = 448.0
 margin_bottom = 128.0
+script = ExtResource( 7 )
+description = "Enable moving the camera with the mouse."
+property = "camera_mouse_controls"
+
+[node name="CheckBox" type="CheckBox" parent="Menu/CursorControls2"]
+margin_top = -2.0
+margin_right = 24.0
+margin_bottom = 22.0
+rect_scale = Vector2( 1.5, 1.5 )
+mouse_filter = 2
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Menu/CursorControls2"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 48.0
+margin_top = -16.0
+margin_right = 288.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 1 )
+text = "Camera Mouse Controls"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KB Camera" parent="Menu" instance=ExtResource( 8 )]
+margin_left = 32.0
+margin_top = 144.0
+margin_right = 448.0
+margin_bottom = 176.0
 script = ExtResource( 7 )
 description = "Invert camera controls with the keyboard."
 property = "inverted_keyboard_camera"
@@ -280,9 +314,9 @@ __meta__ = {
 
 [node name="Mouse Camera" parent="Menu" instance=ExtResource( 8 )]
 margin_left = 32.0
-margin_top = 144.0
+margin_top = 192.0
 margin_right = 448.0
-margin_bottom = 176.0
+margin_bottom = 224.0
 script = ExtResource( 7 )
 description = "Invert camera controls with the mouse."
 property = "inverted_mouse_camera"
@@ -314,9 +348,9 @@ __meta__ = {
 
 [node name="Mouse Camera2" parent="Menu" instance=ExtResource( 8 )]
 margin_left = 32.0
-margin_top = 192.0
+margin_top = 240.0
 margin_right = 448.0
-margin_bottom = 224.0
+margin_bottom = 272.0
 script = ExtResource( 7 )
 description = "Enable being able to undo a stage restart. (May use a ton of RAM)"
 property = "undoable_restart"

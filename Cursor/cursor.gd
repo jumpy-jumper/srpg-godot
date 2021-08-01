@@ -85,14 +85,18 @@ func _process(_delta):
 		old_mouse_pos = get_viewport().get_mouse_position()
 			
 
-	if Input.is_action_just_pressed("confirm") and not Input.is_action_pressed("control"):
-		$AnimatedSprite.play("default")
-		$AnimatedSprite.play("select")
-		emit_signal("confirm_issued", position)
-
-	if Input.is_action_just_pressed("cancel") and not Input.is_action_pressed("control"):
+	if Input.is_action_just_pressed("keyboard_confirm") and not Input.is_action_pressed("control") \
+		or Input.is_action_just_pressed("mouse_confirm") and Game.settings["cursor_mouse_controls"]:
+			$AnimatedSprite.play("default")
+			$AnimatedSprite.play("select")
+			emit_signal("confirm_issued", position)
+	
+	
+	if Input.is_action_just_pressed("keyboard_cancel") and not Input.is_action_pressed("control") \
+		or Input.is_action_just_released("mouse_cancel") and Game.settings["cursor_mouse_controls"]:
 		emit_signal("cancel_issued", position)
-		
+	
+	
 	emit_signal("hovered", position)
 
 

@@ -2,7 +2,7 @@ extends Node
 
 
 const RAPID_FIRE_WAIT = { # How long to wait before rapid fire is active
-	"ui_movement" : 0.2,
+	"keyboard_movement" : 0.2,
 	"camera_movement" : 0.3,
 	"round_manipulation" : 0.3,
 	"restart" : 125,
@@ -10,7 +10,7 @@ const RAPID_FIRE_WAIT = { # How long to wait before rapid fire is active
 }
 
 const RAPID_FIRE_INTERVAL = { # How long to wait before allowing the action to fire again
-	"ui_movement" : 0.01,
+	"keyboard_movement" : 0.01,
 	"camera_movement" : 0.01,
 	"round_manipulation" : 0.04,
 	"restart" : 0.2,
@@ -18,7 +18,7 @@ const RAPID_FIRE_INTERVAL = { # How long to wait before allowing the action to f
 }
 
 const RAPID_FIRE_HOLD = { # How long to wait until rapid fire must be reinitialized
-	"ui_movement" : 0.1,
+	"keyboard_movement" : 0.1,
 	"camera_movement" : 0.1,
 	"round_manipulation" : 0.1,
 	"restart" : 0.1,
@@ -26,30 +26,34 @@ const RAPID_FIRE_HOLD = { # How long to wait until rapid fire must be reinitiali
 }
 
 const RAPID_FIRE_GROUP = {
-	"ui_right" : "ui_movement",
-	"ui_down" : "ui_movement",
-	"ui_left" : "ui_movement",
-	"ui_up" : "ui_movement",
-	"camera_right" : "camera_movement",
-	"camera_down" : "camera_movement",
-	"camera_left" : "camera_movement",
-	"camera_up" : "camera_movement",
-	"advance_round" : "round_manipulation",
-	"undo" : "round_manipulation",
-	"redo" : "round_manipulation",
-	"restart" : "restart",
-	"previous_follower" : "follower_selection",
-	"next_follower" : "follower_selection"
+	"keyboard_right" : "keyboard_movement",
+	"keyboard_down" : "keyboard_movement",
+	"keyboard_left" : "keyboard_movement",
+	"keyboard_up" : "keyboard_movement",
+	"keyboard_camera_right" : "camera_movement",
+	"keyboard_camera_down" : "camera_movement",
+	"keyboard_camera_left" : "camera_movement",
+	"keyboard_camera_up" : "camera_movement",
+	"keyboard_advance" : "round_manipulation",
+	"keyboard_undo" : "round_manipulation",
+	"keyboard_redo" : "round_manipulation",
+	"mouse_restart" : "restart",
+	"keyboard_restart" : "restart",
+	"keyboard_previous" : "follower_selection",
+	"keyboard_next" : "follower_selection"
 }
+
 
 var time_held = RAPID_FIRE_GROUP.duplicate()
 var time_since_fired
 var time_since_released = RAPID_FIRE_HOLD.duplicate()
 
+
 func _ready():
 	for key in time_held.keys():
 		time_held[key] = 0
 	time_since_fired = time_held.duplicate()
+
 
 func _process(delta):
 	for action in time_held:
@@ -88,29 +92,29 @@ func is_action_pressed_with_rapid_fire(action):
 
 func get_keyboard_input(simple = false):
 	if simple:
-		return Vector2((1 if Input.is_action_pressed("ui_right") else 0) \
-		- (1 if Input.is_action_pressed("ui_left") else 0), \
-		(1 if Input.is_action_pressed("ui_down") else 0) \
-		- (1 if Input.is_action_pressed("ui_up") else 0))
+		return Vector2((1 if Input.is_action_pressed("keyboard_right") else 0) \
+		- (1 if Input.is_action_pressed("keyboard_left") else 0), \
+		(1 if Input.is_action_pressed("keyboard_down") else 0) \
+		- (1 if Input.is_action_pressed("keyboard_up") else 0))
 		
 	var movement = Vector2(0, 0)
-	movement.x += 1 if is_action_pressed_with_rapid_fire("ui_right") else 0
-	movement.x += -1 if is_action_pressed_with_rapid_fire("ui_left") else 0
-	movement.y += -1 if is_action_pressed_with_rapid_fire("ui_up") else 0
-	movement.y += 1 if is_action_pressed_with_rapid_fire("ui_down") else 0
+	movement.x += 1 if is_action_pressed_with_rapid_fire("keyboard_right") else 0
+	movement.x += -1 if is_action_pressed_with_rapid_fire("keyboard_left") else 0
+	movement.y += -1 if is_action_pressed_with_rapid_fire("keyboard_up") else 0
+	movement.y += 1 if is_action_pressed_with_rapid_fire("keyboard_down") else 0
 	return movement
 
 
 func get_camera_input(simple = false):
 	if simple:
-		return Vector2((1 if Input.is_action_pressed("camera_right") else 0) \
-		- (1 if Input.is_action_pressed("camera_left") else 0), \
-		(1 if Input.is_action_pressed("camera_down") else 0) \
-		- (1 if Input.is_action_pressed("camera_up") else 0))
+		return Vector2((1 if Input.is_action_pressed("keyboard_camera_right") else 0) \
+		- (1 if Input.is_action_pressed("keyboard_camera_left") else 0), \
+		(1 if Input.is_action_pressed("keyboard_camera_down") else 0) \
+		- (1 if Input.is_action_pressed("keyboard_camera_up") else 0))
 		
 	var movement = Vector2(0, 0)
-	movement.x += 1 if is_action_pressed_with_rapid_fire("camera_right") else 0
-	movement.x += -1 if is_action_pressed_with_rapid_fire("camera_left") else 0
-	movement.y += -1 if is_action_pressed_with_rapid_fire("camera_up") else 0
-	movement.y += 1 if is_action_pressed_with_rapid_fire("camera_down") else 0
+	movement.x += 1 if is_action_pressed_with_rapid_fire("keyboard_camera_right") else 0
+	movement.x += -1 if is_action_pressed_with_rapid_fire("keyboard_camera_left") else 0
+	movement.y += -1 if is_action_pressed_with_rapid_fire("keyboard_camera_up") else 0
+	movement.y += 1 if is_action_pressed_with_rapid_fire("keyboard_camera_down") else 0
 	return movement

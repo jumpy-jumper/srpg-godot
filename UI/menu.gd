@@ -41,11 +41,13 @@ func _process(_delta):
 				if movement.length_squared() > 0:
 					selected_node = get_next_node(movement)
 			
-			if Input.is_action_just_released("confirm"):
+			if Input.is_action_just_released("mouse_confirm"):
 				if mouse_focus != null:
 					mouse_focus.on_pressed()
 					selected_node = mouse_focus
-				else:
+			
+			elif Input.is_action_just_pressed("keyboard_confirm"):
+				if selected_node:
 					selected_node.on_pressed()
 			
 			cursor.visible = true
