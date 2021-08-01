@@ -46,10 +46,10 @@ func is_won():
 	return cur_level_index >= len(level.advance)
 
 
-func is_waiting_for_facing():
+func is_waiting_for_user():
 	for summ in summoners_cache:
 		for unit in summ.followers:
-			if unit.waiting_for_facing:
+			if unit.waiting_for_user:
 				return true
 	return false
 
@@ -104,7 +104,7 @@ func can_undo_or_redo():
 func can_advance_round():
 	return not is_waiting_for_ui() \
 		and not is_won() \
-		and not is_waiting_for_facing() \
+		and not is_waiting_for_user() \
 		and not camera.operatable
 
 
@@ -113,7 +113,7 @@ func can_move_cursor():
 		and is_alive() \
 		and not is_won() \
 		and not is_waiting_for_ui() \
-		and not is_waiting_for_facing() \
+		and not is_waiting_for_user() \
 		and not camera.operatable
 
 
@@ -315,7 +315,7 @@ func _on_UI_mouse_exited():
 	pending_ui -= 1
 
 func _on_Skill_UI_skill_activation_requested(skill):
-	if skill.is_available():
+	if skill and skill.is_available():
 		skill.activate()
 		yield(get_tree(), "idle_frame")
 		$"Foreground UI/Unit UI".update_unit($"Foreground UI/Unit UI".saved_unit)
@@ -613,6 +613,7 @@ func redo():
 	if cur_state_index < len(states) - 1 and Game.redo_enabled:
 		load_state(states[cur_state_index + 1])
 		cur_state_index += 1
+
 
 func save_file():
 	var save_data = []

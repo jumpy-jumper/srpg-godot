@@ -17,6 +17,6 @@ func _process(_delta):
 	var cur = children[posmod(unit.facing, 360) / 90]
 	for node in children:
 		if node == cur:
-			node.modulate.a = 1 if unit.waiting_for_facing else default_alpha
+			node.modulate.a = 1 if unit.waiting_for_user else default_alpha
 		else:
-			node.modulate.a = standby_alpha if unit.waiting_for_facing else 0
+			node.modulate.a = standby_alpha if unit.waiting_for_user else 0

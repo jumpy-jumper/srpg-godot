@@ -26,6 +26,9 @@ Implementation
 	Game Logic
 		Resolve ties in ally targeting / enemy action
 	QoL
+		Follower menu on left click
+			Retreat
+			Activate Skill
 		Menu navigation
 			Clear mouse focus when keyboard input happens
 			Mouse input should not activate keyboard focus and viceversa

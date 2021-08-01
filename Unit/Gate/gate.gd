@@ -99,6 +99,7 @@ func spawn_enemy():
 		if len(path) > 0 and stage.get_unit_at(path[1]) == null:
 			enemy.alive = true
 			enemy.position = path[1]
+			enemy.emit_signal("moved", enemy, enemy.position)
 			enemy.base_level = get_stat("level", base_level)
 			enemy.heal_to_full()
 			var movement_array = enemy.get_stat("movement", enemy.base_movement)

@@ -2,7 +2,7 @@ extends Node
 
 
 const RAPID_FIRE_WAIT = { # How long to wait before rapid fire is active
-	"ui_movement" : 0.3,
+	"ui_movement" : 0.2,
 	"camera_movement" : 0.3,
 	"round_manipulation" : 0.3,
 	"restart" : 125,
@@ -10,7 +10,7 @@ const RAPID_FIRE_WAIT = { # How long to wait before rapid fire is active
 }
 
 const RAPID_FIRE_INTERVAL = { # How long to wait before allowing the action to fire again
-	"ui_movement" : 0.02,
+	"ui_movement" : 0.01,
 	"camera_movement" : 0.01,
 	"round_manipulation" : 0.04,
 	"restart" : 0.2,
@@ -69,7 +69,7 @@ func _process(delta):
 			time_since_released[group] += delta
 	
 	for action in fired:
-		time_since_fired[fired] = 0
+		time_since_fired[action] = 0
 	fired.clear()
 
 var fired = []

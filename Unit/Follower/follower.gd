@@ -36,7 +36,7 @@ func _process(_delta):
 		$DeathTweener.stop_all()
 		modulate.a = 1.0
 	
-	if waiting_for_facing and Game.mouse_enabled and stage.can_update_facing():
+	if waiting_for_user and Game.mouse_enabled and stage.can_update_facing():
 			if Game.mouse_idle == 0:
 				face_mouse()
 			if Input.is_action_just_released("mouse_confirm") \
@@ -46,11 +46,11 @@ func _process(_delta):
 
 
 func _input(event):
-	if event.is_action_pressed("retreat") or (event.is_action_pressed("confirm") and Input.is_action_pressed("cancel")):
+	if event.is_action_pressed("retreat") or (event.is_action_pressed("cancel") and Input.is_action_pressed("confirm")):
 		if alive and (stage.cursor.position == position):
 			die()
 			stage.append_state()
-	elif waiting_for_facing:
+	elif waiting_for_user:
 		var direction = InputWatcher.get_keyboard_input(true)
 		if direction.length_squared() > 0:
 			if direction == Vector2.RIGHT:
@@ -79,17 +79,17 @@ func deploy_self(pos):
 				or skill.activation == skill.Activation.SP_AUTO and skill.is_available():
 					skill.activate()
 		display_toasts()
-		waiting_for_facing = true
+		waiting_for_user = true
 		stage.append_state()
 
 
 func _on_Cursor_confirm_issued(pos):
-	if not alive and not stage.is_waiting_for_facing():
+	if not alive and not stage.is_waiting_for_user():
 		if stage.get_selected_follower() == self and stage.get_unit_at(pos) == null:
 			if stage.get_terrain_at(pos) in deployable_terrain \
 				and can_be_deployed():
 					deploy_self(pos)
-	elif alive and waiting_for_facing:
+	elif alive and waiting_for_user:
 		confirm_facing()
 	elif alive:
 		if pos == position:
@@ -119,7 +119,7 @@ var cooldown = 0
 
 func die():
 	.die()
-	waiting_for_facing = false
+	waiting_for_user = false
 	for skill in $Skills.get_children():
 		skill.initialize()
 	if summoner:
@@ -133,7 +133,7 @@ var previewing = false
 
 func _on_Cursor_hovered(pos):
 	._on_Cursor_hovered(pos)
-	$Ranges.visible = $Ranges.visible or waiting_for_facing
+	$Ranges.visible = $Ranges.visible or waiting_for_user
 	if not alive \
 		and stage.get_selected_follower() == self \
 		and stage.get_unit_at(pos) == null \
@@ -155,7 +155,7 @@ enum Facing {RIGHT = 0, DOWN = 90, LEFT = 180, UP = 270}
 export(Facing) var facing = Facing.RIGHT
 
 
-var waiting_for_facing = false
+var waiting_for_user = false
 
 
 func face_mouse():
@@ -167,7 +167,7 @@ func face_mouse():
 
 
 func confirm_facing():
-	waiting_for_facing = false
+	waiting_for_user = false
 	if name in stage.summoned_order:
 		stage.summoned_order.erase(name)
 	stage.summoned_order.push_back(name)
@@ -224,4 +224,4 @@ func load_state(state):
 	.load_state(state)
 	facing = state["facing"]
 	cooldown = state["cooldown"]
-	waiting_for_facing = false
+	waiting_for_user = false
