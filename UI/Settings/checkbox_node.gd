@@ -1,6 +1,7 @@
-extends MenuNode
+extends SettingsNode
 
-export var property = "settings_property"
+
+export(String, MULTILINE) var property = ""
 
 func _process(_delta):
 	$CheckBox.pressed = Game.settings[property]

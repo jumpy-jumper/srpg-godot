@@ -29,6 +29,8 @@ Implementation
 		Follower menu on left click
 			Retreat
 			Activate Skill
+		Undo on follower facing cancel
+		Multiple rapid fire - increase speed on successive activations of rapid fire
 		Menu navigation
 			Clear mouse focus when keyboard input happens
 			Mouse input should not activate keyboard focus and viceversa

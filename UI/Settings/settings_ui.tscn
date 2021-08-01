@@ -1,17 +1,17 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Fonts/Dynamic Fonts/ui_smaller.tres" type="DynamicFont" id=1]
-[ext_resource path="res://UI/Settings/resolution_change_button.gd" type="Script" id=2]
+[ext_resource path="res://Fonts/Dynamic Fonts/ui_smallest.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Shaders/white.png" type="Texture" id=3]
 [ext_resource path="res://Shaders/blur.tres" type="Material" id=4]
 [ext_resource path="res://UI/menu.tscn" type="PackedScene" id=5]
-[ext_resource path="res://UI/Settings/fullscreen_toggle.gd" type="Script" id=6]
+[ext_resource path="res://UI/Settings/button_node.gd" type="Script" id=6]
 [ext_resource path="res://UI/Settings/checkbox_node.gd" type="Script" id=7]
 [ext_resource path="res://UI/menu_node.tscn" type="PackedScene" id=8]
 [ext_resource path="res://UI/Settings/settings_menu.gd" type="Script" id=9]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends MenuNode
+script/source = "extends SettingsNode
 
 
 func on_pressed():
@@ -44,7 +44,7 @@ modulate = Color( 1, 1, 1, 0.501961 )
 margin_left = 64.0
 margin_top = 32.0
 margin_right = 1216.0
-margin_bottom = 608.0
+margin_bottom = 688.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -71,15 +71,19 @@ margin_right = 64.0
 margin_bottom = 64.0
 script = ExtResource( 9 )
 initial = NodePath("Fullscreen")
+description = NodePath("Description")
 
 [node name="1280x720" type="Control" parent="Menu"]
 margin_left = 32.0
 margin_right = 160.0
 margin_bottom = 32.0
-script = ExtResource( 2 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+description = "Disable fullscreen and change window size to 1280x720."
+properties = [ "resolution", "fullscreen" ]
+values = [ Vector2( 1280, 720 ), false ]
 
 [node name="Label" type="Label" parent="Menu/1280x720"]
 anchor_right = 1.0
@@ -96,12 +100,13 @@ __meta__ = {
 margin_left = 176.0
 margin_right = 304.0
 margin_bottom = 32.0
-script = ExtResource( 2 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-x = 1600
-y = 900
+description = "Disable fullscreen and change window size to 1600x900."
+properties = [ "resolution", "fullscreen" ]
+values = [ Vector2( 1600, 900 ), false ]
 
 [node name="Label" type="Label" parent="Menu/1600x900"]
 anchor_right = 1.0
@@ -118,12 +123,13 @@ __meta__ = {
 margin_left = 320.0
 margin_right = 448.0
 margin_bottom = 32.0
-script = ExtResource( 2 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-x = 1920
-y = 1080
+description = "Disable fullscreen and change window size to 1920x1080."
+properties = [ "resolution", "fullscreen" ]
+values = [ Vector2( 1920, 1080 ), false ]
 
 [node name="Label" type="Label" parent="Menu/1920x1080"]
 anchor_right = 1.0
@@ -140,12 +146,13 @@ __meta__ = {
 margin_left = 464.0
 margin_right = 592.0
 margin_bottom = 32.0
-script = ExtResource( 2 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-x = 2560
-y = 1440
+description = "Disable fullscreen and change window size to 2560x1440."
+properties = [ "resolution", "fullscreen" ]
+values = [ Vector2( 2560, 1440 ), false ]
 
 [node name="Label" type="Label" parent="Menu/2560x1440"]
 anchor_right = 1.0
@@ -166,6 +173,9 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+description = "Enable fullscreen. Does not change the monitor's resolution."
+properties = [ "fullscreen" ]
+values = [ true ]
 
 [node name="Label" type="Label" parent="Menu/Fullscreen"]
 anchor_right = 1.0
@@ -180,13 +190,14 @@ __meta__ = {
 
 [node name="Return" type="Control" parent="Menu"]
 margin_left = 32.0
-margin_top = 480.0
+margin_top = 192.0
 margin_right = 1120.0
-margin_bottom = 512.0
+margin_bottom = 224.0
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+description = "Go back to the title screen."
 
 [node name="Label" type="Label" parent="Menu/Return"]
 anchor_right = 1.0
@@ -199,15 +210,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CheckBox Node" parent="Menu" instance=ExtResource( 8 )]
+[node name="CursorControls" parent="Menu" instance=ExtResource( 8 )]
 margin_left = 32.0
 margin_top = 48.0
 margin_right = 320.0
 margin_bottom = 80.0
 script = ExtResource( 7 )
+description = "Enable moving and controlling the cursor with the mouse."
 property = "cursor_mouse_controls"
 
-[node name="CheckBox" type="CheckBox" parent="Menu/CheckBox Node"]
+[node name="CheckBox" type="CheckBox" parent="Menu/CursorControls"]
 margin_top = -2.0
 margin_right = 24.0
 margin_bottom = 22.0
@@ -218,18 +230,99 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="Menu/CheckBox Node"]
-anchor_left = 1.0
+[node name="Label2" type="Label" parent="Menu/CursorControls"]
 anchor_top = 0.5
-anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -240.0
+margin_left = 48.0
 margin_top = -16.0
+margin_right = 288.0
 margin_bottom = 16.0
 custom_fonts/font = ExtResource( 1 )
 text = "Cursor Mouse Controls"
-align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KB Camera" parent="Menu" instance=ExtResource( 8 )]
+margin_left = 32.0
+margin_top = 96.0
+margin_right = 448.0
+margin_bottom = 128.0
+script = ExtResource( 7 )
+description = "Invert camera controls with the keyboard."
+property = "inverted_keyboard_camera"
+
+[node name="CheckBox" type="CheckBox" parent="Menu/KB Camera"]
+margin_top = -2.0
+margin_right = 24.0
+margin_bottom = 22.0
+rect_scale = Vector2( 1.5, 1.5 )
+mouse_filter = 2
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Menu/KB Camera"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 48.0
+margin_top = -16.0
+margin_right = 320.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 1 )
+text = "Inverted Keyboard Camera"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mouse Camera" parent="Menu" instance=ExtResource( 8 )]
+margin_left = 32.0
+margin_top = 144.0
+margin_right = 448.0
+margin_bottom = 176.0
+script = ExtResource( 7 )
+description = "Invert camera controls with the mouse."
+property = "inverted_mouse_camera"
+
+[node name="CheckBox" type="CheckBox" parent="Menu/Mouse Camera"]
+margin_top = -2.0
+margin_right = 24.0
+margin_bottom = 22.0
+rect_scale = Vector2( 1.5, 1.5 )
+mouse_filter = 2
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Menu/Mouse Camera"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 48.0
+margin_top = -16.0
+margin_right = 304.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 1 )
+text = "Inverted Mouse Camera"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 32.0
+margin_top = 544.0
+margin_right = 1120.0
+margin_bottom = 600.0
+custom_fonts/font = ExtResource( 2 )
+text = "Description."
+align = 1
+valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }

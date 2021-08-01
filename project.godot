@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Unit/Range/range_indicator.gd"
 }, {
+"base": "MenuNode",
+"class": "SettingsNode",
+"language": "GDScript",
+"path": "res://UI/Settings/settings_node.gd"
+}, {
 "base": "Node",
 "class": "Skill",
 "language": "GDScript",
@@ -87,6 +92,7 @@ _global_script_class_icons={
 "Menu": "",
 "MenuNode": "",
 "RangeIndicator": "",
+"SettingsNode": "",
 "Skill": "",
 "Stage": "",
 "StageUI": "",

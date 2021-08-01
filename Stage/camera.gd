@@ -24,18 +24,14 @@ onready var tween = $Tween
 func _process(_delta):
 	if stage.can_move_camera():
 		var movement = InputWatcher.get_camera_input()
-		movement = Vector2(round(movement.x), round(movement.y))
+		movement = Vector2(round(movement.x), round(movement.y)).rotated(PI if Game.settings["inverted_keyboard_camera"] else 0)
 		if Game.inverted_camera_keyboard:
 			movement = -movement
 		
 		var newpos = position + movement * stage.get_cell_size()
 		
 		if movement.length_squared() > 0:
-			tween.stop_all()
-			tween.interpolate_property(self, "position", 
-			position, newpos, speed,
-			Tween.TRANS_LINEAR, Tween.EASE_OUT)
-			tween.start()
+			position = newpos
 
 		var new_zoom
 		if Input.is_action_just_pressed("zoom"):
@@ -65,7 +61,7 @@ func _process(_delta):
 		and stage.can_move_camera_with_cancel()) \
 		or Input.is_action_pressed("drag_camera"):
 			var offset = (base_mouse_position - get_viewport().get_mouse_position()) * zoom
-			if Game.inverted_camera_mouse:
+			if Game.settings["inverted_mouse_camera"]:
 				offset = -offset
 			position = base_camera_position + offset
 	
