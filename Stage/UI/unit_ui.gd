@@ -5,7 +5,6 @@ var saved_unit = null
 
 onready var base_sprite_pos = $Sprite.position
 
-
 func update_unit(unit):
 	saved_unit = unit
 	if unit.get_type_of_self() == unit.UnitType.FOLLOWER:

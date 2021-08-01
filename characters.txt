@@ -1,0 +1,65 @@
+Awakening
+	When a character awakens, all other units of the same blessing are retreated, 
+	the unit's summoner loses faith every round, and the unit's summoner cannot 
+	summon any units or use any skills. When the unit's summoner reaches 0 faith, 
+	awakening ends and the unit is retreated. A unit may only awaken once per map.
+
+[6] Nils
+	Provides faith and small utility.
+	
+	[AWAKEN] All units' costs become 0
+
+[7] Nephenee
+	Weak, but can be resummoned much faster than other units.
+	
+	[AWAKEN] This unit's cost and resummon cooldown become 0. Awakening persists through dying and being retreates manually.
+
+[10] Tethys
+	Cannot attack, but debuffs enemies around her.
+	
+	[AWAKEN] Skill range becomes global
+
+[12] Norne
+	Deals multiple attacks per turn, taking advantage of enemies' low DEF.
+	
+	[AWAKEN] Add twice the enemy's DEF to this unit's damage.
+
+[15] Lysithea
+	Nuker that builds up to one huge nuke.
+	
+	[AWAKEN] This unit's active skill's duration becomes infinite
+
+[18] Lon'qu
+	Glass cannon ground unit that overwhelms the enemy with massive burst damage.
+	
+	[AWAKEN] This unit becomes immortal
+
+[20] Niles
+	Displaces enemies.
+	
+	[AWAKEN] When an enemy is displaced, their movement becomes [0, 0, 0, 0] until this unit is retreated
+
+[22] Natasha
+	Heals and provides damage mitigation to allies.
+	
+	[AWAKEN] All allies heal to full at the beginning of the round
+
+[24] Dieck
+	Takes a while to get going.
+	
+	[AWAKEN] 
+
+[32] Robin
+	Summons weaker units to swarm the enemy.
+	
+	[AWAKEN] This unit's summon limit becomes infinite
+
+[34] Frederick
+	Durable holder that can provide healing and support to nearby party members.
+	
+	[AWAKEN] The ATK of enemies blocked by this unit becomes 0
+
+[36] Edelgard
+	Self-sustainable wall that can hold entire lanes on her own.
+	
+	[AWAKEN] Add all damage taken by this unit since last summoned to this unit's ATK

@@ -1,5 +1,5 @@
 extends Control
-class_name NavigatableMenu
+class_name Menu
 
 
 export var operatable = true

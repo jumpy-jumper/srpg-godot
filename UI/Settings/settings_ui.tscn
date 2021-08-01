@@ -4,7 +4,7 @@
 [ext_resource path="res://UI/Settings/resolution_change_button.gd" type="Script" id=2]
 [ext_resource path="res://Shaders/white.png" type="Texture" id=3]
 [ext_resource path="res://Shaders/blur.tres" type="Material" id=4]
-[ext_resource path="res://UI/navigatable_menu.tscn" type="PackedScene" id=5]
+[ext_resource path="res://UI/menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://UI/Settings/ fullscreen_toggle.gd" type="Script" id=6]
 
 [sub_resource type="GDScript" id=1]

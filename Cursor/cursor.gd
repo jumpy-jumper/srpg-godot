@@ -62,6 +62,7 @@ func _process(_delta):
 					position = stage.get_clamped_position(get_global_mouse_position())
 			else:
 				position = get_global_mouse_position()
+			$"AnimatedSprite/Parent Follower".snap()
 		else:
 			position += DEFAULT_CELL_SIZE * movement
 
@@ -93,3 +94,7 @@ func _process(_delta):
 		emit_signal("cancel_issued", position)
 		
 	emit_signal("hovered", position)
+
+
+func _on_AnimatedSprite_animation_finished():
+	$AnimatedSprite.play("default")

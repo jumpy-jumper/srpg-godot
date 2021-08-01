@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Levels/tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=2]
@@ -13,7 +13,6 @@
 [ext_resource path="res://Unit/Follower/Norne/norne.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Unit/Follower/Lon'qu/lon'qu.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Unit/Enemy/Skeleton/e_skeleton.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=14]
 
 [node name="Level" type="Node" groups=[
 "Level",
@@ -49,16 +48,12 @@ base_max_hp = 1
 faith = 32
 
 [node name="Nephenee" parent="The East Wind" instance=ExtResource( 7 )]
-script = ExtResource( 14 )
 
 [node name="Norne" parent="The East Wind" instance=ExtResource( 11 )]
-script = ExtResource( 14 )
 
 [node name="Lon\'qu" parent="The East Wind" instance=ExtResource( 12 )]
-script = ExtResource( 14 )
 
 [node name="Natasha" parent="The East Wind" instance=ExtResource( 6 )]
-script = ExtResource( 14 )
 
 [node name="Beginnings" parent="." instance=ExtResource( 3 )]
 position = Vector2( 192, 256 )
@@ -73,36 +68,44 @@ spawn_info = "4 8 12
 
 [node name="Hound" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
+base_atk = 50
 
 [node name="Hound3" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
+base_atk = 50
 
 [node name="Centaur" parent="Beginnings" instance=ExtResource( 8 )]
 position = Vector2( 128, 0 )
 
 [node name="Hound5" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
+base_atk = 50
 
 [node name="Hound6" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
+base_atk = 50
 
 [node name="Skeleton" parent="Beginnings" instance=ExtResource( 13 )]
 position = Vector2( 64, 0 )
 
 [node name="Hound7" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
+base_atk = 50
 
 [node name="Hound8" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
+base_atk = 50
 
 [node name="Centaur2" parent="Beginnings" instance=ExtResource( 8 )]
 position = Vector2( 128, 0 )
 
 [node name="Hound9" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
+base_atk = 50
 
 [node name="Hound10" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
+base_atk = 50
 
 [node name="Skeleton2" parent="Beginnings" instance=ExtResource( 13 )]
 position = Vector2( 64, 0 )

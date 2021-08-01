@@ -3,7 +3,7 @@
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui_smaller.tres" type="DynamicFont" id=2]
 [ext_resource path="res://UI/menu_node.tscn" type="PackedScene" id=3]
-[ext_resource path="res://UI/navigatable_menu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://UI/menu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Title/title_button.gd" type="Script" id=5]
 [ext_resource path="res://Levels/blue_level.jpg" type="Texture" id=6]
 

@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://UI/navigatable_menu.gd" type="Script" id=1]
+[ext_resource path="res://UI/menu.gd" type="Script" id=1]
 [ext_resource path="res://UI/menu_cursor.tscn" type="PackedScene" id=2]
 
-[node name="Navigatable Menu" type="Control"]
+[node name="Menu" type="Control"]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -12,6 +12,7 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Cursor" parent="." instance=ExtResource( 2 )]
+visible = true
 
 [node name="MouseFocus" parent="." instance=ExtResource( 2 )]
 modulate = Color( 1, 1, 1, 0.439216 )

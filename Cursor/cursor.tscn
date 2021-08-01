@@ -9,7 +9,7 @@
 [ext_resource path="res://Cursor/Sprites/cursor_selection5.png" type="Texture" id=7]
 [ext_resource path="res://Cursor/Sprites/cursor_selection2.png" type="Texture" id=8]
 [ext_resource path="res://Cursor/cursor.gd" type="Script" id=9]
-[ext_resource path="res://Cursor/cursor_sprite.gd" type="Script" id=10]
+[ext_resource path="res://parent_follower.tscn" type="PackedScene" id=11]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -34,9 +34,12 @@ script = ExtResource( 9 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
+z_index = 1
 frames = SubResource( 1 )
 frame = 1
 playing = true
-script = ExtResource( 10 )
 
-[connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="_on_AnimatedSprite_animation_finished"]
+[node name="Parent Follower" parent="AnimatedSprite" instance=ExtResource( 11 )]
+speed = 20
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

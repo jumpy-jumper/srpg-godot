@@ -18,10 +18,11 @@ Implementation
 			All the static variables in the game class, + resolution options
 		"Slow" game speed, with an option to change it to fast
 	Bugs
+		Cursor vertical movement doesn't rapid fire after horizontal movement
 		Deselect node from menu when window loses focus
 		Unit UI shows up even if camera was fiddled with but zoom didn't change
 		Follower doesn't preview if you restart after dying
-		Enemy tweener can break with fast undo/advance
+		Changing resolution should place the window on the current screen and not screen 0
 	Game Logic
 		Resolve ties in ally targeting / enemy action
 	QoL

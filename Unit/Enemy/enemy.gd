@@ -12,7 +12,6 @@ func get_type_of_self():
 func get_type_of_enemy():
 	return UnitType.FOLLOWER
 
-
 func _process(_delta):
 	$"Sprite/UI".visible = alive
 	if not $DeathTweener.is_active():

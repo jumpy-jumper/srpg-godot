@@ -2,7 +2,7 @@ extends Node
 
 
 const RAPID_FIRE_WAIT = { # How long to wait before rapid fire is active
-	"ui_movement" : 0.2,
+	"ui_movement" : 0.3,
 	"camera_movement" : 0.3,
 	"round_manipulation" : 0.3,
 	"restart" : 125,
@@ -67,7 +67,12 @@ func _process(delta):
 			time_held[action] = 0
 		else:
 			time_since_released[group] += delta
+	
+	for action in fired:
+		time_since_fired[fired] = 0
+	fired.clear()
 
+var fired = []
 
 func is_action_pressed_with_rapid_fire(action):
 	var pressed = Input.is_action_just_pressed(action) \
@@ -75,7 +80,7 @@ func is_action_pressed_with_rapid_fire(action):
 			time_since_fired[action] >= RAPID_FIRE_INTERVAL[RAPID_FIRE_GROUP[action]])
 	
 	if pressed:
-		time_since_fired[action] = 0
+		fired.append(action)
 		return true
 		
 	return false

@@ -171,6 +171,7 @@ func _ready():
 				for e in u.enemies.values():
 					level.add_child(e)
 					connect_with_unit(e)
+					e.position = u.position
 			elif u is Enemy:
 				independent_enemies_cache.append(u)
 				summoned_order.append(u)
