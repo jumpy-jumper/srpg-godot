@@ -64,7 +64,8 @@ func _process(_delta):
 	prev_pos = position
 	
 	if OS.is_debug_build():
-		initialize_path()
+		#initialize_path()
+		pass
 
 
 func die():
@@ -102,9 +103,9 @@ func spawn_enemy():
 			enemy.heal_to_full()
 			var movement_array = enemy.get_stat("movement", enemy.base_movement)
 			enemy.movement = movement_array[(stage.cur_tick) % len(movement_array)]
-			if enemy in stage.summoned_order:
-				stage.summoned_order.erase(enemy)
-			stage.summoned_order.push_back(enemy)
+			if enemy.name in stage.summoned_order:
+				stage.summoned_order.erase(enemy.name)
+			stage.summoned_order.push_back(enemy.name)
 		else:
 			$Sprite/Blocked.visible = true
 		

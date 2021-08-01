@@ -193,6 +193,7 @@ func is_full_hp():
 
 
 signal dead(unit)
+signal moved(unit, from)
 
 
 enum DamageType {PHYSICAL, MAGIC, TRUE, HEALING, SHIELD, SHIELD_DAMAGE}
@@ -325,14 +326,10 @@ func get_state():
 	ret["hp"] = hp
 	ret["shield"] = shield
 	
-	ret["skills"] = []
-	for skill in $Skills.get_children():
-		ret["skills"].append(skill.get_state())
-	
-	
-	ret["statuses"] = []
-	for status in $Statuses.get_children():
-		ret["statuses"].append(status.get_state())
+	for child in $Skills.get_children() + $Statuses.get_children():
+		var child_state = child.get_state()
+		for key in child_state.keys():
+			ret[child.name + "\t" + key] = child_state[key]
 	
 	return ret
 
@@ -343,20 +340,22 @@ func load_state(state):
 	hp = state["hp"]
 	shield = state["shield"]
 	
-	for skill in $Skills.get_children():
-		skill.free()
+	for child in $Skills.get_children() + $Statuses.get_children():
+		child.free()
 	
-	for skill_state in state["skills"]:
-		var new_skill = Node.new()
-		new_skill.script = load(skill_state["script"])
-		$Skills.add_child(new_skill)
-		new_skill.load_state(skill_state)
+	var child_states = {}
+	for key in state.keys():
+		if "\t" in key:
+			var split = key.split("\t")
+			if not child_states.has(split[0]):
+				child_states[split[0]] = {}
+			child_states[split[0]][split[1]] = state[key]
 	
-	for status in $Statuses.get_children():
-		status.free()
-	
-	for status_state in state["statuses"]:
-		var new_status = Node.new()
-		new_status.script = load(status_state["script"])
-		$Statuses.add_child(new_status)
-		new_status.load_state(status_state)
+	for child in child_states.keys():
+		var new_child = Node.new()
+		new_child.script = load(child_states[child]["script"])
+		if new_child is Skill:
+			$Skills.add_child(new_child)
+		elif new_child is Status:
+			$Statuses.add_child(new_child)
+		new_child.load_state(child_states[child])

@@ -46,7 +46,7 @@ func _process(_delta):
 
 
 func _input(event):
-	if event.is_action_pressed("retreat"):
+	if event.is_action_pressed("retreat") or (event.is_action_pressed("confirm") and Input.is_action_pressed("cancel")):
 		if alive and (stage.cursor.position == position):
 			die()
 			stage.append_state()
@@ -71,6 +71,7 @@ func can_be_deployed():
 func deploy_self(pos):
 		alive = true
 		global_position = stage.get_clamped_position(pos)
+		emit_signal("moved", self, position)
 		summoner.faith -= get_stat("cost", base_cost)
 		for skill in get_node("Skills").get_children():
 			skill.initialize()
@@ -167,9 +168,9 @@ func face_mouse():
 
 func confirm_facing():
 	waiting_for_facing = false
-	if self in stage.summoned_order:
-		stage.summoned_order.erase(self)
-	stage.summoned_order.push_back(self)
+	if name in stage.summoned_order:
+		stage.summoned_order.erase(name)
+	stage.summoned_order.push_back(name)
 	stage.replace_last_state() # the last state should be right before confirming facing
 
 

@@ -101,6 +101,7 @@ func move():
 	
 	var oldpos = position
 	position = newpos
+	emit_signal("moved", self, oldpos)
 	
 	return
 	

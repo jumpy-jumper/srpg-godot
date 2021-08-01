@@ -174,10 +174,12 @@ func _ready():
 					e.position = u.position
 			elif u is Enemy:
 				independent_enemies_cache.append(u)
-				summoned_order.append(u)
+				summoned_order.append(u.name)
 			elif u is Follower:
 				independent_followers_cache.append(u)
-				summoned_order.append(u)
+				summoned_order.append(u.name)
+			if u.alive:
+				unit_pos_cache[u.position] = u
 
 	cursor.stage = self
 	camera.position = level.default_camera_position
@@ -217,6 +219,11 @@ func _process(_delta):
 
 
 func process_input():
+	if Input.is_action_just_pressed("debug_save"):
+		save_file()
+	elif Input.is_action_just_pressed("debug_load"):
+		load_file()
+
 	if Input.is_action_just_released("cancel") and not Input.is_action_pressed("control") and can_hide_ui():
 		for ui in $"Foreground UI".get_children():
 			if ui.operatable:
@@ -255,7 +262,7 @@ func process_input():
 		if Game.undoable_restart:
 			load_state(states[0])
 			append_state()
-			$UI/Blackscreen.animate()
+			$"Foreground UI/Blackscreen".animate()
 		else:
 			get_tree().reload_current_scene()
 	
@@ -282,8 +289,17 @@ func _on_Cursor_cancel_issued(pos):
 	pass
 
 
+var unit_pos_cache = {}
+
+
 func _on_Unit_dead(unit):
-	pass
+	unit_pos_cache.erase(unit.position)
+
+
+func _on_Unit_moved(unit, from):
+	if unit_pos_cache.has(from):
+		unit_pos_cache.erase(from)
+	unit_pos_cache[unit.position] = unit
 
 
 func show_unit_ui(unit):
@@ -319,7 +335,6 @@ func _on_Unit_UI_exited():
 func _on_Settings_Button_gui_input(event):
 	if event is InputEventMouseButton and not event.pressed and can_show_ui() and not $"Foreground UI/Settings".operatable:
 		$"Foreground UI/Settings".show()
-
 
 ###############################################################################
 #        Getters                                                              #
@@ -388,9 +403,8 @@ func get_selected_summoner():
 
 
 func get_unit_at(pos):
-	for u in get_all_units():
-		if u.alive and u.position == pos:
-			return u
+	if unit_pos_cache.has(pos):
+		return unit_pos_cache[pos]
 	return null
 
 
@@ -453,6 +467,7 @@ func advance_tick():
 	var followers = []
 	var enemies = []
 	for unit in summoned_order:
+		unit = level.get_node(unit)
 		if unit is Follower:
 			followers.append(unit)
 		if unit is Enemy:
@@ -515,6 +530,7 @@ func deselect_unit():
 func connect_with_unit(unit):
 	unit.stage = self
 	unit.connect("dead", self, "_on_Unit_dead")
+	unit.connect("moved", self, "_on_Unit_moved")
 	connect("player_phase_started", unit, "_on_Stage_player_phase_started")
 	connect("enemy_phase_started", unit, "_on_Stage_enemy_phase_started")
 	connect("tick_ended", unit, "_on_Stage_tick_ended")
@@ -539,7 +555,17 @@ func get_state():
 	ret["cur_level_index"] = cur_level_index
 	ret["summoned_order"] = [] + summoned_order
 	for unit in get_all_units():
-		ret[unit] = unit.get_state()
+		var unit_state = unit.get_state()
+		for key in unit_state:
+			ret[unit.name + "\t" + key] = unit_state[key]
+	return ret
+
+
+func get_state_diff(initial, final):
+	var ret = {}
+	for key in initial.keys():
+		if key in final and initial[key] != final[key]:
+			ret[key] = final[key]
 	return ret
 
 
@@ -547,8 +573,20 @@ func load_state(state):
 	cur_tick = state["cur_tick"]
 	cur_level_index = state["cur_level_index"]
 	summoned_order = state["summoned_order"]
+	unit_pos_cache.clear()
+	
+	var unit_states = {}
+	for key in state.keys():
+		if "\t" in key:
+			var split = key.split("\t")
+			if not unit_states.has(split[0]):
+				unit_states[split[0]] = {}
+			unit_states[split[0]][key.trim_prefix(split[0] + "\t")] = state[key]
+	
 	for unit in get_all_units():
-		unit.load_state(state[unit])
+		unit.load_state(unit_states[unit.name])
+		if unit.alive:
+			unit_pos_cache[unit.position] = unit
 
 
 func append_state():
@@ -575,3 +613,32 @@ func redo():
 	if cur_state_index < len(states) - 1 and Game.redo_enabled:
 		load_state(states[cur_state_index + 1])
 		cur_state_index += 1
+
+func save_file():
+	var save_data = []
+	for i in range(cur_state_index):
+		save_data.append(get_state_diff(states[i], states[i+1]))
+		
+	var save_file = File.new()
+	save_file.open("user://dit_debug_save.sav", File.WRITE)
+	save_file.store_line(var2str(save_data))
+	save_file.close()
+	
+
+func load_file():
+	var save_data = []
+	var save_file = File.new()
+	save_file.open("user://dit_debug_save.sav", File.READ)
+	save_data = str2var(save_file.get_as_text())
+	
+	var first_state = states[0].duplicate()
+	states.clear()
+	states.append(first_state)
+	
+	for i in range(len(save_data)):
+		states.append(states[i].duplicate())
+		for key in save_data[i]:
+			states[i+1][key] = save_data[i][key]
+	
+	cur_state_index = len(save_data)
+	load_state(states[cur_state_index])

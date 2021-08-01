@@ -7,7 +7,6 @@ export var wind = Wind.EAST
 
 
 var followers = []
-var summoned_order = []
 
 
 func get_type_of_self():

@@ -186,7 +186,7 @@ func last_summoned_comparison(a, b):
 		return true
 	elif is_blocking_or_blocked(b) and not is_blocking_or_blocked(a):
 		return false
-	return a.stage.summoned_order.find(a) > b.stage.summoned_order.find(b)
+	return a.stage.summoned_order.find(a.name) > b.stage.summoned_order.find(b.name)
 
 
 func first_summoned_comparison(a, b):
@@ -194,7 +194,7 @@ func first_summoned_comparison(a, b):
 		return true
 	elif is_blocking_or_blocked(b) and not is_blocking_or_blocked(a):
 		return false
-	return a.stage.summoned_order.find(a) < b.stage.summoned_order.find(b)
+	return a.stage.summoned_order.find(a.name) > b.stage.summoned_order.find(b.name)
 
 
 

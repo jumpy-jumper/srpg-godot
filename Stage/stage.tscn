@@ -24,7 +24,7 @@
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=22]
 [ext_resource path="res://Stage/UI/enemy_info.tscn" type="PackedScene" id=23]
 [ext_resource path="res://UI/Settings/settings_ui.tscn" type="PackedScene" id=24]
-[ext_resource path="res://Stage/deployable_tiles_indicator.gd" type="Script" id=27]
+[ext_resource path="res://Stage/Terrain/deployable_tiles_indicator.gd" type="Script" id=27]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -35,8 +35,12 @@ func _process(_delta):
 	$Round.text = \"Round \" + str(stage.cur_tick)
 "
 
+[sub_resource type="DynamicFont" id=3]
+size = 200
+font_data = ExtResource( 7 )
+
 [sub_resource type="GDScript" id=2]
-script/source = "extends Panel
+script/source = "extends StageUI
 
 export var fade_in_duration = 1.0
 
@@ -50,10 +54,6 @@ func animate():
 		Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	$Tween.start()
 "
-
-[sub_resource type="DynamicFont" id=3]
-size = 200
-font_data = ExtResource( 7 )
 
 [node name="Stage" type="Node"]
 script = ExtResource( 1 )
@@ -275,7 +275,7 @@ __meta__ = {
 position = Vector2( -67.973, -1.14441e-05 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
-frame = 7
+frame = 6
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Summoner UI"]
@@ -322,20 +322,6 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Blackscreen" type="Panel" parent="UI"]
-visible = false
-modulate = Color( 0, 0, 0, 1 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-script = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-fade_in_duration = 0.25
-
-[node name="Tween" type="Tween" parent="UI/Blackscreen"]
 
 [node name="Game Over" type="Control" parent="UI"]
 visible = false
@@ -763,6 +749,20 @@ margin_bottom = 664.0
 [node name="Settings" parent="Foreground UI" instance=ExtResource( 24 )]
 visible = false
 script = ExtResource( 4 )
+
+[node name="Blackscreen" type="Panel" parent="Foreground UI"]
+visible = false
+modulate = Color( 0, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+fade_in_duration = 0.25
+
+[node name="Tween" type="Tween" parent="Foreground UI/Blackscreen"]
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
 position = Vector2( 256, 256 )

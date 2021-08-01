@@ -25,5 +25,4 @@ func update_tiles(deployable):
 			children[i].visible = false
 		else:
 			children[i].visible = true
-			children[i].position = position + (cells[i] * stage.get_cell_size()) + \
-				Vector2(stage.get_cell_size() / 2, stage.get_cell_size() / 2)
+			children[i].position = cells[i] * stage.get_cell_size()

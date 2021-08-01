@@ -37,7 +37,7 @@ func update_unit(unit, selected):
 
 
 func _on_Follower_Panel_gui_input(event):
-	if event is InputEventMouseButton and not event.pressed:
+	if event is InputEventMouseButton and not event.pressed and unit:
 		match event.button_index:
 			BUTTON_LEFT:
 				if unit.stage.can_select_follower_ui():

@@ -21,16 +21,11 @@ var prev_pos = Vector2.ZERO
 
 
 export var autoload = false
-var level_to_load = preload("res://Levels/l_east02.tscn")
+var level_to_load = preload("res://Levels/east02.tscn")
 
 
 func _ready():
 	randomize()
-	if OS.is_debug_build():
-		OS.set_window_size(Vector2(1920, 1080))  
-		var screen_size = OS.get_screen_size(0)
-		var window_size = OS.get_window_size()
-		OS.set_window_position(screen_size*0.5 - window_size*0.5)
 		
 
 func _process(_delta):
