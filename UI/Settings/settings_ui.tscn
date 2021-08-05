@@ -352,7 +352,7 @@ margin_top = 240.0
 margin_right = 448.0
 margin_bottom = 272.0
 script = ExtResource( 7 )
-description = "Enable being able to undo a stage restart. (May use a ton of RAM)"
+description = "Enable being able to undo a stage restart. (May use a ton of RAM if you do it many times)"
 property = "undoable_restart"
 
 [node name="CheckBox" type="CheckBox" parent="Menu/Mouse Camera2"]

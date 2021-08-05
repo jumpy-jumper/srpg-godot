@@ -5,18 +5,12 @@ Content
 	East-07: Robin
 Implementation
 	Controls
-		Separate keyboard, mouse, and controller controls
 		Analog vs digital controls for cursor / camera
 	Urgent
 		Portraits are blurry, scale better
-		Cancel while waiting for facing performs an undo
 		Skill icons
 		Rearrange Unit UI
 		Skills that activate on the next basic attack
-		Summoner win skill
-		Settings menu
-			All the static variables in the game class, + resolution options
-		"Slow" game speed, with an option to change it to fast
 	Bugs
 		Cursor vertical movement doesn't rapid fire after horizontal movement
 		Deselect node from menu when window loses focus
@@ -26,6 +20,7 @@ Implementation
 	Game Logic
 		Resolve ties in ally targeting / enemy action
 	QoL
+		"Slow" game speed, with an option to change it to fast
 		Follower menu on left click
 			Retreat
 			Activate Skill

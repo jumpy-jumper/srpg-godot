@@ -12,7 +12,7 @@ Awakening
 [7] Nephenee
 	Weak, but can be resummoned much faster than other units.
 	
-	[AWAKEN] This unit's cost and resummon cooldown become 0. Awakening persists through dying and being retreates manually.
+	[AWAKEN] This unit's cost and resummon cooldown become 0. Awakening persists through dying and being retreated manually.
 
 [10] Tethys
 	Cannot attack, but debuffs enemies around her.
