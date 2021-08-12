@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Stage/stage.gd" type="Script" id=1]
 [ext_resource path="res://Stage/camera.gd" type="Script" id=2]
@@ -10,7 +10,7 @@
 [ext_resource path="res://Stage/UI/follower_panels.gd" type="Script" id=8]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui_smaller.tres" type="DynamicFont" id=9]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui.tres" type="DynamicFont" id=10]
-[ext_resource path="res://Unit/Summoner/East Wind/east_wind.tres" type="SpriteFrames" id=11]
+[ext_resource path="res://Unit/Summoner/South Wind/south_wind.tres" type="SpriteFrames" id=11]
 [ext_resource path="res://Stage/summoner_ui.gd" type="Script" id=12]
 [ext_resource path="res://Stage/Terrain/deployable_high.tres" type="Resource" id=13]
 [ext_resource path="res://Unit/Follower/Dieck/dieck_portrait.png" type="Texture" id=14]
@@ -24,6 +24,8 @@
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=22]
 [ext_resource path="res://Stage/UI/enemy_info.tscn" type="PackedScene" id=23]
 [ext_resource path="res://UI/Settings/settings_ui.tscn" type="PackedScene" id=24]
+[ext_resource path="res://arc.png" type="Texture" id=25]
+[ext_resource path="res://circle.png" type="Texture" id=26]
 [ext_resource path="res://Stage/Terrain/deployable_tiles_indicator.gd" type="Script" id=27]
 
 [sub_resource type="GDScript" id=1]
@@ -32,14 +34,18 @@ script/source = "extends Control
 onready var stage = $\"../..\"
 
 func _process(_delta):
-	$Round.text = \"Round \" + str(stage.cur_tick)
+	var enemy_count = stage.get_enemy_count()
+	$Turn.text = \"T\" + str(stage.cur_tick)
+	$Round.text = \"East-1\"
+	$Left.text = str(enemy_count - stage.get_enemies_left()) + \"/\" + str(enemy_count)
+	$Selected.rotation_degrees = 90 * stage.selected_summoner_index
 "
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 200
 font_data = ExtResource( 7 )
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends StageUI
 
 export var fade_in_duration = 1.0
@@ -179,108 +185,183 @@ __meta__ = {
 }
 
 [node name="1" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = -61.3333
 margin_top = 64.0
 margin_right = 66.6667
 margin_bottom = 192.0
 
 [node name="2" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 66.6667
 margin_top = 64.0
 margin_right = 194.667
 margin_bottom = 192.0
 
 [node name="3" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 194.667
 margin_top = 64.0
 margin_right = 322.667
 margin_bottom = 192.0
 
 [node name="4" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 322.667
 margin_top = 64.0
 margin_right = 450.667
 margin_bottom = 192.0
 
 [node name="5" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 450.667
 margin_top = 64.0
 margin_right = 578.667
 margin_bottom = 192.0
 
 [node name="6" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 578.667
 margin_top = 64.0
 margin_right = 706.667
 margin_bottom = 192.0
 
 [node name="7" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 706.667
 margin_top = 64.0
 margin_right = 834.667
 margin_bottom = 192.0
 
 [node name="8" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 834.667
 margin_top = 64.0
 margin_right = 962.667
 margin_bottom = 192.0
 
 [node name="9" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 962.666
 margin_top = 64.0
 margin_right = 1090.67
 margin_bottom = 192.0
 
 [node name="10" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 1090.67
 margin_top = 64.0
 margin_right = 1218.67
 margin_bottom = 192.0
 
 [node name="11" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 1218.67
 margin_top = 64.0
 margin_right = 1346.67
 margin_bottom = 192.0
 
 [node name="12" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
+visible = false
 margin_left = 1346.67
 margin_top = 64.0
 margin_right = 1474.67
 margin_bottom = 192.0
 
-[node name="Summoner UI" type="Control" parent="UI"]
-margin_left = 1154.0
-margin_top = 59.0
-margin_right = 1154.0
-margin_bottom = 59.0
+[node name="Round UI" type="Control" parent="UI"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 293.0
+margin_bottom = 293.0
 rect_scale = Vector2( 0.75, 0.75 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Sprite" parent="UI/Round UI"]
+modulate = Color( 0, 0, 0, 0.333333 )
+position = Vector2( 138.667, 138.667 )
+scale = Vector2( 0.693334, 0.693334 )
+texture = ExtResource( 26 )
+
+[node name="Selected" type="Sprite" parent="UI/Round UI"]
+modulate = Color( 1, 1, 1, 0.262745 )
+position = Vector2( 138.666, 138.667 )
+scale = Vector2( 0.693331, 0.693334 )
+texture = ExtResource( 25 )
+
+[node name="Tween" type="Tween" parent="UI/Round UI/Selected"]
+
+[node name="Panel2" type="Sprite" parent="UI/Round UI"]
+modulate = Color( 0, 0, 0, 0.333333 )
+position = Vector2( 138.667, 138.667 )
+scale = Vector2( 0.32, 0.32 )
+texture = ExtResource( 26 )
+
+[node name="Turn" type="Label" parent="UI/Round UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -29.3333
+margin_bottom = -29.3333
+custom_fonts/font = ExtResource( 9 )
+text = "Turn 99"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Round" type="Label" parent="UI/Round UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 10 )
+text = "East-1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Left" type="Label" parent="UI/Round UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 29.3333
+margin_bottom = 29.3333
+custom_fonts/font = ExtResource( 9 )
+text = "819 Left"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Summoner UI" type="Control" parent="UI/Round UI"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -42.3333
+margin_top = -10.8333
+margin_right = -42.3333
+margin_bottom = -10.8333
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="UI/Summoner UI"]
-modulate = Color( 1, 1, 1, 0.501961 )
-margin_left = -143.0
-margin_top = 12.0
-margin_right = 147.0
-margin_bottom = 69.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="UI/Summoner UI"]
-position = Vector2( -67.973, -1.14441e-05 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="UI/Round UI/Summoner UI"]
+position = Vector2( -12.0002, -33.1111 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
+frame = 1
 playing = true
 
-[node name="Faith" type="Label" parent="UI/Summoner UI"]
-margin_left = -79.0
-margin_right = 136.0
-margin_bottom = 82.0
+[node name="Faith" type="Label" parent="UI/Round UI/Summoner UI"]
+margin_left = -113.333
+margin_top = -1.11111
+margin_right = 101.667
+margin_bottom = 80.8889
 custom_fonts/font = ExtResource( 10 )
 text = "200"
 align = 1
@@ -289,31 +370,101 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Round UI" type="Control" parent="UI"]
-margin_left = 1154.0
-margin_top = 16.0
-margin_right = 1154.0
-margin_bottom = 16.0
-rect_scale = Vector2( 0.75, 0.75 )
-script = SubResource( 1 )
+[node name="Summoner UI2" type="Control" parent="UI/Round UI"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -127.667
+margin_top = 74.8333
+margin_right = -127.667
+margin_bottom = 74.8333
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+summoner_index = 1
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="UI/Round UI/Summoner UI2"]
+position = Vector2( -12.0002, -33.1111 )
+scale = Vector2( 3.1661, 3.5 )
+frames = ExtResource( 11 )
+frame = 1
+playing = true
+
+[node name="Faith" type="Label" parent="UI/Round UI/Summoner UI2"]
+margin_left = -113.333
+margin_top = -1.11111
+margin_right = 101.667
+margin_bottom = 80.8889
+custom_fonts/font = ExtResource( 10 )
+text = "200"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="UI/Round UI"]
-modulate = Color( 1, 1, 1, 0.501961 )
-margin_left = -143.0
-margin_top = 12.0
-margin_right = 61.0
-margin_bottom = 69.0
+[node name="Summoner UI3" type="Control" parent="UI/Round UI"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -223.667
+margin_top = -10.5
+margin_right = -223.667
+margin_bottom = -10.5
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+summoner_index = 2
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="UI/Round UI/Summoner UI3"]
+position = Vector2( -12.0002, -33.1111 )
+scale = Vector2( 3.1661, 3.5 )
+frames = ExtResource( 11 )
+playing = true
+
+[node name="Faith" type="Label" parent="UI/Round UI/Summoner UI3"]
+margin_left = -113.333
+margin_top = -1.11111
+margin_right = 101.667
+margin_bottom = 80.8889
+custom_fonts/font = ExtResource( 10 )
+text = "200"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Round" type="Label" parent="UI/Round UI"]
-margin_left = -143.0
-margin_right = 61.0
-margin_bottom = 82.0
+[node name="Summoner UI4" type="Control" parent="UI/Round UI"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -127.667
+margin_top = -106.5
+margin_right = -127.667
+margin_bottom = -106.5
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+summoner_index = 3
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="UI/Round UI/Summoner UI4"]
+position = Vector2( -12.0002, -33.1111 )
+scale = Vector2( 3.1661, 3.5 )
+frames = ExtResource( 11 )
+playing = true
+
+[node name="Faith" type="Label" parent="UI/Round UI/Summoner UI4"]
+margin_left = -113.333
+margin_top = -1.11111
+margin_right = 101.667
+margin_bottom = 80.8889
 custom_fonts/font = ExtResource( 10 )
 text = "200"
 align = 1
@@ -336,7 +487,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="UI/Game Over"]
 margin_right = 1280.0
 margin_bottom = 768.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "YOU LOSE :("
 align = 1
 valign = 1
@@ -345,10 +496,10 @@ __meta__ = {
 }
 
 [node name="Settings Button" type="Button" parent="UI"]
-margin_left = 1218.0
-margin_top = 29.0
-margin_right = 1250.0
-margin_bottom = 61.0
+margin_left = 1232.0
+margin_top = 672.0
+margin_right = 1264.0
+margin_bottom = 704.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -755,7 +906,7 @@ modulate = Color( 0, 0, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 2 )
+script = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

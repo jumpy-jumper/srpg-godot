@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Levels/tilemap.tres" type="TileSet" id=1]
-[ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Summoner/South Wind/south_wind.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Unit/Gate/gate.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Unit/Follower/Nils/nils.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Unit/Enemy/Hound/e_hound.tscn" type="PackedScene" id=5]

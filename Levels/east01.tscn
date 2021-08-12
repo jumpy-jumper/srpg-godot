@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Levels/tilemap.tres" type="TileSet" id=1]
-[ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Summoner/South Wind/south_wind.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Unit/Gate/gate.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Unit/Enemy/Cyclops/e_cyclops.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Unit/Enemy/Hound/e_hound.tscn" type="PackedScene" id=5]
@@ -68,44 +68,36 @@ spawn_info = "4 8 12
 
 [node name="Hound" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
-base_atk = 50
 
 [node name="Hound3" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
-base_atk = 50
 
 [node name="Centaur" parent="Beginnings" instance=ExtResource( 8 )]
 position = Vector2( 128, 0 )
 
 [node name="Hound5" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
-base_atk = 50
 
 [node name="Hound6" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
-base_atk = 50
 
 [node name="Skeleton" parent="Beginnings" instance=ExtResource( 13 )]
 position = Vector2( 64, 0 )
 
 [node name="Hound7" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
-base_atk = 50
 
 [node name="Hound8" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
-base_atk = 50
 
 [node name="Centaur2" parent="Beginnings" instance=ExtResource( 8 )]
 position = Vector2( 128, 0 )
 
 [node name="Hound9" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
-base_atk = 50
 
 [node name="Hound10" parent="Beginnings" instance=ExtResource( 5 )]
 position = Vector2( 128, 0 )
-base_atk = 50
 
 [node name="Skeleton2" parent="Beginnings" instance=ExtResource( 13 )]
 position = Vector2( 64, 0 )

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Unit/Follower/Nils/n_nils_s1.gd" type="Script" id=1]
+
+[node name="Northern Cross" type="Node"]
+script = ExtResource( 1 )
+activation = 3
+base_skill_cost = 4
+base_skill_initial_sp = 0
+base_skill_duration = 0
+base_skill_range = [ Vector2( 0, -3 ), Vector2( 0, -2 ), Vector2( 0, -1 ), Vector2( -3, 0 ), Vector2( -2, 0 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 0, 1 ), Vector2( 0, 2 ), Vector2( 0, 3 ) ]

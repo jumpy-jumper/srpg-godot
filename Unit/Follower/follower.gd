@@ -19,10 +19,17 @@ func get_type_of_self():
 func get_type_of_enemy():
 	return UnitType.ENEMY
 
+var follower_group = []
 
 ###############################################################################
 #        Main logic                                                           #
 ###############################################################################
+
+func _ready():
+	yield(get_tree(), "idle_frame")
+	for f in stage.get_units_of_type(get_type_of_self()):
+		if f.unit_name == unit_name:
+			follower_group.append(f)
 
 func _process(_delta):
 	$"Sprite/UI".visible = alive
@@ -65,9 +72,16 @@ func _input(event):
 				facing = Facing.UP
 
 
+func is_unit_in_group_alive():
+	for unit in follower_group:
+		if unit.alive:
+			return true
+	return false
+
+
 func can_be_deployed():
 	return get_stat("cost", base_cost) <= summoner.faith \
-		and not alive and cooldown == 0
+		and not is_unit_in_group_alive() and cooldown == 0
 
 
 func deploy_self(pos):
@@ -135,7 +149,8 @@ func die():
 		summoner.recover_faith(ceil(get_stat("cost", base_cost) / 2))
 	for enemy in blocked:
 		enemy.blocker = null
-	cooldown = get_stat("cooldown", base_cooldown)
+	for unit in follower_group:
+		unit.cooldown = get_stat("cooldown", base_cooldown)
 
 
 var previewing = false
@@ -143,7 +158,7 @@ var previewing = false
 func _on_Cursor_hovered(pos):
 	._on_Cursor_hovered(pos)
 	$Ranges.visible = $Ranges.visible or waiting_for_user
-	if not alive \
+	if not is_unit_in_group_alive() \
 		and stage.get_selected_follower() == self \
 		and stage.get_unit_at(pos) == null \
 		and stage.get_terrain_at(pos) in deployable_terrain \

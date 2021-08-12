@@ -1,36 +1,24 @@
 Weapons
-	[R] [Norne] If this unit would deal [0 damage], deal [magic damage] instead.
-		M1 25% of ATK or less
-		M2 true damage
-	[R] [Dieck] This unit's skill's first activation lasts for [12] rounds. The second activation grants [twice] the bonuses.
-		M1 24
-		M2 three times
-	[R] [Lon'qu'] After receiving [damage equal to this unit's Max HP], this unit survives for [4] rounds before retreating.
-		M1 lethal damage
-		M2 8
-		
-	[U] [Norne] [While this unit's skill is inactive, ][Attack Count +3].
-		M1 
-		M2 Attack Count +7
-	[U] [Norne] [Crit rate +50%] and [crit damage +100%] to all allies within attack range
-		M1 crit rate +100%
-		M2 crit damage +200%
-		
+	[Nephenee] When summoned, push surrounding enemies.
+	[Norne] If this unit would deal [0 damage], deal [magic damage] instead.
+	[Norne] [While this unit's skill is inactive, ][Attack Count +X].
+	[Norne] Attacks reduce the enemy's DEF by X% for the rest of the turn.
+	[Dieck] This unit's skill's first activation lasts for [12] turns instead. The second activation grants [twice] the bonuses.
+	[Lon'qu] After receiving [damage equal to this unit's Max HP], this unit survives for [4] turns before retreating.
+	[Lon'qu] Damage type becomes Magic, attacks heal for X% of damage dealt.
+	[Robin] Whenever this unit would summon, summon a phantom of a random on-field ally unit instead. The phantom has [X]% of the original's stats, but no skills. This effect can activate up to [Y] times.
 		
 Accesories
-	[R] Double the positive effects of this unit's statuses.
-	[R] This unit's Resummon Cooldown becomes 0.
-	[U] This unit's skill SP and activation status persist through being retreated.
-	
-	[U] Transform the tile under this unit into a dream tile. Both grounded and ranged units may be summoned on dream tiles.
-	[U] This unit may not lose any of their initial range.
-	
-	[C]	Immediately gain 25% of skill cost as SP when summoned.
-	
-	[B] ATK +20%
-	[B] DEF +20%
-	[B] RES +10%
-	[B] Hit Rate +10%
-	[B] Dodge Rate +10%
-	[B] Crit Rate +15%
-	[B] Crit Damage +30%
+	Double the positive effects of this unit's statuses.
+	Double this unit's bonuses to HP, ATK, DEF, and RES.
+	This unit's Resummon Cooldown becomes 0.
+	This unit's skill SP and activation status persist through being retreated.
+	Transform the tile under this unit into a dream tile. Both grounded and ranged units may be summoned on dream tiles.
+	This unit may not lose any of their initial range.
+	Immediately gain 25% of skill cost as SP when summoned.
+	Gain invisibility on deployment.
+	ATK +20%
+	DEF +20%
+	RES +10%
+	Attack Count +1
+	Target Count +1

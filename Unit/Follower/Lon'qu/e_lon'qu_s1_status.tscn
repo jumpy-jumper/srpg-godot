@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Status/status.gd" type="Script" id=1]
+
+[node name="lon\'qu_s1_status" type="Node"]
+script = ExtResource( 1 )
+stat_overwrites = {
+"skill_range": [ Vector2( -20, 0 ), Vector2( -19, 0 ), Vector2( -18, 0 ), Vector2( -17, 0 ), Vector2( -16, 0 ), Vector2( -15, 0 ), Vector2( -14, 0 ), Vector2( -13, 0 ), Vector2( -12, 0 ), Vector2( -11, 0 ), Vector2( -10, 0 ), Vector2( -9, 0 ), Vector2( -8, 0 ), Vector2( -7, 0 ), Vector2( -6, 0 ), Vector2( -5, 0 ), Vector2( -4, 0 ), Vector2( -3, 0 ), Vector2( -2, 0 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ), Vector2( 6, 0 ), Vector2( 7, 0 ), Vector2( 8, 0 ), Vector2( 9, 0 ), Vector2( 10, 0 ), Vector2( 11, 0 ), Vector2( 12, 0 ), Vector2( 13, 0 ), Vector2( 14, 0 ), Vector2( 15, 0 ), Vector2( 16, 0 ), Vector2( 17, 0 ), Vector2( 18, 0 ), Vector2( 19, 0 ), Vector2( 20, 0 ) ]
+}
+stat_flat_bonuses = {
+"target_count": 3
+}
+stat_additive_multipliers = {
+"atk": 2.8,
+"def": -0.9,
+"max_hp": -0.5
+}

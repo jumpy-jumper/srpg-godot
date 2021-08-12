@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Stage/Terrain/deployable_high.tres" type="Resource" id=1]
 [ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Unit/Follower/Natasha/natasha.tres" type="SpriteFrames" id=3]
-[ext_resource path="res://Unit/Follower/Natasha/natasha_s1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Unit/Follower/Natasha/natasha_portrait.png" type="Texture" id=5]
 
 [node name="Natasha" instance=ExtResource( 2 )]
@@ -31,5 +30,3 @@ base_skill_range = [ Vector2( -1, -2 ), Vector2( 0, -2 ), Vector2( 1, -2 ), Vect
 targeting_priority = 1
 skill_type = 1
 damage_type = 3
-
-[node name="Emergency Tactics" parent="Skills" index="1" instance=ExtResource( 4 )]

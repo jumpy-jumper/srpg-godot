@@ -14,7 +14,7 @@ func is_basic_attack():
 ###############################################################################
 
 
-enum Activation { PASSIVE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO }
+enum Activation { PASSIVE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO, TURN_START }
 export(Activation) var activation = Activation.PASSIVE
 export var base_skill_cost = 15
 export var base_skill_initial_sp = 10
@@ -55,6 +55,8 @@ func activate():
 		add_statuses()
 		if activation == Activation.SP_MANUAL:
 			unit.stage.append_state()
+		if ticks_left == 0:
+			deactivate()
 
 
 func deactivate():

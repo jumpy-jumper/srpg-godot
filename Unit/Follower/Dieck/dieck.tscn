@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Unit/Follower/Dieck/dieck_s1.tscn" type="PackedScene" id=2]
 
 [node name="Dieck" instance=ExtResource( 1 )]
 unit_name = "Dieck"
@@ -14,10 +13,5 @@ base_cost = 24
 base_block_range = [ Vector2( 0, 1 ), Vector2( 0, -1 ), Vector2( 1, 0 ) ]
 base_block_count = 3
 
-[node name="Sprite" parent="." index="0"]
-frame = 6
-
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 0, 1 ), Vector2( 3, 0 ) ]
-
-[node name="Unchained" parent="Skills" index="1" instance=ExtResource( 2 )]

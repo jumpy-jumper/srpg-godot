@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Skill/skill.gd" type="Script" id=1]
+[ext_resource path="res://Unit/Follower/Norne/e_norne_s1_status.tscn" type="PackedScene" id=2]
+
+[node name="Meteor Rain" type="Node"]
+script = ExtResource( 1 )
+description = "ATK -10%. Attack count becomes 7."
+activation = 4
+base_skill_cost = 12
+base_skill_initial_sp = 4
+base_skill_duration = 12
+statuses_self = [ ExtResource( 2 ) ]

@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Unit/Follower/Nils/nils.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Unit/Follower/Nils/nils_portrait.png" type="Texture" id=2]
-[ext_resource path="res://Unit/Follower/Nils/nils_s1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=4]
 
 [node name="Nils" instance=ExtResource( 4 )]
@@ -18,10 +17,8 @@ base_block_range = [ Vector2( -1, 0 ) ]
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
-frame = 6
+frame = 2
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( -1, 0 ) ]
 damage_type = 1
-
-[node name="Eastern Prayer" parent="Skills" index="1" instance=ExtResource( 3 )]

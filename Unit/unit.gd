@@ -8,6 +8,10 @@ export var unit_name = ""
 enum UnitType {UNDEFINED, SUMMONER, FOLLOWER, GATE, ENEMY}
 
 
+enum Wind {EAST, SOUTH, WEST, NORTH}
+export(Wind) var wind = Wind.EAST
+
+
 func get_type_of_self():
 	return UnitType.UNDEFINED
 
@@ -77,6 +81,14 @@ func tick_skills():
 		skills.invert()
 		for skill in skills:
 			skill.tick()
+
+
+func _on_Stage_tick_started():
+	if alive:
+		for skill in $Skills.get_children():
+			if not skill.is_active():
+				if skill.activation == skill.Activation.TURN_START:
+					skill.activate()
 
 
 func _on_Stage_tick_ended():

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Unit/Follower/Nils/nils.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Unit/Follower/Nils/w_nils_s1.tscn" type="PackedScene" id=2]
+
+[node name="W!Nils" instance=ExtResource( 1 )]
+wind = 2
+
+[node name="Sprite" parent="." index="0"]
+frame = 5
+
+[node name="Western Ritual" parent="Skills" index="1" instance=ExtResource( 2 )]
+description = "Block range shrinks. Stops attacking. Recovers 1 faith to the current summoner."

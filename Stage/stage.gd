@@ -6,6 +6,7 @@ signal player_phase_started(cur_tick)
 signal enemy_phase_started(cur_tick)
 signal undo_issued()
 signal redo_issued()
+signal tick_started()
 signal tick_ended()
 
 
@@ -65,6 +66,12 @@ func is_any_follower_previewing():
 func is_waiting_for_ui():
 	for ui in $"Foreground UI".get_children():
 		if ui.operatable:
+			return true
+	return false
+
+func is_unit_with_name_alive(name):
+	for unit in get_all_units():
+		if unit.alive and unit.unit_name == name:
 			return true
 	return false
 
@@ -162,8 +169,6 @@ func _ready():
 				for f in u.followers:
 					level.add_child(f)
 					connect_with_unit(f)
-				if len(level.advance) > 0:
-					u.get_level_advancing_skill().base_skill_cost = level.advance[0]
 			elif u is Gate:
 				u.initialize_path()
 				gates_cache.append(u)
@@ -184,6 +189,8 @@ func _ready():
 	cursor.stage = self
 	camera.position = level.default_camera_position
 	camera.zoom = level.default_camera_zoom
+	
+	emit_signal("tick_started")
 	
 	append_state()
 
@@ -212,7 +219,7 @@ func _process(_delta):
 		$"UI/Game Over/Label".text = "YOU WIN :D"
 	
 	var selected_follower = get_selected_follower()
-	$Deployable.visible = selected_follower.can_be_deployed()
+	$Deployable.visible = selected_follower.can_be_deployed() if selected_follower else false
 	if $Deployable.visible:
 		$Deployable.update_tiles(get_selected_follower().deployable_terrain)
 		# Big performance bottleneck, but fine for now
@@ -326,7 +333,7 @@ func _on_UI_mouse_exited():
 	pending_ui -= 1
 
 func _on_Skill_UI_skill_activation_requested(skill):
-	if skill and skill.is_available():
+	if is_instance_valid(skill) and skill.is_available():
 		skill.activate()
 		yield(get_tree(), "idle_frame")
 		$"Foreground UI/Unit UI".update_unit($"Foreground UI/Unit UI".saved_unit)
@@ -401,10 +408,30 @@ func get_units_of_type(type):
 					enemies_cache.append(unit)
 			return enemies_cache + independent_enemies_cache
 
+func get_enemy_count():
+	var count = 0
+	for e in independent_enemies_cache:
+		count += 1
+	for g in gates_cache:
+		count += len(g.enemies.keys())
+	return count
+
+func get_enemies_left():
+	var count = 0
+	for e in independent_enemies_cache:
+		if e.alive:
+			count += 1
+	for g in gates_cache:
+		for key in g.enemies.keys():
+			if key >= cur_tick:
+				count += 1
+			elif g.enemies[key].alive:
+				count += 1
+	return count
 
 func get_selected_follower():
 	if len(get_selected_summoner().followers) > 0:
-		return get_selected_summoner().followers[selected_follower_index]
+		return get_selected_summoner().followers[min(selected_follower_index, len(get_selected_summoner().followers) - 1)]
 	else:
 		return null
 
@@ -510,6 +537,9 @@ func advance_tick():
 	emit_signal("tick_ended")
 
 	cur_tick += 1
+	selected_summoner_index = (cur_tick - 1) % len(summoners_cache)
+	
+	emit_signal("tick_started")
 	append_state()
 
 
@@ -544,6 +574,7 @@ func connect_with_unit(unit):
 	unit.connect("moved", self, "_on_Unit_moved")
 	connect("player_phase_started", unit, "_on_Stage_player_phase_started")
 	connect("enemy_phase_started", unit, "_on_Stage_enemy_phase_started")
+	connect("tick_started", unit, "_on_Stage_tick_started")
 	connect("tick_ended", unit, "_on_Stage_tick_ended")
 	$Cursor.connect("confirm_issued", unit, "_on_Cursor_confirm_issued")
 	$Cursor.connect("cancel_issued", unit, "_on_Cursor_cancel_issued")
@@ -585,6 +616,7 @@ func load_state(state):
 	cur_level_index = state["cur_level_index"]
 	summoned_order = state["summoned_order"]
 	unit_pos_cache.clear()
+	selected_summoner_index = (cur_tick - 1) % len(summoners_cache)
 	
 	var unit_states = {}
 	for key in state.keys():

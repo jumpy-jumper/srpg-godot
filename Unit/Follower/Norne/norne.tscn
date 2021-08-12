@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Stage/Terrain/deployable_high.tres" type="Resource" id=1]
 [ext_resource path="res://Unit/Follower/Norne/norne.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Unit/Follower/Norne/norne_portrait.png" type="Texture" id=4]
-[ext_resource path="res://Unit/Follower/Norne/norne_s1.tscn" type="PackedScene" id=5]
 
 [node name="Norne" instance=ExtResource( 3 )]
 unit_name = "Norne"
@@ -21,9 +20,7 @@ base_block_count = 0
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 2 )
-frame = 2
+frame = 3
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 2, -2 ), Vector2( 3, -2 ), Vector2( 4, -2 ), Vector2( 5, -2 ), Vector2( 6, -2 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 3, -1 ), Vector2( 4, -1 ), Vector2( 5, -1 ), Vector2( 6, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ), Vector2( 6, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 4, 1 ), Vector2( 5, 1 ), Vector2( 6, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 2, 2 ), Vector2( 3, 2 ), Vector2( 4, 2 ), Vector2( 5, 2 ), Vector2( 6, 2 ) ]
-
-[node name="Meteor Rain" parent="Skills" index="1" instance=ExtResource( 5 )]

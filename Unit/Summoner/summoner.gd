@@ -2,18 +2,11 @@ class_name Summoner
 extends Unit
 
 
-enum Wind {EAST, SOUTH, WEST, NORTH}
-export var wind = Wind.EAST
-
-
 var followers = []
 
 
 func get_type_of_self():
 	return UnitType.SUMMONER
-
-func get_level_advancing_skill():
-	return $"Skills/Awaken"
 
 func _ready():
 	for unit in get_children():
@@ -36,7 +29,8 @@ func _process(_delta):
 		if skill.is_available():
 			skill.activate()
 
-
+func _on_Stage_tick_started():
+	recover_faith(1)
 
 func _on_Cursor_confirm_issued(pos):
 	._on_Cursor_confirm_issued(pos)

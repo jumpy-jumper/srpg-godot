@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Unit/Follower/follower.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Unit/Follower/Lon'qu/lon'qu_portrait.png" type="Texture" id=2]
-[ext_resource path="res://Unit/Follower/Lon'qu/lon'qu_s1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Unit/Follower/Lon'qu/lon'qu.tres" type="SpriteFrames" id=4]
 
 [node name="Lon\'qu" instance=ExtResource( 1 )]
@@ -18,10 +17,7 @@ base_block_count = 3
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 4 )
-frame = 0
+frame = 3
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, -2 ), Vector2( 1, -2 ), Vector2( 0, -1 ), Vector2( 1, -1 ), Vector2( 2, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 0, 2 ), Vector2( 1, 2 ) ]
-
-[node name="Truesilver Slash" parent="Skills" index="1" instance=ExtResource( 3 )]
-base_skill_duration = 16

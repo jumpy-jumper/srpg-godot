@@ -1,17 +1,16 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Levels/tilemap.tres" type="TileSet" id=1]
-[ext_resource path="res://Unit/Summoner/East Wind/s_east_wind.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Summoner/South Wind/south_wind.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Unit/Gate/gate.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Unit/Follower/Lysithea/lysithea.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Unit/Follower/Lon'qu/e_lon'qu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Unit/Enemy/Hound/e_hound.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Unit/Follower/Lon'qu/lon'qu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Unit/Follower/Norne/e_norne.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Unit/Enemy/Cyclops/e_cyclops.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Unit/Enemy/Centaur/e_centaur.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Levels/level.gd" type="Script" id=9]
 [ext_resource path="res://Levels/blue_level.jpg" type="Texture" id=10]
-[ext_resource path="res://Unit/Follower/Norne/norne.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=12]
+[ext_resource path="res://Unit/Follower/Lysithea/e_lysithea.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Unit/Enemy/Eye/e_eye.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Unit/Enemy/Skeleton/e_skeleton.tscn" type="PackedScene" id=14]
 
@@ -45,17 +44,11 @@ position = Vector2( 704, 576 )
 base_max_hp = 1
 faith = 32
 
-[node name="Norne" parent="The East Wind" instance=ExtResource( 11 )]
-position = Vector2( 0, 64 )
-script = ExtResource( 12 )
+[node name="E!Norne" parent="The East Wind" instance=ExtResource( 6 )]
 
-[node name="Lysithea" parent="The East Wind" instance=ExtResource( 4 )]
-position = Vector2( 0, 64 )
-script = ExtResource( 12 )
+[node name="Lysithea" parent="The East Wind" instance=ExtResource( 11 )]
 
-[node name="Lon\'qu" parent="The East Wind" instance=ExtResource( 6 )]
-position = Vector2( 0, 64 )
-script = ExtResource( 12 )
+[node name="E!Lon\'qu" parent="The East Wind" instance=ExtResource( 4 )]
 
 [node name="Rushdown" parent="." instance=ExtResource( 3 )]
 position = Vector2( 192, 64 )

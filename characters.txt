@@ -4,62 +4,227 @@ Awakening
 	summon any units or use any skills. When the unit's summoner reaches 0 faith, 
 	awakening ends and the unit is retreated. A unit may only awaken once per map.
 
+Macro systems
+	[Level] Determines the character's HP, ATK, DEF, and RES, gives the character skill points to upgrade skills.
+
+	[Skills] The core of how a character plays, with their stats and their range
+	[Weapons] Extend the character to serve a specific purpose
+	[Accessory] Support many different niches, create new synergies, and cover weaknesses
+
+	[Skill upgrades] Skill attributes can be upgraded by allocating skill points
+
+	[Awakening] Ascending an Awakening tier may give the character new skills or change their attack and block range, as well as giving them more weapon / accessory slots.
+
+	[Awakening Materials]
+		[A0] T1 and T2 mats
+		[A1]
+
+	[Weapon upgrades] Weapons can be upgrading by spending weapon materials. 
+
+	[Items]
+		[Blessings] Obtain the character if the player does not have them already, otherwise increase their [devotion].
+		[Weapons] Obtain the weapon, otherwise upgrade the weapon.
+		[Accessories] Obtain the accessory.
+		[EXP] Increase the character's level.
+
+
+Prayers
+	Prayers can return character blessings, awakening materials, 
+	The base rates are the same for all four winds, but their pity mechanics are different.
+
+
+
 [6] Nils
-	Provides faith and small utility.
 	
+	[East]
+	[South]
+		[SP Manual] Range and block range increase, ATK% + DEF% +
+		[Passive] When this unit kills an enemy, restore faith to a random summoner.
+	[West]
+		[SP Auto] Range and block range shrink, restores faith to current summoner.
+	[North]
+		[SP Manual] Slashes enemies in a cross range, restoring faith to the current summoner. Can store X charges.
+
 	[AWAKEN] All units' costs become 0
 
 [7] Nephenee
-	Weak, but can be resummoned much faster than other units.
 	
+	[East]
+		[Passive] Stops summoner's natural faith recovery.
+		[SP Auto] 
+	[South]
+		[Immediate] Randomly deal X% of ATK as physical damage, Y% of ATK as magic damage, or Z% of ATK as true damage to surrounding enemies.
+	[West]
+		[Passive] Change between these two skills each deployment.
+		[Immediate] Gain a shield upon deployment for X% of Max HP. Take shield damage equal to X/Y% of Max HP for Y turns.
+		[Immediate] ATK% +X, ATK% -X/Y per turn for Y turns.
+	[North]
+		[Immediate]
+
 	[AWAKEN] This unit's cost and resummon cooldown become 0. Awakening persists through dying and being retreated manually.
 
 [10] Tethys
-	Cannot attack, but debuffs enemies around her.
+	
+	[East]
+	[South]
+	[West]
+		[SP Auto] 
+	[North]
 	
 	[AWAKEN] Skill range becomes global
 
 [12] Norne
-	Deals multiple attacks per turn, taking advantage of enemies' low DEF.
 	
-	[AWAKEN] Add twice the enemy's DEF to this unit's damage.
+	[East]
+		[SP Auto] ATK% -. Attack count +.
+	[South]
+		[SP Manual] Hit rate -X%. If this unit's attack misses, attack count +2 and the next attack is guaranteed to hit, up to attack count +Y.
+	[West]
+		[Passive] Every turn, gain X arrows, up to Y arrows.
+		[SP Manual] [?/?/1] Attack count + number of arrows.
+	[North]
+		[Passive] Resummon CD -
+		[Immediate] Gain invisibility, Attack Count +
+	
+	[AWAKEN] Deal true damage
 
 [15] Lysithea
-	Nuker that builds up to one huge nuke.
+	
+	[East]
+	[South]
+		[Passive] Gain X~Y SP upon deployment.
+		[SP Manual] ATK% +, Attack Count +, Range expands. Targeting priority becomes random. Can hold up to X charges.
+	[West]
+		[SP Manual] ATK% +. Attacks all enemies in range. For every turn this skill's activation is delayed, ATK% +.
+	[North]
 	
 	[AWAKEN] This unit's active skill's duration becomes infinite
 
 [18] Lon'qu
-	Glass cannon ground unit that overwhelms the enemy with massive burst damage.
+	
+	[East]
+		[SP Manual] ATK% +, DEF% -, Target Count +, range changes to a line
+	[South]
+		[Passive] Blocked enemies' hit rate -50%.
+		[SP Manual] [?/?/1] Range changes, ATK% +, attack all enemies in range, can hold up to X charges.
+	[West]
+	[North]
 	
 	[AWAKEN] This unit becomes immortal
 
 [20] Niles
-	Displaces enemies.
+	
+	[East]
+		[SP Manual] Push enemies in attack range. Deal damage equivalent to the distance pushed. Can store up to X charges.
+	[South]
+		[SP Manual] Pull two random enemies in range together.
+	[West]
+		[SP Auto] Attacks all enemies in range, attacks push enemies back.
+	[North]
+		[SP Manual] Summon a large void. Enemies around the void are continuously sucked in.
 	
 	[AWAKEN] When an enemy is displaced, their movement becomes [0, 0, 0, 0] until this unit is retreated
 
 [22] Natasha
-	Heals and provides damage mitigation to allies.
+	
+	[East]
+		[SP Manual] Range shrinks. Target count +X. DEF +Y% and RES +Z% for allies within range.
+	[South]
+		[SP Manual] Select a random ally in range. Deal X% of ATK as damage to them and their ATK +. 
+	[West]
+		
+	[North]
 	
 	[AWAKEN] All allies heal to full at the beginning of the round
 
 [24] Dieck
-	Takes a while to get going.
 	
-	[AWAKEN] 
+	[East]
+	[South]
+	[West]
+		[SP Auto] ATK% + DEF% + RES% + Target Count + Block Range +.
+	[North]
+	
+	[AWAKEN] This unit's skill activates on deployment. Awakening persists through being retreated.
 
 [32] Robin
-	Summons weaker units to swarm the enemy.
+	
+	[East]
+	[South]
+		[SP Auto] Summon a phantom at a random forest tile inside allied units' range.
+	[West]
+	[North]
 	
 	[AWAKEN] This unit's summon limit becomes infinite
 
 [34] Frederick
-	Durable holder that can provide healing and support to nearby party members.
 	
-	[AWAKEN] The ATK of enemies blocked by this unit becomes 0
+	[East]
+	[South]
+		[SP Auto] Heals an ally in range, their SP +X~Y.
+	[West]
+		[SP Manual] Switches between default and following stance: ATK% -, attack type becomes Healing
+	[North]
+	
+	[AWAKEN] Block count becomes infinite. When this unit blocks an enemy, all enemies of the same type are also blocked
 
 [36] Edelgard
-	Self-sustainable wall that can hold entire lanes on her own.
+	
+	[East]
+		[Passive] Cannot be healed by other allied units.
+		[Passive] When an allied unit other than self takes damage, heal for X% of that damage.
+		[SP Manual] When an allied unit other than self takes damage, add that damage to this unit's ATK for the rest of the round.
+	[South]
+		[Passive] Cannot be healed by other allied units.
+		[SP Manual] Block range expands. Block priority becomes random. Attacks blocked targets only. ATK% +X per enemy blocked.
+	[West]
+		[Passive] Cannot be healed by other allied units.
+		[SP Manual] Stop attacking. At the end of this skill's duration, deal X% ATK as damage and heal for Y% of Max HP per hit taken.
+	[North]
+		[Passive] Cannot be healed by other allied units.
+		[SP Auto] [?/?/1] Target count +, ATK% + and heal for X% of Max HP for the next attack.
 	
 	[AWAKEN] Add all damage taken by this unit since last summoned to this unit's ATK
+
+
+			1	2	3	4
+Nils		W	N
+Nephenee	S	E	W
+Tethys		
+Norne		N   E   W   S
+Lysithea	S   E
+Lon'qu		E
+Niles		E	S	N	W
+Natasha		
+Dieck		W
+Robin		
+Frederick	S	W
+Edelgard	N   W
+
+Character Progression (total 32)
+
+Starting
+	E!Norne
+	E!Lysithea
+	E!Lon'qu
+	S!Lysithea
+	S!Frederick
+	S!Nephenee
+	W!Nils
+	W!Dieck
+	W!Natasha
+	N!Nils
+	N!Norne
+	N!Edelgard
+E1 (4)
+E2 (4)
+E3 (4)
+E4 (4)
+S1 (4)
+S2 (4)
+S3 (4)
+S4 (4)
+W1 (1)
+W2 (1)
+W3 (1)
+W4 (1)

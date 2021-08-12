@@ -18,10 +18,10 @@ func update_unit(unit, selected):
 	$Cost.modulate = Color.lightpink if unit.summoner.faith < unit.get_stat("cost", unit.base_cost) else Color.white
 	$Border.modulate = selected_color if selected else deselected_color
 	
-	if unit.alive:
+	if unit.is_unit_in_group_alive():
 		$CooldownPanel.visible = true
 		$CooldownPanel.modulate.a = base_alpha
-		$CooldownPanel/Cooldown.text = "OUT"
+		$CooldownPanel/Cooldown.text = unit.Wind.keys()[unit.wind][0]
 	else:
 		if unit.cooldown > 0:
 			$CooldownPanel.visible = true

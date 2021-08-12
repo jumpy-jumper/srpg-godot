@@ -1,7 +1,7 @@
 extends Skill
 
 
-export var base_recovery = [1, 1, 1, 1]
+export var base_recovery = [0, 0, 0, 0]
 
 
 func activate():
