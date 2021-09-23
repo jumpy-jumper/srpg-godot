@@ -55,11 +55,10 @@ Prayers
 	[South]
 		[Immediate] Randomly deal X% of ATK as physical damage, Y% of ATK as magic damage, or Z% of ATK as true damage to surrounding enemies.
 	[West]
-		[Passive] Change between these two skills each deployment.
+	[North]
+		[Passive] Alternate between these two skills each deployment.
 		[Immediate] Gain a shield upon deployment for X% of Max HP. Take shield damage equal to X/Y% of Max HP for Y turns.
 		[Immediate] ATK% +X, ATK% -X/Y per turn for Y turns.
-	[North]
-		[Immediate]
 
 	[AWAKEN] This unit's cost and resummon cooldown become 0. Awakening persists through dying and being retreated manually.
 
@@ -68,7 +67,7 @@ Prayers
 	[East]
 	[South]
 	[West]
-		[SP Auto] 
+		[SP Auto] Heals allies in range, their ATK + X% of this unit's ATK.
 	[North]
 	
 	[AWAKEN] Skill range becomes global
@@ -117,7 +116,7 @@ Prayers
 	[East]
 		[SP Manual] Push enemies in attack range. Deal damage equivalent to the distance pushed. Can store up to X charges.
 	[South]
-		[SP Manual] Pull two random enemies in range together.
+		[SP Manual] Pull two random enemies in range together. If there is only one enemy in range, pull them towards this unit.
 	[West]
 		[SP Auto] Attacks all enemies in range, attacks push enemies back.
 	[North]
@@ -128,11 +127,10 @@ Prayers
 [22] Natasha
 	
 	[East]
-		[SP Manual] Range shrinks. Target count +X. DEF +Y% and RES +Z% for allies within range.
+		[SP Manual] Select an ally in range. Deal X% of ATK as damage to them and their ATK +. 
 	[South]
-		[SP Manual] Select a random ally in range. Deal X% of ATK as damage to them and their ATK +. 
 	[West]
-		
+		[SP Manual] Range shrinks. Target count +X. DEF +Y% and RES +Z% for allies within range.
 	[North]
 	
 	[AWAKEN] All allies heal to full at the beginning of the round
@@ -144,8 +142,10 @@ Prayers
 	[West]
 		[SP Auto] ATK% + DEF% + RES% + Target Count + Block Range +.
 	[North]
+		[Passive] While this unit's skill is inactive, gain Invisibility.
+		[SP Manual] Gain a bunch of stats.
 	
-	[AWAKEN] This unit's skill activates on deployment. Awakening persists through being retreated.
+	[AWAKEN] 
 
 [32] Robin
 	

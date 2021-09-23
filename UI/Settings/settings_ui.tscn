@@ -190,9 +190,9 @@ __meta__ = {
 
 [node name="Return" type="Control" parent="Menu"]
 margin_left = 32.0
-margin_top = 288.0
+margin_top = 336.0
 margin_right = 1120.0
-margin_bottom = 320.0
+margin_bottom = 368.0
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -352,7 +352,7 @@ margin_top = 240.0
 margin_right = 448.0
 margin_bottom = 272.0
 script = ExtResource( 7 )
-description = "Enable being able to undo a stage restart. (May use a ton of RAM if you do it many times)"
+description = "Enable being able to undo a stage restart. (May use a ton of RAM if you do it hundreds of times)"
 property = "undoable_restart"
 
 [node name="CheckBox" type="CheckBox" parent="Menu/Mouse Camera2"]
@@ -375,6 +375,40 @@ margin_right = 304.0
 margin_bottom = 16.0
 custom_fonts/font = ExtResource( 1 )
 text = "Undoable Restart"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mouse Camera3" parent="Menu" instance=ExtResource( 8 )]
+margin_left = 32.0
+margin_top = 288.0
+margin_right = 448.0
+margin_bottom = 320.0
+script = ExtResource( 7 )
+description = "NATTOU GOHAN"
+property = "nils_voice_lines"
+
+[node name="CheckBox" type="CheckBox" parent="Menu/Mouse Camera3"]
+margin_top = -2.0
+margin_right = 24.0
+margin_bottom = 22.0
+rect_scale = Vector2( 1.5, 1.5 )
+mouse_filter = 2
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Menu/Mouse Camera3"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 48.0
+margin_top = -16.0
+margin_right = 304.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 1 )
+text = "North Nils Voice Lines"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false

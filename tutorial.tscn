@@ -1,0 +1,22 @@
+[gd_scene format=2]
+
+[node name="Tutorial" type="Control"]
+margin_right = 1280.0
+margin_bottom = 736.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color( 1, 1, 1, 0.490196 )
+anchor_left = 0.5
+anchor_top = 0.521739
+anchor_right = 0.5
+anchor_bottom = 0.521739
+margin_left = -224.0
+margin_top = -288.0
+margin_right = 224.0
+margin_bottom = 288.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

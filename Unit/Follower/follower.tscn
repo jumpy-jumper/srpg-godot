@@ -24,7 +24,7 @@ deployable_terrain = [ ExtResource( 3 ) ]
 base_cooldown = 16
 
 [node name="Sprite" parent="." index="0"]
-frame = 1
+frame = 7
 
 [node name="Ready" type="Sprite" parent="Sprite" index="1"]
 visible = false

@@ -24,7 +24,7 @@ onready var terrain = level.get_node("Terrain")
 onready var cursor = $Cursor
 onready var camera = $Camera2D
 
-
+var follower_groups = {}
 var selected_summoner_index = 0
 var selected_follower_index = 0
 var summoned_order = []
@@ -156,10 +156,11 @@ func can_move_camera_with_cancel():
 #        Main logic	                                                          #
 ###############################################################################
 
+
 func _ready():
 	add_child(level)
-
-	# Why not do this inside the appropriate classes?!
+	
+	# Why not do this inside the respective classes?!
 	# Well, you see, the stage initializes after all of its children.
 	for u in level.get_children():
 		if u is Unit:
@@ -169,6 +170,9 @@ func _ready():
 				for f in u.followers:
 					level.add_child(f)
 					connect_with_unit(f)
+					if not follower_groups.has(f.unit_name):
+						follower_groups[f.unit_name] = {}
+					follower_groups[f.unit_name][f.wind] = f
 			elif u is Gate:
 				u.initialize_path()
 				gates_cache.append(u)
@@ -183,9 +187,18 @@ func _ready():
 			elif u is Follower:
 				independent_followers_cache.append(u)
 				summoned_order.append(u.name)
+				if not follower_groups.has(u.unit_name):
+					follower_groups[u.unit_name] = {}
+				follower_groups[u.unit_name][u.wind] = u
 			if u.alive:
 				unit_pos_cache[u.position] = u
 
+	$"UI/Follower Panels".initialize_ui()
+	
+	for group in follower_groups.values():
+		for unit in group.values():
+			unit.group = group.values()
+	
 	cursor.stage = self
 	camera.position = level.default_camera_position
 	camera.zoom = level.default_camera_zoom
@@ -193,6 +206,7 @@ func _ready():
 	emit_signal("tick_started")
 	
 	append_state()
+
 
 func _process(_delta):
 	process_input()
@@ -207,8 +221,7 @@ func _process(_delta):
 	
 	$UI.scale = Vector2.ZERO if is_waiting_for_ui() else Vector2.ONE
 	
-	$"UI/Follower Panels (Right)".update_ui()
-	$"UI/Follower Panels (Down)".update_ui()
+	$"UI/Follower Panels".update_ui()
 	
 	
 	if cur_level_index < len(level.advance):
@@ -261,9 +274,9 @@ func process_input():
 		pending_ui = 0
 	
 	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_next") and can_change_selected_follower():
-		selected_follower_index = (selected_follower_index + 1) % len(get_selected_summoner().followers)
+		selected_follower_index = (selected_follower_index + 1) % 8
 	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_previous") and can_change_selected_follower():
-		selected_follower_index = posmod(selected_follower_index - 1, len(get_selected_summoner().followers))
+		selected_follower_index = posmod(selected_follower_index - 1, 8)
 			
 	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_undo") and can_undo_or_redo():
 		undo()
@@ -429,11 +442,9 @@ func get_enemies_left():
 				count += 1
 	return count
 
+
 func get_selected_follower():
-	if len(get_selected_summoner().followers) > 0:
-		return get_selected_summoner().followers[min(selected_follower_index, len(get_selected_summoner().followers) - 1)]
-	else:
-		return null
+	return $"UI/Follower Panels".get_children()[selected_follower_index].get_cur_unit()
 
 
 func get_selected_summoner():

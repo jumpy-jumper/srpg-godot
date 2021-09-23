@@ -30,6 +30,7 @@ export var settings = {
 	"inverted_keyboard_camera" : false,
 	"inverted_mouse_camera" : false,
 	"undoable_restart" : true,
+	"nils_voice_lines" : false,
 }
 
 func _ready():

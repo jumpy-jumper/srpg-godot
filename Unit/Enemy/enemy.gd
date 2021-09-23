@@ -21,7 +21,7 @@ func _process(_delta):
 		modulate.a = 1.0
 	
 	if stage.cursor.position == position or marked:
-		var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, stage.get_selected_summoner().position, traversable))
+		var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, stage.summoners_cache[wind].position, traversable))
 		for i in range(len(path)):
 			path[i] += Vector2(stage.get_cell_size() / 2, stage.get_cell_size() / 2)
 			path[i] -= global_position
@@ -66,8 +66,8 @@ func move():
 		
 	$Blocked.visible = false
 	
-	var target = stage.get_selected_summoner()		
-	var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, stage.get_selected_summoner().position, traversable))
+	var target = stage.summoners_cache[wind]
+	var path = ([] + gate.path) if gate else (stage.get_path_to_target(position, target.position, traversable))
 	
 	while (path[0] != position):
 		path.pop_front()

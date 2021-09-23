@@ -10,6 +10,6 @@ base_atk = 60
 base_def = 25
 
 [node name="Sprite" parent="." index="0"]
-frame = 1
+frame = 4
 
 [node name="Northern Cross" parent="Skills" index="1" instance=ExtResource( 2 )]

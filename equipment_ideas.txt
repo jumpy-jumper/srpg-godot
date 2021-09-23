@@ -1,5 +1,6 @@
 Weapons
 	[Nephenee] When summoned, push surrounding enemies.
+	[Tethys] Can summon a phantom that extends this unit's attack range.
 	[Norne] If this unit would deal [0 damage], deal [magic damage] instead.
 	[Norne] [While this unit's skill is inactive, ][Attack Count +X].
 	[Norne] Attacks reduce the enemy's DEF by X% for the rest of the turn.

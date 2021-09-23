@@ -11,12 +11,14 @@ Implementation
 		Skill icons
 		Rearrange Unit UI
 		Skills that activate on the next basic attack
+		Changing resolution places window in correct monitor
 	Bugs
 		Cursor vertical movement doesn't rapid fire after horizontal movement
 		Deselect node from menu when window loses focus
 		Unit UI shows up even if camera was fiddled with but zoom didn't change
 		Follower doesn't preview if you restart after dying
 		Changing resolution should place the window on the current screen and not screen 0
+		Fullscreening with F11 doesn't change the focus in the settings window
 	Game Logic
 		Resolve ties in ally targeting / enemy action
 	QoL
@@ -38,6 +40,7 @@ Implementation
 			Don't show terrain on enemies, other stats on non-combat units
 		Implement camera follows cursor on keyboard
 		Implement intents
+		When placing a unit, give some frames where releasing the button won't confirm facing
 	Refactors for performance / code cleanness
 		Have mugshot regions somewhere central instead of a unit property
 		Consolidate healing and attacking code

@@ -84,7 +84,7 @@ func die():
 
 func initialize_path():
 	if len(enemies.values()) > 0:
-		path = stage.get_path_to_target(position, stage.get_selected_summoner().position, \
+		path = stage.get_path_to_target(position, stage.summoners_cache[wind].position, \
 			enemies.values()[0].traversable)
 	else:
 		path = []

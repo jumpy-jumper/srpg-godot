@@ -79,200 +79,94 @@ script = ExtResource( 27 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Follower Panels (Right)" type="Control" parent="UI"]
-visible = false
-margin_left = 106.0
-margin_top = 560.0
-margin_right = 106.0
-margin_bottom = 560.0
-rect_scale = Vector2( 0.75, 0.75 )
+[node name="Follower Panels" type="Control" parent="UI"]
+margin_left = 256.0
+margin_top = 632.0
+margin_right = 256.0
+margin_bottom = 632.0
+rect_scale = Vector2( 0.65, 0.65 )
 script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="1" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1400.0
-margin_top = -580.0
-margin_right = 1528.0
-margin_bottom = -452.0
-focus_mode = 0
+[node name="1" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = -13.3333
+margin_top = -10.6667
+margin_right = 114.667
+margin_bottom = 117.333
 
-[node name="2" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1400.0
-margin_top = -452.5
-margin_right = 1528.0
-margin_bottom = -324.5
-focus_mode = 0
+[node name="2" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 114.667
+margin_top = -10.6666
+margin_right = 242.667
+margin_bottom = 117.333
 
-[node name="3" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1400.0
-margin_top = -325.0
-margin_right = 1528.0
-margin_bottom = -197.0
-focus_mode = 0
+[node name="3" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 242.667
+margin_top = -10.6666
+margin_right = 370.667
+margin_bottom = 117.333
 
-[node name="4" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1400.0
-margin_top = -197.5
-margin_right = 1528.0
-margin_bottom = -69.5001
-focus_mode = 0
+[node name="4" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 370.667
+margin_top = -10.6667
+margin_right = 498.667
+margin_bottom = 117.333
 
-[node name="5" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1400.0
-margin_top = -70.0001
-margin_right = 1528.0
-margin_bottom = 57.9999
-focus_mode = 0
+[node name="5" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 498.667
+margin_top = -10.6667
+margin_right = 626.667
+margin_bottom = 117.333
 
-[node name="6" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1400.0
-margin_top = 58.7499
-margin_right = 1528.0
-margin_bottom = 186.75
-focus_mode = 0
+[node name="6" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 626.667
+margin_top = -10.6666
+margin_right = 754.667
+margin_bottom = 117.333
 
-[node name="7" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1271.25
-margin_top = -580.0
-margin_right = 1399.25
-margin_bottom = -452.0
-focus_mode = 0
+[node name="7" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 754.667
+margin_top = -10.6666
+margin_right = 882.667
+margin_bottom = 117.333
 
-[node name="8" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1271.25
-margin_top = -452.5
-margin_right = 1399.25
-margin_bottom = -324.5
-focus_mode = 0
+[node name="8" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 882.667
+margin_top = -10.6666
+margin_right = 1010.67
+margin_bottom = 117.333
 
-[node name="9" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1271.25
-margin_top = -325.0
-margin_right = 1399.25
-margin_bottom = -197.0
-focus_mode = 0
+[node name="9" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 1010.67
+margin_top = -10.6666
+margin_right = 1138.67
+margin_bottom = 117.333
 
-[node name="10" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1271.25
-margin_top = -197.5
-margin_right = 1399.25
-margin_bottom = -69.5
-focus_mode = 0
+[node name="10" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 1138.67
+margin_top = -10.6666
+margin_right = 1266.67
+margin_bottom = 117.333
 
-[node name="11" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1271.25
-margin_top = -70.0001
-margin_right = 1399.25
-margin_bottom = 57.9999
+[node name="11" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 1266.67
+margin_top = -10.6667
+margin_right = 1394.67
+margin_bottom = 117.333
 
-[node name="12" parent="UI/Follower Panels (Right)" instance=ExtResource( 19 )]
-margin_left = 1271.25
-margin_top = 58.7499
-margin_right = 1399.25
-margin_bottom = 186.75
-
-[node name="Follower Panels (Down)" type="Control" parent="UI"]
-margin_left = 106.0
-margin_top = 560.0
-margin_right = 106.0
-margin_bottom = 560.0
-rect_scale = Vector2( 0.75, 0.75 )
-script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="1" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = -61.3333
-margin_top = 64.0
-margin_right = 66.6667
-margin_bottom = 192.0
-
-[node name="2" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 66.6667
-margin_top = 64.0
-margin_right = 194.667
-margin_bottom = 192.0
-
-[node name="3" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 194.667
-margin_top = 64.0
-margin_right = 322.667
-margin_bottom = 192.0
-
-[node name="4" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 322.667
-margin_top = 64.0
-margin_right = 450.667
-margin_bottom = 192.0
-
-[node name="5" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 450.667
-margin_top = 64.0
-margin_right = 578.667
-margin_bottom = 192.0
-
-[node name="6" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 578.667
-margin_top = 64.0
-margin_right = 706.667
-margin_bottom = 192.0
-
-[node name="7" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 706.667
-margin_top = 64.0
-margin_right = 834.667
-margin_bottom = 192.0
-
-[node name="8" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 834.667
-margin_top = 64.0
-margin_right = 962.667
-margin_bottom = 192.0
-
-[node name="9" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 962.666
-margin_top = 64.0
-margin_right = 1090.67
-margin_bottom = 192.0
-
-[node name="10" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 1090.67
-margin_top = 64.0
-margin_right = 1218.67
-margin_bottom = 192.0
-
-[node name="11" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 1218.67
-margin_top = 64.0
-margin_right = 1346.67
-margin_bottom = 192.0
-
-[node name="12" parent="UI/Follower Panels (Down)" instance=ExtResource( 19 )]
-visible = false
-margin_left = 1346.67
-margin_top = 64.0
-margin_right = 1474.67
-margin_bottom = 192.0
+[node name="12" parent="UI/Follower Panels" instance=ExtResource( 19 )]
+margin_left = 1394.67
+margin_top = -10.6666
+margin_right = 1522.67
+margin_bottom = 117.333
 
 [node name="Round UI" type="Control" parent="UI"]
 margin_left = 16.0
-margin_top = 16.0
+margin_top = 504.0
 margin_right = 293.0
-margin_bottom = 293.0
+margin_bottom = 781.0
 rect_scale = Vector2( 0.75, 0.75 )
 script = SubResource( 1 )
 __meta__ = {
@@ -354,7 +248,7 @@ __meta__ = {
 position = Vector2( -12.0002, -33.1111 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
-frame = 1
+frame = 7
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Round UI/Summoner UI"]
@@ -389,7 +283,7 @@ summoner_index = 1
 position = Vector2( -12.0002, -33.1111 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
-frame = 1
+frame = 7
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Round UI/Summoner UI2"]
@@ -424,6 +318,7 @@ summoner_index = 2
 position = Vector2( -12.0002, -33.1111 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
+frame = 6
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Round UI/Summoner UI3"]
@@ -458,6 +353,7 @@ summoner_index = 3
 position = Vector2( -12.0002, -33.1111 )
 scale = Vector2( 3.1661, 3.5 )
 frames = ExtResource( 11 )
+frame = 6
 playing = true
 
 [node name="Faith" type="Label" parent="UI/Round UI/Summoner UI4"]
@@ -496,10 +392,10 @@ __meta__ = {
 }
 
 [node name="Settings Button" type="Button" parent="UI"]
-margin_left = 1232.0
-margin_top = 672.0
-margin_right = 1264.0
-margin_bottom = 704.0
+margin_left = 24.0
+margin_top = 664.0
+margin_right = 56.0
+margin_bottom = 696.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -921,8 +817,8 @@ z_index = 1
 [connection signal="gui_input" from="UI/Settings Button" to="." method="_on_Settings_Button_gui_input"]
 [connection signal="mouse_entered" from="UI/Settings Button" to="." method="_on_UI_mouse_entered"]
 [connection signal="mouse_exited" from="UI/Settings Button" to="." method="_on_UI_mouse_exited"]
-[connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_1_skill_activation_requested"]
+[connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 1" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="Foreground UI/Unit UI/Skill 1/Button" to="Foreground UI/Unit UI/Skill 1" method="_on_Button_pressed"]
 [connection signal="skill_activation_requested" from="Foreground UI/Unit UI/Skill 2" to="." method="_on_Skill_UI_skill_activation_requested"]
 [connection signal="pressed" from="Foreground UI/Unit UI/Skill 2/Button" to="Foreground UI/Unit UI/Skill 2" method="_on_Button_pressed"]

@@ -50,7 +50,9 @@ func _process(_delta):
 	
 	if Game.settings["camera_mouse_controls"]:
 		if Input.is_action_just_pressed("mouse_cancel") \
-			and stage.can_move_camera_with_cancel():
+			and stage.can_move_camera_with_cancel() \
+			or Input.is_action_just_pressed("mouse_pan_camera") \
+			and stage.can_move_camera():
 				#position = get_global_mouse_position()
 				base_mouse_position = get_viewport().get_mouse_position()
 				base_camera_position = position
@@ -58,13 +60,17 @@ func _process(_delta):
 			
 		if operatable \
 			and (Input.is_action_pressed("mouse_cancel") \
-			and stage.can_move_camera_with_cancel()):
+			and stage.can_move_camera_with_cancel()) \
+			or Input.is_action_just_pressed("mouse_pan_camera") \
+			and stage.can_move_camera():
 				var offset = (base_mouse_position - get_viewport().get_mouse_position()) * zoom
 				if Game.settings["inverted_mouse_camera"]:
 					offset = -offset
 				position = base_camera_position + offset
 		
-		if Input.is_action_just_released("mouse_cancel") and operatable:
+		if Input.is_action_just_released("mouse_cancel") \
+			or Input.is_action_just_released("mouse_pan_camera") \
+			and operatable:
 				operatable = false
 	else:
 		operatable = false

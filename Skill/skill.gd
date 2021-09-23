@@ -16,6 +16,8 @@ func is_basic_attack():
 
 enum Activation { PASSIVE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO, TURN_START }
 export(Activation) var activation = Activation.PASSIVE
+enum Recovery { NATURAL, OFFENSIVE, DEFENSIVE }
+export(Recovery) var recovery = Recovery.NATURAL
 export var base_skill_cost = 15
 export var base_skill_initial_sp = 10
 export var base_skill_duration = 30
@@ -41,8 +43,10 @@ func tick():
 		deactivate()
 	else:
 		if not is_active():
-			var sp_cost = unit.get_stat("skill_cost", base_skill_cost)
-			sp = 0 if activation == Activation.DEPLOYMENT else min(sp + 1, sp_cost)
+			if activation == Activation.DEPLOYMENT:
+				sp = 0 
+			elif recovery == Recovery.NATURAL:
+				sp = min(sp + 1, unit.get_stat("skill_cost", base_skill_cost))
 		else:
 			ticks_left = max(0, ticks_left - 1)
 			if ticks_left == 0:

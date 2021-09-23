@@ -4,6 +4,7 @@
 
 [node name="Northern Cross" type="Node"]
 script = ExtResource( 1 )
+description = "Deal 180% ATK damage to all enemy units in range. Restore 1 faith to the current summoner."
 activation = 3
 base_skill_cost = 4
 base_skill_initial_sp = 0
