@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Skill/skill.gd" type="Script" id=1]
+[ext_resource path="res://Unit/Follower/Natasha/n_natasha_s1_status_ally.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Follower/Natasha/n_natasha_s1_status_self.tscn" type="PackedScene" id=3]
+
+[node name="Emergency Tactics" type="Node"]
+script = ExtResource( 1 )
+description = "Range shrinks. Target count +2. DEF +90% and RES +50% for allies within range."
+activation = 3
+base_skill_cost = 24
+base_skill_initial_sp = 0
+base_skill_duration = 12
+statuses_self = [ ExtResource( 3 ) ]
+statuses_allies_in_attack_range = [ ExtResource( 2 ) ]

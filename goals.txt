@@ -1,8 +1,16 @@
 Content
 	World map
-	East-05: Frederick + Tethys
-	East-06: Niles
-	East-07: Robin
+	Heaven's Rooftop:
+		Player Blessings Available
+			E Norne, Lysithea, Lon'qu
+			S [Lysithea], [Frederick], [Nephenee]
+			W Nils, Dieck, Norne
+			N Nils, [Natasha], [Edelgard]
+		Enemy Units
+			"Lucid Dreaming": When this unit is defeated, return to the gate and come back next turn.
+			"Lucid Nightmare": When this unit is defeated, return to the gate and come back immediately.
+
+
 Implementation
 	Controls
 		Analog vs digital controls for cursor / camera
@@ -47,6 +55,7 @@ Implementation
 		Skill descriptions - use parameters instead of hard values and have a get_description() function
 		Implement predictive round logic
 		Implement delta state saving		
+		Toast logic in the unit class
 	Tutorial bubble
 		Make skills and statuses reload by instancing a packed scene instead of an empty scene
 		Select unit to be summoned

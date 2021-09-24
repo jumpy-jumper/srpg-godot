@@ -2,5 +2,8 @@
 
 [ext_resource path="res://Status/status.gd" type="Script" id=1]
 
-[node name="Status" type="Node"]
+[node name="No Healing" type="Node"]
 script = ExtResource( 1 )
+stat_overwrites = {
+"incoming_healing": 0.0
+}

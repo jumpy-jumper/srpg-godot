@@ -1,13 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Unit/Follower/Lysithea/e_lysithea_s1.gd" type="Script" id=1]
-[ext_resource path="res://Unit/Follower/Lysithea/e_lysithea_s1_status.tscn" type="PackedScene" id=2]
 
 [node name="Impending Doom" type="Node"]
 script = ExtResource( 1 )
-description = "ATK +70%. ATK +40% for every round this skill's activation is delayed, up to a total of ATK +690%. Attacks all enemies in range."
+description = "Deal 70% ATK as magic damage, plus an additional 40% for every round this skill's activation is delayed, up to a total of 740% ATK. Attacks all enemies in range."
 activation = 3
 base_skill_cost = 8
 base_skill_initial_sp = 0
-base_skill_duration = 1
-statuses_self = [ ExtResource( 2 ) ]
+base_skill_duration = 0

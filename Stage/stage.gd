@@ -261,7 +261,7 @@ func process_input():
 			if unit:
 				show_unit_ui(unit)
 			else:
-				show_unit_ui(get_selected_summoner().followers[selected_follower_index])
+				show_unit_ui(get_selected_follower())
 				
 	elif Input.is_action_just_pressed("mouse_cancel"):
 		camera_position_after_cancel_pressed = $Camera2D.position
@@ -530,6 +530,7 @@ func advance_tick():
 	for u in summoners_cache + followers + enemies + gates_cache:
 		if u.alive:
 			u.tick_skills()
+			u.tick_statuses()
 	
 	for u in enemies:
 		if u.alive:

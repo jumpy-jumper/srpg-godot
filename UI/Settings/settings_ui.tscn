@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Fonts/Dynamic Fonts/ui_smaller.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/Dynamic Fonts/ui_smallest.tres" type="DynamicFont" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://UI/Settings/checkbox_node.gd" type="Script" id=7]
 [ext_resource path="res://UI/menu_node.tscn" type="PackedScene" id=8]
 [ext_resource path="res://UI/Settings/settings_menu.gd" type="Script" id=9]
+[ext_resource path="res://UI/Settings/slider_node.gd" type="Script" id=10]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends SettingsNode
@@ -190,9 +191,9 @@ __meta__ = {
 
 [node name="Return" type="Control" parent="Menu"]
 margin_left = 32.0
-margin_top = 336.0
+margin_top = 384.0
 margin_right = 1120.0
-margin_bottom = 368.0
+margin_bottom = 416.0
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -414,6 +415,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Mouse Camera4" parent="Menu" instance=ExtResource( 8 )]
+margin_left = 0.0
+margin_top = 336.0
+margin_right = 32.0
+margin_bottom = 368.0
+script = ExtResource( 10 )
+property = "bgm_volume"
+
+[node name="Label2" type="Label" parent="Menu/Mouse Camera4"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 48.0
+margin_top = -16.0
+margin_right = 304.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 1 )
+text = "BGM Volume"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlider" type="HSlider" parent="Menu/Mouse Camera4"]
+margin_left = 192.0
+margin_top = 7.0
+margin_right = 480.0
+margin_bottom = 23.0
+
 [node name="Description" type="Label" parent="Menu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -441,3 +470,4 @@ __meta__ = {
 [connection signal="mouse_exited" from="Menu/Fullscreen" to="Menu/Fullscreen" method="_on_Node_mouse_exited"]
 [connection signal="mouse_entered" from="Menu/Return" to="Menu/Return" method="_on_Node_mouse_entered"]
 [connection signal="mouse_exited" from="Menu/Return" to="Menu/Return" method="_on_Node_mouse_exited"]
+[connection signal="value_changed" from="Menu/Mouse Camera4/HSlider" to="Menu/Mouse Camera4" method="_on_HSlider_value_changed"]

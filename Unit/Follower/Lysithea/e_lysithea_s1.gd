@@ -2,7 +2,7 @@ extends Skill
 
 
 export var bonus_atk_step = 0.4
-export var bonus_atk_max = 6.2
+export var bonus_atk_max = 6.7
 var bonus_atk = 0.0
 
 
@@ -11,6 +11,7 @@ onready var base_description = description
 
 func _process(_delta):
 	description = base_description + " (Current: +" + str(round(bonus_atk*100) + 70.0) + "%)" if bonus_atk > 0 else base_description
+	unit.get_node("Sprite/Ready").modulate = Color.cyan if bonus_atk == bonus_atk_max else Color.white
 
 
 func tick():
@@ -20,13 +21,9 @@ func tick():
 	
 
 func activate():
+	base_skill_range = unit.get_basic_attack().base_skill_range
+	deal(unit.get_stat("atk", unit.base_atk) * (0.7 + bonus_atk))
 	.activate()
-	var bonus_atk_status = Status.new()
-	bonus_atk_status.stat_additive_multipliers["atk"] = bonus_atk
-	bonus_atk_status.issuer_unit = unit
-	bonus_atk_status.issuer_name = name
-	unit.get_node("Statuses").add_child(bonus_atk_status)
-	unit.stage.replace_last_state()
 
 
 func deactivate():

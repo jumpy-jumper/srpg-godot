@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Levels/level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://BGM/1-05 Sunshine Coastline.ogg" type="AudioStream" id=2]
+
+[node name="Free Play" instance=ExtResource( 1 )]
+bgm = ExtResource( 2 )

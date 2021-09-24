@@ -203,7 +203,7 @@ Edelgard	N   W
 
 Character Progression (total 32)
 
-Starting
+Starting (12)
 	E!Norne
 	E!Lysithea
 	E!Lon'qu
@@ -216,14 +216,14 @@ Starting
 	N!Nils
 	N!Norne
 	N!Edelgard
-E1 (4)
-E2 (4)
-E3 (4)
-E4 (4)
-S1 (4)
-S2 (4)
-S3 (4)
-S4 (4)
+E1 (1)
+E2 (2)
+E3 (3)
+E4 (3)
+S1 (2)
+S2 (2)
+S3 (2)
+S4 (2)
 W1 (1)
 W2 (1)
 W3 (1)

@@ -10,8 +10,6 @@ export(Unit.DamageType) var damage_type = Unit.DamageType.PHYSICAL
 export var base_attack_count = 1
 
 
-var targeting_toast = preload("res://Unit/targeting_toast.tscn")
-
 func is_basic_attack():
 	return true
 
@@ -48,12 +46,11 @@ func activate():
 				toast.gradient.set_color(1, unit.colors[damage_type])
 				unit.targeting_toasts.append(toast)
 
-
 		elif skill_type == SkillType.HEAL: 
 			var possible_targets = []
 			possible_targets += unit.get_units_in_range_of_type(skill_range, unit.get_type_of_self())
 			for target in possible_targets + []:
-				if target.is_full_hp():
+				if target.is_full_hp() or target.get_stat("incoming_healing", 1) == 0:
 					possible_targets.erase(target)
 			for target in select_targets(possible_targets):
 				target.apply_healing(unit.get_stat("atk", unit.base_atk))
@@ -64,6 +61,10 @@ func activate():
 				toast.gradient = toast.gradient.duplicate()
 				toast.gradient.set_color(1, unit.colors[damage_type])
 				unit.targeting_toasts.append(toast)
+		
+		for skill in unit.get_node("Skills").get_children():
+			if skill.recovery == skill.Recovery.OFFENSIVE:
+				skill.sp += 1
 
 
 ###############################################################################

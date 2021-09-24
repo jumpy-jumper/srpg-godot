@@ -7,7 +7,7 @@
 script = ExtResource( 1 )
 description = "ATK -10%. Attack count becomes 7."
 activation = 4
-base_skill_cost = 12
-base_skill_initial_sp = 4
-base_skill_duration = 12
+base_skill_cost = 16
+base_skill_initial_sp = 8
+base_skill_duration = 8
 statuses_self = [ ExtResource( 2 ) ]

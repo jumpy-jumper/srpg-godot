@@ -14,8 +14,8 @@ func is_basic_attack():
 ###############################################################################
 
 
-enum Activation { PASSIVE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO, TURN_START }
-export(Activation) var activation = Activation.PASSIVE
+enum Activation { PASSIVE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO, TURN_START, NONE }
+export(Activation) var activation = Activation.NONE
 enum Recovery { NATURAL, OFFENSIVE, DEFENSIVE }
 export(Recovery) var recovery = Recovery.NATURAL
 export var base_skill_cost = 15
@@ -27,6 +27,11 @@ onready var sp = base_skill_initial_sp
 var ticks_left = 0
 
 
+func _ready():
+	if activation == Activation.PASSIVE:
+		add_statuses()
+
+
 func is_active():
 	return ticks_left > 0
 
@@ -36,12 +41,11 @@ func is_available():
 		and sp >= unit.get_stat("skill_cost", base_skill_cost) \
 		and not is_active()
 
-
 func tick():
 	if activation == Activation.EVERY_TICK:
 		activate()
 		deactivate()
-	else:
+	elif activation != Activation.PASSIVE:
 		if not is_active():
 			if activation == Activation.DEPLOYMENT:
 				sp = 0 
@@ -54,7 +58,7 @@ func tick():
 
 
 func activate():
-	if activation != Activation.PASSIVE and activation != Activation.EVERY_TICK:
+	if activation != Activation.NONE and activation != Activation.EVERY_TICK:
 		ticks_left = unit.get_stat("skill_duration", base_skill_duration)
 		add_statuses()
 		if activation == Activation.SP_MANUAL:
@@ -86,6 +90,8 @@ export(Array, PackedScene) var statuses_all_allies = []
 func add_statuses():
 	for status in statuses_self:
 		var this_status = status.instance()
+		if activation == Activation.PASSIVE:
+			this_status.persists_through_death = true
 		this_status.issuer_unit = unit
 		this_status.issuer_name = name
 		unit.get_node("Statuses").add_child(this_status)
@@ -93,6 +99,8 @@ func add_statuses():
 		var targets = unit.get_units_in_range_of_type(unit.get_attack_range(), unit.get_type_of_self())
 		for target in targets:
 			var this_status = status.instance()
+			if activation == Activation.PASSIVE:
+				this_status.persists_through_death = true
 			this_status.issuer_unit = unit
 			this_status.issuer_name = name
 			target.get_node("Statuses").add_child(this_status)
@@ -100,6 +108,8 @@ func add_statuses():
 		var targets = unit.stage.get_units_of_type(unit.get_type_of_self())
 		for target in targets:
 			var this_status = status.instance()
+			if activation == Activation.PASSIVE:
+				this_status.persists_through_death = true
 			this_status.issuer_unit = unit
 			this_status.issuer_name = name
 			target.get_node("Statuses").add_child(this_status)
@@ -119,6 +129,30 @@ func remove_statuses():
 
 
 export(Array) var base_skill_range = []
+
+
+###############################################################################
+#        Instant activation logic                                             #
+###############################################################################
+
+var targeting_toast = preload("res://Unit/targeting_toast.tscn")
+
+func deal(amount):
+	var skill_range = unit.get_stat("skill_range", base_skill_range)
+	var possible_targets = []
+	possible_targets = unit.get_units_in_range_of_type(skill_range, unit.get_type_of_enemy())
+	
+	for target in select_targets(possible_targets):
+		target.apply_damage(amount, unit.get_stat("damage_type", unit.get_basic_attack().damage_type))
+		target.display_toasts()
+	
+		var toast = targeting_toast.instance()
+		toast.attacker = unit
+		toast.attackee = target
+		toast.gradient = toast.gradient.duplicate()
+		toast.gradient.set_color(1, unit.colors[unit.get_basic_attack().damage_type])
+		unit.targeting_toasts.append(toast)
+		unit.display_toasts()
 
 
 ###############################################################################
@@ -215,6 +249,7 @@ func get_state():
 	ret["name"] = name
 	ret["description"] = description
 	ret["activation"] = activation
+	ret["recovery"] = recovery
 	ret["base_skill_cost"] = base_skill_cost
 	ret["base_skill_initial_sp"] = base_skill_initial_sp
 	ret["base_skill_duration"] = base_skill_duration
@@ -233,6 +268,7 @@ func load_state(state):
 	name = state["name"]
 	description = state["description"]
 	activation = state["activation"]
+	recovery = state["recovery"]
 	base_skill_cost = state["base_skill_cost"]
 	base_skill_initial_sp = state["base_skill_initial_sp"]
 	base_skill_duration = state["base_skill_duration"]

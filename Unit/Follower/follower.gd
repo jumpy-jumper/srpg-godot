@@ -135,16 +135,14 @@ export var base_cooldown = 32
 var cooldown = 0
 
 func die():
+	for unit in group:
+		unit.cooldown = get_stat("cooldown", base_cooldown)
 	.die()
 	waiting_for_user = false
-	for skill in $Skills.get_children():
-		skill.initialize()
 	if summoner:
 		summoner.recover_faith(ceil(get_stat("cost", base_cost) / 2))
 	for enemy in blocked:
 		enemy.blocker = null
-	for unit in group:
-		unit.cooldown = get_stat("cooldown", base_cooldown)
 
 
 var previewing = false

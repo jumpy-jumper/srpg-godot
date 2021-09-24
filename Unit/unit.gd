@@ -76,11 +76,16 @@ func _on_Cursor_moved(pos):
 
 
 func tick_skills():
-	if alive:
-		var skills = [] + $Skills.get_children()
-		skills.invert()
-		for skill in skills:
-			skill.tick()
+	var skills = [] + $Skills.get_children()
+	skills.invert()
+	for skill in skills:
+		skill.tick()
+
+
+func tick_statuses():
+	var statuses = [] + $Statuses.get_children()
+	for status in statuses:
+		status.tick()
 
 
 func _on_Stage_tick_started():
@@ -94,7 +99,7 @@ func _on_Stage_tick_started():
 func _on_Stage_tick_ended():
 	if alive:
 		for skill in $Skills.get_children():
-			if not skill.is_active():
+			if not skill.is_active() and not skill.activation == skill.Activation.PASSIVE:
 				skill.remove_statuses()
 				var sp_cost = get_stat("skill_cost", skill.base_skill_cost)
 				if skill.activation == skill.Activation.SP_AUTO and skill.sp == sp_cost:
@@ -249,6 +254,13 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	
 	if damage_type != DamageType.SHIELD_DAMAGE and (amount > 0 or shield == 0):
 		damage_toasts.append(get_damage_toast(max(amount, 0), colors[damage_type]))
+	
+	if damage_type == DamageType.PHYSICAL \
+		or damage_type == DamageType.PHYSICAL \
+		or damage_type == DamageType.PHYSICAL :
+			for skill in $Skills.get_children():
+				if skill.recovery == skill.Recovery.DEFENSIVE:
+					skill.sp += 1
 
 
 func apply_healing(amount = 1):
@@ -295,12 +307,13 @@ func die():
 	emit_signal("dead", self)
 	alive = false
 	heal_to_full()
-	for skill in $Skills.get_children():
-		skill.initialize()
 	shield = 0
+	
 	for status in $Statuses.get_children():
 		if not status.persists_through_death:
 			status.free()
+	for skill in $Skills.get_children():
+		skill.initialize()
 	
 	$DeathTweener.interpolate_property(self, "modulate:a",
 	0.75, 0, DEATH_TWEEN_DURATION,

@@ -31,6 +31,7 @@ export var settings = {
 	"inverted_mouse_camera" : false,
 	"undoable_restart" : true,
 	"nils_voice_lines" : false,
+	"bgm_volume" : 0,
 }
 
 func _ready():
@@ -56,12 +57,41 @@ func load_settings():
 						settings[key] = new_settings[key]
 		settings_file.close()
 
+func play_bgm(bgm):
+	if bgm:
+		$BGM.stream = bgm
+		$BGM.play()
+		#$BGM.seek(randf() * $BGM.stream.get_length()/2)
+		#fade_in_bgm(1)
+	else:
+		$BGM.stop()
+		#fade_out_bgm(0.5)
+
+func fade_in_bgm(duration):
+	$BGM.volume_db = -80
+	$Tween.interpolate_property($BGM, "volume_db",
+	-80, linear2db(settings["bgm_volume"]), duration,
+	Tween.TRANS_LINEAR, Tween.EASE_IN)
+	$Tween.start()
+
+func fade_out_bgm(duration):
+	$Tween.interpolate_property($BGM, "volume_db",
+	$BGM.volume_db, -80, duration,
+	Tween.TRANS_LINEAR, Tween.EASE_IN)
+	$Tween.start()
+	while($Tween.is_active()):
+		yield(get_tree(), "idle_frame")
+	$BGM.stop()
+	
+
 func apply_settings():
 	OS.set_window_size(settings["resolution"])
 	var screen_size = OS.get_screen_size(0)
 	var window_size = OS.get_window_size()
 	OS.set_window_position(screen_size*0.5 - window_size*0.5)
 	OS.window_fullscreen = settings["fullscreen"]
+	#$Tween.stop_all()
+	$BGM.volume_db = linear2db(settings["bgm_volume"])
 	
 	var settings_file = File.new()
 	settings_file.open("user://dit_config.json", File.WRITE)

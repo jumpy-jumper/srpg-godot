@@ -6,6 +6,6 @@
 [node name="E!Norne" instance=ExtResource( 1 )]
 
 [node name="Sprite" parent="." index="0"]
-frame = 6
+frame = 2
 
 [node name="Meteor Rain" parent="Skills" index="1" instance=ExtResource( 2 )]
