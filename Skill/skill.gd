@@ -119,8 +119,10 @@ func add_statuses():
 # Might wanna figure out a different way to do this later on
 func remove_statuses():
 	for status in unit.stage.get_all_statuses():
-		if status.issuer_unit == unit and status.issuer_name == name:
-			status.free()
+		if status.issuer_unit == unit \
+			and status.issuer_name == name \
+			and not status.independent_from_skill:
+				status.free()
 
 
 ###############################################################################
@@ -160,7 +162,7 @@ func deal(amount):
 ###############################################################################
 
 
-enum TargetingPriority { CLOSEST_TO_SELF, LOWEST_HP_PERCENTAGE, CLOSEST_TO_SUMMONER, LAST_SUMMONED, FIRST_SUMMONED }
+enum TargetingPriority { CLOSEST_TO_SELF, LOWEST_HP_PERCENTAGE, CLOSEST_TO_SUMMONER, LAST_SUMMONED, FIRST_SUMMONED, RANDOM }
 
 
 export var base_target_count = 1
@@ -170,7 +172,7 @@ export(TargetingPriority) var targeting_priority = TargetingPriority.CLOSEST_TO_
 func select_targets(units):
 	var ret = []
 		
-	match targeting_priority:
+	match unit.get_stat("targeting_priority", targeting_priority):
 		TargetingPriority.CLOSEST_TO_SELF:
 			units.sort_custom(self, "closest_to_self_comparison") 
 		TargetingPriority.LOWEST_HP_PERCENTAGE:
@@ -181,6 +183,14 @@ func select_targets(units):
 			units.sort_custom(self, "last_summoned_comparison")
 		TargetingPriority.FIRST_SUMMONED:
 			units.sort_custom(self, "first_summoned_comparison")
+		TargetingPriority.RANDOM:
+			units.sort_custom(self, "first_summoned_comparison") 
+			for i in range(min(unit.get_stat("target_count", base_target_count), len(units))):
+				var index = unit.stage.get_randi(len(units))
+				ret.append(units[index])
+				units.remove(index)
+			return ret
+			
 	
 	for i in range(min(unit.get_stat("target_count", base_target_count), len(units))):
 		ret.append(units[i])

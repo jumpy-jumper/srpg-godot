@@ -1,7 +1,107 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Levels/level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://BGM/1-05 Sunshine Coastline.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Unit/Summoner/South Wind/south_wind.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Unit/Follower/Natasha/n_natasha.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Unit/Follower/Lysithea/w_lysithea.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Unit/Enemy/Dummy/e_dummy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Unit/Follower/Lon'qu/e_lon'qu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Unit/Follower/Nils/w_nils.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Unit/Follower/Norne/w_norne.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Unit/Follower/Edelgard/n_edelgard.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Unit/Follower/Nils/n_nils.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Unit/Summoner/North Wind/north_wind.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Unit/Follower/Norne/e_norne.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Unit/Summoner/East Wind/east_wind.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Unit/Summoner/West Wind/west_wind.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Unit/Follower/Dieck/w_dieck.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Unit/Follower/Nephenee/e_nephenee.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Unit/Follower/Lysithea/s_lysithea.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Unit/Follower/Frederick/s_frederick.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Unit/Follower/Dieck/s_dieck.tscn" type="PackedScene" id=20]
 
 [node name="Free Play" instance=ExtResource( 1 )]
 bgm = ExtResource( 2 )
+
+[node name="The East Wind2" parent="." index="2" instance=ExtResource( 14 )]
+position = Vector2( 1152, 64 )
+faith = 200
+
+[node name="E!Nephenee" parent="The East Wind2" index="6" instance=ExtResource( 17 )]
+
+[node name="E!Norne" parent="The East Wind2" index="7" instance=ExtResource( 13 )]
+
+[node name="E!Lon\'qu" parent="The East Wind2" index="8" instance=ExtResource( 7 )]
+
+[node name="The South Wind2" parent="." index="3" instance=ExtResource( 3 )]
+position = Vector2( 960, 640 )
+base_max_hp = 1
+faith = 200
+
+[node name="S!Lysithea" parent="The South Wind2" index="6" instance=ExtResource( 18 )]
+
+[node name="S!Dieck" parent="The South Wind2" index="7" instance=ExtResource( 20 )]
+
+[node name="S!Frederick" parent="The South Wind2" index="8" instance=ExtResource( 19 )]
+
+[node name="The West Wind2" parent="." index="4" instance=ExtResource( 15 )]
+position = Vector2( 64, 192 )
+faith = 200
+
+[node name="W!Nils" parent="The West Wind2" index="6" instance=ExtResource( 8 )]
+
+[node name="W!Norne" parent="The West Wind2" index="7" instance=ExtResource( 9 )]
+
+[node name="W!Lysithea" parent="The West Wind2" index="8" instance=ExtResource( 5 )]
+
+[node name="W!Dieck" parent="The West Wind2" index="9" instance=ExtResource( 16 )]
+
+[node name="The North Wind2" parent="." index="5" instance=ExtResource( 12 )]
+position = Vector2( 512, 192 )
+faith = 200
+
+[node name="N!Nils" parent="The North Wind2" index="6" instance=ExtResource( 11 )]
+
+[node name="N!Natasha" parent="The North Wind2" index="7" instance=ExtResource( 4 )]
+
+[node name="N!Edelgard" parent="The North Wind2" index="8" instance=ExtResource( 10 )]
+
+[node name="Dummy6" parent="." index="6" instance=ExtResource( 6 )]
+position = Vector2( 128, 192 )
+
+[node name="Dummy8" parent="." index="7" instance=ExtResource( 6 )]
+position = Vector2( 768, 640 )
+base_level = 10
+
+[node name="Dummy9" parent="." index="8" instance=ExtResource( 6 )]
+position = Vector2( 768, 128 )
+base_level = 20
+
+[node name="Dummy12" parent="." index="9" instance=ExtResource( 6 )]
+position = Vector2( 640, 320 )
+base_level = 30
+
+[node name="Dummy13" parent="." index="10" instance=ExtResource( 6 )]
+position = Vector2( 512, 384 )
+base_level = 30
+
+[node name="Dummy15" parent="." index="11" instance=ExtResource( 6 )]
+position = Vector2( 640, 384 )
+base_level = 30
+
+[node name="Dummy16" parent="." index="12" instance=ExtResource( 6 )]
+position = Vector2( 640, 448 )
+base_level = 30
+
+[node name="Dummy17" parent="." index="13" instance=ExtResource( 6 )]
+position = Vector2( 576, 448 )
+base_level = 30
+
+[node name="Dummy18" parent="." index="14" instance=ExtResource( 6 )]
+position = Vector2( 448, 448 )
+base_level = 30
+
+[node name="Dummy19" parent="." index="15" instance=ExtResource( 6 )]
+position = Vector2( 448, 384 )
+base_level = 30

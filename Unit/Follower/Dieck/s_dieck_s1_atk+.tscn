@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Status/status.gd" type="Script" id=1]
+
+[node name="s_dieck_s1_atk+" type="Node"]
+script = ExtResource( 1 )
+independent_from_skill = true
+stat_additive_multipliers = {
+"atk": 0.1
+}

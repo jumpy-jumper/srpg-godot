@@ -260,7 +260,7 @@ func process_input():
 			var unit = get_unit_at($Cursor.position)
 			if unit:
 				show_unit_ui(unit)
-			else:
+			elif get_selected_follower():
 				show_unit_ui(get_selected_follower())
 				
 	elif Input.is_action_just_pressed("mouse_cancel"):
@@ -272,11 +272,14 @@ func process_input():
 			
 	elif Input.is_action_just_pressed("debug_clear_pending_ui"):
 		pending_ui = 0
+			
+	elif Input.is_action_just_pressed("debug_burn_rn"):
+		print(get_randf())
 	
 	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_next") and can_change_selected_follower():
-		selected_follower_index = (selected_follower_index + 1) % 8
+		selected_follower_index = (selected_follower_index + 1) % len(follower_groups)
 	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_previous") and can_change_selected_follower():
-		selected_follower_index = posmod(selected_follower_index - 1, 8)
+		selected_follower_index = posmod(selected_follower_index - 1, len(follower_groups))
 			
 	elif InputWatcher.is_action_pressed_with_rapid_fire("keyboard_undo") and can_undo_or_redo():
 		undo()
@@ -549,7 +552,10 @@ func advance_tick():
 	emit_signal("tick_ended")
 
 	cur_tick += 1
-	selected_summoner_index = (cur_tick - 1) % len(summoners_cache)
+	selected_summoner_index = (selected_summoner_index + 1) % len(summoners_cache)
+	cur_seed = INITIAL_SEED
+	for i in range(cur_tick):
+		cur_seed = rand_seed(cur_seed)[1]
 	
 	emit_signal("tick_started")
 	append_state()
@@ -562,6 +568,40 @@ func advance_level():
 	if not (cur_level_index >= len(level.advance)):
 		for summoner in summoners_cache:
 			summoner.get_level_advancing_skill().base_skill_cost = level.advance[cur_level_index]
+
+
+###############################################################################
+#        RNG                                                                  #
+###############################################################################
+
+
+const INITIAL_SEED = 3310532886983200000
+var cur_seed = INITIAL_SEED
+
+func get_rn():
+	seed(cur_seed)
+	cur_seed = rand_seed(cur_seed)[1]
+	var ret = cur_seed
+	randomize()
+	return ret
+
+func get_randb():
+	seed(get_rn())
+	var ret = randf() > 0.5
+	randomize()
+	return ret
+
+func get_randi(end, start=0):
+	seed(get_rn())
+	var ret = (randi() % (end-start)) + start
+	randomize()
+	return ret
+
+func get_randf():
+	seed(get_rn())
+	var ret = randf()
+	randomize()
+	return ret
 
 
 ###############################################################################
@@ -608,6 +648,7 @@ func get_state():
 	ret["cur_tick"] = cur_tick
 	ret["cur_level_index"] = cur_level_index
 	ret["summoned_order"] = [] + summoned_order
+	ret["cur_seed"] = cur_seed
 	for unit in get_all_units():
 		var unit_state = unit.get_state()
 		for key in unit_state:
@@ -627,6 +668,7 @@ func load_state(state):
 	cur_tick = state["cur_tick"]
 	cur_level_index = state["cur_level_index"]
 	summoned_order = state["summoned_order"]
+	cur_seed = state["cur_seed"]
 	unit_pos_cache.clear()
 	selected_summoner_index = (cur_tick - 1) % len(summoners_cache)
 	

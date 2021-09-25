@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Unit/Follower/Lysithea/lysithea.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Skill/skill.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Unit/Follower/Lysithea/s_lysithea_s1_status.tscn" type="PackedScene" id=3]
+
+[node name="S!Lysithea" instance=ExtResource( 1 )]
+wind = 1
+
+[node name="Molten Rain" parent="Skills" index="1" instance=ExtResource( 2 )]
+description = "Range changes. ATK +330%, target count +2, targeting priority becomes random."
+activation = 3
+base_skill_cost = 36
+base_skill_initial_sp = 12
+base_skill_duration = 8
+statuses_self = [ ExtResource( 3 ) ]

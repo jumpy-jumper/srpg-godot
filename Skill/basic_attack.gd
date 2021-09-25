@@ -21,6 +21,10 @@ func activate():
 			var possible_targets = []
 			possible_targets = unit.get_units_in_range_of_type(skill_range, unit.get_type_of_enemy())
 			
+			for unit in possible_targets + []:
+				if unit.get_stat("invisible", false):
+					possible_targets.erase(unit)
+			
 			# If this unit has [0, 0] in range, prioritize blockers / blocked units
 			if Vector2.ZERO in skill_range:
 				match(unit.get_type_of_self()):

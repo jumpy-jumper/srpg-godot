@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Status/status.gd" type="Script" id=1]
+
+[node name="careful of the fire" type="Node"]
+script = ExtResource( 1 )
+stat_overwrites = {
+"skill_range": [ Vector2 ( -1, -3), Vector2 ( 0, -3), Vector2 ( 1, -3), Vector2 ( -1, -2), Vector2 ( 0, -2), Vector2 ( 1, -2), Vector2 ( -3, -1), Vector2 ( -2, -1), Vector2 ( -1, -1), Vector2 ( 0, -1), Vector2 ( 1, -1), Vector2 ( 2, -1), Vector2 ( 3, -1), Vector2 ( -3, 0), Vector2 ( -2, 0), Vector2 ( -1, 0), Vector2 ( 0, 0), Vector2 ( 1, 0), Vector2 ( 2, 0), Vector2 ( 3, 0), Vector2 ( -3, 1), Vector2 ( -2, 1), Vector2 ( -1, 1), Vector2 ( 0, 1), Vector2 ( 1, 1), Vector2 ( 2, 1), Vector2 ( 3, 1), Vector2 ( -1, 2), Vector2 ( 0, 2), Vector2 ( 1, 2), Vector2 ( -1, 3), Vector2 ( 0, 3), Vector2 ( 1, 3) ],
+"targeting_priority": 5
+}
+stat_flat_bonuses = {
+"target_count": 2
+}
+stat_additive_multipliers = {
+"atk": 2.3
+}

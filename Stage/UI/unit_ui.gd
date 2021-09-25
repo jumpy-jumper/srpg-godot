@@ -7,7 +7,7 @@ onready var base_sprite_pos = $Sprite.position
 
 func update_unit(unit):
 	saved_unit = unit
-	if unit.get_type_of_self() == unit.UnitType.FOLLOWER:
+	if  unit.get_type_of_self() == unit.UnitType.FOLLOWER:
 		$Sprite.texture = unit.portrait
 		$Sprite.position = base_sprite_pos - Vector2(unit.mugshot_top_left.x - 220, unit.mugshot_top_left.y - 45) #220 is dieck's offset which is what i set the default to
 	else:

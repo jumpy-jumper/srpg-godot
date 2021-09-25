@@ -25,6 +25,9 @@ var group = []
 #        Main logic                                                           #
 ###############################################################################
 
+func _ready():
+	facing = Facing.values()[wind]
+
 func _process(_delta):
 	$"Sprite/UI".visible = alive
 	
@@ -32,6 +35,7 @@ func _process(_delta):
 	$Sprite/Ready.visible = alive and (activatable_skill.is_available() if activatable_skill else false)
 	
 	if not $DeathTweener.is_active():
+	
 		modulate.a = 0.5 if previewing else (1.0 if alive else 0)
 	elif alive:
 		$DeathTweener.stop_all()
@@ -80,6 +84,7 @@ func can_be_deployed():
 
 func deploy_self(pos):
 		alive = true
+		facing = Facing.values()[wind]
 		global_position = stage.get_clamped_position(pos)
 		emit_signal("moved", self, position)
 		summoner.faith -= get_stat("cost", base_cost)
@@ -89,8 +94,9 @@ func deploy_self(pos):
 				or skill.activation == skill.Activation.SP_AUTO and skill.is_available():
 					skill.activate()
 		display_toasts()
-		waiting_for_user = true
+		#waiting_for_user = true
 		stage.append_state()
+		confirm_facing()
 
 
 func _on_Cursor_confirm_issued(pos):
@@ -168,7 +174,7 @@ func _on_Cursor_hovered(pos):
 
 
 enum Facing {RIGHT = 0, DOWN = 90, LEFT = 180, UP = 270}
-export(Facing) var facing = Facing.RIGHT
+export(Facing) var facing = Facing.values()[wind]
 
 
 var waiting_for_user = false

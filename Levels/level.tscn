@@ -1,22 +1,8 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Unit/Summoner/South Wind/south_wind.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/level.gd" type="Script" id=2]
-[ext_resource path="res://Unit/Follower/Dieck/w_dieck.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Unit/Follower/Natasha/n_natasha.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=5]
-[ext_resource path="res://Unit/Follower/Edelgard/n_edelgard.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Unit/Follower/Norne/e_norne.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Unit/Follower/Lon'qu/e_lon'qu.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Unit/Follower/Lysithea/e_lysithea.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Unit/Follower/Nils/n_nils.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Unit/Follower/Nils/w_nils.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Unit/Enemy/Dummy/e_dummy.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Levels/blue_level.jpg" type="Texture" id=13]
-[ext_resource path="res://Unit/Follower/Norne/w_norne.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Unit/Summoner/West Wind/west_wind.tscn" type="PackedScene" id=18]
-[ext_resource path="res://Unit/Summoner/North Wind/north_wind.tscn" type="PackedScene" id=19]
-[ext_resource path="res://Unit/Summoner/East Wind/east_wind.tscn" type="PackedScene" id=20]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap.png 0"
@@ -97,56 +83,3 @@ centered = false
 tile_set = SubResource( 1 )
 format = 1
 tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 14, 2, 0, 15, 2, 0, 16, 2, 0, 17, 2, 0, 18, 2, 0, 19, 2, 0, 65536, 2, 0, 65537, 2, 0, 65538, 2, 0, 65539, 3, 0, 65540, 3, 0, 65541, 2, 0, 65542, 2, 0, 65543, 2, 0, 65544, 2, 0, 65545, 2, 0, 65546, 2, 0, 65547, 2, 0, 65548, 2, 0, 65549, 2, 0, 65550, 2, 0, 65551, 2, 0, 65552, 2, 0, 65553, 1, 0, 65554, 1, 0, 65555, 2, 0, 131072, 2, 0, 131073, 2, 0, 131074, 1, 0, 131075, 2, 0, 131076, 2, 0, 131077, 2, 0, 131078, 2, 0, 131079, 2, 0, 131080, 2, 0, 131081, 2, 0, 131082, 2, 0, 131083, 0, 0, 131084, 0, 0, 131085, 2, 0, 131086, 3, 0, 131087, 3, 0, 131088, 2, 0, 131089, 2, 0, 131090, 1, 0, 131091, 2, 0, 196608, 2, 0, 196609, 1, 0, 196610, 0, 0, 196611, 2, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 2, 0, 196616, 0, 0, 196617, 0, 0, 196618, 1, 0, 196619, 1, 0, 196620, 1, 0, 196621, 0, 0, 196622, 0, 0, 196623, 1, 0, 196624, 0, 0, 196625, 1, 0, 196626, 1, 0, 196627, 2, 0, 262144, 2, 0, 262145, 1, 0, 262146, 0, 0, 262147, 3, 0, 262148, 0, 0, 262149, 2, 0, 262150, 1, 0, 262151, 1, 0, 262152, 2, 0, 262153, 1, 0, 262154, 0, 0, 262155, 2, 0, 262156, 2, 0, 262157, 1, 0, 262158, 0, 0, 262159, 0, 0, 262160, 0, 0, 262161, 2, 0, 262162, 2, 0, 262163, 2, 0, 327680, 2, 0, 327681, 2, 0, 327682, 0, 0, 327683, 2, 0, 327684, 2, 0, 327685, 0, 0, 327686, 0, 0, 327687, 2, 0, 327688, 3, 0, 327689, 0, 0, 327690, 1, 0, 327691, 3, 0, 327692, 0, 0, 327693, 1, 0, 327694, 0, 0, 327695, 0, 0, 327696, 0, 0, 327697, 2, 0, 327698, 2, 0, 327699, 2, 0, 393216, 2, 0, 393217, 2, 0, 393218, 0, 0, 393219, 2, 0, 393220, 0, 0, 393221, 1, 0, 393222, 1, 0, 393223, 1, 0, 393224, 1, 0, 393225, 0, 0, 393226, 1, 0, 393227, 2, 0, 393228, 1, 0, 393229, 1, 0, 393230, 1, 0, 393231, 1, 0, 393232, 0, 0, 393233, 2, 0, 393234, 2, 0, 393235, 2, 0, 458752, 2, 0, 458753, 2, 0, 458754, 0, 0, 458755, 2, 0, 458756, 0, 0, 458757, 1, 0, 458758, 1, 0, 458759, 0, 0, 458760, 3, 0, 458761, 2, 0, 458762, 1, 0, 458763, 1, 0, 458764, 1, 0, 458765, 2, 0, 458766, 1, 0, 458767, 0, 0, 458768, 0, 0, 458769, 2, 0, 458770, 2, 0, 458771, 2, 0, 524288, 2, 0, 524289, 2, 0, 524290, 1, 0, 524291, 2, 0, 524292, 2, 0, 524293, 2, 0, 524294, 2, 0, 524295, 1, 0, 524296, 1, 0, 524297, 0, 0, 524298, 2, 0, 524299, 0, 0, 524300, 0, 0, 524301, 2, 0, 524302, 2, 0, 524303, 3, 0, 524304, 3, 0, 524305, 2, 0, 524306, 2, 0, 524307, 2, 0, 589824, 2, 0, 589825, 2, 0, 589826, 1, 0, 589827, 2, 0, 589828, 2, 0, 589829, 2, 0, 589830, 2, 0, 589831, 0, 0, 589832, 2, 0, 589833, 2, 0, 589834, 2, 0, 589835, 0, 0, 589836, 0, 0, 589837, 2, 0, 589838, 2, 0, 589839, 2, 0, 589840, 2, 0, 589841, 0, 0, 589842, 2, 0, 589843, 2, 0, 655360, 2, 0, 655361, 2, 0, 655362, 1, 0, 655363, 1, 0, 655364, 1, 0, 655365, 0, 0, 655366, 1, 0, 655367, 0, 0, 655368, 2, 0, 655369, 3, 0, 655370, 3, 0, 655371, 2, 0, 655372, 0, 0, 655373, 0, 0, 655374, 1, 0, 655375, 1, 0, 655376, 0, 0, 655377, 0, 0, 655378, 2, 0, 655379, 2, 0, 720896, 2, 0, 720897, 2, 0, 720898, 2, 0, 720899, 2, 0, 720900, 2, 0, 720901, 2, 0, 720902, 2, 0, 720903, 2, 0, 720904, 2, 0, 720905, 2, 0, 720906, 2, 0, 720907, 2, 0, 720908, 2, 0, 720909, 2, 0, 720910, 2, 0, 720911, 2, 0, 720912, 2, 0, 720913, 2, 0, 720914, 2, 0, 720915, 2, 0, 786432, 2, 0, 786433, 2, 0, 786434, 2, 0, 786435, 2, 0, 786436, 2, 0, 786437, 2, 0, 786438, 2, 0, 786439, 2, 0, 786440, 2, 0, 786441, 2, 0, 786442, 2, 0, 786443, 2, 0, 786444, 2, 0, 786445, 2, 0, 786446, 2, 0, 786447, 2, 0, 786448, 2, 0, 786449, 2, 0, 786450, 2, 0, 786451, 2, 0 )
-
-[node name="The East Wind" parent="." instance=ExtResource( 20 )]
-position = Vector2( 1152, 64 )
-faith = 200
-
-[node name="E!Norne" parent="The East Wind" instance=ExtResource( 7 )]
-
-[node name="E!Lysithea" parent="The East Wind" instance=ExtResource( 9 )]
-
-[node name="E!Lon\'qu" parent="The East Wind" instance=ExtResource( 8 )]
-
-[node name="The South Wind" parent="." instance=ExtResource( 1 )]
-position = Vector2( 960, 640 )
-base_max_hp = 1
-faith = 200
-
-[node name="The West Wind" parent="." instance=ExtResource( 18 )]
-position = Vector2( 64, 192 )
-faith = 200
-
-[node name="W!Nils" parent="The West Wind" instance=ExtResource( 11 )]
-
-[node name="W!Norne" parent="The West Wind" instance=ExtResource( 14 )]
-
-[node name="W!Dieck" parent="The West Wind" instance=ExtResource( 3 )]
-
-[node name="The North Wind" parent="." instance=ExtResource( 19 )]
-position = Vector2( 512, 192 )
-faith = 200
-
-[node name="N!Nils" parent="The North Wind" instance=ExtResource( 10 )]
-
-[node name="N!Natasha" parent="The North Wind" instance=ExtResource( 4 )]
-
-[node name="N!Edelgard" parent="The North Wind" instance=ExtResource( 6 )]
-
-[node name="Dummy" parent="." instance=ExtResource( 12 )]
-position = Vector2( 128, 192 )
-
-[node name="Dummy5" parent="." instance=ExtResource( 12 )]
-position = Vector2( 704, 64 )
-
-[node name="Dummy2" parent="." instance=ExtResource( 12 )]
-position = Vector2( 768, 640 )
-base_level = 10
-
-[node name="Dummy3" parent="." instance=ExtResource( 12 )]
-position = Vector2( 768, 128 )
-base_level = 20
-
-[node name="Dummy4" parent="." instance=ExtResource( 12 )]
-position = Vector2( 576, 384 )
-base_level = 30

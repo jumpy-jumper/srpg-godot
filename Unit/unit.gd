@@ -35,6 +35,9 @@ func _ready():
 
 
 func _process(_delta):
+	
+	$Sprite/Invisible.visible = get_stat("invisible", false)
+	
 	if alive:
 		hp = min(hp, get_stat("max_hp", base_max_hp))
 		
@@ -122,10 +125,11 @@ var shield = 0
 
 
 const AFFECTED_BY_LEVEL = ["max_hp", "atk", "def"]
+const BOOL_STATS = ["invisible"]
 const NUMERICAL_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
 	"block_count", "damage_type", "incoming_damage", "incoming_healing", \
-	"skill_duration", "cooldown", "incoming_shield"]
+	"skill_duration", "cooldown", "incoming_shield", "targeting_priority"]
 const INTEGER_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
 	"block_count", "skill_duration", "cooldown"]
@@ -133,22 +137,23 @@ const ARRAY_STATS = ["movement", "skill_range", "block_range", "faith_recovery"]
 
 
 const SCALING_FACTOR = 0.047326582
-
 func get_stat_after_level(stat_name, base_value):
 	if stat_name in AFFECTED_BY_LEVEL:
 		return floor(base_value * pow(1 + SCALING_FACTOR, get_stat_after_statuses("level", base_level)))
 	else:
 		return base_value
 	
-	
 func get_stat_after_statuses(stat_name, base_value):
-	assert(stat_name in NUMERICAL_STATS + ARRAY_STATS)
+	assert(stat_name in BOOL_STATS + NUMERICAL_STATS + ARRAY_STATS)
 	
-	var ret = base_value if stat_name in NUMERICAL_STATS else [] + base_value
+	var ret = base_value if stat_name in BOOL_STATS + NUMERICAL_STATS else [] + base_value
 	
 	for status in $Statuses.get_children():
 		if status.stat_overwrites.has(stat_name):
 			return status.stat_overwrites[stat_name]
+	
+	if stat_name in BOOL_STATS:
+		return ret
 	
 	var additive_multiplier = 1.0 
 	var multiplicative_multiplier = 1.0

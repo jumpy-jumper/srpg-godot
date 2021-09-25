@@ -2,12 +2,14 @@ Content
 	World map
 	Heaven's Rooftop:
 		Player Blessings Available
-			E Norne, Lysithea, Lon'qu
-			S [Lysithea], [Frederick], [Nephenee]
-			W Nils, Dieck, Norne
-			N Nils, [Natasha], [Edelgard]
+			E Lon'qu, Nephenee, Norne
+			S Lysithea, [Frederick], Dieck
+			W Nils, Lysithea, Norne
+			N Nils, [Natasha], Edelgard
+				n!nils: implement charges
+				n!edel: make her skill only go off on attack
 		Enemy Units
-			"Lucid Dreaming": When this unit is defeated, return to the gate and come back next turn.
+			"Lucid Dreaming": When this unit is defeated, return to the gate and come back next round.
 			"Lucid Nightmare": When this unit is defeated, return to the gate and come back immediately.
 
 

@@ -16,7 +16,7 @@ base_block_range = [ Vector2( 0, 1 ), Vector2( 0, -1 ), Vector2( 1, 0 ) ]
 base_block_count = 3
 
 [node name="Sprite" parent="." index="0"]
-frame = 2
+frame = 0
 
 [node name="Basic Attack" parent="Skills" index="0"]
 base_skill_range = [ Vector2( 0, -1 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 0, 1 ), Vector2( 3, 0 ) ]

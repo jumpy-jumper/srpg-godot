@@ -5,6 +5,7 @@ class_name Status
 var issuer_unit = null
 var issuer_name = ""
 export var persists_through_death = false
+export var independent_from_skill = false
 export(Dictionary) var stat_overwrites = {}
 export(Dictionary) var stat_flat_bonuses = {}
 export(Dictionary) var stat_additive_multipliers = {}
@@ -22,6 +23,7 @@ func get_state():
 	ret["issuer_unit"] = issuer_unit
 	ret["issuer_name"] = issuer_name
 	ret["persists_through_death"] = persists_through_death
+	ret["independent_from_skill"] = independent_from_skill
 	ret["stat_overwrites"] = var2str(stat_overwrites)
 	ret["stat_flat_bonuses"] = var2str(stat_flat_bonuses)
 	ret["stat_additive_multipliers"] = var2str(stat_additive_multipliers)
@@ -34,6 +36,7 @@ func load_state(state):
 	issuer_unit = state["issuer_unit"]
 	issuer_name = state["issuer_name"]
 	persists_through_death = state["persists_through_death"]
+	independent_from_skill = state["independent_from_skill"]
 	stat_overwrites = str2var(state["stat_overwrites"])
 	stat_flat_bonuses = str2var(state["stat_flat_bonuses"])
 	stat_additive_multipliers = str2var(state["stat_additive_multipliers"])

@@ -204,27 +204,39 @@ Edelgard	N   W
 Character Progression (total 32)
 
 Starting (12)
+	E!Nephenee
 	E!Norne
-	E!Lysithea
 	E!Lon'qu
 	S!Lysithea
 	S!Frederick
-	S!Nephenee
+	S!Dieck
 	W!Nils
-	W!Dieck
-	W!Natasha
+	W!Norne
+	W!Lysithea
 	N!Nils
-	N!Norne
+	N!Natasha
 	N!Edelgard
 E1 (1)
+	Nephenee-2
+	Lon'qu-2
+	Frederick-2
+	W!Dieck
+	Natasha-2
+	Edelgard-2
+	Tethys-1
+	Robin-1
+	Niles-1
 E2 (2)
 E3 (3)
 E4 (3)
 S1 (2)
 S2 (2)
 S3 (2)
-S4 (2)
+S4 (1)
 W1 (1)
 W2 (1)
+	Tethys-4
+	Robin-4
+	Niles-4
 W3 (1)
 W4 (1)

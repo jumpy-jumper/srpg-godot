@@ -1,14 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Status/status.gd" type="Script" id=1]
+[ext_resource path="res://Unit/Follower/Natasha/n_natasha_s1_status_ally.gd" type="Script" id=1]
 
 [node name="natasha_s1_status_ally" type="Node"]
 script = ExtResource( 1 )
-stat_overwrites = {
-}
-stat_flat_bonuses = {
-}
-stat_additive_multipliers = {
-"def": 0.9,
-"res": 0.5
-}

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Unit/Follower/Frederick/frederick.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Skill/skill.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Skill/s_frederick_s1.gd" type="Script" id=3]
+
+[node name="S!Frederick" instance=ExtResource( 1 )]
+wind = 1
+
+[node name="Sprite" parent="." index="0"]
+frame = 6
+
+[node name="Skill" parent="Skills" index="1" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+description = "Basic attacks heal a random ally in skill range for 70% of damage dealt."

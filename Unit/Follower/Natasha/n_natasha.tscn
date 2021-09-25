@@ -7,6 +7,6 @@
 wind = 3
 
 [node name="Sprite" parent="." index="0"]
-frame = 4
+frame = 3
 
-[node name="Emergency Tactics" parent="Skills" index="1" instance=ExtResource( 2 )]
+[node name="Soothing Mist" parent="Skills" index="1" instance=ExtResource( 2 )]
