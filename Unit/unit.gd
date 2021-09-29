@@ -128,7 +128,7 @@ const AFFECTED_BY_LEVEL = ["max_hp", "atk", "def"]
 const BOOL_STATS = ["invisible", "unblockable", "invincible"]
 const NUMERICAL_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
-	"block_count", "damage_type", "incoming_damage", "incoming_healing", \
+	"block_count", "damage_type", "incoming_damage", "incoming_healing", "incoming_recovery", \
 	"skill_duration", "cooldown", "incoming_shield", "targeting_priority"]
 const INTEGER_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
@@ -153,6 +153,7 @@ var BASE_VALUES = {
 	"block_range" : "base_block_range",
 	"incoming_damage" : 1,
 	"incoming_healing" : 1,
+	"incoming_recovery" : 1,
 	"incoming_shield" : 1,
 }
 
@@ -205,10 +206,7 @@ func get_stat_after_statuses(stat_name, base_value):
 
 
 func get_basic_attack():
-	for skill in $Skills.get_children():
-		if skill.is_basic_attack():
-			return skill
-	return null
+	return $"Skills/Basic Attack"
 
 
 func get_first_activatable_skill():
@@ -240,7 +238,7 @@ signal dead(unit)
 signal moved(unit, from)
 
 
-enum DamageType {PHYSICAL, MAGIC, TRUE, HEALING, SHIELD, SHIELD_DAMAGE}
+enum DamageType {PHYSICAL, MAGIC, TRUE, HEALING, SHIELD, SHIELD_DAMAGE, RECOVERY}
 
 
 var physical_color = Color.lightcoral
@@ -248,15 +246,47 @@ var magic_color = Color.blue
 var true_color = Color.white
 var shield_damage_color = Color.goldenrod
 var healing_color = Color.green
+var recovery_color = Color.lightgreen
 var shield_color = Color.goldenrod
-var colors = [physical_color, magic_color, true_color, healing_color, shield_color, shield_damage_color]
+var colors = [physical_color, magic_color, true_color, healing_color, shield_color, shield_damage_color, recovery_color]
 
+var targeting_toast = preload("res://Unit/targeting_toast.tscn")
 var damage_toast = preload("res://Unit/damage_toast.tscn")
 
 var damage_toasts = []
 var targeting_toasts = []
 
-func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
+
+func deal_damage_to_target(target, amount, damage_type):
+	target.apply_damage(amount, damage_type)
+	target.display_toasts()
+
+	var toast = targeting_toast.instance()
+	toast.attacker = self
+	toast.attackee = target
+	toast.gradient = toast.gradient.duplicate()
+	toast.gradient.set_color(1, colors[damage_type])
+	targeting_toasts.append(toast)
+	display_toasts()
+
+
+func apply_damage(amount, damage_type, no_toast = false):
+	if damage_type == DamageType.HEALING or damage_type == DamageType.RECOVERY:
+		amount *= get_stat("incoming_recovery")
+		if damage_type == DamageType.HEALING:
+			amount *= get_stat("incoming_healing")
+		hp = min(hp + max(amount, 0), get_stat("max_hp"))
+		if not no_toast:
+			damage_toasts.append(get_damage_toast(amount, colors[DamageType.HEALING]))
+		return
+	
+	if damage_type == DamageType.SHIELD:
+		amount *= get_stat("incoming_shield")
+		shield += max(amount, 0)
+		if not no_toast:
+			damage_toasts.append(get_damage_toast(amount, colors[DamageType.SHIELD]))
+		return
+		
 	if damage_type == DamageType.PHYSICAL:
 		amount -= get_stat("def")
 	elif damage_type == DamageType.MAGIC:
@@ -270,7 +300,8 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if shield_damage > 0:
 		amount -= shield_damage
 		shield -= shield_damage
-		damage_toasts.append(get_damage_toast(-shield_damage, colors[DamageType.SHIELD_DAMAGE]))
+		if not no_toast:
+			damage_toasts.append(get_damage_toast(-shield_damage, colors[DamageType.SHIELD_DAMAGE]))
 	
 	if amount > 0:
 		hp -= amount
@@ -279,7 +310,8 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 		hp = min(get_stat("max_hp"), hp)
 	
 	if damage_type != DamageType.SHIELD_DAMAGE and (amount > 0 or shield == 0):
-		damage_toasts.append(get_damage_toast(max(amount, 0), colors[damage_type]))
+		if not no_toast:
+			damage_toasts.append(get_damage_toast(max(amount, 0), colors[damage_type]))
 	
 	if damage_type == DamageType.PHYSICAL \
 		or damage_type == DamageType.PHYSICAL \
@@ -287,24 +319,8 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 			for skill in $Skills.get_children():
 				if skill.recovery == skill.Recovery.DEFENSIVE:
 					skill.sp += 1
-
-
-func apply_healing(amount = 1):
-	amount *= get_stat("incoming_healing")
-	hp = min(hp + max(amount, 0), get_stat("max_hp"))
-	damage_toasts.append(get_damage_toast(amount, colors[DamageType.HEALING]))
-
-
-func heal_to_full():
-	var max_hp = get_stat("max_hp")
-	if max_hp - hp > 0:
-		hp = max_hp
-
-
-func apply_shield(amount):
-	amount *= get_stat("incoming_shield")
-	shield += max(amount, 0)
-	damage_toasts.append(get_damage_toast(amount, colors[DamageType.SHIELD]))
+	
+	display_toasts()
 
 
 func get_damage_toast(amount, color):
@@ -312,6 +328,9 @@ func get_damage_toast(amount, color):
 	toast.amount = amount
 	toast.color = color
 	return toast
+
+func heal_to_full():
+	apply_damage(get_stat("max_hp"), DamageType.HEALING, true)
 
 
 func display_toasts():

@@ -13,10 +13,11 @@ export var base_attack_count = 1
 func is_basic_attack():
 	return true
 
+
 func activate():
 	.activate()
+	var skill_range = get_stat("skill_range")
 	for i in range (get_stat("attack_count")):
-		var skill_range = get_stat("skill_range")
 		if skill_type == SkillType.ATTACK: 
 			var possible_targets = []
 			possible_targets = unit.get_units_in_range_of_type(skill_range, unit.get_type_of_enemy())
@@ -25,7 +26,7 @@ func activate():
 				if unit.get_stat("invisible"):
 					possible_targets.erase(unit)
 			
-			# If this unit has [0, 0] in range, prioritize blockers / blocked units
+			# If this unit has [0, 0] in attack range, also target blockers / blocked units
 			if Vector2.ZERO in skill_range:
 				match(unit.get_type_of_self()):
 					unit.UnitType.FOLLOWER:
@@ -40,15 +41,8 @@ func activate():
 							possible_targets.push_front(unit.blocker)
 						
 			for target in select_targets(possible_targets):
-				target.apply_damage(unit.get_stat("atk"), get_stat("damage_type"))
-	
-				var toast = targeting_toast.instance()
-				toast.attacker = unit
-				toast.attackee = target
-				toast.gradient = toast.gradient.duplicate()
-				toast.gradient.set_color(1, unit.colors[damage_type])
-				unit.targeting_toasts.append(toast)
-
+				unit.deal_damage_to_target(target, unit.get_stat("atk"), get_stat("damage_type"))
+		
 		elif skill_type == SkillType.HEAL: 
 			var possible_targets = []
 			possible_targets += unit.get_units_in_range_of_type(skill_range, unit.get_type_of_self())
@@ -56,14 +50,7 @@ func activate():
 				if target.is_full_hp() or target.get_stat("incoming_healing") == 0:
 					possible_targets.erase(target)
 			for target in select_targets(possible_targets):
-				target.apply_healing(unit.get_stat("atk"))
-				
-				var toast = targeting_toast.instance()
-				toast.attacker = unit
-				toast.attackee = target
-				toast.gradient = toast.gradient.duplicate()
-				toast.gradient.set_color(1, unit.colors[damage_type])
-				unit.targeting_toasts.append(toast)
+				unit.deal_damage_to_target(target, unit.get_stat("atk"), get_stat("damage_type"))
 		
 		for skill in unit.get_node("Skills").get_children():
 			if skill.recovery == skill.Recovery.OFFENSIVE:

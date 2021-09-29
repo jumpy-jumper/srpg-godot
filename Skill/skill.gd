@@ -140,23 +140,9 @@ export(Array) var base_skill_range = []
 
 var targeting_toast = preload("res://Unit/targeting_toast.tscn")
 
-func deal(amount):
-	var skill_range = get_stat("skill_range")
-	var possible_targets = []
-	possible_targets = unit.get_units_in_range_of_type(skill_range, unit.get_type_of_enemy())
-	
-	for target in select_targets(possible_targets):
-		target.apply_damage(amount, unit.get_basic_attack().get_stat("damage_type"))
-		target.display_toasts()
-	
-		var toast = targeting_toast.instance()
-		toast.attacker = unit
-		toast.attackee = target
-		toast.gradient = toast.gradient.duplicate()
-		toast.gradient.set_color(1, unit.colors[unit.get_basic_attack().damage_type])
-		unit.targeting_toasts.append(toast)
-		unit.display_toasts()
-
+func deal(amount):	
+	for target in select_targets(unit.get_units_in_range_of_type(get_stat("skill_range"), unit.get_type_of_enemy())):
+		unit.deal_damage_to_target(target, amount, unit.get_basic_attack().get_stat("damage_type"))
 
 
 ###############################################################################

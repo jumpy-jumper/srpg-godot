@@ -9,4 +9,4 @@ func tick():
 
 func activate():
 	.activate()
-	unit.apply_shield(floor(unit.get_stat("max_hp") * 1.6))
+	unit.apply_damage(floor(unit.get_stat("max_hp") * 1.6), unit.DamageType.SHIELD)
