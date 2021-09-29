@@ -25,7 +25,7 @@ func update_skill(skill, unit):
 		if skill.activation == skill.Activation.SP_MANUAL \
 			or skill.activation == skill.Activation.SP_AUTO:
 				button_label.text += "(" + str(skill.sp) + "/"
-				button_label.text += str(unit.get_stat("skill_cost", skill.base_skill_cost)) + ")"
+				button_label.text += str(skill.get_stat("skill_cost")) + ")"
 	else:
 		button_label.text = "ACTIVE"
 	
@@ -47,12 +47,12 @@ func update_skill(skill, unit):
 			skill_label.text += "\n[PASSIVE]"
 	if skill.activation == skill.Activation.SP_MANUAL \
 		or skill.activation == skill.Activation.SP_AUTO:
-			skill_label.text += " [INITIAL " + str(unit.get_stat("skill_initial_sp", skill.base_skill_initial_sp)) + "]"
-			skill_label.text += " [COST " + str(unit.get_stat("skill_cost", skill.base_skill_cost)) + "]"
+			skill_label.text += " [INITIAL " + str(skill.get_stat("skill_initial_sp")) + "]"
+			skill_label.text += " [COST " + str(skill.get_stat("skill_cost")) + "]"
 	if skill.activation == skill.Activation.SP_MANUAL \
 		or skill.activation == skill.Activation.SP_AUTO \
 		or skill.activation == skill.Activation.DEPLOYMENT:
-			var duration = unit.get_stat("skill_duration", skill.base_skill_duration)
+			var duration = skill.get_stat("skill_duration")
 			skill_label.text += " [DURATION " + (str(duration) if duration < 1982371 else "∞") + "]"
 	
 	skill_label.text += ("\n" + skill.description) if skill.description != "" else ""

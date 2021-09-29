@@ -16,7 +16,7 @@ export var color = Color.black
 
 
 func _process(_delta):
-	update_range(unit.get_stat(\"block_range\", unit.base_block_range), color)
+	update_range(unit.get_stat(\"block_range\"), color)
 "
 
 [node name="Follower" instance=ExtResource( 1 )]
@@ -24,7 +24,7 @@ deployable_terrain = [ ExtResource( 3 ) ]
 base_cooldown = 16
 
 [node name="Sprite" parent="." index="0"]
-frame = 7
+frame = 0
 
 [node name="Ready" type="Sprite" parent="Sprite" index="1"]
 visible = false

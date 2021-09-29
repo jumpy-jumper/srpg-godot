@@ -79,11 +79,10 @@ Prayers
 	[South]
 		[SP Manual] Hit rate -X%. If this unit's attack misses, attack count +2 and the next attack is guaranteed to hit, up to attack count +Y.
 	[West]
-		[Passive] Every turn, gain X arrows, up to Y arrows.
-		[SP Manual] [?/?/1] Attack count + number of arrows.
-	[North]
 		[Passive] Resummon CD -
-		[Immediate] Gain invisibility, Attack Count +
+		[Immediate] Attack Count +
+	[North]
+		[]
 	
 	[AWAKEN] Deal true damage
 
@@ -201,9 +200,8 @@ Robin
 Frederick	S	W
 Edelgard	N   W
 
-Character Progression (total 32)
 
-Starting (12)
+Starting
 	E!Nephenee
 	E!Norne
 	E!Lon'qu
@@ -216,27 +214,27 @@ Starting (12)
 	N!Nils
 	N!Natasha
 	N!Edelgard
+Acquisition (total 36)
 E1 (1)
-	Nephenee-2
-	Lon'qu-2
-	Frederick-2
+	S!Lon'qu
+E2 (2)
 	W!Dieck
+	Frederick-2
+	Nephenee-2
 	Natasha-2
 	Edelgard-2
 	Tethys-1
 	Robin-1
 	Niles-1
-E2 (2)
 E3 (3)
 E4 (3)
-S1 (2)
-S2 (2)
+S1 (3)
+S2 (3)
 S3 (2)
-S4 (1)
-W1 (1)
-W2 (1)
+S4 (2)
+W1 (2)
+W2 (2)
 	Tethys-4
 	Robin-4
 	Niles-4
 W3 (1)
-W4 (1)

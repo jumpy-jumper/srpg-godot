@@ -36,10 +36,10 @@ func _ready():
 
 func _process(_delta):
 	
-	$Sprite/Invisible.visible = get_stat("invisible", false)
+	$Sprite/Invisible.visible = get_stat("invisible")
 	
 	if alive:
-		hp = min(hp, get_stat("max_hp", base_max_hp))
+		hp = min(hp, get_stat("max_hp"))
 		
 		if (Input.is_action_just_pressed("debug_activate_skill")):
 			if (stage.cursor.position == position):
@@ -59,7 +59,7 @@ func _process(_delta):
 			if (stage.cursor.position == position):
 				marked = not marked
 	else:
-		hp = get_stat("max_hp", base_max_hp)
+		hp = get_stat("max_hp")
 		
 
 func _on_Cursor_confirm_issued(pos):
@@ -104,7 +104,7 @@ func _on_Stage_tick_ended():
 		for skill in $Skills.get_children():
 			if not skill.is_active() and not skill.activation == skill.Activation.PASSIVE:
 				skill.remove_statuses()
-				var sp_cost = get_stat("skill_cost", skill.base_skill_cost)
+				var sp_cost = skill.get_stat("skill_cost")
 				if skill.activation == skill.Activation.SP_AUTO and skill.sp == sp_cost:
 					skill.activate()
 
@@ -120,12 +120,12 @@ export var base_atk = 500
 export var base_def = 200
 export var base_res = 0
 
-onready var hp = get_stat("max_hp", base_max_hp)
+onready var hp = get_stat("max_hp")
 var shield = 0
 
 
 const AFFECTED_BY_LEVEL = ["max_hp", "atk", "def"]
-const BOOL_STATS = ["invisible"]
+const BOOL_STATS = ["invisible", "unblockable", "invincible"]
 const NUMERICAL_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
 	"block_count", "damage_type", "incoming_damage", "incoming_healing", \
@@ -135,6 +135,31 @@ const INTEGER_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"block_count", "skill_duration", "cooldown"]
 const ARRAY_STATS = ["movement", "skill_range", "block_range", "faith_recovery"]
 
+var BASE_VALUES = {
+	"max_hp" : "base_max_hp",
+	"atk" : "base_atk",
+	"def" : "base_def",
+	"res" : "base_res",
+	"invisible" : false,
+	"unblockable" : false,
+	"invincible" : false,
+	"level" : "base_level",
+	"max_faith" : "base_max_faith",
+	"cost" : "base_cost",
+	"block_count" : "base_block_count",
+	"cooldown" : "base_cooldown",
+	"movement" : "base_movement",
+	"faith_recovery" : "base_faith_recovery",
+	"block_range" : "base_block_range",
+	"incoming_damage" : 1,
+	"incoming_healing" : 1,
+	"incoming_shield" : 1,
+}
+
+func get_stat(stat_name):
+	var base_value = get(BASE_VALUES[stat_name]) if BASE_VALUES[stat_name] is String else BASE_VALUES[stat_name]
+	assert(base_value != null)
+	return get_stat_after_statuses(stat_name, get_stat_after_level(stat_name, base_value))
 
 const SCALING_FACTOR = 0.047326582
 func get_stat_after_level(stat_name, base_value):
@@ -198,16 +223,12 @@ func get_first_activatable_skill():
 func get_attack_range():
 	var basic_attack = get_basic_attack()
 	if basic_attack:
-		return get_stat("skill_range", get_basic_attack().base_skill_range)
+		return basic_attack.get_stat("skill_range")
 	return []
 
 
-func get_stat(stat_name, base_value):
-	return get_stat_after_statuses(stat_name, get_stat_after_level(stat_name, base_value))
-
-
 func is_full_hp():
-	return hp >= get_stat("max_hp", base_max_hp)
+	return hp >= get_stat("max_hp")
 
 
 ###############################################################################
@@ -237,13 +258,13 @@ var targeting_toasts = []
 
 func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 	if damage_type == DamageType.PHYSICAL:
-		amount -= get_stat("def", base_def)
+		amount -= get_stat("def")
 	elif damage_type == DamageType.MAGIC:
-		amount = floor(amount * (1 - (get_stat("res", base_res) / 100.0)))
+		amount = floor(amount * (1 - (get_stat("res") / 100.0)))
 	elif damage_type == DamageType.SHIELD_DAMAGE:
 		amount = min(shield, amount)
 
-	amount = floor(amount * get_stat("incoming_damage", 1))
+	amount = floor(amount * get_stat("incoming_damage"))
 	
 	var shield_damage = min(shield, amount)
 	if shield_damage > 0:
@@ -255,7 +276,7 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 		hp -= amount
 		if hp <= 0:
 			die()
-		hp = min(get_stat("max_hp", base_max_hp), hp)
+		hp = min(get_stat("max_hp"), hp)
 	
 	if damage_type != DamageType.SHIELD_DAMAGE and (amount > 0 or shield == 0):
 		damage_toasts.append(get_damage_toast(max(amount, 0), colors[damage_type]))
@@ -269,19 +290,19 @@ func apply_damage(amount = 1, damage_type = DamageType.PHYSICAL):
 
 
 func apply_healing(amount = 1):
-	amount *= get_stat("incoming_healing", 1)
-	hp = min(hp + max(amount, 0), get_stat("max_hp", base_max_hp))
+	amount *= get_stat("incoming_healing")
+	hp = min(hp + max(amount, 0), get_stat("max_hp"))
 	damage_toasts.append(get_damage_toast(amount, colors[DamageType.HEALING]))
 
 
 func heal_to_full():
-	var max_hp = get_stat("max_hp", base_max_hp)
+	var max_hp = get_stat("max_hp")
 	if max_hp - hp > 0:
 		hp = max_hp
 
 
 func apply_shield(amount):
-	amount *= get_stat("incoming_shield", 1)
+	amount *= get_stat("incoming_shield")
 	shield += max(amount, 0)
 	damage_toasts.append(get_damage_toast(amount, colors[DamageType.SHIELD]))
 

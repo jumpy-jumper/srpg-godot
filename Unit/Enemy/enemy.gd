@@ -91,7 +91,7 @@ func move():
 			newpos = path[i]
 			leftover_movement = movement - i
 
-	var movement_array = get_stat("movement", base_movement)
+	var movement_array = get_stat("movement")
 	var this_tick_movement = movement_array[(stage.cur_tick) % len(movement_array)]
 	
 	if movement >= this_tick_movement:

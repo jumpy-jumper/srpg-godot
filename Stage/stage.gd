@@ -44,7 +44,7 @@ func is_alive():
 
 
 func is_won():
-	return cur_level_index >= len(level.advance)
+	return cur_round > level.round_count
 
 
 func is_waiting_for_user():
@@ -68,6 +68,7 @@ func is_waiting_for_ui():
 		if ui.operatable:
 			return true
 	return false
+
 
 func is_unit_with_name_alive(name):
 	for unit in get_all_units():
@@ -224,7 +225,7 @@ func _process(_delta):
 	$"UI/Follower Panels".update_ui()
 	
 	
-	if cur_level_index < len(level.advance):
+	if not is_won():
 		$"UI/Game Over".visible = not is_alive()
 		$"UI/Game Over/Label".text = "YOU LOSE :("
 	else:
@@ -512,8 +513,11 @@ func get_path_to_target(start, end, traversable):
 #        Tick logic                                                          #
 ###############################################################################
 
-
+var cur_round = 0
 var cur_tick = 1
+
+func advance_round():
+	pass
 
 func advance_tick():
 	var followers = []
@@ -559,15 +563,6 @@ func advance_tick():
 	
 	emit_signal("tick_started")
 	append_state()
-
-
-var cur_level_index = 0
-
-func advance_level():
-	cur_level_index += 1
-	if not (cur_level_index >= len(level.advance)):
-		for summoner in summoners_cache:
-			summoner.get_level_advancing_skill().base_skill_cost = level.advance[cur_level_index]
 
 
 ###############################################################################
@@ -646,7 +641,7 @@ var cur_state_index = -1
 func get_state():
 	var ret = {}
 	ret["cur_tick"] = cur_tick
-	ret["cur_level_index"] = cur_level_index
+	ret["cur_round"] = cur_round
 	ret["summoned_order"] = [] + summoned_order
 	ret["cur_seed"] = cur_seed
 	for unit in get_all_units():
@@ -666,7 +661,7 @@ func get_state_diff(initial, final):
 
 func load_state(state):
 	cur_tick = state["cur_tick"]
-	cur_level_index = state["cur_level_index"]
+	cur_round = state["cur_round"]
 	summoned_order = state["summoned_order"]
 	cur_seed = state["cur_seed"]
 	unit_pos_cache.clear()

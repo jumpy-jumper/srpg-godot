@@ -30,8 +30,8 @@ export var settings = {
 	"inverted_keyboard_camera" : false,
 	"inverted_mouse_camera" : false,
 	"undoable_restart" : true,
-	"nils_voice_lines" : false,
 	"bgm_volume" : 0,
+	"voices_volume" : 0,
 }
 
 func _ready():
@@ -61,8 +61,8 @@ func play_bgm(bgm):
 	if bgm:
 		$BGM.stream = bgm
 		$BGM.play()
-		#$BGM.seek(randf() * $BGM.stream.get_length()/2)
-		#fade_in_bgm(1)
+		$BGM.seek(randf() * $BGM.stream.get_length()/2)
+		fade_in_bgm(2)
 	else:
 		$BGM.stop()
 		#fade_out_bgm(0.5)

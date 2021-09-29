@@ -24,7 +24,7 @@ func activate():
 	base_skill_range = unit.get_basic_attack().base_skill_range
 	var pre = base_target_count
 	base_target_count = 129873129837
-	deal(unit.get_stat("atk", unit.base_atk) * (0.7 + bonus_atk))
+	deal(unit.get_stat("atk") * (0.7 + bonus_atk))
 	base_target_count = pre
 	.activate()
 

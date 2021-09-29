@@ -189,33 +189,67 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Return" type="Control" parent="Menu"]
-margin_left = 32.0
-margin_top = 384.0
-margin_right = 1120.0
-margin_bottom = 416.0
-script = SubResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-description = "Go back to the title screen."
+[node name="BGM" parent="Menu" instance=ExtResource( 8 )]
+margin_left = 48.0
+margin_top = 64.0
+margin_right = 184.0
+margin_bottom = 96.0
+script = ExtResource( 10 )
+property = "bgm_volume"
 
-[node name="Label" type="Label" parent="Menu/Return"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Label2" type="Label" parent="Menu/BGM"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 17.0
+margin_top = -16.0
+margin_right = 273.0
+margin_bottom = 16.0
 custom_fonts/font = ExtResource( 1 )
-text = "Return to Title"
-align = 1
+text = "BGM"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="HSlider" type="HSlider" parent="Menu/BGM"]
+margin_left = 151.0
+margin_top = 7.0
+margin_right = 439.0
+margin_bottom = 23.0
+
+[node name="Voices" parent="Menu" instance=ExtResource( 8 )]
+margin_left = 48.0
+margin_top = 104.0
+margin_right = 184.0
+margin_bottom = 136.0
+script = ExtResource( 10 )
+property = "voices_volume"
+
+[node name="Label2" type="Label" parent="Menu/Voices"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 16.0
+margin_top = -16.0
+margin_right = 272.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 1 )
+text = "Voices"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlider" type="HSlider" parent="Menu/Voices"]
+margin_left = 152.0
+margin_top = 7.0
+margin_right = 440.0
+margin_bottom = 23.0
+
 [node name="CursorControls" parent="Menu" instance=ExtResource( 8 )]
-margin_left = 32.0
-margin_top = 48.0
-margin_right = 448.0
-margin_bottom = 80.0
+margin_left = 40.0
+margin_top = 160.0
+margin_right = 456.0
+margin_bottom = 192.0
 script = ExtResource( 7 )
 description = "Enable moving and controlling the cursor with the mouse."
 property = "cursor_mouse_controls"
@@ -246,10 +280,10 @@ __meta__ = {
 }
 
 [node name="CursorControls2" parent="Menu" instance=ExtResource( 8 )]
-margin_left = 32.0
-margin_top = 96.0
-margin_right = 448.0
-margin_bottom = 128.0
+margin_left = 40.0
+margin_top = 208.0
+margin_right = 456.0
+margin_bottom = 240.0
 script = ExtResource( 7 )
 description = "Enable moving the camera with the mouse."
 property = "camera_mouse_controls"
@@ -280,10 +314,10 @@ __meta__ = {
 }
 
 [node name="KB Camera" parent="Menu" instance=ExtResource( 8 )]
-margin_left = 32.0
-margin_top = 144.0
-margin_right = 448.0
-margin_bottom = 176.0
+margin_left = 40.0
+margin_top = 256.0
+margin_right = 456.0
+margin_bottom = 288.0
 script = ExtResource( 7 )
 description = "Invert camera controls with the keyboard."
 property = "inverted_keyboard_camera"
@@ -314,10 +348,10 @@ __meta__ = {
 }
 
 [node name="Mouse Camera" parent="Menu" instance=ExtResource( 8 )]
-margin_left = 32.0
-margin_top = 192.0
-margin_right = 448.0
-margin_bottom = 224.0
+margin_left = 40.0
+margin_top = 304.0
+margin_right = 456.0
+margin_bottom = 336.0
 script = ExtResource( 7 )
 description = "Invert camera controls with the mouse."
 property = "inverted_mouse_camera"
@@ -347,16 +381,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Mouse Camera2" parent="Menu" instance=ExtResource( 8 )]
-margin_left = 32.0
-margin_top = 240.0
-margin_right = 448.0
-margin_bottom = 272.0
+[node name="Undoable Restart" parent="Menu" instance=ExtResource( 8 )]
+margin_left = 40.0
+margin_top = 350.0
+margin_right = 456.0
+margin_bottom = 382.0
 script = ExtResource( 7 )
 description = "Enable being able to undo a stage restart. (May use a ton of RAM if you do it hundreds of times)"
 property = "undoable_restart"
 
-[node name="CheckBox" type="CheckBox" parent="Menu/Mouse Camera2"]
+[node name="CheckBox" type="CheckBox" parent="Menu/Undoable Restart"]
 margin_top = -2.0
 margin_right = 24.0
 margin_bottom = 22.0
@@ -367,7 +401,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="Menu/Mouse Camera2"]
+[node name="Label2" type="Label" parent="Menu/Undoable Restart"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 48.0
@@ -381,67 +415,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Mouse Camera3" parent="Menu" instance=ExtResource( 8 )]
+[node name="Return" type="Control" parent="Menu"]
 margin_left = 32.0
-margin_top = 288.0
-margin_right = 448.0
-margin_bottom = 320.0
-script = ExtResource( 7 )
-description = "NATTOU GOHAN"
-property = "nils_voice_lines"
-
-[node name="CheckBox" type="CheckBox" parent="Menu/Mouse Camera3"]
-margin_top = -2.0
-margin_right = 24.0
-margin_bottom = 22.0
-rect_scale = Vector2( 1.5, 1.5 )
-mouse_filter = 2
-pressed = true
+margin_top = 384.0
+margin_right = 1120.0
+margin_bottom = 416.0
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+description = "Go back to the title screen."
 
-[node name="Label2" type="Label" parent="Menu/Mouse Camera3"]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 48.0
-margin_top = -16.0
-margin_right = 304.0
-margin_bottom = 16.0
+[node name="Label" type="Label" parent="Menu/Return"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 1 )
-text = "North Nils Voice Lines"
+text = "Return to Title"
+align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Mouse Camera4" parent="Menu" instance=ExtResource( 8 )]
-margin_left = 0.0
-margin_top = 336.0
-margin_right = 32.0
-margin_bottom = 368.0
-script = ExtResource( 10 )
-property = "bgm_volume"
-
-[node name="Label2" type="Label" parent="Menu/Mouse Camera4"]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 48.0
-margin_top = -16.0
-margin_right = 304.0
-margin_bottom = 16.0
-custom_fonts/font = ExtResource( 1 )
-text = "BGM Volume"
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HSlider" type="HSlider" parent="Menu/Mouse Camera4"]
-margin_left = 192.0
-margin_top = 7.0
-margin_right = 480.0
-margin_bottom = 23.0
 
 [node name="Description" type="Label" parent="Menu"]
 anchor_right = 1.0
@@ -468,6 +462,7 @@ __meta__ = {
 [connection signal="mouse_exited" from="Menu/2560x1440" to="Menu/2560x1440" method="_on_Node_mouse_exited"]
 [connection signal="mouse_entered" from="Menu/Fullscreen" to="Menu/Fullscreen" method="_on_Node_mouse_entered"]
 [connection signal="mouse_exited" from="Menu/Fullscreen" to="Menu/Fullscreen" method="_on_Node_mouse_exited"]
+[connection signal="value_changed" from="Menu/BGM/HSlider" to="Menu/BGM" method="_on_HSlider_value_changed"]
+[connection signal="value_changed" from="Menu/Voices/HSlider" to="Menu/Voices" method="_on_HSlider_value_changed"]
 [connection signal="mouse_entered" from="Menu/Return" to="Menu/Return" method="_on_Node_mouse_entered"]
 [connection signal="mouse_exited" from="Menu/Return" to="Menu/Return" method="_on_Node_mouse_exited"]
-[connection signal="value_changed" from="Menu/Mouse Camera4/HSlider" to="Menu/Mouse Camera4" method="_on_HSlider_value_changed"]

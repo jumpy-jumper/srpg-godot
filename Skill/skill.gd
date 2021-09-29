@@ -38,7 +38,7 @@ func is_active():
 
 func is_available():
 	return (activation == Activation.SP_MANUAL or activation == Activation.SP_AUTO) \
-		and sp >= unit.get_stat("skill_cost", base_skill_cost) \
+		and sp >= get_stat("skill_cost") \
 		and not is_active()
 
 func tick():
@@ -50,7 +50,7 @@ func tick():
 			if activation == Activation.DEPLOYMENT:
 				sp = 0 
 			elif recovery == Recovery.NATURAL:
-				sp = min(sp + 1, unit.get_stat("skill_cost", base_skill_cost))
+				sp = min(sp + 1, get_stat("skill_cost"))
 		else:
 			ticks_left = max(0, ticks_left - 1)
 			if ticks_left == 0:
@@ -59,12 +59,13 @@ func tick():
 
 func activate():
 	if activation != Activation.NONE and activation != Activation.EVERY_TICK:
-		ticks_left = unit.get_stat("skill_duration", base_skill_duration)
+		ticks_left = get_stat("skill_duration")
 		add_statuses()
 		if activation == Activation.SP_MANUAL:
 			unit.stage.append_state()
 		if ticks_left == 0:
 			deactivate()
+		unit.play_voice_line()
 
 
 func deactivate():
@@ -73,7 +74,7 @@ func deactivate():
 
 
 func initialize():
-	sp = unit.get_stat("skill_initial_sp", base_skill_initial_sp)
+	sp = get_stat("skill_initial_sp")
 	ticks_left = 0
 
 
@@ -140,12 +141,12 @@ export(Array) var base_skill_range = []
 var targeting_toast = preload("res://Unit/targeting_toast.tscn")
 
 func deal(amount):
-	var skill_range = unit.get_stat("skill_range", base_skill_range)
+	var skill_range = get_stat("skill_range")
 	var possible_targets = []
 	possible_targets = unit.get_units_in_range_of_type(skill_range, unit.get_type_of_enemy())
 	
 	for target in select_targets(possible_targets):
-		target.apply_damage(amount, unit.get_stat("damage_type", unit.get_basic_attack().damage_type))
+		target.apply_damage(amount, unit.get_basic_attack().get_stat("damage_type"))
 		target.display_toasts()
 	
 		var toast = targeting_toast.instance()
@@ -156,6 +157,27 @@ func deal(amount):
 		unit.targeting_toasts.append(toast)
 		unit.display_toasts()
 
+
+
+###############################################################################
+#        Get skill stat                                                        #
+###############################################################################
+
+var BASE_VALUES = {
+	"attack_count" : "base_attack_count",
+	"target_count" : "base_target_count",
+	"damage_type" : "damage_type",
+	"skill_cost" : "base_skill_cost",
+	"skill_initial_sp" : "base_skill_initial_sp",
+	"skill_duration" : "base_skill_duration",
+	"targeting_priority" : "targeting_priority",
+	"skill_range" : "base_skill_range",
+}
+
+func get_stat(stat_name):
+	var base_value = get(BASE_VALUES[stat_name])
+	assert(base_value != null)
+	return unit.get_stat_after_statuses(stat_name, base_value)
 
 ###############################################################################
 #        Targeting logic                                                      #
@@ -172,7 +194,7 @@ export(TargetingPriority) var targeting_priority = TargetingPriority.CLOSEST_TO_
 func select_targets(units):
 	var ret = []
 		
-	match unit.get_stat("targeting_priority", targeting_priority):
+	match get_stat("targeting_priority"):
 		TargetingPriority.CLOSEST_TO_SELF:
 			units.sort_custom(self, "closest_to_self_comparison") 
 		TargetingPriority.LOWEST_HP_PERCENTAGE:
@@ -185,14 +207,14 @@ func select_targets(units):
 			units.sort_custom(self, "first_summoned_comparison")
 		TargetingPriority.RANDOM:
 			units.sort_custom(self, "first_summoned_comparison") 
-			for i in range(min(unit.get_stat("target_count", base_target_count), len(units))):
+			for i in range(min(get_stat("target_count"), len(units))):
 				var index = unit.stage.get_randi(len(units))
 				ret.append(units[index])
 				units.remove(index)
 			return ret
 			
 	
-	for i in range(min(unit.get_stat("target_count", base_target_count), len(units))):
+	for i in range(min(get_stat("target_count"), len(units))):
 		ret.append(units[i])
 	
 	return ret
@@ -218,8 +240,8 @@ func lowest_hp_percentage_comparison(a, b):
 		return true
 	elif is_blocking_or_blocked(b) and not is_blocking_or_blocked(a):
 		return false
-	return float(a.hp) / a.get_stat("max_hp", a.base_max_hp) <\
-		float(b.hp) / b.get_stat("max_hp", b.base_max_hp)
+	return float(a.hp) / a.get_stat("max_hp") <\
+		float(b.hp) / b.get_stat("max_hp")
 
 
 func closest_to_summoner_comparison(a, b):

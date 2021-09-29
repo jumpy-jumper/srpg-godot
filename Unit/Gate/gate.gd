@@ -2,6 +2,8 @@ class_name Gate
 extends Unit
 
 
+export var spawn_round = 1
+export var lifespan = 1
 export(String, MULTILINE) var spawn_info = ""
 var spawn_ticks = []
 var enemies = {}
@@ -100,9 +102,9 @@ func spawn_enemy():
 			enemy.alive = true
 			enemy.position = path[1]
 			enemy.emit_signal("moved", enemy, enemy.position)
-			enemy.base_level = get_stat("level", base_level)
+			enemy.base_level = get_stat("level")
 			enemy.heal_to_full()
-			var movement_array = enemy.get_stat("movement", enemy.base_movement)
+			var movement_array = enemy.get_stat("movement")
 			enemy.movement = movement_array[(stage.cur_tick) % len(movement_array)]
 			if enemy.name in stage.summoned_order:
 				stage.summoned_order.erase(enemy.name)

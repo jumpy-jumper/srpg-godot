@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/nils_4.ogg-beacf8c1672a99c2f756f61c96285678.oggstr"
+
+[deps]
+
+source_file="res://Voices/nils_4.ogg"
+dest_files=[ "res://.import/nils_4.ogg-beacf8c1672a99c2f756f61c96285678.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

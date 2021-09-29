@@ -15,14 +15,14 @@ func is_basic_attack():
 
 func activate():
 	.activate()
-	for i in range (unit.get_stat("attack_count", base_attack_count)):
-		var skill_range = unit.get_stat("skill_range", base_skill_range)
+	for i in range (get_stat("attack_count")):
+		var skill_range = get_stat("skill_range")
 		if skill_type == SkillType.ATTACK: 
 			var possible_targets = []
 			possible_targets = unit.get_units_in_range_of_type(skill_range, unit.get_type_of_enemy())
 			
 			for unit in possible_targets + []:
-				if unit.get_stat("invisible", false):
+				if unit.get_stat("invisible"):
 					possible_targets.erase(unit)
 			
 			# If this unit has [0, 0] in range, prioritize blockers / blocked units
@@ -40,8 +40,7 @@ func activate():
 							possible_targets.push_front(unit.blocker)
 						
 			for target in select_targets(possible_targets):
-				target.apply_damage(unit.get_stat("atk", unit.base_atk), \
-					unit.get_stat("damage_type", damage_type))
+				target.apply_damage(unit.get_stat("atk"), get_stat("damage_type"))
 	
 				var toast = targeting_toast.instance()
 				toast.attacker = unit
@@ -54,10 +53,10 @@ func activate():
 			var possible_targets = []
 			possible_targets += unit.get_units_in_range_of_type(skill_range, unit.get_type_of_self())
 			for target in possible_targets + []:
-				if target.is_full_hp() or target.get_stat("incoming_healing", 1) == 0:
+				if target.is_full_hp() or target.get_stat("incoming_healing") == 0:
 					possible_targets.erase(target)
 			for target in select_targets(possible_targets):
-				target.apply_healing(unit.get_stat("atk", unit.base_atk))
+				target.apply_healing(unit.get_stat("atk"))
 				
 				var toast = targeting_toast.instance()
 				toast.attacker = unit

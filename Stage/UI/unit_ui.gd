@@ -21,11 +21,11 @@ func update_unit(unit):
 	
 	
 	var basic_stats = ""
-	basic_stats += "Level: " + str(unit.get_stat("level", unit.base_level)) + ""
+	basic_stats += "Level: " + str(unit.get_stat("level")) + ""
 	
 	if unit.get_type_of_self() == unit.UnitType.FOLLOWER \
 		or unit.get_type_of_self() == unit.UnitType.ENEMY:
-			var max_hp = unit.get_stat("max_hp", unit.base_max_hp)
+			var max_hp = unit.get_stat("max_hp")
 			var base_max_hp = unit.get_stat_after_level("max_hp", unit.base_max_hp)
 			basic_stats += "\nHP: " + str(unit.hp)
 			if unit.shield > 0:
@@ -35,21 +35,21 @@ func update_unit(unit):
 				basic_stats += " (+" if base_max_hp < max_hp else " (-"
 				basic_stats += str(abs(base_max_hp - max_hp)) + ")"
 			
-			var atk = unit.get_stat("atk", unit.base_atk)
+			var atk = unit.get_stat("atk")
 			var base_atk = unit.get_stat_after_level("atk", unit.base_atk)
 			basic_stats += "\nATK: " + str(atk)
 			if base_atk != atk:
 				basic_stats += " (" + "+" if base_atk < atk else " (-"
 				basic_stats += str(abs(base_atk - atk)) + ")"
 			
-			var def = unit.get_stat("def", unit.base_def)
+			var def = unit.get_stat("def")
 			var base_def = unit.get_stat_after_level("def", unit.base_def)
 			basic_stats += "\nDEF: " + str(def)
 			if base_def != def:
 				basic_stats += " (" + "+" if base_def < def else " (-"
 				basic_stats += str(abs(base_def - def)) + ")"
 			
-			var res = unit.get_stat("res", unit.base_res)
+			var res = unit.get_stat("res")
 			basic_stats += "\nRES: " + str(res)
 			if unit.base_res != res:
 				basic_stats += " (" + "+" if unit.base_res < res else " (-"
@@ -62,14 +62,14 @@ func update_unit(unit):
 	
 	if unit.get_type_of_self() == unit.UnitType.FOLLOWER or unit.get_type_of_self() == unit.UnitType.ENEMY:
 		var base_damage_type = unit.get_basic_attack().damage_type
-		var damage_type = unit.get_stat("damage_type", base_damage_type)
+		var damage_type = unit.get_basic_attack().get_stat("damage_type")
 		other_stats += "Damage: " + unit.DamageType.keys()[damage_type]
 
 
 	if unit.get_type_of_self() == unit.UnitType.FOLLOWER \
 		or unit.get_type_of_self() == unit.UnitType.ENEMY:
 			var base_target_count = unit.get_basic_attack().base_target_count
-			var target_count = unit.get_stat("target_count", base_target_count)
+			var target_count = unit.get_basic_attack().get_stat("target_count")
 			if target_count > 129873:
 				other_stats += "\nTarget Count: ∞"
 			else:
@@ -79,7 +79,7 @@ func update_unit(unit):
 					other_stats += str(abs(base_target_count - target_count)) + ")"
 		
 			var base_attack_count = unit.get_basic_attack().base_attack_count
-			var attack_count = unit.get_stat("attack_count", unit.get_basic_attack().base_attack_count)
+			var attack_count = unit.get_basic_attack().get_stat("attack_count")
 			if attack_count > 129873:
 				other_stats += "\nAttack Count: ∞"
 			else:
@@ -90,7 +90,7 @@ func update_unit(unit):
 					
 	if unit.get_type_of_self() == unit.UnitType.FOLLOWER:
 		var base_block_count = unit.base_block_count
-		var block_count = unit.get_stat("block_count", base_block_count)
+		var block_count = unit.get_stat("block_count")
 		if block_count > 129873:
 			other_stats += "\nBlock Count: ∞"
 		else:
@@ -100,7 +100,7 @@ func update_unit(unit):
 				other_stats += str(abs(base_block_count - block_count)) + ")"
 				
 		var base_cooldown = unit.base_cooldown
-		var cooldown = unit.get_stat("cooldown", base_cooldown)
+		var cooldown = unit.get_stat("cooldown")
 		if cooldown > 129873:
 			other_stats += "\nResummon CD: ∞"
 		else:
@@ -119,7 +119,7 @@ func update_unit(unit):
 	if not unit.alive or unit.get_type_of_self() != unit.UnitType.FOLLOWER:
 		$Retreat.visible = false
 	if unit.get_type_of_self() == unit.UnitType.ENEMY:
-		other_stats += "\nMovement: " + str(unit.get_stat("movement", unit.base_movement))
+		other_stats += "\nMovement: " + str(unit.get_stat("movement"))
 		other_stats += "\nNext Movement: " + str(unit.movement)
 		
 	$"Other Stats/Stats Label".text = other_stats

@@ -20,7 +20,7 @@ func initialize_panel(follower_group):
 	$Mugshot.region_rect.position = unit.mugshot_top_left
 	$CooldownPanel.modulate.a = base_alpha * 0.5
 	$CooldownPanel/Cooldown.text = ""
-	$Cost.text = str(unit.get_stat("cost", unit.base_cost))
+	$Cost.text = str(unit.get_stat("cost"))
 
 
 func update_panel():
@@ -38,14 +38,14 @@ func update_panel():
 		$CooldownPanel/Cooldown.text = first_unit.Wind.keys()[first_unit.get_alive_in_group().wind][0]
 	else:
 		if cur_unit:
-			$Level.text = "L" + str(cur_unit.get_stat("level", cur_unit.base_level))
-			$Cost.text = str(cur_unit.get_stat("cost", cur_unit.base_cost))
-			$Cost.modulate = Color.lightpink if cur_unit.summoner.faith < cur_unit.get_stat("cost", cur_unit.base_cost) else Color.white
+			$Level.text = "L" + str(cur_unit.get_stat("level"))
+			$Cost.text = str(cur_unit.get_stat("cost"))
+			$Cost.modulate = Color.lightpink if cur_unit.summoner.faith < cur_unit.get_stat("cost") else Color.white
 		if first_unit.cooldown > 0:
 			$CooldownPanel.visible = true
 			$CooldownPanel.modulate.a = base_alpha
 			$CooldownPanel/Cooldown.text = str(first_unit.cooldown)
-		elif cur_unit and cur_unit.get_stat("cost", cur_unit.base_cost) <= cur_unit.summoner.faith:
+		elif cur_unit and cur_unit.get_stat("cost") <= cur_unit.summoner.faith:
 			$CooldownPanel.visible = false
 			$CooldownPanel/Cooldown.text = ""
 		else:

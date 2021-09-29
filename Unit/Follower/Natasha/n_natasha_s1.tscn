@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 description = "Allies within range gain invisibility and recover 3% of Max HP every turn."
 activation = 3
-base_skill_cost = 48
-base_skill_initial_sp = 24
-base_skill_duration = 24
+base_skill_cost = 24
+base_skill_initial_sp = 12
+base_skill_duration = 12
 statuses_allies_in_attack_range = [ ExtResource( 3 ), ExtResource( 2 ) ]

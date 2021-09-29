@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
+[ext_resource path="res://BGM/「BlackY」 Marine Garden-(p).ogg" type="AudioStream" id=1]
 [ext_resource path="res://Levels/level.gd" type="Script" id=2]
 [ext_resource path="res://Stage/Terrain/terrain.png" type="Texture" id=5]
 [ext_resource path="res://Levels/blue_level.jpg" type="Texture" id=13]
@@ -66,9 +67,9 @@
 "Level",
 ]]
 script = ExtResource( 2 )
+bgm = ExtResource( 1 )
 default_camera_position = Vector2( 631, 492 )
 default_camera_zoom = Vector2( 1.5, 1.5 )
-advance = [ 99999 ]
 
 [node name="BG" type="CanvasLayer" parent="."]
 layer = -1

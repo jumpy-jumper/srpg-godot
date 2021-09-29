@@ -8,9 +8,9 @@
 wind = 1
 
 [node name="Molten Rain" parent="Skills" index="1" instance=ExtResource( 2 )]
-description = "Range changes. ATK +330%, target count +2, targeting priority becomes random."
+description = "Range changes. ATK +660%, target count +2, targeting priority becomes random."
 activation = 3
 base_skill_cost = 36
 base_skill_initial_sp = 12
-base_skill_duration = 8
+base_skill_duration = 4
 statuses_self = [ ExtResource( 3 ) ]

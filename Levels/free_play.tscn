@@ -1,7 +1,7 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Levels/level.tscn" type="PackedScene" id=1]
-[ext_resource path="res://BGM/1-05 Sunshine Coastline.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Unit/Follower/follower.gd" type="Script" id=2]
 [ext_resource path="res://Unit/Summoner/South Wind/south_wind.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Unit/Follower/Natasha/n_natasha.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Unit/Follower/Lysithea/w_lysithea.tscn" type="PackedScene" id=5]
@@ -20,15 +20,17 @@
 [ext_resource path="res://Unit/Follower/Lysithea/s_lysithea.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Unit/Follower/Frederick/s_frederick.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Unit/Follower/Dieck/s_dieck.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Stage/Terrain/deployable_low.tres" type="Resource" id=21]
 
 [node name="Free Play" instance=ExtResource( 1 )]
-bgm = ExtResource( 2 )
 
 [node name="The East Wind2" parent="." index="2" instance=ExtResource( 14 )]
 position = Vector2( 1152, 64 )
 faith = 200
 
 [node name="E!Nephenee" parent="The East Wind2" index="6" instance=ExtResource( 17 )]
+script = ExtResource( 2 )
+deployable_terrain = [ ExtResource( 21 ) ]
 
 [node name="E!Norne" parent="The East Wind2" index="7" instance=ExtResource( 13 )]
 

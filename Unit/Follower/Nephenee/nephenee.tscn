@@ -17,7 +17,8 @@ portrait = ExtResource( 2 )
 mugshot_top_left = Vector2( 290, 80 )
 base_cost = 7
 base_cooldown = 4
-base_block_range = [ Vector2( 1, 0 ), Vector2( -1, 0 ) ]
+base_block_range = [ Vector2( 0, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 1 ) ]
+base_block_count = 1
 
 [node name="Sprite" parent="." index="0"]
 frames = ExtResource( 1 )
@@ -27,4 +28,4 @@ frame = 3
 texture = SubResource( 1 )
 
 [node name="Basic Attack" parent="Skills" index="0"]
-base_skill_range = [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( -1, 0 ) ]
+base_skill_range = [ Vector2( 0, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 1 ) ]

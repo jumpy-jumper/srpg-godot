@@ -8,6 +8,6 @@ script = ExtResource( 1 )
 description = "Range changes. Target count +3. Max HP -50%. ATK +280%. DEF -90%."
 activation = 3
 base_skill_cost = 32
-base_skill_initial_sp = 16
+base_skill_initial_sp = 20
 base_skill_duration = 12
 statuses_self = [ ExtResource( 2 ) ]

@@ -78,7 +78,7 @@ func get_alive_in_group():
 
 
 func can_be_deployed():
-	return get_stat("cost", base_cost) <= summoner.faith \
+	return get_stat("cost") <= summoner.faith \
 		and not get_alive_in_group() and cooldown == 0
 
 
@@ -87,7 +87,7 @@ func deploy_self(pos):
 		facing = Facing.values()[wind]
 		global_position = stage.get_clamped_position(pos)
 		emit_signal("moved", self, position)
-		summoner.faith -= get_stat("cost", base_cost)
+		summoner.faith -= get_stat("cost")
 		for skill in get_node("Skills").get_children():
 			skill.initialize()
 			if skill.activation == skill.Activation.DEPLOYMENT \
@@ -121,8 +121,8 @@ func _on_Cursor_cancel_issued(pos):
 		stage.undo()
 
 
-func get_stat(stat_name, base_value):
-	var ret = .get_stat(stat_name, base_value)
+func get_stat_after_statuses(stat_name, base_value):
+	var ret = .get_stat_after_statuses(stat_name, base_value)
 	if stat_name == "skill_range" or stat_name == "block_range":
 		var rotated = []
 		for pos in ret:
@@ -142,11 +142,11 @@ var cooldown = 0
 
 func die():
 	for unit in group:
-		unit.cooldown = get_stat("cooldown", base_cooldown)
+		unit.cooldown = get_stat("cooldown")
 	.die()
 	waiting_for_user = false
 	if summoner:
-		summoner.recover_faith(ceil(get_stat("cost", base_cost) / 2))
+		summoner.recover_faith(ceil(get_stat("cost") / 2))
 	for enemy in blocked:
 		enemy.blocker = null
 
@@ -160,7 +160,7 @@ func _on_Cursor_hovered(pos):
 		and stage.get_selected_follower() == self \
 		and stage.get_unit_at(pos) == null \
 		and stage.get_terrain_at(pos) in deployable_terrain \
-		and summoner.faith >= get_stat("cost", base_cost) \
+		and summoner.faith >= get_stat("cost") \
 		and cooldown == 0:
 			position = pos
 			previewing = true
@@ -209,13 +209,13 @@ var blocked = []
 
 
 func block_enemies():
-	var block_range = get_stat("block_range", base_block_range)
-	var block_count = get_stat("block_count", base_block_count)
+	var block_range = get_stat("block_range")
+	var block_count = get_stat("block_count")
 	
 	var blockable_enemies_in_range = get_units_in_range_of_type(block_range, UnitType.ENEMY)
 	
 	for enemy in blockable_enemies_in_range:
-		if enemy.blocker != null:
+		if enemy.blocker != null or enemy.get_stat("unblockable"):
 			blockable_enemies_in_range.erase(enemy)
 	
 	while len(blocked) < block_count and len(blockable_enemies_in_range) > 0:
@@ -247,3 +247,21 @@ func load_state(state):
 	facing = state["facing"]
 	cooldown = state["cooldown"]
 	waiting_for_user = false
+
+
+###############################################################################
+#        Voice Lines                                                          #
+###############################################################################
+
+export var voice_lines = []
+
+func play_voice_line():
+	if voice_lines.empty():
+		return
+	
+	var audio = AudioStreamPlayer2D.new()
+	add_child(audio)
+	audio.stream = voice_lines[randi() % len(voice_lines)]
+	audio.pitch_scale = 1.35
+	audio.volume_db = linear2db(Game.settings["voices_volume"])
+	audio.play()
