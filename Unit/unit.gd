@@ -54,6 +54,7 @@ func _process(_delta):
 		if (Input.is_action_just_pressed("debug_kill")):
 			if (stage.cursor.position == position):
 				die()
+				stage.append_state()
 		
 		if (Input.is_action_just_pressed("mark")):
 			if (stage.cursor.position == position):
@@ -129,7 +130,7 @@ const BOOL_STATS = ["invisible", "unblockable", "invincible"]
 const NUMERICAL_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
 	"block_count", "damage_type", "incoming_damage", "incoming_healing", "incoming_recovery", \
-	"skill_duration", "cooldown", "incoming_shield", "targeting_priority"]
+	"skill_duration", "cooldown", "incoming_shield", "targeting_priority", "charges"]
 const INTEGER_STATS = ["level", "max_hp", "max_faith", "atk", "def", "res", \
 	"cost", "skill_cost", "skill_initial_sp", "attack_count", "target_count", \
 	"block_count", "skill_duration", "cooldown"]

@@ -55,9 +55,8 @@ export var faith = 20
 ###############################################################################
 
 
-func apply_damage(amount, damage_type, no_toasts = false):
-	hp -= 1
-	if hp <= 0:
+func take_enemy():
+	if not get_stat("invincible"):
 		die()
 
 

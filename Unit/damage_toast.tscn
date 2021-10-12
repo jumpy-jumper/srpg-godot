@@ -9,7 +9,7 @@ script = ExtResource( 2 )
 travel = 100
 x_spread = 0
 y_spread = 15
-y_step = -25
+y_step = -100
 
 [node name="Label" type="Label" parent="."]
 margin_left = -64.0

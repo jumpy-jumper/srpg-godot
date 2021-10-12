@@ -13,9 +13,9 @@ func is_basic_attack():
 #        Activation logic                                                     #
 ###############################################################################
 
-
 enum Activation { PASSIVE, EVERY_TICK, DEPLOYMENT, SP_MANUAL, SP_AUTO, TURN_START, NONE }
 export(Activation) var activation = Activation.NONE
+export var base_charges = 1
 enum Recovery { NATURAL, OFFENSIVE, DEFENSIVE }
 export(Recovery) var recovery = Recovery.NATURAL
 export var base_skill_cost = 15
@@ -50,7 +50,7 @@ func tick():
 			if activation == Activation.DEPLOYMENT:
 				sp = 0 
 			elif recovery == Recovery.NATURAL:
-				sp = min(sp + 1, get_stat("skill_cost"))
+				sp = min(sp + 1, get_stat("skill_cost") * get_stat("charges"))
 		else:
 			ticks_left = max(0, ticks_left - 1)
 			if ticks_left == 0:
@@ -61,15 +61,15 @@ func activate():
 	if activation != Activation.NONE and activation != Activation.EVERY_TICK:
 		ticks_left = get_stat("skill_duration")
 		add_statuses()
-		if activation == Activation.SP_MANUAL:
-			unit.stage.append_state()
 		if ticks_left == 0:
 			deactivate()
+		if activation == Activation.SP_MANUAL:
+			unit.stage.append_state()
 		unit.play_voice_line()
 
 
 func deactivate():
-	sp = 0
+	sp -= get_stat("skill_cost")
 	ticks_left = 0
 
 
@@ -158,6 +158,7 @@ var BASE_VALUES = {
 	"skill_duration" : "base_skill_duration",
 	"targeting_priority" : "targeting_priority",
 	"skill_range" : "base_skill_range",
+	"charges" : "base_charges",
 }
 
 func get_stat(stat_name):
@@ -269,6 +270,7 @@ func get_state():
 	ret["activation"] = activation
 	ret["recovery"] = recovery
 	ret["base_skill_cost"] = base_skill_cost
+	ret["base_charges"] = base_charges
 	ret["base_skill_initial_sp"] = base_skill_initial_sp
 	ret["base_skill_duration"] = base_skill_duration
 	ret["sp"] = sp
@@ -288,6 +290,7 @@ func load_state(state):
 	activation = state["activation"]
 	recovery = state["recovery"]
 	base_skill_cost = state["base_skill_cost"]
+	base_charges = state["base_charges"]
 	base_skill_initial_sp = state["base_skill_initial_sp"]
 	base_skill_duration = state["base_skill_duration"]
 	sp = state["sp"]

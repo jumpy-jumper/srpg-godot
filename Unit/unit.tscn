@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Unit/ui_hp.gd" type="Script" id=1]
 [ext_resource path="res://Unit/Follower/Dieck/dieck.tres" type="SpriteFrames" id=2]
@@ -29,6 +29,9 @@ bg_color = Color( 0.603922, 1, 0.270588, 1 )
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="StreamTexture" id=6]
 load_path = "res://.import/cursor_default0.png-8adba084a8cf7015ba3f2250c4fff637.stex"
@@ -103,6 +106,21 @@ custom_styles/fg = SubResource( 5 )
 custom_styles/bg = SubResource( 4 )
 percent_visible = false
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Charge" type="ProgressBar" parent="Sprite/UI/SP"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -32.5
+margin_top = -4.0
+margin_right = 32.5
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 7 )
+percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
