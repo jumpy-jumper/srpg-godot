@@ -59,6 +59,8 @@ func _process(_delta):
 		if (Input.is_action_just_pressed("mark")):
 			if (stage.cursor.position == position):
 				marked = not marked
+	
+		display_toasts()
 	else:
 		hp = get_stat("max_hp")
 		
@@ -260,7 +262,6 @@ var targeting_toasts = []
 
 func deal_damage_to_target(target, amount, damage_type):
 	target.apply_damage(amount, damage_type)
-	target.display_toasts()
 
 	var toast = targeting_toast.instance()
 	toast.attacker = self
@@ -268,7 +269,6 @@ func deal_damage_to_target(target, amount, damage_type):
 	toast.gradient = toast.gradient.duplicate()
 	toast.gradient.set_color(1, colors[damage_type])
 	targeting_toasts.append(toast)
-	display_toasts()
 
 
 func apply_damage(amount, damage_type, no_toast = false):
@@ -320,8 +320,6 @@ func apply_damage(amount, damage_type, no_toast = false):
 			for skill in $Skills.get_children():
 				if skill.recovery == skill.Recovery.DEFENSIVE:
 					skill.sp += 1
-	
-	display_toasts()
 
 
 func get_damage_toast(amount, color):
